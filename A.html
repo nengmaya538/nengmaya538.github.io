@@ -1,9 +1,4 @@
----
-layout: null
----
-
-
-{% for post in site.posts %}
+{% for post in paginator.posts %}
 <div class="card">
     <div class="card-body">
         <h2>
@@ -55,6 +50,7 @@ layout: null
 {% endfor %}
 
 <style>
+/* (style tetap sama seperti sebelumnya) */
 .card-body {
     padding: 14px;
     border-bottom: 1px solid #eee;
