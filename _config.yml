@@ -2,7 +2,7 @@
 name: "Mediumish"
 title: "Mediumish"
 description: "Jekyll template, Medium styled, free for bloggers."
-baseurl: /
+baseurl: "/"
 permalink: /:title/
 
 # Plugins STANDARD saja (tanpa custom)
