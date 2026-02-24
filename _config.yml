@@ -22,7 +22,7 @@ jekyll-archives:
     category: '/category/?q=:name'
     
 # Pagination 
-paginate: 6
+paginate: 18
 paginate_path: 'page:num'
     
 # Markdown
