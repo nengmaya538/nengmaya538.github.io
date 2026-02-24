@@ -2,12 +2,12 @@
 
 <style>
 .post-list { max-width: 800px; margin: auto; }
-.post-item { border-bottom: 1px solid #eee; padding: 16px 0; }
-.post-title { font-size: 18px; font-weight: 600; margin: 0 0 6px; }
+.post-item { border-bottom: 1px solid #eee; padding: 18px 0; }
+.post-title { font-size: 20px; margin: 0 0 6px; }
 .post-title a { text-decoration: none; color: #111; }
 .post-title a:hover { text-decoration: underline; }
 
-.meta { margin-bottom: 6px; }
+.meta { margin-bottom: 8px; }
 .meta a {
   display: inline-block;
   font-size: 11px;
@@ -24,81 +24,98 @@
 }
 
 .excerpt { font-size: 14px; color: #444; margin: 0; }
+
+.pagination { text-align: center; margin-top: 40px; }
+.pagination a, .pagination span {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 4px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333;
+}
+.pagination a:hover {
+  background: #111;
+  color: #fff;
+}
+.pagination .current {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
 </style>
 
 
-<div class="post-list" id="postContainer">
+<div class="post-list">
 
-{% for post in site.posts %}
-<div class="post-item">
+{% for post in paginator.posts %}
 
-  <div class="post-title">
+<article class="post-item">
+
+  <h2 class="post-title">
     <a href="{{ site.baseurl }}{{ post.url }}">
       {{ post.title }}
     </a>
-  </div>
+  </h2>
 <p class="excerpt">
-    {{ post.excerpt | strip_html | truncatewords:150 }}
+    {{ post.excerpt | strip_html | truncatewords: 150 }}
   </p>
-  
-  <div class="meta spo">
+  <div class="meta">
+
+    <!-- Categories -->
     {% for cat in post.categories %}
-      <a href="{{ site.baseurl }}/categories/?q={{ cat | slugify }}/">{{ cat }}</a>
+      <a href="{{ site.baseurl }}/categories/?q={{ cat | slugify }}/">
+        {{ cat }}
+      </a>
     {% endfor %}
 
+    <!-- Tags -->
     {% for tag in post.tags %}
-      <a href="{{ site.baseurl }}/tags/?q={{ tag | slugify }}/">#{{ tag }}</a>
+      <a href="{{ site.baseurl }}/tags/?q={{ tag | slugify }}/">
+        #{{ tag }}
+      </a>
     {% endfor %}
 
+    <!-- Labels -->
     {% for label in post.labels %}
-      <a href="{{ site.baseurl }}/labels/?q={{ label | slugify }}/">{{ label }}</a>
+      <a href="{{ site.baseurl }}/labels/?q={{ label | slugify }}/">
+        {{ label }}
+      </a>
     {% endfor %}
+
   </div>
 
   
 
-</div>
+</article>
+
 {% endfor %}
 
 </div>
 
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const container = document.getElementById("postContainer");
-  let items = Array.from(container.children);
+<!-- PAGINATION -->
+{% if paginator.total_pages > 1 %}
+<div class="pagination">
 
-  // Ambil kategori utama dari setiap post
-  items = items.map(item => {
-    const firstCategory = item.querySelector(".meta a");
-    return {
-      element: item,
-      category: firstCategory ? firstCategory.textContent.trim() : ""
-    };
-  });
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}">« Prev</a>
+  {% endif %}
 
-  // Shuffle awal
-  items.sort(() => Math.random() - 0.5);
+  {% for page in (1..paginator.total_pages) %}
+    {% if page == paginator.page %}
+      <span class="current">{{ page }}</span>
+    {% elsif page == 1 %}
+      <a href="{{ site.baseurl }}/">{{ page }}</a>
+    {% else %}
+      <a href="{{ site.baseurl }}/page/{{ page }}/">{{ page }}</a>
+    {% endif %}
+  {% endfor %}
 
-  // Susun ulang supaya tidak ada kategori sama berurutan
-  const result = [];
-  while (items.length > 0 && result.length < 6) {
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl }}">Next »</a>
+  {% endif %}
 
-    let foundIndex = items.findIndex(item => {
-      if (result.length === 0) return true;
-      return item.category !== result[result.length - 1].category;
-    });
-
-    if (foundIndex === -1) {
-      foundIndex = 0; // kalau semua sisa kategori sama, paksa ambil
-    }
-
-    result.push(items.splice(foundIndex, 1)[0]);
-  }
-
-  // Render ulang
-  container.innerHTML = "";
-  result.forEach(item => container.appendChild(item.element));
-});
-</script>
-
+</div>
+{% endif %}
