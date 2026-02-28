@@ -86,16 +86,7 @@ layout: null
 
 
 
-<link rel="sitemap" type="application/xml" href="" id="sitemap-main">
-<link rel="alternate" type="application/rss+xml" href="" id="sitemap-feed">
 
-<script>
-(function() {
-  var origin = window.location.origin;
-  document.getElementById("sitemap-main").href = origin + "/sitemap.xml";
-  document.getElementById("sitemap-feed").href = origin + "/feed.xml";
-})();
-</script>	
 
 {% if paginator.previous_page %}
 <link rel="prev" href="{{ paginator.previous_page_path | prepend: site.url }}">
@@ -121,7 +112,7 @@ layout: null
 	
 	{% include /kw/01.html %}
 
-{% include main2.html %}
+{% include main3.html %}
 
 </main>
 
