@@ -1,0 +1,43 @@
+---
+layout: null
+permalink: /sitemap-taxonomy.xml
+---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+{% assign all_terms = "" | split: "" %}
+
+<!-- categories -->
+{% for category in site.categories %}
+  {% assign all_terms = all_terms | push: category[0] %}
+{% endfor %}
+
+<!-- tags -->
+{% for tag in site.tags %}
+  {% assign all_terms = all_terms | push: tag[0] %}
+{% endfor %}
+
+<!-- labels -->
+{% for post in site.posts %}
+  {% if post.labels %}
+    {% assign all_terms = all_terms | concat: post.labels %}
+  {% endif %}
+{% endfor %}
+
+<!-- keywords -->
+{% for post in site.posts %}
+  {% if post.keywords %}
+    {% assign all_terms = all_terms | concat: post.keywords %}
+  {% endif %}
+{% endfor %}
+
+{% assign unique_terms = all_terms | uniq %}
+
+{% for term in unique_terms %}
+  <url>
+    <loc>{{ "/?q=" | append: term | uri_escape | absolute_url }}</loc>
+  </url>
+{% endfor %}
+
+</urlset>
