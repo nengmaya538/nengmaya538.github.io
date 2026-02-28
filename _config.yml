@@ -1,7 +1,4 @@
 # Site
-name: "Mediumish"
-title: "Mediumish"
-description: "Jekyll template, Medium styled, free for bloggers."
 baseurl: "/"
 permalink: /:title/
 
