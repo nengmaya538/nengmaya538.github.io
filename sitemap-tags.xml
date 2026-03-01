@@ -8,8 +8,9 @@ permalink: /sitemap-tags.xml
 
 {% for tag in site.tags %}
   <url>
-    <loc>{{ "/?q=" | append: tag[0] | uri_escape | absolute_url }}</loc>
+    <loc>{{ "/tags/?q=" | append: tag[0] | uri_escape | absolute_url }}</loc>
   </url>
 {% endfor %}
+
 
 </urlset>
