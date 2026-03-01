@@ -17,8 +17,9 @@ permalink: /sitemap-labels.xml
 
 {% for label in unique_labels %}
   <url>
-    <loc>{{ "/?q=" | append: label | uri_escape | absolute_url }}</loc>
+    <loc>{{ "/labels/?q=" | append: label | uri_escape | absolute_url }}</loc>
   </url>
 {% endfor %}
+
 
 </urlset>
