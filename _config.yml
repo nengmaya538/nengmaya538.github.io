@@ -1,6 +1,6 @@
 # Site
 url: ""
-baseurl: ""
+baseurl: "/"
 permalink: /:title/
 
 # Plugins STANDARD saja (tanpa custom)
