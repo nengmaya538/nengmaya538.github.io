@@ -17,8 +17,9 @@ permalink: /sitemap-keywords.xml
 
 {% for keyword in unique_keywords %}
   <url>
-    <loc>{{ "/?q=" | append: keyword | uri_escape | absolute_url }}</loc>
+    <loc>{{ "/keywords/?q=" | append: keyword | uri_escape | absolute_url }}</loc>
   </url>
 {% endfor %}
+
 
 </urlset>
