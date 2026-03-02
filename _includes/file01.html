@@ -25,7 +25,7 @@
         {% if score == level_num %}
 
           <div class="related-item">
-
+<hr />
             <h3>
               <a href="{{ post.url | relative_url }}">
                 {{ post.title }}
@@ -40,7 +40,7 @@
             {% endif %}
 
             <!-- Excerpt dari <p> pertama -->
-            <p class="excerpt-content">
+            <p class="excerpt-content spo">
               {{ post.excerpt | strip_html | truncatewords: 200 }}
             </p>
           </div>
