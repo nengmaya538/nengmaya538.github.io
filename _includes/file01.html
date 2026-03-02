@@ -1,4 +1,4 @@
-{% assign max_related = 6 %}
+{% assign max_related = 99 %}
 {% assign count = 0 %}
 
 <div class="related-posts">
@@ -34,15 +34,15 @@
 
             <!-- Excerpt dari description -->
             {% if post.description %}
-              <div class="excerpt-desc">
+              <p class="excerpt-desc">
                 {{ post.description }}
-              </div>
+              </p>
             {% endif %}
 
             <!-- Excerpt dari <p> pertama -->
-            <div class="excerpt-content">
-              {{ post.content | split: '</p>' | first | append: '</p>' }}
-            </div>
+            <p class="excerpt-content">
+              {{ post.content | split: '</div>' | first | append: '</div>' }}
+            </p>
 
             <!-- Keywords -->
             {% if post.keywords %}
