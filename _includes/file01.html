@@ -41,21 +41,8 @@
 
             <!-- Excerpt dari <p> pertama -->
             <p class="excerpt-content">
-              {{ post.content | split: '</div>' | first | append: '</div>' }}
+              {{ post.excerpt | strip_html | truncatewords: 200 }}
             </p>
-
-            <!-- Keywords -->
-            {% if post.keywords %}
-              <div class="meta-keywords">
-                Keywords:
-                {% for kw in post.keywords %}
-                  <a href="/keywords/?q={{ kw | slugify }}">
-                    {{ kw }}
-                  </a>{% unless forloop.last %}, {% endunless %}
-                {% endfor %}
-              </div>
-            {% endif %}
-
           </div>
 
           {% assign count = count | plus: 1 %}
