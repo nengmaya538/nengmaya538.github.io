@@ -106,9 +106,8 @@
 }
 </style>
 
-
-{% for post in paginator.posts %}
 <center><b>Latest Posts</b></center>
+{% for post in paginator.posts %}
 <div class="post-item">
   <h2>
     <a href="{{ post.url }}">
