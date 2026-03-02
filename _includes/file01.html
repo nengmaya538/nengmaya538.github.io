@@ -1,87 +1,50 @@
-{% if page.categories and page.categories.size > 0 %}
-<div class="post-categories">
-  {% for category in page.categories %}
-    <a href="/categories/?q={{ category | slugify }}/" rel="tag">
-      {{ category }}
-    </a>
-  {% endfor %}
-</div>
-{% endif %}
-
 {% assign max_related = 6 %}
 {% assign count = 0 %}
-{% assign has_related = false %}
 
 <div class="related-posts">
   <h2>Related Articles</h2>
 
-  {% if page.categories %}
+  {% assign levels = "5,4,3,2,1" | split: "," %}
 
-    {% for level in (5..1) %}
-      {% for post in site.posts %}
-        {% if post.url != page.url %}
+  {% for level in levels %}
+    {% assign level_num = level | plus: 0 %}
 
-          {% assign score = 0 %}
+    {% for post in site.posts %}
+      {% if post.url != page.url %}
 
-          {% for cat in page.categories %}
-            {% assign clean_cat = cat | downcase | slugify %}
+        {% assign score = 0 %}
 
-            {% for pcat in post.categories %}
-              {% assign clean_pcat = pcat | downcase | slugify %}
-
-              {% if clean_cat == clean_pcat %}
-                {% assign score = score | plus: 1 %}
-              {% endif %}
-
-            {% endfor %}
-          {% endfor %}
-
-          {% if score == level %}
-            {% assign has_related = true %}
-
-            <div class="related-item">
-              <h3>
-                <a href="{{ post.url | relative_url }}">
-                  {{ post.title }}
-                </a>
-              </h3>
-
-              <div class="excerpt">
-                {{ post.content | split: '</p>' | first | append: '</p>' }}
-              </div>
-            </div>
-
-            {% assign count = count | plus: 1 %}
-            {% if count >= max_related %}
-              {% break %}
+        {% for cat in page.categories %}
+          {% for pcat in post.categories %}
+            {% if cat == pcat %}
+              {% assign score = score | plus: 1 %}
             {% endif %}
+          {% endfor %}
+        {% endfor %}
+
+        {% if score == level_num %}
+
+          <div class="related-item">
+            <h3>
+              <a href="{{ post.url | relative_url }}">
+                {{ post.title }}
+              </a>
+            </h3>
+
+            <div class="excerpt">
+              {{ post.content | split: '</p>' | first | append: '</p>' }}
+            </div>
+          </div>
+
+          {% assign count = count | plus: 1 %}
+          {% if count >= max_related %}
+            {% break %}
           {% endif %}
 
         {% endif %}
-      {% endfor %}
-    {% endfor %}
 
-  {% endif %}
-
-  <!-- Fallback jika benar-benar tidak ada -->
-  {% if has_related == false %}
-    {% assign count = 0 %}
-    {% for post in site.posts %}
-      {% if post.url != page.url %}
-        <div class="related-item">
-        <p>fall</p>
-          <h3>
-            <a href="{{ post.url | relative_url }}">
-              {{ post.title }}
-            </a>
-          </h3>
-        </div>
-        {% assign count = count | plus: 1 %}
-        {% if count >= max_related %}
-          {% break %}
-        {% endif %}
       {% endif %}
     {% endfor %}
-  {% endif %}
 
+  {% endfor %}
 </div>
