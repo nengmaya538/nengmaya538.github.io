@@ -25,15 +25,37 @@
         {% if score == level_num %}
 
           <div class="related-item">
+
             <h3>
               <a href="{{ post.url | relative_url }}">
                 {{ post.title }}
               </a>
             </h3>
 
-            <div class="excerpt">
+            <!-- Excerpt dari description -->
+            {% if post.description %}
+              <div class="excerpt-desc">
+                {{ post.description }}
+              </div>
+            {% endif %}
+
+            <!-- Excerpt dari <p> pertama -->
+            <div class="excerpt-content">
               {{ post.content | split: '</p>' | first | append: '</p>' }}
             </div>
+
+            <!-- Keywords -->
+            {% if post.keywords %}
+              <div class="meta-keywords">
+                Keywords:
+                {% for kw in post.keywords %}
+                  <a href="/keywords/?q={{ kw | slugify }}">
+                    {{ kw }}
+                  </a>{% unless forloop.last %}, {% endunless %}
+                {% endfor %}
+              </div>
+            {% endif %}
+
           </div>
 
           {% assign count = count | plus: 1 %}
@@ -45,6 +67,62 @@
 
       {% endif %}
     {% endfor %}
-
   {% endfor %}
+
 </div>
+
+<style>
+.related-posts {
+  margin-top: 60px;
+  padding-top: 25px;
+  border-top: 1px solid #eee;
+}
+
+.related-posts h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.related-item {
+  margin-bottom: 35px;
+}
+
+.related-item h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.related-item h3 a {
+  text-decoration: none;
+}
+
+.related-item h3 a:hover {
+  text-decoration: underline;
+}
+
+.excerpt-desc {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.excerpt-content {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.meta-keywords {
+  font-size: 12px;
+  color: #888;
+}
+
+.meta-keywords a {
+  text-decoration: none;
+}
+
+.meta-keywords a:hover {
+  text-decoration: underline;
+}
+</style>
