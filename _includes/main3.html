@@ -108,36 +108,19 @@
 
 
 {% for post in paginator.posts %}
-
+<center><b>Latest Posts</b></center>
 <div class="post-item">
-
   <h2>
     <a href="{{ post.url }}">
       {{ post.title }}
     </a>
   </h2>
-
-  <div class="excerpt spo">
-    {{ post.excerpt | strip_html | truncatewords: 150 }}
+<div class="excerpt">
+    {{ post.description }}
   </div>
-
-  <div class="meta">
-
-    {% for cat in post.categories %}
-      <i>
-         {{ cat }}
-      </i>
-    {% endfor %}
-</div>
-<div class="spoo">
-    {% for keyword in post.keywords %}
-      <a class="label"
-         href="/labels/?q={{ keyword | slugify }}">
-         {{ keyword }}
-      </a>
-    {% endfor %}
-    
-  </div>
+  <p class="excerpt spo">
+    {{ post.excerpt | strip_html | truncatewords: 200 }}
+  </p>
 
 </div>
 
