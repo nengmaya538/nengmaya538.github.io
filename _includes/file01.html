@@ -22,14 +22,21 @@
         {% if post.url != page.url %}
 
           {% assign score = 0 %}
+
           {% for cat in page.categories %}
-            {% if post.categories contains cat %}
-              {% assign score = score | plus: 1 %}
-            {% endif %}
+            {% assign clean_cat = cat | downcase | slugify %}
+
+            {% for pcat in post.categories %}
+              {% assign clean_pcat = pcat | downcase | slugify %}
+
+              {% if clean_cat == clean_pcat %}
+                {% assign score = score | plus: 1 %}
+              {% endif %}
+
+            {% endfor %}
           {% endfor %}
 
           {% if score == level %}
-
             {% assign has_related = true %}
 
             <div class="related-item">
@@ -48,7 +55,6 @@
             {% if count >= max_related %}
               {% break %}
             {% endif %}
-
           {% endif %}
 
         {% endif %}
@@ -57,6 +63,25 @@
 
   {% endif %}
 
-  
+  <!-- Fallback jika benar-benar tidak ada -->
+  {% if has_related == false %}
+    {% assign count = 0 %}
+    {% for post in site.posts %}
+      {% if post.url != page.url %}
+        <div class="related-item">
+        <p>fall</p>
+          <h3>
+            <a href="{{ post.url | relative_url }}">
+              {{ post.title }}
+            </a>
+          </h3>
+        </div>
+        {% assign count = count | plus: 1 %}
+        {% if count >= max_related %}
+          {% break %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 
 </div>
