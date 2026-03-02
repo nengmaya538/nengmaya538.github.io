@@ -1,3 +1,14 @@
+{% if page.categories and page.categories.size > 0 %}
+<nav class="post-categories">
+  {% for category in page.categories %}
+    <a href="/categories/?q={{ category | slugify }}/" rel="tag">
+      {{ category }}
+    </a>
+  {% endfor %}
+</nav>
+{% endif %}
+
+
 {% assign max_related = 50 %}
 {% assign count = 0 %}
 
