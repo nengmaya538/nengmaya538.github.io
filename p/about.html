@@ -207,6 +207,8 @@ permalink: /about/
         <div class="twitter-header">
             <div class="logo">Leak<span>X</span></div>
         </div>
+        <!-- PERUBAHAN: <h1> mengandung query + subdomain -->
+        <h1 style="font-size: 1.25rem; padding: 0.5rem 1rem 0 1rem; margin: 0;">LeakX · Home Feed</h1>
         <div class="breadcrumb">
             <a href="/">Home</a> / LeakX Feed
         </div>
@@ -273,6 +275,8 @@ permalink: /about/
         <div class="twitter-header">
             <div class="logo">Leak<span>X</span></div>
         </div>
+        <!-- PERUBAHAN: <h1> dinamis berdasarkan query + subdomain -->
+        <h1 id="dynamic-h1" style="font-size: 1.25rem; padding: 0.5rem 1rem 0 1rem; margin: 0;"></h1>
         <div class="breadcrumb">
             <a href="/">Home</a> / <a href="/edition/">LeakX</a> / <span id="bc-name"></span>
         </div>
@@ -370,12 +374,20 @@ permalink: /about/
     const followingCount = Math.floor(Math.random() * 200) + 50;
     const followerCount = Math.floor(Math.random() * 800) + 200;
     
-    // SEO
-    let pageTitle = `${displayName} Leaked Content · Twitter Feed | LeakX`;
+    // SEO - PERUBAHAN: title mengandung query + subdomain
+    let currentSubdomain = window.location.hostname.split('.')[0];
+    if (currentSubdomain === 'www' || currentSubdomain === 'leakx') currentSubdomain = 'LeakX';
+    let pageTitle = `${displayName} Leaked · ${currentSubdomain} | LeakX`;
     let pageDesc = `Latest tweets about ${displayName} leaked content. ${followerCount} followers. Real-time updates on leaked videos and photos.`;
     document.title = pageTitle;
     const metaTag = document.getElementById('dynamic-description');
     if (metaTag) metaTag.setAttribute('content', pageDesc);
+    
+    // PERUBAHAN: mengisi <h1> dinamis
+    const h1Element = document.getElementById('dynamic-h1');
+    if (h1Element) {
+        h1Element.innerText = `${displayName} Leaked · ${currentSubdomain}`;
+    }
     
     document.getElementById('bc-name').innerText = displayName;
     document.getElementById('profile-name').innerHTML = `${displayName} <span style="font-size:0.7rem; color:var(--brand-color);">· Leaked Archive</span>`;
