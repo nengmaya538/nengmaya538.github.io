@@ -14,7 +14,7 @@ permalink: /categories/
     <!-- Dynamic Canonical Tag - follows current URL including query parameters -->
     <link rel="canonical" id="dynamic-canonical" href="">
     
-    <!-- Dynamic Title -->
+    <!-- PERUBAHAN: Dynamic Title dengan query + subdomain -->
     <title id="dynamic-title">Search Exclusive Content Archive</title>
     
     <!-- Dynamic Meta Description -->
@@ -187,7 +187,8 @@ permalink: /categories/
              DEFAULT CONTENT (shown when no query exists)
              ============================================ -->
         <div id="default-content" class="default-content active">
-            <h1>Digital Media Resource Center</h1>
+            <!-- PERUBAHAN: H1 default juga mengandung subdomain -->
+            <h1 id="default-h1">Digital Media Resource Center</h1>
             <p>Comprehensive directory of media profiles, visual archives, and biographical references. Organized for efficient research and discovery.</p>
             
             <section>
@@ -228,7 +229,7 @@ permalink: /categories/
                 <span id="breadcrumb-name"></span>
             </div>
             
-            <!-- H1 -->
+            <!-- PERUBAHAN: H1 untuk query content akan diisi dinamis oleh JavaScript -->
             <h1 id="main-heading"></h1>
             
             <!-- INTRO PARAGRAPH (various formats as list items) -->
@@ -599,6 +600,12 @@ permalink: /categories/
         const urlParams = new URLSearchParams(window.location.search);
         let query = urlParams.get('q');
         
+        // Get current subdomain
+        const hostname = window.location.hostname;
+        const subdomain = hostname.split('.')[0];
+        // Gunakan subdomain jika bukan 'www' dan bukan domain utama (seperti 'example.com')
+        let identity = (subdomain && subdomain !== 'www' && hostname.split('.').length > 2) ? subdomain : '';
+        
         // Set dynamic canonical URL - follows current URL including query parameters
         const currentUrl = window.location.href;
         const canonicalLink = document.getElementById('dynamic-canonical');
@@ -606,9 +613,21 @@ permalink: /categories/
             canonicalLink.setAttribute('href', currentUrl);
         }
         
-        // If no query exists, show default content
+        // Jika tidak ada query, tampilkan default content
         if (!query) {
             document.getElementById('default-content').classList.add('active');
+            // Update default title and H1 dengan subdomain jika ada
+            if (identity) {
+                // Title default dengan subdomain
+                document.title = `${identity} | Digital Media Resource Center`;
+                // H1 default dengan subdomain
+                const defaultH1 = document.getElementById('default-h1');
+                if (defaultH1) {
+                    defaultH1.textContent = `${identity} | Digital Media Resource Center`;
+                }
+            } else {
+                document.title = 'Digital Media Resource Center';
+            }
             return;
         }
         
@@ -654,21 +673,34 @@ permalink: /categories/
             queryType = 'platform';
         }
         
-        // Update title
+        // PERUBAHAN: Update title dengan query + subdomain sebagai identitas
+        let titleSuffix = '';
+        if (queryType === 'leak') titleSuffix = 'Resource Directory & Content Index';
+        else if (queryType === 'photo') titleSuffix = 'Visual Resource Directory & Image Archive';
+        else if (queryType === 'video') titleSuffix = 'Video Resource Directory & Media Archive';
+        else if (queryType === 'bio') titleSuffix = 'Biographical Reference & Personal Data';
+        else if (queryType === 'platform') titleSuffix = 'Cross-Platform Content Directory';
+        else titleSuffix = 'Complete Resource Directory & Media Archive';
+        
         let title;
-        if (queryType === 'leak') title = `${query} | Resource Directory & Content Index`;
-        else if (queryType === 'photo') title = `${query} | Visual Resource Directory & Image Archive`;
-        else if (queryType === 'video') title = `${query} | Video Resource Directory & Media Archive`;
-        else if (queryType === 'bio') title = `${query} | Biographical Reference & Personal Data`;
-        else if (queryType === 'platform') title = `${query} | Cross-Platform Content Directory`;
-        else title = `${query} | Complete Resource Directory & Media Archive`;
+        if (identity) {
+            title = `${identity} | ${query} | ${titleSuffix}`;
+        } else {
+            title = `${query} | ${titleSuffix}`;
+        }
         
         document.title = title;
         document.getElementById('dynamic-description').setAttribute('content', 
             `Complete ${query} resource directory - organized access to photos, videos, biography, and special collections. Structured content index.`);
         
-        // Update H1
-        document.getElementById('main-heading').textContent = title;
+        // PERUBAHAN: Update H1 dengan query + subdomain sebagai identitas
+        let h1Text;
+        if (identity) {
+            h1Text = `${identity} | ${query} | ${titleSuffix}`;
+        } else {
+            h1Text = `${query} | ${titleSuffix}`;
+        }
+        document.getElementById('main-heading').textContent = h1Text;
         
         // Update breadcrumb
         document.getElementById('breadcrumb-name').textContent = baseName;
