@@ -432,17 +432,21 @@ permalink: /edition/
     const subCount = Math.floor(Math.random() * 500) + 50;
     const totalViews = Math.floor(Math.random() * 2000) + 500;
     
-    // SEO
-    let pageTitle = `${displayName} Leaked Videos · Full Playlist | LeakTube`;
+    // --- PERUBAHAN: title dan h1 mengandung query + subdomain ---
+    const subdomain = window.location.hostname.split('.')[0];
+    const subdomainText = (subdomain && subdomain !== 'www' && subdomain !== '') ? ` | ${subdomain}` : '';
+    
+    let pageTitle = `${displayName} · ${query}${subdomainText} | LeakTube`;
     let pageDesc = `Watch ${displayName} leaked videos. Full playlist of leaked content including private clips and viral moments. ${totalViews}+ views this week.`;
     document.title = pageTitle;
     const metaTag = document.getElementById('dynamic-description');
     if (metaTag) metaTag.setAttribute('content', pageDesc);
     
-    document.getElementById('channel-name').innerHTML = `${displayName} <span style="font-size:0.7rem; color: var(--yt-red);">· LEAKED CONTENT</span>`;
+    document.getElementById('channel-name').innerHTML = `${displayName} <span style="font-size:0.7rem; color: var(--yt-red);">· ${query}${subdomainText}</span>`;
     document.getElementById('channel-stats').innerHTML = `${subCount}K subscribers · ${totalViews}K views this month`;
     document.getElementById('bc-name').innerText = displayName;
     document.getElementById('channel-avatar').innerHTML = displayName.charAt(0).toUpperCase();
+    // --- AKHIR PERUBAHAN ---
     
     // helper: make video card
     function makeVideoCard(variant, title, views, timeAgo, duration, icon) {
