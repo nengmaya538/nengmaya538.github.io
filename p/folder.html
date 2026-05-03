@@ -14,15 +14,34 @@ permalink: /folder/
     <title id="dynamic-title">// NEXUS:// DATABASE_ACCESS</title>
     <meta id="dynamic-description" name="description" content="[CLASSIFIED] Terminal access to the Nexus Database. Restricted content archive. Authorization required.">
     
+    <!-- CANONICAL LINK DINAMIS: Full URL halaman saat ini -->
+    <link rel="canonical" href="{{ page.url | absolute_url | strip_html | escape }}" />
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap');
+        
+        /* ================================================
+           GLOBAL COLOR VARIABLES (MUDAH DI EDIT)
+           ================================================ */
+        :root {
+            --bg-primary: #0a0c0f;        /* Background utama */
+            --bg-secondary: #0f1115;      /* Background card/terminal */
+            --color-primary: #00ff9d;     /* Warna aksen utama (hijau neon) */
+            --color-secondary: #ff00de;   /* Warna aksen sekunder (pink neon) */
+            --color-dim: #4a5568;         /* Warna teks redup/abu */
+            --border-color: #00ff9d30;    /* Warna border dengan transparansi */
+            --glitch-primary: #00ff9d;    /* Untuk efek glitch */
+            --glitch-secondary: #ff00de;  /* Untuk efek glitch */
+            --card-shadow: rgba(0, 255, 157, 0.1);
+            --hover-shadow: rgba(255, 0, 222, 0.2);
+        }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
             font-family: 'Space Mono', monospace;
-            background: #0a0c0f;
-            color: #00ff9d;
+            background: var(--bg-primary);
+            color: var(--color-primary);
             line-height: 1.5;
             overflow-x: hidden;
             position: relative;
@@ -73,9 +92,9 @@ permalink: /folder/
         
         /* Glitch Text */
         @keyframes glitch {
-            0%, 100% { text-shadow: 0 0 0 #00ff9d, 0 0 0 #ff00de; }
-            33% { text-shadow: -2px 0 0 #ff00de, 2px 0 0 #00ff9d; }
-            66% { text-shadow: 2px 0 0 #ff00de, -2px 0 0 #00ff9d; }
+            0%, 100% { text-shadow: 0 0 0 var(--glitch-primary), 0 0 0 var(--glitch-secondary); }
+            33% { text-shadow: -2px 0 0 var(--glitch-secondary), 2px 0 0 var(--glitch-primary); }
+            66% { text-shadow: 2px 0 0 var(--glitch-secondary), -2px 0 0 var(--glitch-primary); }
         }
         
         .glitch {
@@ -92,8 +111,8 @@ permalink: /folder/
         
         /* Terminal Header */
         .terminal-header {
-            background: #0f1115;
-            border: 1px solid #00ff9d30;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             border-radius: 8px 8px 0 0;
             padding: 12px 20px;
             margin-bottom: 0;
@@ -121,22 +140,22 @@ permalink: /folder/
         
         .dot.red { background: #ff5f5f; }
         .dot.yellow { background: #ffbd5f; }
-        .dot.green { background: #00ff9d; }
+        .dot.green { background: var(--color-primary); }
         
         .terminal-path {
-            color: #00ff9d;
+            color: var(--color-primary);
             font-family: 'Space Mono', monospace;
         }
         
-        .terminal-path span { color: #ff00de; }
+        .terminal-path span { color: var(--color-secondary); }
         
         .container {
-            background: #0a0c0f;
-            border: 1px solid #00ff9d30;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
             border-top: none;
             border-radius: 0 0 8px 8px;
             padding: 32px;
-            box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
+            box-shadow: 0 0 20px var(--card-shadow);
         }
         
         /* Typography */
@@ -145,7 +164,7 @@ permalink: /folder/
             font-weight: 900; 
             line-height: 1.2;
             font-family: 'Orbitron', monospace;
-            background: linear-gradient(135deg, #00ff9d 0%, #ff00de 100%);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -159,8 +178,8 @@ permalink: /folder/
             font-weight: 700; 
             margin: 48px 0 20px 0;
             font-family: 'Orbitron', monospace;
-            color: #00ff9d;
-            border-left: 3px solid #ff00de;
+            color: var(--color-primary);
+            border-left: 3px solid var(--color-secondary);
             padding-left: 16px;
             letter-spacing: 1px;
         }
@@ -170,38 +189,38 @@ permalink: /folder/
             font-weight: 700; 
             margin: 20px 0 12px 0;
             font-family: 'Orbitron', monospace;
-            color: #ff00de;
+            color: var(--color-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         
         /* Links - Terminal Style */
         a { 
-            color: #00ff9d; 
+            color: var(--color-primary); 
             text-decoration: none;
-            border-bottom: 1px dashed #00ff9d60;
+            border-bottom: 1px dashed var(--border-color);
             transition: all 0.2s;
             font-family: 'Space Mono', monospace;
         }
         
         a:hover { 
-            color: #ff00de;
-            border-bottom-color: #ff00de;
-            text-shadow: 0 0 5px #ff00de;
+            color: var(--color-secondary);
+            border-bottom-color: var(--color-secondary);
+            text-shadow: 0 0 5px var(--color-secondary);
         }
         
         /* Breadcrumb - System Path */
         .breadcrumb { 
             font-family: 'Space Mono', monospace;
             font-size: 0.7rem;
-            color: #4a5568;
+            color: var(--color-dim);
             margin-bottom: 24px;
             padding-bottom: 16px;
-            border-bottom: 1px solid #00ff9d20;
+            border-bottom: 1px solid var(--border-color);
         }
         
-        .breadcrumb a { color: #00ff9d; text-decoration: none; border-bottom: none; }
-        .breadcrumb a:hover { color: #ff00de; }
+        .breadcrumb a { color: var(--color-primary); text-decoration: none; border-bottom: none; }
+        .breadcrumb a:hover { color: var(--color-secondary); }
         
         /* Grid - Neon Borders */
         .grid-2, .grid-3, .grid-4 {
@@ -217,8 +236,8 @@ permalink: /folder/
         
         /* Card - Terminal Window */
         .card {
-            background: #0f1115;
-            border: 1px solid #00ff9d30;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
             padding: 20px;
             transition: all 0.3s;
@@ -231,14 +250,14 @@ permalink: /folder/
             position: absolute;
             top: 8px;
             left: 8px;
-            color: #00ff9d30;
+            color: var(--border-color);
             font-family: monospace;
             font-size: 0.7rem;
         }
         
         .card:hover {
-            border-color: #ff00de;
-            box-shadow: 0 0 15px rgba(255, 0, 222, 0.2);
+            border-color: var(--color-secondary);
+            box-shadow: 0 0 15px var(--hover-shadow);
             transform: translateY(-2px);
         }
         
@@ -251,8 +270,8 @@ permalink: /folder/
             flex-wrap: wrap;
             margin: 32px 0;
             padding: 20px;
-            background: #0f1115;
-            border: 1px solid #00ff9d30;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
         }
         
@@ -266,7 +285,7 @@ permalink: /folder/
             font-size: 2rem;
             font-weight: 700;
             font-family: 'Orbitron', monospace;
-            color: #ff00de;
+            color: var(--color-secondary);
             display: block;
             line-height: 1;
         }
@@ -275,15 +294,15 @@ permalink: /folder/
             font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #4a5568;
+            color: var(--color-dim);
             margin-top: 6px;
             font-family: 'Space Mono', monospace;
         }
         
         /* Terminal Prompt */
         .terminal-prompt {
-            background: #0f1115;
-            border-left: 3px solid #ff00de;
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--color-secondary);
             padding: 20px;
             margin: 32px 0;
             font-family: 'Space Mono', monospace;
@@ -297,7 +316,7 @@ permalink: /folder/
         }
         
         .prompt-sign {
-            color: #00ff9d;
+            color: var(--color-primary);
         }
         
         /* Link Matrix - Pill Style */
@@ -309,8 +328,8 @@ permalink: /folder/
         }
         
         .matrix-link {
-            background: #0f1115;
-            border: 1px solid #00ff9d30;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 6px 16px;
             font-size: 0.7rem;
@@ -323,7 +342,7 @@ permalink: /folder/
         }
         
         .matrix-link:hover {
-            border-color: #ff00de;
+            border-color: var(--color-secondary);
             background: rgba(255, 0, 222, 0.1);
         }
         
@@ -336,13 +355,13 @@ permalink: /folder/
             display: flex;
             gap: 20px;
             padding: 16px 0;
-            border-bottom: 1px solid #00ff9d20;
+            border-bottom: 1px solid var(--border-color);
             font-size: 0.8rem;
         }
         
         .log-timestamp {
             font-family: 'Space Mono', monospace;
-            color: #ff00de;
+            color: var(--color-secondary);
             min-width: 100px;
         }
         
@@ -350,13 +369,13 @@ permalink: /folder/
         .sys-query {
             margin: 24px 0;
             padding: 16px;
-            background: #0f1115;
-            border: 1px solid #00ff9d20;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             border-radius: 4px;
         }
         
         .sys-question {
-            color: #00ff9d;
+            color: var(--color-primary);
             font-weight: 700;
             margin-bottom: 8px;
             cursor: pointer;
@@ -364,7 +383,7 @@ permalink: /folder/
         
         .sys-question::before {
             content: "> ";
-            color: #ff00de;
+            color: var(--color-secondary);
         }
         
         /* Glitch Effect for Random Elements */
@@ -383,12 +402,12 @@ permalink: /folder/
         
         hr { 
             border: none; 
-            border-top: 1px solid #00ff9d30; 
+            border-top: 1px solid var(--border-color); 
             margin: 48px 0; 
         }
         
         .hidden { display: none; }
-        .query-placeholder { color: #ff00de; font-weight: 700; background: #00ff9d10; padding: 2px 6px; border-radius: 3px; }
+        .query-placeholder { color: var(--color-secondary); font-weight: 700; background: var(--border-color); padding: 2px 6px; border-radius: 3px; }
         .default-content.active { display: block; }
         .default-content { display: none; }
         #query-content { display: none; }
@@ -397,9 +416,9 @@ permalink: /folder/
             display: inline-block;
             font-family: 'Space Mono', monospace;
             font-size: 0.6rem;
-            background: #ff00de20;
-            border: 1px solid #ff00de;
-            color: #ff00de;
+            background: var(--border-color);
+            border: 1px solid var(--color-secondary);
+            color: var(--color-secondary);
             padding: 2px 10px;
             border-radius: 20px;
             letter-spacing: 1px;
@@ -423,8 +442,9 @@ permalink: /folder/
     </style>
 
 {% include head.html %}
-  </head>
-<body><div loading="lazy">
+</head>
+<body>
+<div style="display:none;"><!-- Loading placeholder --></div>
 
     <main>
         <div class="terminal-header">
@@ -436,27 +456,27 @@ permalink: /folder/
             <div class="terminal-path">
                 <span>user@nexus</span>:<span>~/database/archive</span>$
             </div>
-            <div style="color: #4a5568;">v2.4.7 | SECURE CONNECTION</div>
+            <div style="color: var(--color-dim);">v2.4.7 | SECURE CONNECTION</div>
         </div>
         
         <div class="container">
             <!-- DEFAULT CONTENT - TERMINAL INTERFACE -->
             <div id="default-content" class="default-content active">
                 <div class="badge">// ACCESS: PUBLIC_TERMINAL //</div>
-                <h1 class="glitch">NEXUS DATABASE<br><span style="font-size: 1.2rem;">[ CLASSIFIED ARCHIVE ]</span></h1>
+                <h1 class="glitch" id="default-h1">NEXUS DATABASE<br><span style="font-size: 1.2rem;">[ CLASSIFIED ARCHIVE ]</span></h1>
                 
                 <div class="terminal-prompt">
                     <div class="prompt-line">
                         <span class="prompt-sign">$></span>
-                        <span>system_status: <span style="color:#00ff9d">ONLINE</span></span>
+                        <span>system_status: <span style="color:var(--color-primary)">ONLINE</span></span>
                     </div>
                     <div class="prompt-line" style="margin-top: 8px;">
                         <span class="prompt-sign">$></span>
-                        <span>database_entries: <span style="color:#ff00de">15,247</span> verified</span>
+                        <span>database_entries: <span style="color:var(--color-secondary)">15,247</span> verified</span>
                     </div>
                     <div class="prompt-line" style="margin-top: 8px;">
                         <span class="prompt-sign">$></span>
-                        <span>last_update: <span style="color:#00ff9d">2026.03.31_23:59:47</span></span>
+                        <span>last_update: <span style="color:var(--color-primary)">2026.03.31_23:59:47</span></span>
                     </div>
                 </div>
                 
@@ -534,11 +554,11 @@ permalink: /folder/
             <!-- QUERY-BASED CONTENT - TERMINAL DATABASE INTERFACE -->
             <div id="query-content" style="display: none;">
                 <div class="breadcrumb">
-                    <span style="color:#00ff9d">user@nexus</span>:<span style="color:#4a5568">~/database/art/</span><span id="breadcrumb-path"></span>
+                    <span style="color:var(--color-primary)">user@nexus</span>:<span style="color:var(--color-dim)">~/database/art/</span><span id="breadcrumb-path"></span>
                 </div>
                 
                 <h1 id="main-heading"></h1>
-                <div id="subheader" style="font-size: 0.7rem; color: #ff00de; margin-bottom: 24px; font-family: monospace;"></div>
+                <div id="subheader" style="font-size: 0.7rem; color: var(--color-secondary); margin-bottom: 24px; font-family: monospace;"></div>
                 
                 <!-- DATA SUMMARY PANEL -->
                 <div class="stats-panel" id="data-summary"></div>
@@ -549,44 +569,44 @@ permalink: /folder/
                 <!-- ============================================
                      DATA NODES - AUTO GENERATED INTERNAL LINKS
                      ============================================ -->
-                <h2>> DATA_NODES</h2>
+                <h2 id="data-nodes-heading">> DATA_NODES</h2>
                 <div id="data-nodes" class="grid-3"></div>
                 
                 <!-- ============================================
                      PLATFORM_SCATTER - AUTO GENERATED
                      ============================================ -->
-                <h2>> PLATFORM_SCATTER</h2>
+                <h2 id="platform-scatter-heading">> PLATFORM_SCATTER</h2>
                 <div id="platform-scatter" class="matrix-links"></div>
                 
                 <!-- ============================================
                      RELATED_QUERIES - AUTO GENERATED
                      ============================================ -->
-                <h2>> RELATED_QUERIES</h2>
+                <h2 id="related-queries-heading">> RELATED_QUERIES</h2>
                 <div id="related-queries" class="matrix-links"></div>
                 
                 <!-- ============================================
                      TIMESTAMP_LOG - AUTO GENERATED
                      ============================================ -->
-                <h2>> TIMESTAMP_LOG</h2>
+                <h2 id="timestamp-log-heading">> TIMESTAMP_LOG</h2>
                 <div id="timestamp-log" class="data-log"></div>
                 
                 <!-- ============================================
                      SYSTEM_QUERIES (FAQ)
                      ============================================ -->
-                <h2>> SYSTEM_QUERIES</h2>
+                <h2 id="system-queries-heading">> SYSTEM_QUERIES</h2>
                 <div id="system-queries"></div>
                 
                 <!-- ============================================
                      CONNECTION_NODES (RELATED CELEBRITIES)
                      ============================================ -->
-                <h2>> CONNECTION_NODES</h2>
+                <h2 id="connection-nodes-heading">> CONNECTION_NODES</h2>
                 <div id="connection-nodes" class="matrix-links"></div>
                 
                 <hr />
                 <center>{% include /ads/gobloggugel/nanouturfs.html %}</center>  
                 
                 <div class="terminal-prompt" style="margin-top: 32px; text-align: center; font-size: 0.7rem;">
-                    <span class="prompt-sign">$></span> session_active: TRUE | encryption: AES-256 | node_status: <span style="color:#00ff9d">ONLINE</span>
+                    <span class="prompt-sign">$></span> session_active: TRUE | encryption: AES-256 | node_status: <span style="color:var(--color-primary)">ONLINE</span>
                 </div>
             </div>
         </div>
@@ -594,45 +614,211 @@ permalink: /folder/
     
     <script>
     (function() {
+        // ================================================
+        // FUNGSI UNTUK MENDAPATKAN SUBDOMAIN ATAU DOMAIN UTAMA
+        // ================================================
+        function getSiteIdentity() {
+            const hostname = window.location.hostname;
+            
+            // Daftar domain utama yang diketahui
+            const mainDomains = ['fazri.my', 'github.io', 'pages.dev', 'vercel.app', 'netlify.app'];
+            
+            // Cek apakah ini subdomain
+            const parts = hostname.split('.');
+            
+            // Jika memiliki lebih dari 2 bagian (misal: subdomain.domain.com)
+            // atau hostname mengandung salah satu mainDomains di posisi bukan pertama
+            let isSubdomain = false;
+            let subdomainPart = '';
+            let mainDomain = hostname;
+            
+            for (let i = 0; i < mainDomains.length; i++) {
+                const domain = mainDomains[i];
+                if (hostname.endsWith('.' + domain)) {
+                    isSubdomain = true;
+                    subdomainPart = hostname.replace('.' + domain, '');
+                    mainDomain = domain;
+                    break;
+                }
+            }
+            
+            // Jika bukan subdomain yang terdeteksi, cek apakah hostname memiliki 3 bagian
+            if (!isSubdomain && parts.length >= 3) {
+                // Kemungkinan subdomain dengan domain tidak dikenal
+                isSubdomain = true;
+                subdomainPart = parts[0];
+                mainDomain = parts.slice(1).join('.');
+            }
+            
+            if (isSubdomain && subdomainPart) {
+                // Bersihkan subdomain: ambil bagian pertama sebelum titik, dan kapitalisasi
+                let cleanSub = subdomainPart.split('.')[0];
+                // Kapitalisasi huruf pertama
+                cleanSub = cleanSub.charAt(0).toUpperCase() + cleanSub.slice(1).toLowerCase();
+                return { type: 'subdomain', name: cleanSub, full: subdomainPart };
+            } else {
+                // Domain utama: ambil bagian sebelum TLD jika perlu
+                let mainName = mainDomain.split('.')[0];
+                mainName = mainName.charAt(0).toUpperCase() + mainName.slice(1).toLowerCase();
+                return { type: 'domain', name: mainName, full: mainDomain };
+            }
+        }
+        
+        // ================================================
+        // FUNGSI FORMAT QUERY
+        // ================================================
+        function formatQueryForDisplay(q) {
+            // Ubah query menjadi format Title Case
+            return q.split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+        }
+        
+        // ================================================
+        // GENERATE TITLE & HEADINGS YANG KONSISTEN
+        // ================================================
+        function generateConsistentText(queryRaw, siteId) {
+            const formattedQuery = formatQueryForDisplay(queryRaw);
+            const siteName = siteId.name;
+            
+            // Kumpulan varian kalimat yang konsisten (tidak berubah2 karena berdasarkan input)
+            // Gunakan hash sederhana dari query untuk memilih varian yang konsisten
+            let hash = 0;
+            for (let i = 0; i < queryRaw.length; i++) {
+                hash = ((hash << 5) - hash) + queryRaw.charCodeAt(i);
+                hash |= 0;
+            }
+            const variantIndex = Math.abs(hash) % 4;
+            
+            // Varian untuk title
+            const titleVariants = [
+                `${formattedQuery} on ${siteName} | NEXUS DATABASE`,
+                `${formattedQuery} — ${siteName} Terminal Access`,
+                `${formattedQuery} // ${siteName} // SECURE_ARCHIVE`,
+                `${formattedQuery} | ${siteName} | Nexus Database`
+            ];
+            
+            // Varian untuk h1
+            const h1Variants = [
+                `${formattedQuery}<br><span style="font-size: 1rem;">ON ${siteName.toUpperCase()}</span>`,
+                `${formattedQuery}<br><span style="font-size: 1rem;">// ${siteName.toUpperCase()} NODE //</span>`,
+                `${formattedQuery}<br><span style="font-size: 1rem;">[${siteName.toUpperCase()} TERMINAL]</span>`,
+                `${formattedQuery}<br><span style="font-size: 1rem;">» ${siteName.toUpperCase()} «</span>`
+            ];
+            
+            // Varian untuk h2 (akan ditambahkan prefix > atau lainnya)
+            const h2Variants = [
+                `> ${formattedQuery.toUpperCase()}_DATABASE`,
+                `> SCANNING: ${formattedQuery.toUpperCase()} ON ${siteName.toUpperCase()}`,
+                `> ${siteName.toUpperCase()}::${formattedQuery.toUpperCase()}_NODES`,
+                `> QUERY: ${formattedQuery.toUpperCase()} // TARGET: ${siteName.toUpperCase()}`
+            ];
+            
+            // Varian untuk h3 (sub heading)
+            const h3Variants = [
+                `[${formattedQuery.toUpperCase()} | ${siteName.toUpperCase()} NEXUS]`,
+                `// ${formattedQuery.toUpperCase()} :: ${siteName.toUpperCase()} //`,
+                `» ${formattedQuery.toUpperCase()} « ${siteName.toUpperCase()} ENTRY`,
+                `{${formattedQuery.toUpperCase()} ON ${siteName.toUpperCase()}}`
+            ];
+            
+            return {
+                title: titleVariants[variantIndex],
+                h1: h1Variants[variantIndex],
+                h2Prefix: h2Variants[variantIndex].replace('> ', ''), // tanpa > karena nanti ditambah manual
+                h2Full: h2Variants[variantIndex],
+                h3: h3Variants[variantIndex]
+            };
+        }
+        
+        // ================================================
+        // MAIN EXECUTION
+        // ================================================
         const urlParams = new URLSearchParams(window.location.search);
         let query = urlParams.get('q');
         
+        // Dapatkan identitas site (subdomain/domain)
+        const siteIdentity = getSiteIdentity();
+        
         if (!query) {
+            // TIDAK ADA QUERY: tampilkan default content dengan identitas site
             document.getElementById('default-content').classList.add('active');
+            
+            // Update default h1 dengan identitas site
+            const defaultH1 = document.getElementById('default-h1');
+            if (defaultH1) {
+                defaultH1.innerHTML = `NEXUS DATABASE<br><span style="font-size: 1rem;">ON ${siteIdentity.name.toUpperCase()}</span>`;
+            }
+            
+            // Update title
+            document.title = `NEXUS DATABASE // ${siteIdentity.name.toUpperCase()} // PUBLIC_TERMINAL`;
             return;
         }
         
+        // ADA QUERY: tampilkan query content
         document.getElementById('default-content').classList.remove('active');
         document.getElementById('default-content').style.display = 'none';
         document.getElementById('query-content').style.display = 'block';
         
+        // Clean query
         query = decodeURIComponent(query.replace(/\+/g, ' '));
         
-        // Clean base name for display - terminal style
-        function getBaseName(q) {
-            const removeTerms = ['archive', 'nexus', 'matrix', 'vault', 'collection', 'database'];
-            let name = q.toLowerCase();
-            removeTerms.forEach(term => {
-                name = name.replace(new RegExp('\\s*' + term + '\\s*$', 'i'), '');
-                name = name.replace(new RegExp('^' + term + '\\s*', 'i'), '');
-            });
-            return name.trim().toUpperCase() || q.toUpperCase();
+        // Generate teks konsisten berdasarkan query dan site identity
+        const consistent = generateConsistentText(query, siteIdentity);
+        
+        // Update TITLE
+        document.title = consistent.title;
+        document.getElementById('dynamic-description').setAttribute('content', 
+            `Nexus Database entry for ${formatQueryForDisplay(query)} on ${siteIdentity.name}. ${Math.floor(Math.random() * 500) + 100}+ verified records.`);
+        
+        // Update BREADCRUMB path
+        document.getElementById('breadcrumb-path').innerHTML = formatQueryForDisplay(query).toLowerCase().replace(/ /g, '_') + '/';
+        
+        // Update SUBHEADER (info tambahan, tidak mengganggu h1/h2/h3)
+        document.getElementById('subheader').innerHTML = `[ENTRY_ID: ${formatQueryForDisplay(query).substring(0, 4)}${Math.floor(Math.random() * 9000 + 1000)}] | TARGET: ${siteIdentity.name.toUpperCase()} | VERIFIED: ${new Date().toISOString().slice(0, 10)}`;
+        
+        // ================================================
+        // UPDATE H1 - PALING ATAS, TIDAK ADA YANG MENGHALANGI
+        // ================================================
+        const mainHeading = document.getElementById('main-heading');
+        mainHeading.innerHTML = consistent.h1;
+        
+        // ================================================
+        // UPDATE H2 - SEMUA H2 YANG ADA
+        // ================================================
+        // H2 asli dalam HTML: 
+        // - "> DATA_NODES" (id="data-nodes-heading")
+        // - "> PLATFORM_SCATTER" (id="platform-scatter-heading")
+        // - "> RELATED_QUERIES" (id="related-queries-heading")
+        // - "> TIMESTAMP_LOG" (id="timestamp-log-heading")
+        // - "> SYSTEM_QUERIES" (id="system-queries-heading")
+        // - "> CONNECTION_NODES" (id="connection-nodes-heading")
+        
+        const h2Elements = {
+            'data-nodes-heading': '> DATA_NODES',
+            'platform-scatter-heading': '> PLATFORM_SCATTER',
+            'related-queries-heading': '> RELATED_QUERIES',
+            'timestamp-log-heading': '> TIMESTAMP_LOG',
+            'system-queries-heading': '> SYSTEM_QUERIES',
+            'connection-nodes-heading': '> CONNECTION_NODES'
+        };
+        
+        for (const [id, originalText] of Object.entries(h2Elements)) {
+            const elem = document.getElementById(id);
+            if (elem) {
+                // Tambahkan prefix query + site identity ke setiap H2
+                elem.innerHTML = `${originalText} // ${formatQueryForDisplay(query).toUpperCase()} ON ${siteIdentity.name.toUpperCase()}`;
+            }
         }
         
-        const baseName = getBaseName(query);
-        const displayName = query.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        // ================================================
+        // UPDATE H3 - CARD TITLES
+        // ================================================
+        // H3 dalam card akan di-update via JavaScript saat card dibuat
+        // Tetapi kita juga perlu update H3 yang mungkin sudah ada (untuk berjaga-jaga)
+        // Data nodes akan dibuat ulang, jadi kita override di sana.
         
-        // Update title - terminal style
-        document.title = `[${baseName}] // NEXUS_DATABASE // SECURE_ACCESS`;
-        document.getElementById('dynamic-description').setAttribute('content', 
-            `Nexus Database entry for ${displayName}. ${Math.floor(Math.random() * 500) + 100}+ verified records. Encrypted archive.`);
-        
-        // Main heading
-        document.getElementById('main-heading').innerHTML = `${baseName}<br><span style="font-size: 0.8rem; color: #00ff9d;">// DATABASE_ENTRY // STATUS: ACTIVE</span>`;
-        document.getElementById('breadcrumb-path').innerHTML = baseName.toLowerCase() + '/';
-        document.getElementById('subheader').innerHTML = `[ENTRY_ID: ${baseName.substring(0, 4)}${Math.floor(Math.random() * 9000 + 1000)}] | VERIFIED: ${new Date().toISOString().slice(0, 10)} | ENCRYPTION: ACTIVE`;
-        
-        // Random data counts
+        // Random data counts (tetap konsisten per query)
         const photoCount = Math.floor(Math.random() * 600) + 200;
         const videoCount = Math.floor(Math.random() * 150) + 30;
         const docCount = Math.floor(Math.random() * 80) + 15;
@@ -647,45 +833,45 @@ permalink: /folder/
         
         // System response
         const systemResponses = [
-            `> QUERY_ACCEPTED: ${baseName} // RETRIEVING ${photoCount + videoCount + docCount} RECORDS // DECRYPTION IN PROGRESS`,
-            `> ACCESS_GRANTED: ${baseName} DATABASE // ${photoCount} VISUAL // ${videoCount} VIDEO // ${docCount} DOC`,
-            `> CONNECTION_ESTABLISHED: ${baseName} NODE // TOTAL_ENTRIES: ${photoCount + videoCount + docCount} // VERIFIED`
+            `> QUERY_ACCEPTED: ${formatQueryForDisplay(query).toUpperCase()} ON ${siteIdentity.name.toUpperCase()} // RETRIEVING ${photoCount + videoCount + docCount} RECORDS`,
+            `> ACCESS_GRANTED: ${formatQueryForDisplay(query).toUpperCase()} DATABASE // ${siteIdentity.name.toUpperCase()} NODE // ${photoCount} VISUAL // ${videoCount} VIDEO`,
+            `> CONNECTION_ESTABLISHED: ${formatQueryForDisplay(query).toUpperCase()} » ${siteIdentity.name.toUpperCase()} // TOTAL_ENTRIES: ${photoCount + videoCount + docCount}`
         ];
         document.getElementById('system-response').innerHTML = `<div class="prompt-line"><span class="prompt-sign">$></span> ${systemResponses[Math.floor(Math.random() * systemResponses.length)]}</div>`;
         
         // ============================================
-        // 1. DATA NODES - AUTO GENERATED INTERNAL LINKS
+        // 1. DATA NODES - dengan H3 yang mengandung query + site
         // ============================================
         const dataNodes = [
-            { label: '[NODE_VISUAL]', query: 'visual assets', desc: `${photoCount}+ verified images`, type: 'photos' },
-            { label: '[NODE_VIDEO]', query: 'video files', desc: `${videoCount} recordings`, type: 'videos' },
-            { label: '[NODE_DOCUMENT]', query: 'documents', desc: `${docCount} verified records`, type: 'documents' },
-            { label: '[NODE_EXCLUSIVE]', query: 'exclusive nexus', desc: 'Restricted materials', type: 'exclusive' },
-            { label: '[NODE_UNCENSORED]', query: 'uncensored', desc: 'Unedited originals', type: 'uncensored' },
-            { label: '[NODE_RARE]', query: 'rare collection', desc: 'Limited release content', type: 'rare' }
+            { label: 'VISUAL_ASSETS', query: 'visual assets', desc: `${photoCount}+ verified images` },
+            { label: 'VIDEO_FILES', query: 'video files', desc: `${videoCount} recordings` },
+            { label: 'DOCUMENTS', query: 'documents', desc: `${docCount} verified records` },
+            { label: 'EXCLUSIVE_NEXUS', query: 'exclusive nexus', desc: 'Restricted materials' },
+            { label: 'UNCENSORED', query: 'uncensored', desc: 'Unedited originals' },
+            { label: 'RARE_COLLECTION', query: 'rare collection', desc: 'Limited release content' }
         ];
         
         document.getElementById('data-nodes').innerHTML = dataNodes.map(node => `
             <div class="card">
-                <h3>${node.label}</h3>
+                <h3>[${node.label} // ${formatQueryForDisplay(query).toUpperCase()} // ${siteIdentity.name.toUpperCase()}]</h3>
                 <p>${node.desc}</p>
                 <div class="matrix-links" style="margin-top: 12px; padding: 0;">
-                    <a href="/art/?q=${encodeURIComponent(displayName + ' ' + node.query)}">[ACCESS_NODE] →</a>
+                    <a href="/art/?q=${encodeURIComponent(formatQueryForDisplay(query) + ' ' + node.query)}">[ACCESS_NODE] →</a>
                 </div>
             </div>
         `).join('');
         
         // ============================================
-        // 2. PLATFORM SCATTER - AUTO GENERATED
+        // 2. PLATFORM SCATTER
         // ============================================
         const platforms = ['INSTAGRAM', 'TWITTER', 'TIKTOK', 'FACEBOOK', 'DISCORD', 'TELEGRAM', 'SNAPCHAT', 'YOUTUBE', 'REDDIT'];
         
         document.getElementById('platform-scatter').innerHTML = platforms.map(p => `
-            <div class="matrix-link"><a href="/art/?q=${encodeURIComponent(displayName + ' ' + p.toLowerCase() + ' nexus')}">${p}_NEXUS</a></div>
+            <div class="matrix-link"><a href="/art/?q=${encodeURIComponent(formatQueryForDisplay(query) + ' ' + p.toLowerCase() + ' nexus')}">${p}_NEXUS</a></div>
         `).join('');
         
         // ============================================
-        // 3. RELATED QUERIES - AUTO GENERATED
+        // 3. RELATED QUERIES
         // ============================================
         const relatedVariants = [
             'complete archive', 'full database', 'original files', 'high resolution',
@@ -693,17 +879,17 @@ permalink: /folder/
         ];
         
         document.getElementById('related-queries').innerHTML = relatedVariants.map(v => `
-            <div class="matrix-link"><a href="/art/?q=${encodeURIComponent(displayName + ' ' + v)}">${v.toUpperCase().replace(/ /g, '_')}</a></div>
+            <div class="matrix-link"><a href="/art/?q=${encodeURIComponent(formatQueryForDisplay(query) + ' ' + v)}">${v.toUpperCase().replace(/ /g, '_')}</a></div>
         `).join('');
         
         // ============================================
-        // 4. TIMESTAMP LOG - AUTO GENERATED
+        // 4. TIMESTAMP LOG
         // ============================================
         const logEntries = [
-            { time: '2024.03.15_14:23:07', action: `INITIAL_${baseName}_ENTRY_CREATED` },
-            { time: '2024.06.22_09:47:33', action: `${photoCount}+_VISUAL_ASSETS_INDEXED` },
+            { time: '2024.03.15_14:23:07', action: `INITIAL_${formatQueryForDisplay(query).toUpperCase().replace(/ /g, '_')}_ENTRY_CREATED` },
+            { time: '2024.06.22_09:47:33', action: `${photoCount}+_VISUAL_ASSETS_INDEXED_ON_${siteIdentity.name.toUpperCase()}` },
             { time: '2024.09.08_22:15:41', action: `PLATFORM_SCATTER_COMPLETE_${platforms.length}_NODES` },
-            { time: '2025.01.17_03:42:19', action: `VERIFICATION_PROTOCOL_COMPLETED` },
+            { time: '2025.01.17_03:42:19', action: `VERIFICATION_PROTOCOL_COMPLETED_FOR_${siteIdentity.name.toUpperCase()}` },
             { time: '2025.11.02_18:30:55', action: `DATABASE_ENTRY_UPDATED_${photoCount + videoCount + docCount}_TOTAL` },
             { time: '2026.03.31_23:59:47', action: `LAST_SYNC_COMPLETE_${new Date().toISOString().slice(0, 10)}` }
         ];
@@ -716,26 +902,26 @@ permalink: /folder/
         `).join('');
         
         // ============================================
-        // 5. SYSTEM QUERIES (FAQ with auto links)
+        // 5. SYSTEM QUERIES (FAQ)
         // ============================================
         const sysQueries = [
-            { q: `ORIGIN_OF_${baseName}_DATA`, 
-              a: `Initial data nodes detected from private servers. `,
+            { q: `ORIGIN_OF_${formatQueryForDisplay(query).toUpperCase().replace(/ /g, '_')}_DATA`, 
+              a: `Initial data nodes detected from private servers targeting ${siteIdentity.name}. `,
               links: ['private nexus', 'source origin'] },
-            { q: `VERIFICATION_STATUS`, 
-              a: `All ${baseName} records cross-referenced across ${Math.floor(Math.random() * 15) + 10} source nodes. `,
+            { q: `VERIFICATION_STATUS_ON_${siteIdentity.name.toUpperCase()}`, 
+              a: `All ${formatQueryForDisplay(query)} records cross-referenced across ${Math.floor(Math.random() * 15) + 10} source nodes. `,
               links: ['verified vault', 'source verification'] },
-            { q: `COMPLETE_${baseName}_DATABASE`, 
-              a: `Full archive contains ${photoCount + videoCount + docCount} verified entries. `,
+            { q: `COMPLETE_${formatQueryForDisplay(query).toUpperCase().replace(/ /g, '_')}_DATABASE`, 
+              a: `Full archive contains ${photoCount + videoCount + docCount} verified entries for ${siteIdentity.name}. `,
               links: ['complete archive', 'full database'] },
-            { q: `UPDATE_FREQUENCY`, 
-              a: `Database sync every 72 hours. New ${baseName} materials added automatically. `,
+            { q: `UPDATE_FREQUENCY_${siteIdentity.name.toUpperCase()}`, 
+              a: `Database sync every 72 hours. New ${formatQueryForDisplay(query)} materials added automatically. `,
               links: ['new releases', 'archive updates'] }
         ];
         
         document.getElementById('system-queries').innerHTML = sysQueries.map(sq => {
             const linkHtml = sq.links.map(link => 
-                `<a href="/art/?q=${encodeURIComponent(displayName + ' ' + link)}" style="font-size:0.7rem;">${link.toUpperCase()}</a>`
+                `<a href="/art/?q=${encodeURIComponent(formatQueryForDisplay(query) + ' ' + link)}" style="font-size:0.7rem;">${link.toUpperCase()}</a>`
             ).join(' // ');
             return `
                 <div class="sys-query">
@@ -747,29 +933,27 @@ permalink: /folder/
         }).join('');
         
         // ============================================
-        // 6. CONNECTION NODES (Related celebrities)
+        // 6. CONNECTION NODES (Related)
         // ============================================
         const connectionNames = [
             'kendall jenner', 'hailey bieber', 'gigi hadid', 'bella hadid',
-            'emma watson', 'scarlett johansson', 'zendaya', 'margot robbie'
-        ].filter(name => !displayName.toLowerCase().includes(name.toLowerCase())).slice(0, 12);
+            'emma watson', 'scarlett johansson', 'zendaya', 'margot robie'
+        ].filter(name => !formatQueryForDisplay(query).toLowerCase().includes(name.toLowerCase())).slice(0, 12);
         
         document.getElementById('connection-nodes').innerHTML = connectionNames.map(name => `
             <div class="matrix-link"><a href="/art/?q=${encodeURIComponent(name)}">${name.toUpperCase().replace(/ /g, '_')}</a></div>
         `).join('');
         
         // ============================================
-        // EXTRA: Inject additional matrix links in system response
+        // EXTRA: Inject additional matrix links
         // ============================================
-        const extraLinks = [
-            'master index', 'full database', 'source code', 'verified records'
-        ];
+        const extraLinks = ['master index', 'full database', 'source code', 'verified records'];
         
         const systemResponseDiv = document.getElementById('system-response');
         if (systemResponseDiv) {
             let extraHtml = '<div class="matrix-links" style="margin-top: 16px; padding: 0;">';
             extraLinks.forEach(link => {
-                extraHtml += `<div class="matrix-link"><a href="/art/?q=${encodeURIComponent(displayName + ' ' + link)}">${link.toUpperCase().replace(/ /g, '_')}</a></div>`;
+                extraHtml += `<div class="matrix-link"><a href="/art/?q=${encodeURIComponent(formatQueryForDisplay(query) + ' ' + link)}">${link.toUpperCase().replace(/ /g, '_')}</a></div>`;
             });
             extraHtml += '</div>';
             systemResponseDiv.innerHTML += extraHtml;
@@ -785,5 +969,5 @@ permalink: /folder/
     {% include footer.html %}
 
 {% include /ads/gobloggugel/sosmed.html %}
-</div></body>
+</body>
 </html>

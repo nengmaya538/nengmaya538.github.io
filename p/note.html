@@ -2,7 +2,7 @@
 layout: null
 permalink: /note/
 ---
-  
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,15 +13,61 @@ permalink: /note/
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="description" content="Digital time capsule preserving cultural moments, digital footprints, and internet history. Explore comprehensive archives of influential figures.">
     
-    <title>Digital Time Capsule | Internet Culture Archive</title>
+    <title id="dynamic-title">Digital Time Capsule | Internet Culture Archive</title>
+    
+    <!-- Canonical Link Dinamis via JS -->
+    <script>
+        (function() {
+            // Membuat canonical URL lengkap: protocol + domain/host + pathname + search (query string)
+            var canonicalUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + window.location.search;
+            var link = document.createElement('link');
+            link.setAttribute('rel', 'canonical');
+            link.setAttribute('href', canonicalUrl);
+            document.head.appendChild(link);
+        })();
+    </script>
     
     <style>
+        /* ============================================
+           GLOBAL COLOR VARIABLES - MUDAH DIEDIT
+           ============================================ */
+        :root {
+            /* Warna Background & Utama */
+            --bg-body: #f8fafc;
+            --bg-container: rgba(255, 255, 255, 0.96);
+            --bg-card: #ffffff;
+            --bg-stats: #f8fafc;
+            --bg-feature: linear-gradient(135deg, #fef9e3 0%, #ffffff 100%);
+            --bg-insight: #f1f5f9;
+            --bg-pill: #f1f5f9;
+            --bg-badge: #eef2ff;
+            
+            /* Warna Teks */
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #475569;
+            --text-light: #64748b;
+            --text-accent: #4f46e5;
+            --text-accent-hover: #6366f1;
+            
+            /* Warna Border & Dekorasi */
+            --border-light: #eef2ff;
+            --border-card: #f1f5f9;
+            --border-pill: #e2e8f0;
+            --border-accent: #c7d2fe;
+            --border-feature: #fef3c7;
+            
+            /* Warna Lainnya */
+            --color-accent-gold: #eab308;
+            --gradient-h1: linear-gradient(135deg, #0f172a 0%, #334155 50%, #475569 100%);
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Pro Text', system-ui, sans-serif;
-            background: #f8fafc;
-            color: #0f172a;
+            background: var(--bg-body);
+            color: var(--text-primary);
             line-height: 1.6;
         }
         
@@ -46,12 +92,12 @@ permalink: /note/
         }
         
         .container {
-            background: rgba(255, 255, 255, 0.96);
+            background: var(--bg-container);
             backdrop-filter: blur(0px);
             border-radius: 32px;
             padding: 56px;
             box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
-            border: 1px solid #eef2ff;
+            border: 1px solid var(--border-light);
         }
         
         /* Typography */
@@ -60,7 +106,7 @@ permalink: /note/
             font-weight: 700;
             line-height: 1.2;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #0f172a 0%, #334155 50%, #475569 100%);
+            background: var(--gradient-h1);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -71,7 +117,7 @@ permalink: /note/
             font-size: 1.75rem;
             font-weight: 600;
             margin: 48px 0 24px 0;
-            color: #0f172a;
+            color: var(--text-primary);
             letter-spacing: -0.01em;
             border-bottom: 2px solid #e2e8f0;
             padding-bottom: 12px;
@@ -86,38 +132,38 @@ permalink: /note/
         
         /* Links & Interactive */
         a {
-            color: #4f46e5;
+            color: var(--text-accent);
             text-decoration: none;
             transition: all 0.2s ease;
             font-weight: 500;
-            border-bottom: 1px dotted #c7d2fe;
+            border-bottom: 1px dotted var(--border-accent);
         }
         
         a:hover {
-            color: #6366f1;
-            border-bottom-color: #6366f1;
+            color: var(--text-accent-hover);
+            border-bottom-color: var(--text-accent-hover);
         }
         
         /* Breadcrumb */
         .breadcrumb {
             padding: 0 0 24px 0;
             margin-bottom: 32px;
-            border-bottom: 1px solid #eef2ff;
+            border-bottom: 1px solid var(--border-light);
             font-size: 0.875rem;
-            color: #64748b;
+            color: var(--text-light);
         }
         
         .breadcrumb a {
-            color: #64748b;
+            color: var(--text-light);
             border-bottom: none;
         }
         
         .breadcrumb a:hover {
-            color: #4f46e5;
+            color: var(--text-accent);
         }
         
         .breadcrumb span {
-            color: #4f46e5;
+            color: var(--text-accent);
             font-weight: 600;
         }
         
@@ -137,16 +183,16 @@ permalink: /note/
         
         /* Cards - Minimalist archive style */
         .card {
-            background: #ffffff;
+            background: var(--bg-card);
             border-radius: 20px;
             padding: 24px;
-            border: 1px solid #f1f5f9;
+            border: 1px solid var(--border-card);
             transition: all 0.25s ease;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
         }
         
         .card:hover {
-            border-color: #e0e7ff;
+            border-color: var(--border-accent);
             box-shadow: 0 8px 20px -12px rgba(79, 70, 229, 0.12);
             transform: translateY(-2px);
         }
@@ -157,7 +203,7 @@ permalink: /note/
         }
         
         .card p {
-            color: #475569;
+            color: var(--text-muted);
             font-size: 0.9rem;
             margin-bottom: 16px;
         }
@@ -167,11 +213,11 @@ permalink: /note/
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 24px;
-            background: #f8fafc;
+            background: var(--bg-stats);
             padding: 28px;
             border-radius: 24px;
             margin: 32px 0;
-            border: 1px solid #eef2ff;
+            border: 1px solid var(--border-light);
         }
         
         .stat {
@@ -181,7 +227,7 @@ permalink: /note/
         .stat-number {
             font-size: 2rem;
             font-weight: 700;
-            color: #4f46e5;
+            color: var(--text-accent);
             display: block;
             line-height: 1.2;
         }
@@ -190,7 +236,7 @@ permalink: /note/
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #64748b;
+            color: var(--text-light);
             font-weight: 500;
         }
         
@@ -203,23 +249,23 @@ permalink: /note/
         }
         
         .topic-pill {
-            background: #f1f5f9;
+            background: var(--bg-pill);
             border-radius: 100px;
             padding: 8px 20px;
             font-size: 0.85rem;
             transition: all 0.2s;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-pill);
         }
         
         .topic-pill a {
-            color: #334155;
+            color: var(--text-secondary);
             border-bottom: none;
             font-weight: 500;
         }
         
         .topic-pill:hover {
             background: #eef2ff;
-            border-color: #c7d2fe;
+            border-color: var(--border-accent);
             transform: translateY(-1px);
         }
         
@@ -236,12 +282,12 @@ permalink: /note/
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.75rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-pill);
             transition: all 0.15s;
         }
         
         .keyword a {
-            color: #475569;
+            color: var(--text-muted);
             border-bottom: none;
         }
         
@@ -252,32 +298,32 @@ permalink: /note/
         
         /* Feature Block */
         .feature-block {
-            background: linear-gradient(135deg, #fef9e3 0%, #ffffff 100%);
-            border-left: 4px solid #eab308;
+            background: var(--bg-feature);
+            border-left: 4px solid var(--color-accent-gold);
             padding: 28px 32px;
             border-radius: 20px;
             margin: 32px 0;
-            border: 1px solid #fef3c7;
+            border: 1px solid var(--border-feature);
         }
         
         .insight-box {
-            background: #f1f5f9;
+            background: var(--bg-insight);
             padding: 20px 28px;
             border-radius: 20px;
             margin: 24px 0;
-            border-left: 3px solid #4f46e5;
+            border-left: 3px solid var(--text-accent);
         }
         
         hr {
             border: none;
-            border-top: 1px solid #eef2ff;
+            border-top: 1px solid var(--border-light);
             margin: 48px 0;
         }
         
         .badge {
             display: inline-block;
-            background: #eef2ff;
-            color: #4f46e5;
+            background: var(--bg-badge);
+            color: var(--text-accent);
             font-size: 0.7rem;
             padding: 4px 12px;
             border-radius: 20px;
@@ -309,8 +355,8 @@ permalink: /note/
         
         .query-name {
             font-weight: 700;
-            color: #4f46e5;
-            background: #eef2ff;
+            color: var(--text-accent);
+            background: var(--bg-badge);
             padding: 2px 8px;
             border-radius: 8px;
             display: inline-block;
@@ -338,7 +384,7 @@ permalink: /note/
         <div id="default-content" class="default-content active">
             <div class="badge">📀 DIGITAL TIME CAPSULE · EST. 2024</div>
             <h1>Preserving Digital Culture<br>One Archive at a Time</h1>
-            <p style="font-size: 1.2rem; color: #334155; margin: 16px 0 24px 0; max-width: 780px;">
+            <p style="font-size: 1.2rem; color: var(--text-secondary); margin: 16px 0 24px 0; max-width: 780px;">
                 A curated collection of internet history — moments, personalities, and digital footprints 
                 that shaped online culture. Explore comprehensive archives below.
             </p>
@@ -387,7 +433,7 @@ permalink: /note/
             <div class="divider"></div>
             
             <div class="insight-box">
-                <p style="margin: 0; text-align: center; color: #475569;">
+                <p style="margin: 0; text-align: center; color: var(--text-muted);">
                     🔍 <strong>Looking for something specific?</strong> Type any name, username, or topic in the search bar above 
                     to explore our complete archives.
                 </p>
@@ -406,7 +452,7 @@ permalink: /note/
                 <span class="badge" style="margin-left: 12px;">Digital Archive</span>
             </div>
             
-            <!-- Dynamic H1 -->
+            <!-- Dynamic H1 (paling atas, tidak ada section lain yang menghalangi) -->
             <h1 id="main-heading"></h1>
             
             <!-- Dynamic Description Block -->
@@ -415,55 +461,55 @@ permalink: /note/
             <!-- ============================================
                  SECTION 1: ARCHIVE NAVIGATION (20+ Internal Links)
                  ============================================ -->
-            <h2>📚 Archive Navigation</h2>
+            <h2 id="archive-nav-heading">📚 Archive Navigation</h2>
             <div id="archive-nav" class="topic-cloud"></div>
             
             <!-- ============================================
                  SECTION 2: CONTENT CATEGORIES
                  ============================================ -->
-            <h2>🗂️ Content Categories</h2>
+            <h2 id="categories-heading">🗂️ Content Categories</h2>
             <div id="content-categories" class="grid-3"></div>
             
             <!-- ============================================
                  SECTION 3: PLATFORM ARCHIVES
                  ============================================ -->
-            <h2>🌐 Platform Archives</h2>
+            <h2 id="platform-heading">🌐 Platform Archives</h2>
             <div id="platform-archives" class="grid-4"></div>
             
             <!-- ============================================
                  SECTION 4: MEDIA TYPES
                  ============================================ -->
-            <h2>🎨 Media Types</h2>
+            <h2 id="media-heading">🎨 Media Types</h2>
             <div id="media-types" class="keyword-strip"></div>
             
             <!-- ============================================
                  SECTION 5: RELATED PROFILES
                  ============================================ -->
-            <h2>👥 Related Profiles</h2>
+            <h2 id="related-heading">👥 Related Profiles</h2>
             <div id="related-profiles" class="topic-cloud"></div>
             
             <!-- ============================================
                  SECTION 6: EXCLUSIVE COLLECTIONS
                  ============================================ -->
-            <h2>✨ Special Collections</h2>
+            <h2 id="collections-heading">✨ Special Collections</h2>
             <div id="special-collections" class="grid-2"></div>
             
             <!-- ============================================
                  SECTION 7: YEAR & TIMELINE ARCHIVES
                  ============================================ -->
-            <h2>📅 Timeline Archives</h2>
+            <h2 id="timeline-heading">📅 Timeline Archives</h2>
             <div id="timeline-archives" class="keyword-strip"></div>
             
             <!-- ============================================
                  SECTION 8: FAQ WITH INTERNAL LINKS
                  ============================================ -->
-            <h2>💭 Frequently Explored</h2>
+            <h2 id="faq-heading">💭 Frequently Explored</h2>
             <div id="faq-links" class="grid-2"></div>
             
             <!-- ============================================
                  SECTION 9: DEEP DIVE SUGGESTIONS
                  ============================================ -->
-            <h2>🔍 Deep Dive</h2>
+            <h2 id="deepdive-heading">🔍 Deep Dive</h2>
             <div id="deep-dive" class="topic-cloud"></div>
             
             <hr />
@@ -478,7 +524,41 @@ permalink: /note/
 <script>
 (function() {
     // ============================================
-    // CONFIGURATION & HELPER FUNCTIONS
+    // FUNGSI UNTUK MENDAPATKAN SUBDOMAIN ATAU DOMAIN UTAMA
+    // ============================================
+    function getSiteIdentity() {
+        var hostname = window.location.hostname;
+        // Pisahkan berdasarkan titik
+        var parts = hostname.split('.');
+        
+        // Cek apakah ini subdomain (memiliki lebih dari 2 bagian, misal: sub.example.com)
+        // Atau untuk github.io / pages.dev yang memiliki 3+ bagian
+        if (parts.length >= 3) {
+            // Untuk kasus seperti "subdomain.github.io" atau "subdomain.pages.dev"
+            // Bagian pertama adalah subdomain, bagian kedua adalah nama platform
+            var possibleSub = parts[0];
+            // Cek apakah ini domain dengan banyak subdomain (seperti xxx.github.io)
+            if (possibleSub !== 'www' && possibleSub !== 'api' && possibleSub !== 'mail') {
+                return possibleSub.charAt(0).toUpperCase() + possibleSub.slice(1);
+            }
+        }
+        
+        // Jika tidak ada subdomain yang jelas, gunakan domain utama
+        var mainDomain = parts.length >= 2 ? parts[parts.length - 2] : parts[0];
+        // Bersihkan dari 'www' jika ada
+        if (mainDomain === 'www') mainDomain = parts[parts.length - 3] || mainDomain;
+        return mainDomain.charAt(0).toUpperCase() + mainDomain.slice(1);
+    }
+    
+    // Fungsi untuk memformat query menjadi judul (Capitalize setiap kata)
+    function formatQueryToTitle(queryStr) {
+        return queryStr.split(' ').map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        ).join(' ');
+    }
+    
+    // ============================================
+    // KONFIGURASI & HELPER FUNCTIONS
     // ============================================
     
     const urlParams = new URLSearchParams(window.location.search);
@@ -497,8 +577,69 @@ permalink: /note/
     document.getElementById('query-content').style.display = 'block';
     
     query = decodeURIComponent(query.replace(/\+/g, ' '));
+    const formattedQuery = formatQueryToTitle(query);
+    const siteIdentity = getSiteIdentity();
     
-    // Clean base name function
+    // ============================================
+    // MEMPERBARUI TITLE, H1, H2, H3 DENGAN FORMAT:
+    // "{Query} on {SiteIdentity}"
+    // ============================================
+    const titleText = `${formattedQuery} on ${siteIdentity} | Digital Archive`;
+    document.title = titleText;
+    
+    // Update meta description tetap relevan dengan query
+    document.querySelector('meta[name="description"]').setAttribute('content', 
+        `Explore the complete archive of ${formattedQuery} on ${siteIdentity} — curated collection of digital footprints, cultural moments, and comprehensive documentation.`);
+    
+    // Update H1 - utama dan paling atas
+    const h1Element = document.getElementById('main-heading');
+    h1Element.innerHTML = `${formattedQuery}<br><span style="font-size: 1.2rem; color: var(--text-light); display: block; margin-top: 8px;">Digital Archive on ${siteIdentity}</span>`;
+    
+    // Update breadcrumb name
+    document.getElementById('breadcrumb-name').innerHTML = formattedQuery;
+    
+    // Update semua H2 dan H3 di dalam query-content agar mengandung identitas subdomain/domain
+    const h2Headings = [
+        'archive-nav-heading',
+        'categories-heading', 
+        'platform-heading',
+        'media-heading',
+        'related-heading',
+        'collections-heading',
+        'timeline-heading',
+        'faq-heading',
+        'deepdive-heading'
+    ];
+    
+    // Teks asli untuk setiap H2
+    const h2OriginalTexts = {
+        'archive-nav-heading': '📚 Archive Navigation',
+        'categories-heading': '🗂️ Content Categories',
+        'platform-heading': '🌐 Platform Archives',
+        'media-heading': '🎨 Media Types',
+        'related-heading': '👥 Related Profiles',
+        'collections-heading': '✨ Special Collections',
+        'timeline-heading': '📅 Timeline Archives',
+        'faq-heading': '💭 Frequently Explored',
+        'deepdive-heading': '🔍 Deep Dive'
+    };
+    
+    // Update setiap H2 dengan menambahkan "for {formattedQuery} on {siteIdentity}"
+    h2Headings.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            const originalText = h2OriginalTexts[id] || el.innerText;
+            // Hapus emoji jika ada di awal untuk penempatan ulang
+            const cleanText = originalText.replace(/^[^\w]+/, '').trim();
+            el.innerHTML = `${originalText.split(' ')[0]} ${cleanText.substring(originalText.split(' ')[0].length)} <span style="font-weight:normal; font-size:0.85rem; color:var(--text-accent);">· ${formattedQuery} on ${siteIdentity}</span>`;
+        }
+    });
+    
+    // Update H3 di dalam card (jika ada) - ini akan mempengaruhi card yang di-generate secara dinamis
+    // Karena card dibuat setelahnya, kita akan override fungsi makeLink agar H3 ikut berubah nanti
+    // Tapi karena H3 di card berasal dari data statis, kita akan tambahkan observer atau modifikasi setelah render
+    
+    // Clean base name function untuk internal link
     function getCleanBaseName(input) {
         const removePatterns = ['archive', 'collection', 'photos', 'videos', 'profile', 'bio', 'leak', 'exclusive', 'rare'];
         let cleaned = input.toLowerCase();
@@ -510,23 +651,13 @@ permalink: /note/
     }
     
     const baseName = getCleanBaseName(query);
-    const displayName = baseName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     
-    // Update metadata
-    document.title = `${displayName} | Digital Archive | Time Capsule`;
-    document.querySelector('meta[name="description"]').setAttribute('content', 
-        `Explore the complete ${displayName} digital archive — curated collection of public moments, cultural footprint, and comprehensive documentation.`);
-    
-    // Update breadcrumb & H1
-    document.getElementById('breadcrumb-name').innerHTML = displayName;
-    document.getElementById('main-heading').innerHTML = `${displayName}<br><span style="font-size: 1.2rem; color: #64748b; display: block; margin-top: 8px;">Digital Archive · Complete Documentation</span>`;
-    
-    // Dynamic description block
+    // Dynamic description block (tetap sama, tidak diubah sesuai permintaan)
     const descriptionBlock = document.getElementById('description-block');
     const descriptions = [
-        `This archive documents the digital footprint of <strong class="query-name">${displayName}</strong> — a comprehensive collection of public moments, creative works, and cultural impact. Every entry is preserved for historical and educational context.`,
-        `Explore the complete digital archive of <strong class="query-name">${displayName}</strong>. From early beginnings to cultural milestones, this collection captures the journey and evolution of an influential figure in digital culture.`,
-        `<strong class="query-name">${displayName}</strong> has left a significant mark on internet culture. This archive preserves the key moments, creative outputs, and documented history for researchers, fans, and cultural historians.`
+        `This archive documents the digital footprint of <strong class="query-name">${formattedQuery}</strong> on <strong>${siteIdentity}</strong> — a comprehensive collection of public moments, creative works, and cultural impact. Every entry is preserved for historical and educational context.`,
+        `Explore the complete digital archive of <strong class="query-name">${formattedQuery}</strong> on <strong>${siteIdentity}</strong>. From early beginnings to cultural milestones, this collection captures the journey and evolution of an influential figure in digital culture.`,
+        `<strong class="query-name">${formattedQuery}</strong> has left a significant mark on internet culture through <strong>${siteIdentity}</strong>. This archive preserves the key moments, creative outputs, and documented history for researchers, fans, and cultural historians.`
     ];
     descriptionBlock.innerHTML = `<p>${descriptions[Math.floor(Math.random() * descriptions.length)]}</p>`;
     
@@ -537,6 +668,19 @@ permalink: /note/
     // Generate internal link URL
     function makeLink(suffix) {
         return `/visual/?q=${encodeURIComponent(baseName + ' ' + suffix)}`;
+    }
+    
+    // Fungsi untuk memodifikasi H3 di dalam card yang dihasilkan secara dinamis
+    function modifyCardHeadings() {
+        // Semua H3 di dalam .card (termasuk yang sudah ada dan yang akan datang)
+        const cards = document.querySelectorAll('#query-content .card h3');
+        cards.forEach(h3 => {
+            const currentText = h3.innerText;
+            // Hanya modifikasi jika belum mengandung formattedQuery
+            if (!currentText.includes(formattedQuery) && !currentText.includes(siteIdentity)) {
+                h3.innerHTML = `${currentText}<span style="font-weight:normal; font-size:0.7rem; color:var(--text-accent); display:block; margin-top:4px;">${formattedQuery} on ${siteIdentity}</span>`;
+            }
+        });
     }
     
     // SECTION 1: Archive Navigation (15+ variants)
@@ -650,6 +794,19 @@ permalink: /note/
     document.getElementById('deep-dive').innerHTML = deepDiveTerms.map(term => 
         `<div class="topic-pill"><a href="${makeLink(term)}">🔍 ${term}</a></div>`
     ).join('');
+    
+    // Modifikasi semua H3 di dalam card setelah konten dibuat
+    modifyCardHeadings();
+    
+    // Observer untuk menangkap H3 yang mungkin ditambahkan kemudian (jika ada)
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                modifyCardHeadings();
+            }
+        });
+    });
+    observer.observe(document.getElementById('query-content'), { childList: true, subtree: true });
     
     // ============================================
     // HOMEPAGE DYNAMIC LINKS (for default view)

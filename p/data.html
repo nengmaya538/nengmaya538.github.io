@@ -11,25 +11,62 @@ permalink: /data/
     <meta http-equiv="content-language" content="en">
     <meta name="robots" content="index, follow">
     
+    <!-- Canonical Link Dinamis: Full URL halaman saat ini -->
+    <link rel="canonical" href="{{ page.url | replace:'/index.html','/' | prepend: site.url }}" id="dynamic-canonical">
+    
     <title id="dynamic-title">CHRONOS | Digital Time Capsule</title>
     <meta id="dynamic-description" name="description" content="Interactive digital chronicle documenting cultural moments. A time-based archive of documented events and verified materials.">
     
     <style>
+        /* ============================================
+           GLOBAL COLOR VARIABLES - MUDAH DIEDIT
+           ============================================ */
+        :root {
+            /* Warna Background & Body */
+            --bg-primary: #0a0c12;
+            --bg-secondary: #141824;
+            --bg-card: #0f1219;
+            --border-color: #1e293b;
+            --border-hover: #2d3748;
+            
+            /* Warna Teks */
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --text-dark: #4a5568;
+            
+            /* Warna Aksen (Gradient & Hover) */
+            --accent-gold: #fbbf24;
+            --accent-pink: #ec489a;
+            --accent-blue: #3b82f6;
+            --accent-gold-dark: #eab308;
+            
+            /* Warna Link */
+            --link-color: #94a3b8;
+            --link-hover: var(--accent-gold);
+            --link-border: var(--border-hover);
+            
+            /* Warna Lainnya */
+            --badge-bg: #ec489a20;
+            --badge-border: var(--accent-pink);
+            --breadcrumb-color: var(--text-muted);
+        }
+        
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
             font-family: 'Space Grotesk', sans-serif;
-            background: #0a0c12;
-            color: #e2e8f0;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.5;
         }
         
         /* Time-themed Header */
         .time-header {
-            background: linear-gradient(135deg, #0a0c12 0%, #141824 100%);
-            border-bottom: 1px solid #2d3748;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            border-bottom: 1px solid var(--border-hover);
             padding: 32px 0;
             position: relative;
             overflow: hidden;
@@ -42,7 +79,7 @@ permalink: /data/
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, #fbbf24, #ec489a, #3b82f6, #fbbf24);
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-pink), var(--accent-blue), var(--accent-gold));
             background-size: 200% 100%;
             animation: timeShift 4s linear infinite;
         }
@@ -64,7 +101,7 @@ permalink: /data/
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
             font-weight: 600;
-            background: linear-gradient(135deg, #fbbf24, #ec489a);
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-pink));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -73,7 +110,7 @@ permalink: /data/
         
         .chronos-tagline {
             font-size: 0.7rem;
-            color: #94a3b8;
+            color: var(--text-secondary);
             letter-spacing: 2px;
             margin-top: 4px;
         }
@@ -95,7 +132,7 @@ permalink: /data/
             font-weight: 700; 
             line-height: 1.2;
             font-family: 'Playfair Display', serif;
-            background: linear-gradient(135deg, #ffffff, #94a3b8);
+            background: linear-gradient(135deg, #ffffff, var(--text-secondary));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -107,9 +144,9 @@ permalink: /data/
             font-weight: 600; 
             margin: 56px 0 24px 0;
             font-family: 'Space Grotesk', sans-serif;
-            color: #fbbf24;
+            color: var(--accent-gold);
             letter-spacing: -0.3px;
-            border-left: 3px solid #ec489a;
+            border-left: 3px solid var(--accent-pink);
             padding-left: 16px;
         }
         
@@ -117,33 +154,33 @@ permalink: /data/
             font-size: 1rem; 
             font-weight: 600; 
             margin: 20px 0 12px 0;
-            color: #fbbf24;
+            color: var(--accent-gold);
         }
         
         /* Links - Timeline Style */
         a { 
-            color: #94a3b8; 
+            color: var(--link-color); 
             text-decoration: none;
             transition: all 0.2s;
-            border-bottom: 1px dashed #2d3748;
+            border-bottom: 1px dashed var(--link-border);
         }
         
         a:hover { 
-            color: #fbbf24;
-            border-bottom-color: #fbbf24;
+            color: var(--link-hover);
+            border-bottom-color: var(--link-hover);
         }
         
         /* Breadcrumb */
         .breadcrumb { 
             font-size: 0.7rem;
-            color: #4a5568;
+            color: var(--breadcrumb-color);
             margin-bottom: 32px;
             padding-bottom: 16px;
-            border-bottom: 1px solid #1e293b;
+            border-bottom: 1px solid var(--border-color);
             font-family: monospace;
         }
         
-        .breadcrumb a { color: #64748b; border-bottom: none; }
+        .breadcrumb a { color: var(--text-muted); border-bottom: none; }
         
         /* Grid */
         .grid-2, .grid-3, .grid-4 {
@@ -159,8 +196,8 @@ permalink: /data/
         
         /* Timeline Card */
         .timeline-card {
-            background: #0f1219;
-            border: 1px solid #1e293b;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             padding: 24px;
             transition: all 0.3s;
             position: relative;
@@ -174,7 +211,7 @@ permalink: /data/
             left: 0;
             width: 3px;
             height: 100%;
-            background: linear-gradient(180deg, #fbbf24, #ec489a);
+            background: linear-gradient(180deg, var(--accent-gold), var(--accent-pink));
             transform: scaleY(0);
             transition: transform 0.3s;
         }
@@ -184,7 +221,7 @@ permalink: /data/
         }
         
         .timeline-card:hover {
-            border-color: #fbbf24;
+            border-color: var(--accent-gold);
             transform: translateY(-2px);
         }
         
@@ -195,8 +232,8 @@ permalink: /data/
             flex-wrap: wrap;
             margin: 32px 0;
             padding: 24px;
-            background: #0f1219;
-            border: 1px solid #1e293b;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
         }
         
@@ -210,7 +247,7 @@ permalink: /data/
             font-size: 2rem;
             font-weight: 700;
             font-family: 'Space Grotesk', monospace;
-            color: #fbbf24;
+            color: var(--accent-gold);
             display: block;
             line-height: 1;
         }
@@ -219,7 +256,7 @@ permalink: /data/
             font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #64748b;
+            color: var(--text-muted);
             margin-top: 6px;
         }
         
@@ -227,8 +264,8 @@ permalink: /data/
         .visual-timeline {
             margin: 40px 0;
             padding: 24px;
-            background: #0f1219;
-            border-left: 4px solid #fbbf24;
+            background: var(--bg-card);
+            border-left: 4px solid var(--accent-gold);
             position: relative;
         }
         
@@ -238,7 +275,7 @@ permalink: /data/
             top: 0;
             width: 8px;
             height: 8px;
-            background: #ec489a;
+            background: var(--accent-pink);
             border-radius: 50%;
         }
         
@@ -251,8 +288,8 @@ permalink: /data/
         }
         
         .chrono-link {
-            background: #0f1219;
-            border: 1px solid #1e293b;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             padding: 4px 12px;
             font-size: 0.65rem;
             font-family: monospace;
@@ -264,7 +301,7 @@ permalink: /data/
         }
         
         .chrono-link:hover {
-            border-color: #fbbf24;
+            border-color: var(--accent-gold);
             background: #1a1f2a;
         }
         
@@ -276,10 +313,10 @@ permalink: /data/
         .era-header {
             font-family: 'Playfair Display', serif;
             font-size: 1.1rem;
-            color: #ec489a;
+            color: var(--accent-pink);
             margin: 24px 0 16px 0;
             padding-bottom: 8px;
-            border-bottom: 1px solid #1e293b;
+            border-bottom: 1px solid var(--border-color);
         }
         
         .era-grid {
@@ -293,24 +330,24 @@ permalink: /data/
         .time-question {
             margin: 24px 0;
             padding: 20px;
-            background: #0f1219;
-            border: 1px solid #1e293b;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
         }
         
         .time-question .q {
             font-weight: 600;
-            color: #fbbf24;
+            color: var(--accent-gold);
             margin-bottom: 8px;
         }
         
         hr { 
             border: none; 
-            border-top: 1px solid #1e293b; 
+            border-top: 1px solid var(--border-color); 
             margin: 48px 0; 
         }
         
         .hidden { display: none; }
-        .query-placeholder { color: #fbbf24; font-weight: 600; background: #1e293b; padding: 2px 6px; border-radius: 4px; }
+        .query-placeholder { color: var(--accent-gold); font-weight: 600; background: var(--border-color); padding: 2px 6px; border-radius: 4px; }
         .default-content.active { display: block; }
         .default-content { display: none; }
         #query-content { display: none; }
@@ -319,9 +356,9 @@ permalink: /data/
             display: inline-block;
             font-size: 0.6rem;
             font-family: monospace;
-            background: #ec489a20;
-            border: 1px solid #ec489a;
-            color: #ec489a;
+            background: var(--badge-bg);
+            border: 1px solid var(--badge-border);
+            color: var(--accent-pink);
             padding: 4px 12px;
             margin-bottom: 24px;
             letter-spacing: 1px;
@@ -330,7 +367,7 @@ permalink: /data/
         .timestamp {
             font-family: monospace;
             font-size: 0.7rem;
-            color: #64748b;
+            color: var(--text-muted);
         }
         
         @media (max-width: 768px) {
@@ -346,7 +383,7 @@ permalink: /data/
     <div class="time-header">
         <div class="time-container">
             <div class="chronos-logo">CHRONOS</div>
-            <div class="chronos-tagline">DIGITAL TIME CAPSULE • ARCHIVING CULTURAL MOMENTS SINCE 2019</div>
+            <div class="chronos-tagline">DIGITAL TIME CAPSULE ● ARCHIVING CULTURAL MOMENTS SINCE 2019</div>
         </div>
     </div>
     
@@ -354,9 +391,9 @@ permalink: /data/
         <div class="container">
             <!-- DEFAULT CONTENT - TIMELINE ENTRANCE -->
             <div id="default-content" class="default-content active">
-                <div class="time-badge">◉ LIVE TIMELINE • UPDATED MOMENT BY MOMENT</div>
+                <div class="time-badge">● LIVE TIMELINE • UPDATED MOMENT BY MOMENT</div>
                 <h1>The Digital Chronicle<br>Preserving What Time Erases</h1>
-                <p style="font-size: 1rem; color: #94a3b8; margin: 16px 0 24px 0;">An interactive timeline documenting cultural moments, digital artifacts, and documented events across the digital landscape.</p>
+                <p style="font-size: 1rem; color: var(--text-secondary); margin: 16px 0 24px 0;">An interactive timeline documenting cultural moments, digital artifacts, and documented events across the digital landscape.</p>
                 
                 <div class="time-metrics">
                     <div class="metric"><span class="metric-number">15,247</span><span class="metric-label">TIMESTAMPED EVENTS</span></div>
@@ -367,12 +404,12 @@ permalink: /data/
                 
                 <div class="visual-timeline">
                     <div class="timeline-marker"></div>
-                    <strong style="color: #fbbf24;">◉ CURRENT ERA</strong><br>
+                    <strong style="color: var(--accent-gold);">● CURRENT ERA</strong><br>
                     Digital documentation continues. Every moment adds to the chronicle. Browse by subject, era, or cultural movement.
                 </div>
                 
                 <!-- ERA NAVIGATION -->
-                <h2>◉ NAVIGATE BY ERA</h2>
+                <h2>● NAVIGATE BY ERA</h2>
                 <div class="chrono-links">
                     <div class="chrono-link"><a href="/note/?q=era 2023">ERA 2023</a></div>
                     <div class="chrono-link"><a href="/note/?q=era 2024">ERA 2024</a></div>
@@ -383,7 +420,7 @@ permalink: /data/
                 </div>
                 
                 <!-- CONTENT CATEGORIES -->
-                <h2>◉ CONTENT CATEGORIES</h2>
+                <h2>● CONTENT CATEGORIES</h2>
                 <div class="grid-3">
                     <div class="timeline-card">
                         <h3>📸 VISUAL TIMELINE</h3>
@@ -409,7 +446,7 @@ permalink: /data/
                 </div>
                 
                 <!-- PLATFORM TIMELINES -->
-                <h2>◉ PLATFORM TIMELINES</h2>
+                <h2>● PLATFORM TIMELINES</h2>
                 <div class="chrono-links">
                     <div class="chrono-link"><a href="/note/?q=instagram timeline">INSTAGRAM TIMELINE</a></div>
                     <div class="chrono-link"><a href="/note/?q=twitter timeline">TWITTER TIMELINE</a></div>
@@ -424,7 +461,7 @@ permalink: /data/
                 <hr>
                 
                 <div class="visual-timeline" style="text-align: center;">
-                    <strong>◉ BEGIN YOUR JOURNEY THROUGH TIME</strong><br>
+                    <strong>● BEGIN YOUR JOURNEY THROUGH TIME</strong><br>
                     Enter any subject name to view their complete digital timeline.
                 </div>
                 
@@ -441,7 +478,7 @@ permalink: /data/
                 
                 <div class="time-badge" id="time-badge"></div>
                 <h1 id="main-heading"></h1>
-                <p id="timeline-range" style="font-size: 0.75rem; color: #64748b; margin-bottom: 24px; font-family: monospace;"></p>
+                <p id="timeline-range" style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 24px; font-family: monospace;"></p>
                 
                 <!-- TIMELINE METRICS -->
                 <div class="time-metrics" id="timeline-metrics"></div>
@@ -457,31 +494,31 @@ permalink: /data/
                 <!-- ============================================
                      CONTENT TIMELINES - AUTO GENERATED
                      ============================================ -->
-                <h2>◉ CONTENT TIMELINES</h2>
+                <h2>● CONTENT TIMELINES</h2>
                 <div id="content-timelines" class="grid-2"></div>
                 
                 <!-- ============================================
                      PLATFORM TIMELINES - AUTO GENERATED
                      ============================================ -->
-                <h2>◉ PLATFORM TIMELINES</h2>
+                <h2>● PLATFORM TIMELINES</h2>
                 <div id="platform-timelines" class="chrono-links"></div>
                 
                 <!-- ============================================
                      CHRONOLOGICAL MILESTONES - AUTO GENERATED
                      ============================================ -->
-                <h2>◉ CHRONOLOGICAL MILESTONES</h2>
+                <h2>● CHRONOLOGICAL MILESTONES</h2>
                 <div id="chronological-milestones" class="era-section"></div>
                 
                 <!-- ============================================
                      RELATED TIMELINES - AUTO GENERATED
                      ============================================ -->
-                <h2>◉ RELATED TIMELINES</h2>
+                <h2>● RELATED TIMELINES</h2>
                 <div id="related-timelines" class="chrono-links"></div>
                 
                 <!-- ============================================
                      TIME CAPSULE FAQ - AUTO GENERATED
                      ============================================ -->
-                <h2>◉ TIME CAPSULE INQUIRIES</h2>
+                <h2>● TIME CAPSULE INQUIRIES</h2>
                 <div id="time-capsule-faq"></div>
                 
                 <hr />
@@ -496,6 +533,24 @@ permalink: /data/
     
     <script>
     (function() {
+        // ============================================
+        // SETUP CANONICAL LINK DINAMIS via JavaScript
+        // ============================================
+        function setDynamicCanonical() {
+            const canonicalLink = document.getElementById('dynamic-canonical');
+            if (canonicalLink) {
+                // Ambil URL lengkap dari browser (termasuk protocol, domain, path, dan query string)
+                let currentUrl = window.location.href;
+                // Hapus anchor/hash jika ada
+                currentUrl = currentUrl.split('#')[0];
+                canonicalLink.setAttribute('href', currentUrl);
+            }
+        }
+        
+        // Panggil fungsi untuk mengatur canonical link
+        setDynamicCanonical();
+        
+        // Logic untuk query content
         const urlParams = new URLSearchParams(window.location.search);
         let query = urlParams.get('q');
         
@@ -524,7 +579,7 @@ permalink: /data/
         const startYear = 2023;
         const currentYear = new Date().getFullYear();
         
-        // Update title
+        // Update title & meta description
         document.title = `${displayName} | Digital Timeline | CHRONOS Archive`;
         document.getElementById('dynamic-description').setAttribute('content', 
             `Complete digital timeline for ${displayName}. Documented moments from ${startYear} to present. ${Math.floor(Math.random() * 500) + 200}+ timestamped events.`);
@@ -533,7 +588,7 @@ permalink: /data/
         document.getElementById('breadcrumb-name').textContent = displayName.toLowerCase().replace(/ /g, '-');
         
         // Time badge
-        document.getElementById('time-badge').innerHTML = `◉ TIMELINE: ${displayName.toUpperCase()} • ${startYear} — PRESENT • COMPLETE CHRONICLE`;
+        document.getElementById('time-badge').innerHTML = `● TIMELINE: ${displayName.toUpperCase()} • ${startYear} — PRESENT • COMPLETE CHRONICLE`;
         
         // Main heading
         document.getElementById('main-heading').innerHTML = `${displayName}<br><span style="font-size: 1rem;">Digital Timeline • Complete Chronicle</span>`;
@@ -559,7 +614,7 @@ permalink: /data/
             `This timeline chronicles ${displayName}'s documented digital presence from ${startYear} through ${currentYear}. ${totalEvents} timestamped entries capture the complete arc.`,
             `Beginning in ${startYear}, the ${displayName} chronicle documents ${totalEvents} moments, ${visualEvents} visual records, and ${motionEvents} motion captures.`
         ];
-        document.getElementById('timeline-intro').innerHTML = `<div class="timeline-marker"></div><strong style="color: #fbbf24;">◉ TIMELINE OVERVIEW</strong><br>${timelineIntros[Math.floor(Math.random() * timelineIntros.length)]}`;
+        document.getElementById('timeline-intro').innerHTML = `<div class="timeline-marker"></div><strong style="color: var(--accent-gold, #fbbf24);">● TIMELINE OVERVIEW</strong><br>${timelineIntros[Math.floor(Math.random() * timelineIntros.length)]}`;
         
         // ============================================
         // 1. ERA SECTIONS - MASSIVE AUTO-GENERATED LINKS
@@ -572,7 +627,7 @@ permalink: /data/
         
         const eraSectionHtml = eras.map(era => `
             <div class="era-section">
-                <div class="era-header">◉ ${era.name} • ${era.years} • ${era.events} Events</div>
+                <div class="era-header">● ${era.name} • ${era.years} • ${era.events} Events</div>
                 <div class="era-grid" id="era-${era.name.replace(/ /g, '-')}"></div>
             </div>
         `).join('');
@@ -612,7 +667,7 @@ permalink: /data/
         
         document.getElementById('content-timelines').innerHTML = contentTimelines.map(ct => `
             <div class="timeline-card">
-                <h3>◉ ${ct.label}</h3>
+                <h3>● ${ct.label}</h3>
                 <p>${ct.desc}</p>
                 <div class="chrono-links" style="margin-top: 12px;">
                     <div class="chrono-link"><a href="/note/?q=${encodeURIComponent(displayName + ' ' + ct.query)}">VIEW TIMELINE →</a></div>
@@ -641,7 +696,7 @@ permalink: /data/
         
         document.getElementById('chronological-milestones').innerHTML = milestones.map(m => `
             <div class="timeline-card" style="margin-bottom: 16px;">
-                <div class="timestamp" style="margin-bottom: 8px;">◉ ${m.year}</div>
+                <div class="timestamp" style="margin-bottom: 8px;">● ${m.year}</div>
                 <p>${m.event}</p>
                 <div class="chrono-links" style="margin-top: 12px;">
                     <div class="chrono-link"><a href="/note/?q=${encodeURIComponent(displayName + ' ' + m.year + ' timeline')}">VIEW ${m.year} TIMELINE →</a></div>
@@ -695,8 +750,8 @@ permalink: /data/
             ).join('');
             return `
                 <div class="time-question">
-                    <div class="q">◉ ${faq.q}</div>
-                    <div class="a" style="color: #94a3b8; font-size: 0.85rem;">${faq.a}</div>
+                    <div class="q">● ${faq.q}</div>
+                    <div class="a" style="color: var(--text-secondary, #94a3b8); font-size: 0.85rem;">${faq.a}</div>
                     <div style="margin-top: 12px;" class="chrono-links">${linkHtml}</div>
                 </div>
             `;
@@ -709,7 +764,7 @@ permalink: /data/
         // Add monthly breakdown section
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         const monthlySection = document.createElement('div');
-        monthlySection.innerHTML = `<h2>◉ MONTHLY BREAKDOWN</h2><div class="chrono-links" id="monthly-links"></div>`;
+        monthlySection.innerHTML = `<h2>● MONTHLY BREAKDOWN</h2><div class="chrono-links" id="monthly-links"></div>`;
         
         const monthlyLinksHtml = months.map(month => 
             `<div class="chrono-link"><a href="/note/?q=${encodeURIComponent(displayName + ' ' + month + ' timeline')}">${month.toUpperCase()}</a></div>`
@@ -720,7 +775,7 @@ permalink: /data/
         // Add quarterly breakdown section
         const quarters = ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025', 'Q1 2026'];
         const quarterlySection = document.createElement('div');
-        quarterlySection.innerHTML = `<h2>◉ QUARTERLY ARCHIVES</h2><div class="chrono-links" id="quarterly-links"></div>`;
+        quarterlySection.innerHTML = `<h2>● QUARTERLY ARCHIVES</h2><div class="chrono-links" id="quarterly-links"></div>`;
         
         const quarterlyLinksHtml = quarters.map(q => 
             `<div class="chrono-link"><a href="/note/?q=${encodeURIComponent(displayName + ' ' + q.toLowerCase() + ' archive')}">${q}</a></div>`
@@ -731,7 +786,7 @@ permalink: /data/
         // Add content type breakdown section
         const contentTypes = ['photographs', 'video recordings', 'documents', 'screenshots', 'archives', 'original files', 'verified records', 'exclusive materials'];
         const contentTypeSection = document.createElement('div');
-        contentTypeSection.innerHTML = `<h2>◉ CONTENT TYPE BREAKDOWN</h2><div class="chrono-links" id="content-type-links"></div>`;
+        contentTypeSection.innerHTML = `<h2>● CONTENT TYPE BREAKDOWN</h2><div class="chrono-links" id="content-type-links"></div>`;
         
         const contentTypeLinksHtml = contentTypes.map(type => 
             `<div class="chrono-link"><a href="/note/?q=${encodeURIComponent(displayName + ' ' + type)}">${type.toUpperCase()}</a></div>`

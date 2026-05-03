@@ -12,8 +12,27 @@ permalink: /video/
     <meta name="googlebot" content="index, follow">
     <title id="dynamic-title">Telegram Leaks Channel · Influencer Content Archive</title>
     <meta id="dynamic-description" name="description" content="Telegram-style leak channel. Daily leaked content from influencers, TikTokers, and OnlyFans creators. Join 500K+ members.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/explore/">
+    <link id="dynamic-canonical" rel="canonical" href="">
     <style>
+        :root {
+            --bg-primary: #0f0f11;
+            --bg-secondary: #1e1e24;
+            --bg-tertiary: #1a1a20;
+            --bg-dark: #0a0a0c;
+            --text-primary: #e8e8ed;
+            --text-secondary: #8e8e93;
+            --text-tertiary: #6e6e77;
+            --text-muted: #5e5e66;
+            --accent-primary: #2a6b5e;
+            --accent-secondary: #1e4a6b;
+            --accent-link: #4a9eff;
+            --border-primary: #2a2a30;
+            --border-secondary: #1e1e24;
+            --gradient-avatar: linear-gradient(135deg, #2a6b5e, #1e4a6b);
+            --bubble-out: #2a6b5e;
+            --bubble-in: #1e1e24;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,26 +40,26 @@ permalink: /video/
         }
 
         body {
-            background: #0f0f11;
+            background: var(--bg-primary);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
-            color: #e8e8ed;
+            color: var(--text-primary);
         }
 
         .tg-container {
             max-width: 800px;
             margin: 0 auto;
-            background: #0f0f11;
+            background: var(--bg-primary);
             min-height: 100vh;
         }
 
         /* header ala Telegram Channel */
         .tg-header {
-            background: #1e1e24;
+            background: var(--bg-secondary);
             padding: 1rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            border-bottom: 1px solid #2a2a30;
+            border-bottom: 1px solid var(--border-primary);
             position: sticky;
             top: 0;
             z-index: 10;
@@ -49,7 +68,7 @@ permalink: /video/
         .tg-avatar {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #2a6b5e, #1e4a6b);
+            background: var(--gradient-avatar);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -64,11 +83,11 @@ permalink: /video/
 
         .tg-info p {
             font-size: 0.65rem;
-            color: #8e8e93;
+            color: var(--text-secondary);
         }
 
         .tg-badge {
-            background: #2a2a30;
+            background: var(--border-primary);
             padding: 0.2rem 0.6rem;
             border-radius: 30px;
             font-size: 0.6rem;
@@ -79,13 +98,13 @@ permalink: /video/
         .breadcrumb {
             padding: 0.5rem 1rem;
             font-size: 0.6rem;
-            color: #5e5e66;
-            background: #0a0a0c;
-            border-bottom: 1px solid #1e1e24;
+            color: var(--text-muted);
+            background: var(--bg-dark);
+            border-bottom: 1px solid var(--border-secondary);
         }
 
         .breadcrumb a {
-            color: #2a6b5e;
+            color: var(--accent-primary);
             text-decoration: none;
         }
 
@@ -119,18 +138,18 @@ permalink: /video/
         }
 
         .bubble-out {
-            background: #2a6b5e;
+            background: var(--bubble-out);
             border-bottom-right-radius: 4px;
         }
 
         .bubble-in {
-            background: #1e1e24;
+            background: var(--bubble-in);
             border-bottom-left-radius: 4px;
         }
 
         .message-sender {
             font-size: 0.6rem;
-            color: #6e6e77;
+            color: var(--text-tertiary);
             margin-bottom: 0.2rem;
             margin-left: 0.5rem;
         }
@@ -141,20 +160,20 @@ permalink: /video/
         }
 
         .message-text a {
-            color: #4a9eff;
+            color: var(--accent-link);
             text-decoration: none;
         }
 
         .message-time {
             font-size: 0.55rem;
-            color: #6e6e77;
+            color: var(--text-tertiary);
             margin-top: 0.2rem;
             margin-left: 0.5rem;
         }
 
         /* media preview */
         .media-preview {
-            background: #1a1a20;
+            background: var(--bg-tertiary);
             border-radius: 12px;
             padding: 0.5rem;
             margin-top: 0.5rem;
@@ -173,8 +192,8 @@ permalink: /video/
 
         /* pinned message */
         .pinned-message {
-            background: #1a1a20;
-            border-left: 3px solid #2a6b5e;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent-primary);
             padding: 0.5rem 1rem;
             margin: 0 1rem;
             border-radius: 8px;
@@ -186,11 +205,11 @@ permalink: /video/
             display: flex;
             gap: 1rem;
             padding: 0.5rem 1rem;
-            background: #1a1a20;
+            background: var(--bg-tertiary);
             font-size: 0.65rem;
-            color: #8e8e93;
-            border-top: 1px solid #2a2a30;
-            border-bottom: 1px solid #2a2a30;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-primary);
+            border-bottom: 1px solid var(--border-primary);
         }
 
         /* footer */
@@ -198,8 +217,8 @@ permalink: /video/
             padding: 1rem;
             text-align: center;
             font-size: 0.55rem;
-            color: #5e5e66;
-            border-top: 1px solid #1e1e24;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-secondary);
             margin-top: 1rem;
         }
 
@@ -303,7 +322,7 @@ permalink: /video/
         <div class="tg-header">
             <div class="tg-avatar" id="tg-avatar">📡</div>
             <div class="tg-info">
-                <h2 id="channel-name">LeakHub Channel</h2>
+                <h1 id="channel-name">LeakHub Channel</h1>
                 <p id="channel-handle">@leakhub · <span id="member-count"></span> members</p>
             </div>
             <div class="tg-badge">🔞 18+</div>
@@ -337,6 +356,12 @@ permalink: /video/
     const defaultDiv = document.getElementById('default-tg');
     const queryDiv = document.getElementById('query-tg');
 
+    // Set canonical URL dynamically
+    const canonical = document.getElementById('dynamic-canonical');
+    if (canonical) {
+        canonical.setAttribute('href', window.location.href);
+    }
+
     if (!query) {
         defaultDiv.style.display = 'block';
         queryDiv.style.display = 'none';
@@ -348,7 +373,24 @@ permalink: /video/
 
     query = decodeURIComponent(query.replace(/\+/g, ' '));
     
-    // extract nama influencer
+    // Extract domain/subdomain info
+    const hostname = window.location.hostname;
+    let domainName = '';
+    
+    if (hostname.includes('.')) {
+        const parts = hostname.split('.');
+        if (parts.length > 2) {
+            // Subdomain exists
+            const subdomain = parts[0].replace(/-/g, ' ');
+            domainName = subdomain.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') + ' on Sub Domain';
+        } else {
+            // No subdomain, just domain
+            const domain = parts[0].replace(/-/g, ' ');
+            domainName = 'on ' + domain.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        }
+    }
+    
+    // Extract influencer name
     const removeTerms = ['leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'pack', 'bundle', 'gallery', 'content', 'media', 'videos', 'photos', 'pics', 'onlyfans', 'tiktok', 'instagram', 'twitter', 'telegram', 'discord', 'trending', 'viral', 'exclusive', 'private', 'premium', '2024', '2025', '2026', 'full', 'complete', 'hot', 'new', 'watch', 'view', 'access', 'telegram', 'channel', 'dm', 'chat'];
     let baseRaw = query.toLowerCase();
     removeTerms.forEach(term => {
@@ -365,23 +407,40 @@ permalink: /video/
     const displayName = formatName(baseName);
     const displayLower = displayName.toLowerCase();
 
-    // random numbers
+    // Random numbers
     const memberCount = Math.floor(Math.random() * 200) + 50;
     const fileCount = Math.floor(Math.random() * 300) + 80;
     const viewCount = Math.floor(Math.random() * 800) + 200;
     
-    // SEO
-    let pageTitle = `${displayName} Leaked Content · Telegram Channel`;
-    let pageDesc = `Join our Telegram channel for ${displayName} leaked content. ${fileCount}+ leaked files, ${memberCount}K members. Updated daily.`;
+    // SEO with domain context
+    let pageTitle = `${displayName} ${domainName} · Leaked Content`;
+    let pageDesc = `${displayName} leaked content archive on ${hostname}. ${fileCount}+ leaked files, ${memberCount}K members. Updated daily.`;
     document.title = pageTitle;
     const metaTag = document.getElementById('dynamic-description');
     if (metaTag) metaTag.setAttribute('content', pageDesc);
     
-    document.getElementById('channel-name').innerHTML = `${displayName} Leaks`;
+    // Update H1, H2, H3 with query + domain context
+    document.getElementById('channel-name').innerHTML = `${displayName} ${domainName}`;
     document.getElementById('channel-handle').innerHTML = `@${displayLower}_leaks · ${memberCount}K members`;
-    document.getElementById('bc-name').innerText = displayName;
-    document.getElementById('pinned-name').innerHTML = displayName;
+    document.getElementById('bc-name').innerText = `${displayName} Leaks`;
+    document.getElementById('pinned-name').innerHTML = `${displayName} ${domainName}`;
     document.getElementById('member-count').innerHTML = `${memberCount}K`;
+    
+    // Update h2 elements in messages
+    const h2Elements = document.querySelectorAll('#query-tg h2');
+    h2Elements.forEach(h2 => {
+        if (h2.innerHTML.includes('LeakHub')) {
+            h2.innerHTML = `${displayName} ${domainName}`;
+        }
+    });
+    
+    // Update h3 elements if any
+    const h3Elements = document.querySelectorAll('#query-tg h3');
+    h3Elements.forEach(h3 => {
+        if (h3.innerHTML.includes('LeakHub')) {
+            h3.innerHTML = `${displayName} Leaks`;
+        }
+    });
     
     document.getElementById('channel-stats').innerHTML = `
         <span>📁 ${fileCount}+ leaked files</span>
@@ -389,7 +448,7 @@ permalink: /video/
         <span>⚡ updated hourly</span>
     `;
     
-    // helper: membuat message bubble (incoming message dari admin/bot)
+    // Helper: membuat message bubble (incoming message dari admin/bot)
     function makeInMessage(title, desc, variant, btnText, timeAgo, badge, mediaIcon, fileSize) {
         const newQ = `${displayLower} ${variant}`;
         return `
@@ -404,7 +463,7 @@ permalink: /video/
         `;
     }
     
-    // helper: make outgoing message (opsional, untuk interaksi)
+    // Helper: make outgoing message (opsional, untuk interaksi)
     function makeOutMessage(text, timeAgo) {
         return `
             <div class="message message-out">
@@ -417,7 +476,7 @@ permalink: /video/
         `;
     }
     
-    // helper: make reply message
+    // Helper: make reply message
     function makeReplyMessage(text, links) {
         const linksHtml = links.map(l => `<a href="/explore/?q=${encodeURIComponent(displayLower + ' ' + l.variant)}">${l.label}</a>`).join(' · ');
         return `
@@ -431,10 +490,10 @@ permalink: /video/
         `;
     }
     
-    // MESSAGES
+    // MESSAGES with domain context in titles
     const messages = [
         makeInMessage(
-            `🔥 HOT LEAK — ${displayName} Video Compilation`, 
+            `🔥 HOT LEAK — ${displayName} ${domainName} Video Compilation`, 
             `Full leaked video archive. ${Math.floor(fileCount * 0.6)}+ clips. Viral moments and private footage.`, 
             'leaked video full compilation', 
             '🎬 WATCH LEAKED VIDEOS →', 
@@ -444,7 +503,7 @@ permalink: /video/
             `${Math.floor(fileCount * 0.6)}+ files · 2.3GB`
         ),
         makeInMessage(
-            `💎 EXCLUSIVE VAULT — ${displayName} Private Content`, 
+            `💎 EXCLUSIVE VAULT — ${displayName} ${domainName} Private Content`, 
             `Complete ${displayName} leaked exclusive set. Rare material not available elsewhere.`, 
             'exclusive leaked vault', 
             '💎 ACCESS EXCLUSIVE LEAKS →', 
@@ -454,17 +513,17 @@ permalink: /video/
             `${Math.floor(fileCount * 0.3)}+ files · Limited`
         ),
         makeInMessage(
-            `📸 ${displayName} Leaked Photo Gallery`, 
+            `📸 ${displayName} ${domainName} Leaked Photo Gallery`, 
             `Full ${displayName} leaked photo set. Private Instagram photos, deleted stories.`, 
             'leaked photos full gallery', 
-                            '📸 VIEW LEAKED PHOTOS →', 
-            'Yesterday at 2:30 PM · ?? new', 
+            '📸 VIEW LEAKED PHOTOS →', 
+            'Yesterday at 2:30 PM · 📸 new', 
             '📸', 
             '🖼️', 
             `${Math.floor(fileCount * 0.5)}+ images · 800MB`
         ),
         makeInMessage(
-            `🌐 ${displayName} — Platform Leaks`, 
+            `🌐 ${displayName} — ${domainName} Platform Leaks`, 
             `Where ${displayName} leaked content originated. Telegram, Discord, Twitter archives.`, 
             'leaked platform sources', 
             '🔍 EXPLORE LEAK SOURCES →', 
@@ -475,10 +534,10 @@ permalink: /video/
         )
     ];
     
-    // tambahin outgoing message
+    // Tambahin outgoing message
     messages.push(makeOutMessage('Are there more leaks from this creator?', 'Yesterday at 2:32 PM'));
     
-    // tambahin reply message dengan multiple links
+    // Tambahin reply message with multiple links
     messages.push(makeReplyMessage(
         'Yes! Check these related leak channels:', 
         [
@@ -489,33 +548,28 @@ permalink: /video/
         ]
     ));
     
-    // tambahin satu lagi incoming message
+    // Tambahin satu lagi incoming message
     messages.push(makeInMessage(
-        `📁 ${displayName} Complete Archive Dump`, 
+        `📁 ${displayName} ${domainName} Complete Archive Dump`, 
         `Everything leaked about ${displayName} in one place. Full mega pack.`, 
         'complete leaked archive dump', 
-                        '📁 DOWNLOAD COMPLETE LEAKED ARCHIVE →', 
+        '📁 DOWNLOAD COMPLETE LEAKED ARCHIVE →', 
         '2 hours ago · 🔥 mega', 
-                        '🔥', 
-                        '📦', 
-                        `${fileCount}+ total files · 4.1GB`
+        '🔥', 
+        '📦', 
+        `${fileCount}+ total files · 4.1GB`
     ));
     
     document.getElementById('chat-area').innerHTML = messages.join('');
     
-    // footer update
+    // Footer update with domain context
     const today = new Date();
     const dateStr = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    document.getElementById('tg-footer').innerHTML = `🔒 Private channel · ${memberCount}K members online · Last leak update: ${dateStr}`;
+    document.getElementById('tg-footer').innerHTML = `🔒 ${displayName} ${domainName} · ${memberCount}K members online · Last leak update: ${dateStr}`;
     
-    // avatar dinamis
+    // Avatar dinamis
     document.getElementById('tg-avatar').innerHTML = displayName.charAt(0).toUpperCase();
     
-    // canonical
-    const canonical = document.getElementById('dynamic-canonical');
-    if (canonical) {
-        canonical.setAttribute('href', window.location.href.split('?')[0]);
-    }
 })();
 </script>
 <nav>

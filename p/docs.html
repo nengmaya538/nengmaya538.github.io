@@ -12,10 +12,32 @@ permalink: /docs/
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     
+    <!-- Canonical link dinamis akan diisi oleh JavaScript -->
+    <link rel="canonical" id="dynamic-canonical" href="">
+    
     <title id="dynamic-title">Digital Forensics Unit | Evidence Archive</title>
     <meta id="dynamic-description" name="description" content="Digital forensics evidence archive. Data breach documentation, leaked content repository, and forensic analysis.">
     
     <style>
+        /* ============================================
+            GLOBAL COLOR VARIABLES - MUDAH DIEDIT
+           ============================================ */
+        :root {
+            --color-bg: #0a0c12;
+            --color-bg-card: #0e1118;
+            --color-bg-hover: #121620;
+            --color-text-primary: #c0c4d0;
+            --color-text-secondary: #5a6e8a;
+            --color-text-accent: #e0e4f0;
+            --color-accent: #4a9eff;
+            --color-accent-dark: #2a5f8a;
+            --color-border: #2a2f3f;
+            --color-border-light: #1e222c;
+            --color-highlight-bg: #1a2a3a;
+            --color-redacted: #2a2f3f;
+            --font-mono: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+        }
+
         /* TECH NOIR / DIGITAL FORENSIC STYLE */
         * {
             margin: 0;
@@ -24,9 +46,9 @@ permalink: /docs/
         }
         
         body {
-            font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
-            background: #0a0c12;
-            color: #c0c4d0;
+            font-family: var(--font-mono);
+            background: var(--color-bg);
+            color: var(--color-text-primary);
             line-height: 1.5;
         }
         
@@ -39,14 +61,14 @@ permalink: /docs/
         
         /* HEADER - EVIDENCE LABEL */
         .evidence-header {
-            border-bottom: 2px solid #2a2f3f;
+            border-bottom: 2px solid var(--color-border);
             padding-bottom: 1rem;
             margin-bottom: 2rem;
         }
         
         .case-number {
             font-size: 0.7rem;
-            color: #5a6e8a;
+            color: var(--color-text-secondary);
             letter-spacing: 1px;
             text-transform: uppercase;
         }
@@ -54,14 +76,14 @@ permalink: /docs/
         .evidence-title {
             font-size: 1.2rem;
             font-weight: 600;
-            color: #e0e4f0;
+            color: var(--color-text-accent);
             margin-top: 0.25rem;
         }
         
         .evidence-badge {
             display: inline-block;
             background: #1e2a3a;
-            color: #4a9eff;
+            color: var(--color-accent);
             padding: 0.2rem 0.6rem;
             font-size: 0.7rem;
             border-radius: 2px;
@@ -71,13 +93,13 @@ permalink: /docs/
         /* BREADCRUMB - FORENSIC PATH */
         .forensic-path {
             font-size: 0.7rem;
-            color: #5a6e8a;
+            color: var(--color-text-secondary);
             margin-bottom: 1.5rem;
             font-family: monospace;
         }
         
         .forensic-path a {
-            color: #4a9eff;
+            color: var(--color-accent);
             text-decoration: none;
         }
         
@@ -86,7 +108,7 @@ permalink: /docs/
         }
         
         .forensic-path span {
-            color: #e0e4f0;
+            color: var(--color-text-accent);
         }
         
         /* TYPOGRAPHY */
@@ -96,7 +118,7 @@ permalink: /docs/
             font-family: monospace;
             margin-bottom: 1rem;
             letter-spacing: -0.5px;
-            border-left: 3px solid #4a9eff;
+            border-left: 3px solid var(--color-accent);
             padding-left: 1rem;
             word-break: break-word;
         }
@@ -107,8 +129,8 @@ permalink: /docs/
             margin: 2rem 0 1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #4a9eff;
-            border-bottom: 1px solid #2a2f3f;
+            color: var(--color-accent);
+            border-bottom: 1px solid var(--color-border);
             padding-bottom: 0.5rem;
         }
         
@@ -116,14 +138,14 @@ permalink: /docs/
             font-size: 0.85rem;
             font-weight: 600;
             margin: 1rem 0 0.5rem;
-            color: #c0c4d0;
+            color: var(--color-text-primary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
         .forensic-lead {
-            background: #0e1118;
-            border-left: 3px solid #4a9eff;
+            background: var(--color-bg-card);
+            border-left: 3px solid var(--color-accent);
             padding: 1rem;
             margin: 1rem 0;
             font-size: 0.9rem;
@@ -139,20 +161,20 @@ permalink: /docs/
         }
         
         .evidence-card {
-            background: #0e1118;
-            border: 1px solid #2a2f3f;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
             padding: 1rem;
             transition: all 0.2s;
         }
         
         .evidence-card:hover {
-            border-color: #4a9eff;
-            background: #121620;
+            border-color: var(--color-accent);
+            background: var(--color-bg-hover);
         }
         
         .evidence-tag {
             font-size: 0.6rem;
-            color: #4a9eff;
+            color: var(--color-accent);
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 0.5rem;
@@ -166,15 +188,15 @@ permalink: /docs/
         
         .evidence-meta {
             font-size: 0.65rem;
-            color: #5a6e8a;
+            color: var(--color-text-secondary);
             margin-bottom: 0.75rem;
         }
         
         .evidence-link {
             font-size: 0.7rem;
-            color: #4a9eff;
+            color: var(--color-accent);
             text-decoration: none;
-            border-bottom: 1px dashed #4a9eff;
+            border-bottom: 1px dashed var(--color-accent);
         }
         
         .evidence-link:hover {
@@ -186,8 +208,8 @@ permalink: /docs/
             display: flex;
             gap: 1.5rem;
             flex-wrap: wrap;
-            background: #0e1118;
-            border: 1px solid #2a2f3f;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
             padding: 1rem;
             margin: 1.5rem 0;
         }
@@ -200,7 +222,7 @@ permalink: /docs/
         .stat-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #4a9eff;
+            color: var(--color-accent);
             font-family: monospace;
         }
         
@@ -208,7 +230,7 @@ permalink: /docs/
             font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #5a6e8a;
+            color: var(--color-text-secondary);
         }
         
         /* EVIDENCE LOG - TABLE STYLE */
@@ -223,22 +245,22 @@ permalink: /docs/
             flex-wrap: wrap;
             gap: 0.5rem;
             padding: 0.6rem 0;
-            border-bottom: 1px solid #1e222c;
+            border-bottom: 1px solid var(--color-border-light);
             font-size: 0.8rem;
         }
         
         .log-name a {
-            color: #c0c4d0;
+            color: var(--color-text-primary);
             text-decoration: none;
         }
         
         .log-name a:hover {
-            color: #4a9eff;
+            color: var(--color-accent);
         }
         
         .log-hash {
             font-size: 0.6rem;
-            color: #5a6e8a;
+            color: var(--color-text-secondary);
             font-family: monospace;
         }
         
@@ -248,7 +270,7 @@ permalink: /docs/
         }
         
         .interrogation-item {
-            border-bottom: 1px solid #1e222c;
+            border-bottom: 1px solid var(--color-border-light);
             padding: 1rem 0;
         }
         
@@ -256,7 +278,7 @@ permalink: /docs/
             font-weight: 600;
             font-size: 0.8rem;
             margin-bottom: 0.3rem;
-            color: #4a9eff;
+            color: var(--color-accent);
         }
         
         .interrogation-a {
@@ -278,12 +300,12 @@ permalink: /docs/
             padding: 0.2rem 0.6rem;
             font-size: 0.65rem;
             font-family: monospace;
-            color: #5a6e8a;
+            color: var(--color-text-secondary);
         }
         
         /* LINKS */
         a {
-            color: #4a9eff;
+            color: var(--color-accent);
             text-decoration: none;
         }
         
@@ -295,16 +317,16 @@ permalink: /docs/
         hr {
             margin: 2rem 0;
             border: none;
-            border-top: 1px solid #2a2f3f;
+            border-top: 1px solid var(--color-border);
         }
         
         /* FOOTER - CASE CLOSED */
         .case-footer {
             margin-top: 2rem;
             padding-top: 1rem;
-            border-top: 1px solid #2a2f3f;
+            border-top: 1px solid var(--color-border);
             font-size: 0.65rem;
-            color: #5a6e8a;
+            color: var(--color-text-secondary);
             text-align: center;
         }
         
@@ -314,9 +336,9 @@ permalink: /docs/
         }
         
         .query-highlight {
-            color: #4a9eff;
+            color: var(--color-accent);
             font-weight: 700;
-            background: #1a2a3a;
+            background: var(--color-highlight-bg);
             padding: 0 0.2rem;
         }
         
@@ -329,7 +351,7 @@ permalink: /docs/
         }
         
         .redacted {
-            background: #2a2f3f;
+            background: var(--color-redacted);
             color: transparent;
             text-shadow: none;
             padding: 0 0.2rem;
@@ -416,7 +438,7 @@ permalink: /docs/
                     <a href="/">[ROOT]</a> / <a href="/model/">EVIDENCE_LOCKER</a> / <span id="breadcrumb-name"></span>
                 </div>
                 
-                <!-- H1 DENGAN QUERY DI AWAL -->
+                <!-- H1 DENGAN QUERY + SUBDOMAIN/DOMAIN (WAJIB PALING ATAS) -->
                 <h1 id="main-heading"></h1>
                 
                 <!-- FORENSIC LEAD DENGAN QUERY -->
@@ -432,6 +454,10 @@ permalink: /docs/
                     <span class="class-tag" id="tag4"></span>
                     <span class="class-tag">FORENSIC PRESERVATION</span>
                 </div>
+                
+                <!-- ============================================ -->
+                <!-- H2 DAN H3 DINAMIS AKAN MUNCUL DI BAWAH INI      -->
+                <!-- ============================================ -->
                 
                 <!-- INTRO VARIAN - FORENSIC STYLE -->
                 <div id="intro-leak" class="intro-varian hidden">
@@ -552,7 +578,7 @@ permalink: /docs/
                 
                 <hr>
                 
-                <!-- SECTION 1: CASE OVERVIEW -->
+                <!-- SECTION 1: CASE OVERVIEW (H2 sudah ada di atas, ini konten tambahan) -->
                 <h2>CASE FILE · EVIDENCE OVERVIEW</h2>
                 <div class="evidence-log">
                     <div class="log-entry"><span>EVIDENCE SUBJECT:</span><span class="log-hash" id="case-subject"></span></div>
@@ -635,7 +661,17 @@ permalink: /docs/
     
     <script>
     (function() {
-        // Ambil query dari URL
+        // ========================
+        // 1. CANONICAL LINK DINAMIS
+        // ========================
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if (canonicalLink) {
+            canonicalLink.href = window.location.href;
+        }
+        
+        // ========================
+        // 2. QUERY DAN SUBDOMAIN
+        // ========================
         const urlParams = new URLSearchParams(window.location.search);
         let query = urlParams.get('q');
         
@@ -652,156 +688,160 @@ permalink: /docs/
         
         // Decode query
         query = decodeURIComponent(query.replace(/\+/g, ' '));
-        const originalQuery = query;
         
-        // Daftar kata yang akan dihapus untuk mendapatkan base name
-        const removeTerms = [
-            '2025', '2024'
+        // Ambil subdomain/domain untuk identitas
+        let hostParts = window.location.hostname.split('.');
+        let subDomain = '';
+        let domain = '';
+        
+        if (hostParts.length >= 3) {
+            // Contoh: sub-domain.fazri.my
+            subDomain = hostParts[0];
+            domain = hostParts.slice(1).join('.');
+        } else {
+            // Contoh: fazri.my atau github.io / pages.dev
+            subDomain = '';
+            domain = window.location.hostname;
+        }
+        
+        // Format identitas untuk ditampilkan (tanpa TLD complex handling, cukup gunakan subdomain atau domain)
+        let identity = '';
+        if (subDomain && subDomain !== 'www') {
+            identity = subDomain;
+        } else {
+            // Untuk kasus seperti fazri.my, github.io, pages.dev
+            let mainPart = domain.split('.')[0];
+            // Kapitalisasi huruf pertama
+            identity = mainPart.charAt(0).toUpperCase() + mainPart.slice(1);
+        }
+        
+        // Pastikan identity tidak kosong
+        if (!identity) identity = 'Site';
+        
+        // ========================
+        // 3. FUNGSI MEMBUAT JUDUL BERDASARKAN QUERY + IDENTITY
+        //    Konsisten tapi bervariasi untuk setiap elemen
+        // ========================
+        function capitalizeWords(str) {
+            return str.replace(/\b\w/g, l => l.toUpperCase());
+        }
+        
+        const capitalizedQuery = capitalizeWords(query);
+        
+        // Variasi untuk <title>
+        const titleVariants = [
+            `${capitalizedQuery} on ${identity} | Digital Forensics Evidence`,
+            `${capitalizedQuery} — ${identity} Data Breach Archive`,
+            `${capitalizedQuery} | Forensic Locker — ${identity}`
         ];
+        const chosenTitle = titleVariants[Math.floor(Math.random() * titleVariants.length)];
+        document.title = chosenTitle;
         
-        // Fungsi untuk mendapatkan base name
-        function getBaseName(query) {
-            let base = query.toLowerCase();
-            removeTerms.forEach(term => {
-                const regex = new RegExp('\\b' + term + '\\s*', 'gi');
-                base = base.replace(regex, '');
-            });
-            return base.trim() || query;
+        // Variasi untuk <h1> (paling utama)
+        const h1Variants = [
+            `Forensic Evidence: ${capitalizedQuery} on ${identity}`,
+            `${capitalizedQuery} — Complete Case File from ${identity}`,
+            `Digital Forensics: ${capitalizedQuery} (${identity})`
+        ];
+        const h1Element = document.getElementById('main-heading');
+        if (h1Element) {
+            h1Element.textContent = h1Variants[Math.floor(Math.random() * h1Variants.length)];
         }
         
-        const baseName = getBaseName(query);
+        // Variasi untuk <h2> pertama (dalam intro varian nanti, tapi kita buat juga untuk judul dinamis lain)
+        // Karena h2 di dalam intro sudah memiliki teks tetap, kita akan mengubah beberapa h2 spesifik nanti di bawah.
+        // Untuk sekarang, kita buat fungsi untuk update h2 yang mengandung placeholder.
         
-        // Deteksi tipe query
-        const queryLower = query.toLowerCase();
-        let queryType = 'general';
+        // Update breadcrumb
+        const breadcrumbSpan = document.getElementById('breadcrumb-name');
+        if (breadcrumbSpan) breadcrumbSpan.textContent = `${capitalizedQuery.toUpperCase()} / ${identity.toUpperCase()}`;
         
-        if (queryLower.includes('leak') || queryLower.includes('leaked') || queryLower.includes('leaks')) {
-            queryType = 'leak';
-        } else if (queryLower.includes('photo') || queryLower.includes('photos') || queryLower.includes('picture') || queryLower.includes('gallery')) {
-            queryType = 'photo';
-        } else if (queryLower.includes('video') || queryLower.includes('videos') || queryLower.includes('clip') || queryLower.includes('footage')) {
-            queryType = 'video';
-        } else if (queryLower.includes('bio') || queryLower.includes('biography') || queryLower.includes('age') || queryLower.includes('height')) {
-            queryType = 'bio';
-        } else if (queryLower.includes('instagram') || queryLower.includes('facebook') || queryLower.includes('twitter') || queryLower.includes('tiktok')) {
-            queryType = 'platform';
-        }
+        // Update lead query
+        const leadSpan = document.getElementById('lead-query');
+        if (leadSpan) leadSpan.textContent = `FORENSIC EVIDENCE: ${capitalizedQuery.toUpperCase()} — SOURCE: ${identity.toUpperCase()}`;
         
-        // UPDATE TITLE - SEO OPTIMIZED DENGAN QUERY DI AWAL
-        let title;
-        if (queryType === 'leak') title = `${query} | DIGITAL FORENSICS EVIDENCE | Leak Archive Data Breach Report`;
-        else if (queryType === 'photo') title = `${query} | FORENSIC IMAGE EVIDENCE | Leaked Photo Archive Complete Set`;
-        else if (queryType === 'video') title = `${query} | FORENSIC VIDEO EVIDENCE | Leaked Footage Private Recordings`;
-        else if (queryType === 'bio') title = `${query} | DATA BREACH EVIDENCE | Biographical Records Personal Information`;
-        else if (queryType === 'platform') title = `${query} | PLATFORM DATA BREACH | Social Media Evidence Archive`;
-        else title = `${query} | COMPLETE FORENSIC EVIDENCE | Data Breach Leak Archive`;
+        // Update tags
+        const tagElements = ['tag1', 'tag2', 'tag3', 'tag4'];
+        tagElements.forEach((id, idx) => {
+            const el = document.getElementById(id);
+            if (el) {
+                if (idx === 0) el.textContent = `${capitalizedQuery.toUpperCase()}_LEAK`;
+                else if (idx === 1) el.textContent = `${capitalizedQuery.toUpperCase()}_DATA_BREACH`;
+                else if (idx === 2) el.textContent = `${capitalizedQuery.toUpperCase()}_EVIDENCE`;
+                else if (idx === 3) el.textContent = `CASE_${identity.toUpperCase()}`;
+            }
+        });
         
-        document.title = title;
-        document.getElementById('dynamic-description').setAttribute('content', 
-            `${query} forensic evidence package. Complete data breach documentation including leaked images, private videos, and exclusive content. Digital forensics archive with verified chain of custody.`);
-        
-        // UPDATE H1 DENGAN QUERY
-        let h1Text;
-        if (queryType === 'leak') h1Text = `FORENSIC EVIDENCE: ${query} · LEAK ARCHIVE · DATA BREACH REPORT`;
-        else if (queryType === 'photo') h1Text = `FORENSIC EVIDENCE: ${query} · IMAGE LEAK MANIFEST · COMPLETE PHOTO SET`;
-        else if (queryType === 'video') h1Text = `FORENSIC EVIDENCE: ${query} · VIDEO LEAK MANIFEST · PRIVATE FOOTAGE`;
-        else if (queryType === 'bio') h1Text = `FORENSIC EVIDENCE: ${query} · DATA BREACH · PERSONAL RECORDS`;
-        else if (queryType === 'platform') h1Text = `FORENSIC EVIDENCE: ${query} · PLATFORM BREACH · SOCIAL MEDIA DATA`;
-        else h1Text = `FORENSIC EVIDENCE: ${query} · COMPLETE CASE FILE · DATA BREACH ARCHIVE`;
-        
-        document.getElementById('main-heading').textContent = h1Text;
-        
-        // UPDATE BREADCRUMB
-        document.getElementById('breadcrumb-name').textContent = baseName.toUpperCase();
-        
-        // UPDATE FORENSIC LEAD
-        const leadElement = document.getElementById('lead-query');
-        if (leadElement) leadElement.textContent = `FORENSIC EVIDENCE PACKAGE: ${baseName.toUpperCase()}`;
-        
-        // UPDATE TAGS
-        const tag1 = document.getElementById('tag1');
-        const tag2 = document.getElementById('tag2');
-        const tag3 = document.getElementById('tag3');
-        const tag4 = document.getElementById('tag4');
-        
-        if (tag1) tag1.textContent = `${baseName.toUpperCase()}_LEAK`;
-        if (tag2) tag2.textContent = `${baseName.toUpperCase()}_DATA_BREACH`;
-        if (tag3) tag3.textContent = `${baseName.toUpperCase()}_EVIDENCE`;
-        if (tag4) tag4.textContent = `CASE_${baseName.toUpperCase()}`;
-        
-        // UPDATE LEAK STATS LABELS
+        // Update leak stats label
         const leakPhotoLabel = document.getElementById('leak-photo-label');
         const leakVideoLabel = document.getElementById('leak-video-label');
-        if (leakPhotoLabel) leakPhotoLabel.textContent = `${baseName.toUpperCase()} LEAKED PHOTOS`;
-        if (leakVideoLabel) leakVideoLabel.textContent = `${baseName.toUpperCase()} LEAKED VIDEOS`;
+        if (leakPhotoLabel) leakPhotoLabel.textContent = `${capitalizedQuery.toUpperCase()} LEAKED PHOTOS`;
+        if (leakVideoLabel) leakVideoLabel.textContent = `${capitalizedQuery.toUpperCase()} LEAKED VIDEOS`;
         
-        // UPDATE CASE SUBJECT
+        // Update case subject
         const caseSubject = document.getElementById('case-subject');
-        if (caseSubject) caseSubject.textContent = baseName.toUpperCase();
+        if (caseSubject) caseSubject.textContent = `${capitalizedQuery.toUpperCase()} (${identity.toUpperCase()})`;
         
-        // UPDATE INTEGRITY SUBJECT
         const integritySubject = document.getElementById('integrity-subject');
-        if (integritySubject) integritySubject.textContent = baseName.toUpperCase();
+        if (integritySubject) integritySubject.textContent = `${capitalizedQuery} (${identity})`;
         
-        // UPDATE FOOTER SUBJECT
         const footerSubject = document.getElementById('footer-subject');
-        if (footerSubject) footerSubject.textContent = baseName.toUpperCase();
+        if (footerSubject) footerSubject.textContent = `${capitalizedQuery} · ${identity}`;
         
-        // UPDATE FAQ DENGAN QUERY
+        // Update FAQ dengan query + identity
         const faqQ1 = document.getElementById('faq-q1');
+        if (faqQ1) faqQ1.textContent = `What evidence is available for ${capitalizedQuery} from ${identity}?`;
         const faqA1 = document.getElementById('faq-a1');
+        if (faqA1) faqA1.innerHTML = `Complete forensic evidence package including <a href="#" class="dynamic-link" data-variant="leaked+photos">${capitalizedQuery} leaked photos</a>, <a href="#" class="dynamic-link" data-variant="leaked+videos">${capitalizedQuery} private videos</a>, and exclusive data breach documentation sourced from ${identity}.`;
+        
         const faqQ2 = document.getElementById('faq-q2');
+        if (faqQ2) faqQ2.textContent = `Where can I access ${capitalizedQuery} leaked image evidence from ${identity}?`;
         const faqA2 = document.getElementById('faq-a2');
+        if (faqA2) faqA2.innerHTML = `The <a href="#" class="dynamic-link" data-variant="leaked+photos">${capitalizedQuery} image evidence catalog</a> contains complete leaked photo sets with chain of custody documentation from ${identity}.`;
+        
         const faqQ3 = document.getElementById('faq-q3');
+        if (faqQ3) faqQ3.textContent = `Is there ${capitalizedQuery} video evidence available from ${identity}?`;
         const faqA3 = document.getElementById('faq-a3');
+        if (faqA3) faqA3.innerHTML = `Yes. The <a href="#" class="dynamic-link" data-variant="leaked+videos">${capitalizedQuery} video evidence archive</a> includes private recordings, performances, and interview footage related to ${identity}.`;
+        
         const faqQ4 = document.getElementById('faq-q4');
+        if (faqQ4) faqQ4.textContent = `What is the source of ${capitalizedQuery} data breach evidence on ${identity}?`;
         const faqA4 = document.getElementById('faq-a4');
+        if (faqA4) faqA4.innerHTML = `Evidence sourced from multiple data breaches, private server leaks, and underground distribution channels associated with ${identity}. Chain of custody maintained.`;
+        
         const faqQ5 = document.getElementById('faq-q5');
+        if (faqQ5) faqQ5.textContent = `How is this forensic evidence from ${identity} preserved?`;
         const faqA5 = document.getElementById('faq-a5');
+        if (faqA5) faqA5.innerHTML = `All evidence maintained in original format with hash verification. Complete integrity preservation protocol followed for ${identity} case files.`;
         
-        if (faqQ1) faqQ1.textContent = `What evidence is available for ${baseName}?`;
-        if (faqA1) faqA1.innerHTML = `Complete forensic evidence package including <a href="" class="dynamic-link" data-variant="leaked+photos">${baseName} leaked photos</a>, <a href="" class="dynamic-link" data-variant="leaked+videos">${baseName} private videos</a>, and exclusive data breach documentation.`;
-        
-        if (faqQ2) faqQ2.textContent = `Where can I access ${baseName} leaked image evidence?`;
-        if (faqA2) faqA2.innerHTML = `The <a href="" class="dynamic-link" data-variant="leaked+photos">${baseName} image evidence catalog</a> contains complete leaked photo sets with chain of custody documentation.`;
-        
-        if (faqQ3) faqQ3.textContent = `Is there ${baseName} video evidence available?`;
-        if (faqA3) faqA3.innerHTML = `Yes. The <a href="" class="dynamic-link" data-variant="leaked+videos">${baseName} video evidence archive</a> includes private recordings, performances, and interview footage.`;
-        
-        if (faqQ4) faqQ4.textContent = `What is the source of ${baseName} data breach evidence?`;
-        if (faqA4) faqA4.innerHTML = `Evidence sourced from multiple data breaches, private server leaks, and underground distribution channels. Chain of custody maintained.`;
-        
-        if (faqQ5) faqQ5.textContent = `How is this forensic evidence preserved?`;
-        if (faqA5) faqA5.innerHTML = `All evidence maintained in original format with hash verification. Complete integrity preservation protocol followed.`;
-        
-        // UPDATE SEMUA DYNAMIC LINKS
+        // Update semua dynamic links dengan query + identity
         function updateLinks() {
             document.querySelectorAll('.dynamic-link').forEach(link => {
                 const variant = link.getAttribute('data-variant');
                 if (variant) {
-                    link.href = `/model/?q=${encodeURIComponent(baseName + ' ' + variant)}`;
+                    link.href = `/model/?q=${encodeURIComponent(capitalizedQuery + ' ' + variant + ' ' + identity)}`;
                 }
             });
         }
         
-        // UPDATE SEMUA LINK YANG PERLU TEXT CONTENT
+        // Update text content untuk link-link penting
         function updateLinkTexts() {
             const linkTextMappings = {
-                'link-photo-master': `📸 ${baseName} LEAKED PHOTO SET · MASTER EVIDENCE`,
-                'link-photo-rare': `💎 ${baseName} RARE LEAKED IMAGES · LIMITED CIRCULATION`,
-                'link-photo-uncensored': `⚠️ ${baseName} UNCENSORED PHOTO EVIDENCE · UNEDITED`,
-                'link-photo-studio': `📷 ${baseName} LEAKED STUDIO SHOOT · UNRELEASED`,
-                'link-photo-candid': `🎞️ ${baseName} LEAKED CANDID MOMENTS · PRIVATE`,
-                'link-photo-bts': `🎬 ${baseName} LEAKED BTS PHOTOS · PRODUCTION LEAK`,
-                'link-video-master': `🎥 ${baseName} COMPLETE VIDEO LEAK SET · MASTER FOOTAGE`,
-                'link-video-performances': `🎤 ${baseName} LEAKED PERFORMANCE VIDEOS · UNCUT`,
-                'link-video-interviews': `🎙️ ${baseName} LEAKED INTERVIEW FOOTAGE · UNEDITED`,
-                'link-video-exclusive': `🔒 ${baseName} EXCLUSIVE VIDEO LEAKS · PRIVATE SOURCE`,
-                'link-video-rare': `💎 ${baseName} RARE VIDEO LEAKS · LIMITED CIRCULATION`,
-                'link-private': `🔐 ${baseName} PRIVATE COLLECTION DUMP · COMPLETE SET`,
-                'link-original': `💾 ${baseName} ORIGINAL LEAK SOURCES · SOURCE EVIDENCE`,
-                'link-unreleased': `📀 ${baseName} UNRELEASED CONTENT · NEVER PUBLISHED`,
-                'link-archive': `📁 ${baseName} COMPLETE EVIDENCE MANIFEST · FULL ARCHIVE`
+                'link-photo-master': `📸 ${capitalizedQuery} LEAKED PHOTO SET · ${identity} MASTER`,
+                'link-photo-rare': `💎 ${capitalizedQuery} RARE LEAKED IMAGES · ${identity} LIMITED`,
+                'link-photo-uncensored': `⚠️ ${capitalizedQuery} UNCENSORED PHOTO · ${identity} EDITION`,
+                'link-photo-studio': `📷 ${capitalizedQuery} LEAKED STUDIO SHOOT · ${identity}`,
+                'link-photo-candid': `🎞️ ${capitalizedQuery} CANDID MOMENTS · ${identity} PRIVATE`,
+                'link-photo-bts': `🎬 ${capitalizedQuery} LEAKED BTS · ${identity} PRODUCTION`,
+                'link-video-master': `🎥 ${capitalizedQuery} COMPLETE VIDEO LEAK · ${identity}`,
+                'link-video-performances': `🎤 ${capitalizedQuery} LEAKED PERFORMANCES · ${identity}`,
+                'link-video-interviews': `🎙️ ${capitalizedQuery} LEAKED INTERVIEWS · ${identity}`,
+                'link-video-exclusive': `🔒 ${capitalizedQuery} EXCLUSIVE VIDEO · ${identity}`,
+                'link-video-rare': `💎 ${capitalizedQuery} RARE VIDEOS · ${identity}`,
+                'link-private': `🔐 ${capitalizedQuery} PRIVATE COLLECTION · ${identity}`,
+                'link-original': `💾 ${capitalizedQuery} ORIGINAL LEAK · ${identity}`,
+                'link-unreleased': `📀 ${capitalizedQuery} UNRELEASED · ${identity}`,
+                'link-archive': `📁 ${capitalizedQuery} COMPLETE MANIFEST · ${identity}`
             };
             
             for (const [id, text] of Object.entries(linkTextMappings)) {
@@ -813,15 +853,64 @@ permalink: /docs/
         updateLinks();
         updateLinkTexts();
         
-        // UPDATE SEMUA QUERY PLACEHOLDER
+        // Update semua placeholder query
         document.querySelectorAll('.query-placeholder').forEach(el => {
-            el.textContent = baseName;
+            el.textContent = capitalizedQuery;
         });
         
-        // TAMPILKAN INTRO YANG SESUAI
+        // Tampilkan intro yang sesuai
+        const queryLower = query.toLowerCase();
+        let queryType = 'general';
+        if (queryLower.includes('leak') || queryLower.includes('leaked') || queryLower.includes('leaks')) queryType = 'leak';
+        else if (queryLower.includes('photo') || queryLower.includes('photos') || queryLower.includes('picture')) queryType = 'photo';
+        else if (queryLower.includes('video') || queryLower.includes('videos') || queryLower.includes('clip')) queryType = 'video';
+        else if (queryLower.includes('bio') || queryLower.includes('biography') || queryLower.includes('age')) queryType = 'bio';
+        else if (queryLower.includes('instagram') || queryLower.includes('facebook') || queryLower.includes('twitter')) queryType = 'platform';
+        
         document.querySelectorAll('.intro-varian').forEach(el => el.classList.add('hidden'));
         const introElement = document.getElementById(`intro-${queryType}`);
         if (introElement) introElement.classList.remove('hidden');
+        
+        // ========================
+        // 4. UPDATE H2 DAN H3 DINAMIS (SUPAYA MENGANDUNG QUERY)
+        //    Kita cari semua h2 dan h3 di dalam #query-content dan modifikasi isinya agar mengandung query + identity
+        //    Namun tidak mengubah struktur asli, hanya menambah atau mengganti kata kunci.
+        // ========================
+        const queryContainer = document.getElementById('query-content');
+        if (queryContainer) {
+            // Update semua h2
+            const allH2 = queryContainer.querySelectorAll('h2');
+            allH2.forEach(h2 => {
+                let originalText = h2.innerHTML;
+                // Hindari duplikasi jika sudah mengandung query
+                if (!originalText.includes(capitalizedQuery) && !originalText.toLowerCase().includes(query.toLowerCase())) {
+                    // Tambahkan query di depan atau di belakang dengan gaya konsisten
+                    h2.innerHTML = `${capitalizedQuery} · ${originalText}`;
+                }
+                // Tambahkan identity jika belum ada
+                if (!originalText.includes(identity)) {
+                    h2.innerHTML = `${h2.innerHTML} (${identity})`;
+                }
+            });
+            
+            // Update semua h3
+            const allH3 = queryContainer.querySelectorAll('h3');
+            allH3.forEach(h3 => {
+                let originalText = h3.innerHTML;
+                if (!originalText.includes(capitalizedQuery) && !originalText.toLowerCase().includes(query.toLowerCase())) {
+                    h3.innerHTML = `${capitalizedQuery} — ${originalText}`;
+                }
+                if (!originalText.includes(identity)) {
+                    h3.innerHTML = `${h3.innerHTML} [${identity}]`;
+                }
+            });
+        }
+        
+        // Update meta description juga
+        const metaDesc = document.getElementById('dynamic-description');
+        if (metaDesc) {
+            metaDesc.setAttribute('content', `${capitalizedQuery} forensic evidence from ${identity}. Complete data breach documentation including leaked images, private videos, and exclusive content. Digital forensics archive with verified chain of custody.`);
+        }
         
     })();
     </script>

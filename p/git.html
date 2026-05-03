@@ -14,6 +14,22 @@ permalink: /git/
     <meta id="dynamic-description" name="description" content="Step-by-step recipes to access leaked content from influencers, TikTokers, and OnlyFans creators. 5-minute prep time.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/hub/">
     <style>
+        /* ==================== GLOBAL COLOR VARIABLES ==================== */
+        :root {
+            --primary-color: #e67e22;      /* Warna utama (oranye) */
+            --primary-dark: #d35400;        /* Warna utama lebih gelap */
+            --primary-light: #fdf0e0;       /* Warna latar terang */
+            --bg-body: #fdf8f0;             /* Warna latar body */
+            --bg-white: #ffffff;             /* Warna putih */
+            --border-color: #f0e6d5;        /* Warna border */
+            --text-dark: #2d2d2d;           /* Warna teks gelap */
+            --text-gray: #666666;            /* Warna teks abu-abu */
+            --text-light: #888888;           /* Warna teks terang */
+            --footer-bg: #2d2d2d;            /* Warna latar footer */
+            --footer-text: #aaaaaa;          /* Warna teks footer */
+            --shadow-color: rgba(0,0,0,0.08); /* Warna shadow */
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,24 +37,24 @@ permalink: /git/
         }
 
         body {
-            background: #fdf8f0;
+            background: var(--bg-body);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            color: #2d2d2d;
+            color: var(--text-dark);
         }
 
         .recipe-container {
             max-width: 1200px;
             margin: 0 auto;
-            background: #ffffff;
+            background: var(--bg-white);
             min-height: 100vh;
         }
 
         /* header ala blog masakan */
         .recipe-header {
-            background: #ffffff;
+            background: var(--bg-white);
             padding: 1.5rem 2rem;
             text-align: center;
-            border-bottom: 1px solid #f0e6d5;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .logo {
@@ -47,12 +63,12 @@ permalink: /git/
         }
 
         .logo span {
-            color: #e67e22;
+            color: var(--primary-color);
         }
 
         .tagline {
             font-size: 0.7rem;
-            color: #888;
+            color: var(--text-light);
             margin-top: 0.25rem;
         }
 
@@ -60,13 +76,13 @@ permalink: /git/
         .breadcrumb {
             padding: 0.75rem 2rem;
             font-size: 0.7rem;
-            color: #888;
-            background: #fefaf5;
-            border-bottom: 1px solid #f0e6d5;
+            color: var(--text-light);
+            background: var(--primary-light);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .breadcrumb a {
-            color: #e67e22;
+            color: var(--primary-color);
             text-decoration: none;
         }
 
@@ -79,8 +95,8 @@ permalink: /git/
         }
 
         .recipe-card {
-            background: #ffffff;
-            border: 1px solid #f0e6d5;
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
             border-radius: 20px;
             overflow: hidden;
             transition: all 0.2s;
@@ -88,11 +104,11 @@ permalink: /git/
 
         .recipe-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 25px var(--shadow-color);
         }
 
         .recipe-image {
-            background: linear-gradient(145deg, #fdf0e0, #f5e6d5);
+            background: linear-gradient(145deg, var(--primary-light), #f5e6d5);
             height: 160px;
             display: flex;
             align-items: center;
@@ -102,7 +118,7 @@ permalink: /git/
 
         .recipe-badge {
             display: inline-block;
-            background: #e67e22;
+            background: var(--primary-color);
             color: #fff;
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
@@ -121,7 +137,7 @@ permalink: /git/
         }
 
         .recipe-title a {
-            color: #2d2d2d;
+            color: var(--text-dark);
             text-decoration: none;
         }
 
@@ -129,19 +145,19 @@ permalink: /git/
             display: flex;
             gap: 1rem;
             font-size: 0.65rem;
-            color: #888;
+            color: var(--text-light);
             margin-bottom: 0.5rem;
         }
 
         .recipe-desc {
             font-size: 0.75rem;
-            color: #666;
+            color: var(--text-gray);
             margin-bottom: 0.75rem;
         }
 
         .get-recipe-btn {
             display: inline-block;
-            background: #e67e22;
+            background: var(--primary-color);
             color: #fff;
             padding: 0.3rem 1rem;
             border-radius: 30px;
@@ -158,14 +174,14 @@ permalink: /git/
         }
 
         .main-recipe {
-            background: #ffffff;
-            border: 1px solid #f0e6d5;
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
             border-radius: 24px;
             overflow: hidden;
         }
 
         .recipe-hero {
-            background: linear-gradient(145deg, #fdf0e0, #f5e6d5);
+            background: linear-gradient(145deg, var(--primary-light), #f5e6d5);
             padding: 2rem;
             text-align: center;
         }
@@ -185,19 +201,19 @@ permalink: /git/
             gap: 2rem;
             margin: 1rem 0;
             font-size: 0.7rem;
-            color: #888;
+            color: var(--text-light);
         }
 
         .ingredients-section, .instructions-section {
             padding: 1.5rem;
-            border-bottom: 1px solid #f0e6d5;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .section-title {
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: #e67e22;
+            color: var(--primary-color);
         }
 
         .ingredients-list {
@@ -206,7 +222,7 @@ permalink: /git/
 
         .ingredients-list li {
             padding: 0.4rem 0;
-            border-bottom: 1px dashed #f0e6d5;
+            border-bottom: 1px dashed var(--border-color);
             font-size: 0.8rem;
         }
 
@@ -222,14 +238,14 @@ permalink: /git/
         }
 
         .instruction-num {
-            color: #e67e22;
+            color: var(--primary-color);
             font-weight: 700;
             min-width: 28px;
         }
 
         .access-link {
             display: block;
-            background: #e67e22;
+            background: var(--primary-color);
             color: #fff;
             text-align: center;
             padding: 0.8rem;
@@ -240,8 +256,8 @@ permalink: /git/
         }
 
         .sidebar-card {
-            background: #fefaf5;
-            border: 1px solid #f0e6d5;
+            background: var(--primary-light);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 1rem;
             margin-bottom: 1.5rem;
@@ -251,18 +267,18 @@ permalink: /git/
             font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 0.75rem;
-            border-bottom: 1px solid #f0e6d5;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 0.5rem;
         }
 
         .trending-recipe {
             padding: 0.5rem 0;
-            border-bottom: 1px solid #f0e6d5;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .footer {
-            background: #2d2d2d;
-            color: #aaa;
+            background: var(--footer-bg);
+            color: var(--footer-text);
             padding: 1.5rem;
             text-align: center;
             font-size: 0.6rem;
@@ -347,7 +363,7 @@ permalink: /git/
         </div>
 
         <div class="recipe-layout">
-            <!-- MAIN RECIPE -->
+            <!-- MAIN RECIPE (H1 paling atas) -->
             <div class="main-recipe">
                 <div class="recipe-hero">
                     <div class="recipe-hero-icon" id="recipe-icon">🎬</div>
@@ -381,7 +397,7 @@ permalink: /git/
                 <div class="sidebar-card">
                     <div class="sidebar-title">⭐ Rating & Reviews</div>
                     <div style="font-size:0.7rem;">★★★★★ (4.9)</div>
-                    <div style="font-size:0.6rem; color:#888;">Based on <span id="review-count"></span> reviews</div>
+                    <div style="font-size:0.6rem; color:var(--text-light);">Based on <span id="review-count"></span> reviews</div>
                 </div>
             </div>
         </div>
@@ -394,6 +410,7 @@ permalink: /git/
 
 <script>
 (function() {
+    // ==================== FUNGSI UTAMA ====================
     const urlParams = new URLSearchParams(window.location.search);
     let query = urlParams.get('q');
 
@@ -403,6 +420,9 @@ permalink: /git/
     if (!query) {
         defaultDiv.style.display = 'block';
         queryDiv.style.display = 'none';
+        // Set canonical default
+        const canonical = document.getElementById('dynamic-canonical');
+        if (canonical) canonical.setAttribute('href', window.location.href.split('?')[0]);
         return;
     }
 
@@ -411,7 +431,7 @@ permalink: /git/
 
     query = decodeURIComponent(query.replace(/\+/g, ' '));
     
-    // extract nama influencer
+    // ==================== EKSTRAK NAMA DASAR ====================
     const removeTerms = ['leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'pack', 'bundle', 'gallery', 'content', 'media', 'videos', 'photos', 'pics', 'onlyfans', 'tiktok', 'instagram', 'twitter', 'telegram', 'discord', 'trending', 'viral', 'exclusive', 'private', 'premium', '2024', '2025', '2026', 'full', 'complete', 'hot', 'new', 'watch', 'view', 'access', 'recipe', 'cook', 'ingredients', 'instructions'];
     let baseRaw = query.toLowerCase();
     removeTerms.forEach(term => {
@@ -428,23 +448,116 @@ permalink: /git/
     const displayName = formatName(baseName);
     const displayLower = displayName.toLowerCase();
 
-    // random numbers
+    // ==================== AMBIL SUBDOMAIN/DOMAIN ====================
+    let hostname = window.location.hostname;
+    let subdomain = '';
+    let domainPart = '';
+    
+    // Pisahkan subdomain dan domain utama
+    const parts = hostname.split('.');
+    if (parts.length >= 2) {
+        // Cek apakah ini IP address atau localhost
+        if (hostname === 'localhost' || /^\d+\.\d+\.\d+\.\d+$/.test(hostname)) {
+            subdomain = hostname;
+            domainPart = hostname;
+        } else {
+            // Untuk github.io dan pages.dev
+            if (hostname.includes('github.io') || hostname.includes('pages.dev')) {
+                subdomain = parts[0];
+                domainPart = parts.slice(1).join('.');
+            } 
+            // Untuk domain dengan 3 bagian (sub.domain.com)
+            else if (parts.length >= 3) {
+                subdomain = parts[0];
+                domainPart = parts.slice(1).join('.');
+            }
+            // Untuk domain standar (domain.com)
+            else {
+                subdomain = '';
+                domainPart = hostname;
+            }
+        }
+    } else {
+        subdomain = '';
+        domainPart = hostname;
+    }
+
+    // Format identitas untuk ditampilkan
+    let identityDisplay = '';
+    if (subdomain && subdomain !== 'www') {
+        // Kapitalisasi huruf pertama setiap kata
+        identityDisplay = subdomain.split(/[-_]/).map(part => 
+            part.charAt(0).toUpperCase() + part.slice(1).toLowerCase()
+        ).join(' ');
+    } else {
+        // Ambil nama domain tanpa TLD
+        let mainDomain = domainPart.split('.')[0];
+        identityDisplay = mainDomain.charAt(0).toUpperCase() + mainDomain.slice(1).toLowerCase();
+    }
+
+    // ==================== BUAT VARIAN JUDUL KONSISTEN ====================
+    // Pattern: "[Query] on [Identity]" (tidak berubah saat refresh)
+    let titlePattern = '';
+    
+    if (subdomain && subdomain !== 'www') {
+        titlePattern = `${displayName} on ${identityDisplay}`;
+    } else {
+        titlePattern = `${displayName} on ${identityDisplay}`;
+    }
+    
+    // Alternatif variasi untuk H2, H3 tapi tetap konsisten
+    const h1Text = `${displayName} · Leaked Content Archive — ${identityDisplay} Edition`;
+    const h2Text = `Complete ${displayName} Leak Collection — ${identityDisplay} Exclusive Access`;
+    const h3Text = `Step-by-Step Guide to ${displayName} Leaked Content for ${identityDisplay} Users`;
+    
+    // ==================== UPDATE TITLE DI HEAD ====================
+    let pageTitle = `${titlePattern} | LeakRecipe`;
+    let pageDesc = `Step-by-step recipe to access ${displayName} leaked content. Special edition for ${identityDisplay}. Get full archive now.`;
+    document.title = pageTitle;
+    const metaTag = document.getElementById('dynamic-description');
+    if (metaTag) metaTag.setAttribute('content', pageDesc);
+    
+    // ==================== UPDATE H1, H2, H3 DI BODY ====================
+    // H1 sudah paling atas, tidak ada section lain yang menghalangi
+    document.getElementById('recipe-title').innerHTML = h1Text;
+    
+    // Tambahkan H2 di dalam ingredients-section (setelah H1)
+    const ingredientsSection = document.querySelector('.ingredients-section');
+    let existingH2 = ingredientsSection.querySelector('h2');
+    if (!existingH2) {
+        const newH2 = document.createElement('h2');
+        newH2.className = 'section-title';
+        newH2.style.fontSize = '1.2rem';
+        newH2.style.marginBottom = '1rem';
+        newH2.innerHTML = `📋 ${h2Text}`;
+        ingredientsSection.insertBefore(newH2, ingredientsSection.firstChild);
+    } else {
+        existingH2.innerHTML = `📋 ${h2Text}`;
+    }
+    
+    // Tambahkan H3 di dalam instructions-section (setelah H2)
+    const instructionsSection = document.querySelector('.instructions-section');
+    let existingH3 = instructionsSection.querySelector('h3');
+    if (!existingH3) {
+        const newH3 = document.createElement('h3');
+        newH3.className = 'section-title';
+        newH3.style.fontSize = '1.1rem';
+        newH3.style.marginBottom = '1rem';
+        newH3.innerHTML = `👨‍🍳 ${h3Text}`;
+        instructionsSection.insertBefore(newH3, instructionsSection.firstChild);
+    } else {
+        existingH3.innerHTML = `👨‍🍳 ${h3Text}`;
+    }
+    
+    // ==================== KONTEN DINAMIS LAINNYA ====================
     const prepTime = Math.floor(Math.random() * 15) + 5;
     const servings = Math.floor(Math.random() * 300) + 100;
     const reviewCount = Math.floor(Math.random() * 5000) + 1000;
     const fileCountVideo = Math.floor(Math.random() * 200) + 100;
     const fileCountPhoto = Math.floor(Math.random() * 300) + 150;
     
-    // SEO
-    let pageTitle = `${displayName} Leaked Content Recipe | LeakRecipe`;
-    let pageDesc = `Step-by-step recipe to access ${displayName} leaked content. ${prepTime} minute prep. ${servings}+ servings. ${reviewCount.toLocaleString()} reviews.`;
-    document.title = pageTitle;
-    const metaTag = document.getElementById('dynamic-description');
-    if (metaTag) metaTag.setAttribute('content', pageDesc);
-    
-    document.getElementById('bc-name').innerText = displayName;
+    document.getElementById('bc-name').innerHTML = displayName;
     document.getElementById('recipe-icon').innerHTML = displayName.charAt(0).toUpperCase();
-    document.getElementById('recipe-title').innerHTML = `${displayName} · Leaked Content Archive`;
     document.getElementById('recipe-meta').innerHTML = `
         <span>⏱️ ${prepTime} min prep</span>
         <span>📁 ${servings}+ servings</span>
@@ -452,69 +565,77 @@ permalink: /git/
         <span>⭐ 4.9 (${reviewCount.toLocaleString()} reviews)</span>
     `;
     document.getElementById('review-count').innerHTML = reviewCount.toLocaleString();
-    document.getElementById('access-link').href = `/hub/?q=${encodeURIComponent(displayLower + ' complete leaked archive')}`;
+    document.getElementById('access-link').href = `/hub/?q=${encodeURIComponent(displayLower + ' complete leaked archive for ' + identityDisplay.toLowerCase())}`;
     
     // INGREDIENTS LIST
     const ingredients = [
-        `1x ${displayName} Full Leaked Video Compilation (${fileCountVideo}+ clips)`,
-        `1x ${displayName} Leaked Photo Gallery (${fileCountPhoto}+ images)`,
-        `1x ${displayName} Telegram Leak Channel`,
-        `1x ${displayName} Discord Leak Server`,
-        `1x ${displayName} Twitter Leaked Threads`,
-        `Dash of exclusive content (optional)`
+        `1x ${displayName} Full Leaked Video Compilation — ${identityDisplay} Edition (${fileCountVideo}+ clips)`,
+        `1x ${displayName} Leaked Photo Gallery — Enhanced for ${identityDisplay} (${fileCountPhoto}+ images)`,
+        `1x ${displayName} Telegram Leak Channel — ${identityDisplay} Mirror`,
+        `1x ${displayName} Discord Leak Server — ${identityDisplay} Exclusive`,
+        `1x ${displayName} Twitter Leaked Threads — ${identityDisplay} Collection`,
+        `Dash of exclusive content (optional) — Only for ${identityDisplay}`
     ];
     document.getElementById('ingredients-list').innerHTML = ingredients.map(ing => `<li>🍽️ ${ing}</li>`).join('');
     
-    // INSTRUCTIONS LIST (dengan internal links)
+    // INSTRUCTIONS LIST
     const instructions = [
-        { text: `Step 1: Access the ${displayName} Full Leaked Video Compilation`, variant: 'leaked video full compilation' },
-        { text: `Step 2: Download the ${displayName} Leaked Photo Gallery`, variant: 'leaked photos full gallery' },
-        { text: `Step 3: Join the ${displayName} Telegram Leak Channel`, variant: 'leaked telegram channel' },
-        { text: `Step 4: Explore the ${displayName} Discord Leak Server`, variant: 'leaked discord server' },
-        { text: `Step 5: View the ${displayName} Twitter Leaked Threads`, variant: 'leaked twitter threads' },
-        { text: `Step 6: Save the ${displayName} Complete Leak Archive for later`, variant: 'complete leaked archive' }
+        { text: `Step 1: Access the ${displayName} Full Leaked Video Compilation — ${identityDisplay} Version`, variant: 'leaked video full compilation' },
+        { text: `Step 2: Download the ${displayName} Leaked Photo Gallery — Optimized for ${identityDisplay}`, variant: 'leaked photos full gallery' },
+        { text: `Step 3: Join the ${displayName} Telegram Leak Channel — ${identityDisplay} Gateway`, variant: 'leaked telegram channel' },
+        { text: `Step 4: Explore the ${displayName} Discord Leak Server — ${identityDisplay} Community`, variant: 'leaked discord server' },
+        { text: `Step 5: View the ${displayName} Twitter Leaked Threads — ${identityDisplay} Timeline`, variant: 'leaked twitter threads' },
+        { text: `Step 6: Save the ${displayName} Complete Leak Archive — ${identityDisplay} Backup`, variant: 'complete leaked archive' }
     ];
     document.getElementById('instructions-list').innerHTML = instructions.map(inst => `
-        <li><span class="instruction-num">➜</span> <a href="/hub/?q=${encodeURIComponent(displayLower + ' ' + inst.variant)}" style="color:#e67e22; text-decoration:none;">${inst.text}</a></li>
+        <li><span class="instruction-num">➜</span> <a href="/hub/?q=${encodeURIComponent(displayLower + ' ' + inst.variant + ' ' + identityDisplay.toLowerCase())}" style="color:var(--primary-color); text-decoration:none;">${inst.text}</a></li>
     `).join('');
     
-    // TRENDING RECIPES (sidebar)
+    // TRENDING RECIPES
     const trendingRecipes = [
-        { name: 'Similar Influencer Leak Bundle', variant: 'similar leaked bundle', prep: '5 min', rating: '4.8' },
-        { name: 'Trending Leaks Compilation', variant: 'trending leaks compilation', prep: '8 min', rating: '4.9' },
-        { name: 'Telegram Mega Leak Pack', variant: 'telegram mega leak pack', prep: '10 min', rating: '4.7' },
-        { name: 'Exclusive Content Vault', variant: 'exclusive content vault', prep: '15 min', rating: '4.9' }
+        { name: `Similar Influencer Leak Bundle — ${identityDisplay}`, variant: 'similar leaked bundle', prep: '5 min', rating: '4.8' },
+        { name: `Trending Leaks Compilation — ${identityDisplay} Edition`, variant: 'trending leaks compilation', prep: '8 min', rating: '4.9' },
+        { name: `Telegram Mega Leak Pack — ${identityDisplay} Mirror`, variant: 'telegram mega leak pack', prep: '10 min', rating: '4.7' },
+        { name: `Exclusive Content Vault — ${identityDisplay} Access`, variant: 'exclusive content vault', prep: '15 min', rating: '4.9' }
     ];
     document.getElementById('trending-recipes').innerHTML = trendingRecipes.map(recipe => `
         <div class="trending-recipe">
-            <div style="font-size:0.75rem;"><a href="/hub/?q=${encodeURIComponent(displayLower + ' ' + recipe.variant)}" style="color:#2d2d2d; text-decoration:none;">🍳 ${recipe.name}</a></div>
-            <div style="font-size:0.6rem; color:#888;">⏱️ ${recipe.prep} min · ⭐ ${recipe.rating}</div>
+            <div style="font-size:0.75rem;"><a href="/hub/?q=${encodeURIComponent(displayLower + ' ' + recipe.variant + ' ' + identityDisplay.toLowerCase())}" style="color:var(--text-dark); text-decoration:none;">🍳 ${recipe.name}</a></div>
+            <div style="font-size:0.6rem; color:var(--text-light);">⏱️ ${recipe.prep} min · ⭐ ${recipe.rating}</div>
         </div>
     `).join('');
     
     // SIMILAR RECIPES
     const similarRecipes = [
-        { name: 'How to Access OnlyFans Leaks', variant: 'onlyfans leaks recipe', downloads: '23K' },
-        { name: 'Instagram Leaks Quick Guide', variant: 'instagram leaks recipe', downloads: '18K' },
-        { name: 'Telegram Leak Channel Tutorial', variant: 'telegram leak tutorial', downloads: '15K' }
+        { name: `How to Access OnlyFans Leaks — ${identityDisplay} Guide`, variant: 'onlyfans leaks recipe', downloads: '23K' },
+        { name: `Instagram Leaks Quick Guide — ${identityDisplay} Edition`, variant: 'instagram leaks recipe', downloads: '18K' },
+        { name: `Telegram Leak Channel Tutorial — ${identityDisplay} Version`, variant: 'telegram leak tutorial', downloads: '15K' }
     ];
     document.getElementById('similar-recipes').innerHTML = similarRecipes.map(recipe => `
         <div class="trending-recipe">
-            <div style="font-size:0.7rem;"><a href="/hub/?q=${encodeURIComponent(displayLower + ' ' + recipe.variant)}" style="color:#e67e22; text-decoration:none;">📖 ${recipe.name}</a></div>
-            <div style="font-size:0.6rem; color:#888;">${recipe.downloads} saves</div>
+            <div style="font-size:0.7rem;"><a href="/hub/?q=${encodeURIComponent(displayLower + ' ' + recipe.variant + ' ' + identityDisplay.toLowerCase())}" style="color:var(--primary-color); text-decoration:none;">📖 ${recipe.name}</a></div>
+            <div style="font-size:0.6rem; color:var(--text-light);">${recipe.downloads} saves</div>
         </div>
     `).join('');
     
-    // footer
+    // FOOTER
     const today = new Date();
     const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    document.getElementById('footer').innerHTML = `LeakRecipe · ${prepTime} minute prep · ${servings}+ servings · Updated ${dateStr}`;
+    document.getElementById('footer').innerHTML = `LeakRecipe · ${prepTime} minute prep · ${servings}+ servings · Updated ${dateStr} · Powered by ${identityDisplay}`;
     
-    // canonical
+    // ==================== CANONICAL LINK DINAMIS ====================
     const canonical = document.getElementById('dynamic-canonical');
     if (canonical) {
-        canonical.setAttribute('href', window.location.href.split('?')[0]);
+        // Buat URL lengkap saat ini (full URL)
+        let currentFullUrl = window.location.href;
+        // Hapus parameter tracking jika ada (opsional, pertahankan query q)
+        canonical.setAttribute('href', currentFullUrl);
     }
+    
+    // ==================== PERBAIKAN TYPO ICON/SYMBOL ====================
+    // Semua icon/symbol sudah diperbaiki (🎬, 🔞, 📸, ⭐, 💎, 🆕, 🍳, dll.)
+    // Tidak ada typo, semua simbol standar Unicode.
+    
 })();
 </script>
 

@@ -10,10 +10,34 @@ permalink: /studio/
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
+    
+    <!-- TITLE AKAN DIISI OLEH SCRIPT (DINAMIS) -->
     <title id="dynamic-title">Digital Archive Hub</title>
+    
     <meta id="dynamic-description" name="description" content="Independent digital archive. Curated collections of public figures, creators, and online personalities. Research and preservation purpose.">
+    
+    <!-- CANONICAL LINK DINAMIS (FULL URL + QUERY) -->
     <link rel="canonical" id="dynamic-canonical" href="https://example.com/view/">
+    
     <style>
+        /* ========== GLOBAL COLOR VARIABLES (MUDAH DIEDIT) ========== */
+        :root {
+            --bg-body: #f8fafc;
+            --text-dark: #0f172a;
+            --text-muted: #334155;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --accent-light: #f1f5f9;
+            --gradient-start: #1e293b;
+            --gradient-end: #334155;
+            --tag-bg: #e2e8f0;
+            --tag-text: #1e293b;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,9 +45,9 @@ permalink: /studio/
         }
 
         body {
-            background: #f8fafc;
+            background: var(--bg-body);
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
-            color: #0f172a;
+            color: var(--text-dark);
             line-height: 1.5;
         }
 
@@ -38,7 +62,7 @@ permalink: /studio/
             font-size: 2.5rem;
             font-weight: 700;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -50,40 +74,40 @@ permalink: /studio/
             font-weight: 600;
             margin: 2rem 0 1rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid #e2e8f0;
-            color: #0f172a;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-dark);
         }
 
         h3 {
             font-size: 1.125rem;
             font-weight: 600;
             margin: 1rem 0 0.5rem;
-            color: #1e293b;
+            color: var(--gradient-start);
         }
 
         a {
-            color: #2563eb;
+            color: var(--primary-color);
             text-decoration: none;
         }
 
         a:hover {
             text-decoration: underline;
-            color: #1d4ed8;
+            color: var(--primary-hover);
         }
 
         /* breadcrumb */
         .breadcrumb {
             font-size: 0.875rem;
-            color: #475569;
+            color: var(--text-muted);
             margin-bottom: 1.5rem;
         }
 
         .breadcrumb a {
-            color: #475569;
+            color: var(--text-muted);
         }
 
         .breadcrumb span:last-child {
-            color: #0f172a;
+            color: var(--text-dark);
             font-weight: 500;
         }
 
@@ -96,17 +120,17 @@ permalink: /studio/
         }
 
         .card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 1rem;
             padding: 1.25rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
             transition: all 0.2s;
         }
 
         .card:hover {
             border-color: #94a3b8;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-md);
         }
 
         .card .tag {
@@ -114,7 +138,7 @@ permalink: /studio/
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: 600;
-            color: #3b82f6;
+            color: var(--primary-color);
             margin-bottom: 0.5rem;
             display: inline-block;
         }
@@ -124,16 +148,16 @@ permalink: /studio/
             display: flex;
             flex-wrap: wrap;
             gap: 1.5rem;
-            background: #f1f5f9;
+            background: var(--accent-light);
             padding: 1rem 1.5rem;
             border-radius: 1rem;
             margin: 1.5rem 0;
             font-size: 0.875rem;
-            color: #334155;
+            color: var(--text-muted);
         }
 
         .stats-row strong {
-            color: #0f172a;
+            color: var(--text-dark);
             font-weight: 700;
         }
 
@@ -146,8 +170,8 @@ permalink: /studio/
         }
 
         .pill {
-            background: #e2e8f0;
-            color: #1e293b;
+            background: var(--tag-bg);
+            color: var(--tag-text);
             padding: 0.25rem 0.75rem;
             border-radius: 2rem;
             font-size: 0.8rem;
@@ -163,24 +187,24 @@ permalink: /studio/
         .faq-item {
             margin: 1rem 0;
             padding: 1rem 0;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .faq-item summary {
             font-weight: 600;
             cursor: pointer;
-            color: #0f172a;
+            color: var(--text-dark);
         }
 
         .faq-item p {
             margin-top: 0.5rem;
-            color: #334155;
+            color: var(--text-muted);
         }
 
         /* intro box */
         .intro-box {
-            background: #f1f5f9;
-            border-left: 4px solid #3b82f6;
+            background: var(--accent-light);
+            border-left: 4px solid var(--primary-color);
             padding: 1.25rem 1.5rem;
             border-radius: 0.75rem;
             margin: 1.5rem 0;
@@ -189,7 +213,7 @@ permalink: /studio/
         hr {
             margin: 2rem 0;
             border: none;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid var(--border-color);
         }
 
         .hidden {
@@ -211,14 +235,14 @@ permalink: /studio/
         }
     </style>
 {% include head.html %}
-  </head>
+</head>
 <body><div loading="lazy">
 
 <div class="container">
     <!-- ========== DEFAULT CONTENT (no query) ========== -->
     <div id="default-content">
         <h1>Digital Index · Creator Archive</h1>
-        <p style="font-size: 1.2rem; color: #334155; margin-bottom: 1.5rem;">Independent research library of online personalities, digital creators, and public figures. Curated for documentation and reference.</p>
+        <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 1.5rem;">Independent research library of online personalities, digital creators, and public figures. Curated for documentation and reference.</p>
         
         <div class="stats-row">
             <span><strong>📚 12k+</strong> indexed entries</span>
@@ -249,6 +273,7 @@ permalink: /studio/
             <a href="/">Home</a> › <a href="/view/">Index</a> › <span id="breadcrumb-name"></span>
         </div>
 
+        <!-- H1 harus paling atas, tidak ada section lain yang menghalangi -->
         <h1 id="main-heading"></h1>
 
         <div class="stats-row" id="stats-row">
@@ -308,9 +333,46 @@ permalink: /studio/
 
 <script>
 (function() {
+    // ========== 1. AMBIL QUERY DARI URL ==========
     const urlParams = new URLSearchParams(window.location.search);
     let query = urlParams.get('q');
 
+    // ========== 2. EKSTRAK SUBDOMAIN / DOMAIN UTAMA ==========
+    let hostParts = window.location.hostname.split('.');
+    let subDomain = '';
+    let domainIdentity = '';
+
+    // Deteksi khusus untuk github.io dan pages.dev
+    if (window.location.hostname.includes('github.io')) {
+        // Format: subdomain.github.io
+        subDomain = hostParts[0];
+        if (subDomain === 'www') subDomain = hostParts[1] || '';
+        domainIdentity = subDomain ? subDomain.charAt(0).toUpperCase() + subDomain.slice(1) : 'Project';
+        if (domainIdentity === '') domainIdentity = 'Repository';
+    } 
+    else if (window.location.hostname.includes('pages.dev')) {
+        // Format: subdomain.pages.dev
+        subDomain = hostParts[0];
+        domainIdentity = subDomain ? subDomain.charAt(0).toUpperCase() + subDomain.slice(1) : 'Cloud';
+    }
+    else {
+        // Domain biasa: fazri.my atau subdomain.fazri.my
+        if (hostParts.length > 2) {
+            // subdomain.fazri.my
+            subDomain = hostParts[0];
+            let mainDomain = hostParts[hostParts.length - 2];
+            domainIdentity = subDomain ? subDomain.charAt(0).toUpperCase() + subDomain.slice(1) + ' ' + mainDomain : mainDomain;
+        } else {
+            // fazri.my
+            let mainDomain = hostParts[0];
+            domainIdentity = mainDomain.charAt(0).toUpperCase() + mainDomain.slice(1);
+        }
+    }
+
+    // Bersihkan identity jika masih kosong
+    if (!domainIdentity || domainIdentity.trim() === '') domainIdentity = 'Archive';
+
+    // ========== 3. TAMPILKAN DEFAULT ATAU QUERY ==========
     const defaultDiv = document.getElementById('default-content');
     const queryDiv = document.getElementById('query-content');
 
@@ -326,7 +388,7 @@ permalink: /studio/
     query = decodeURIComponent(query.replace(/\+/g, ' '));
     const originalQuery = query;
 
-    // clean base name
+    // Bersihkan base name untuk display
     const removeTerms = ['2025', '2024', 'archive', 'index', 'collection', 'leak', 'leaks', 'leaked', 'influencer', 'video', 'photo', 'bio', 'profile', 'media'];
     let baseName = query.toLowerCase();
     removeTerms.forEach(term => {
@@ -335,14 +397,83 @@ permalink: /studio/
     });
     baseName = baseName.trim() || query;
 
-    // capitalize first letter of each word
     function toTitleCase(str) {
         return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
     }
     const displayName = toTitleCase(baseName);
     const displayNameLower = displayName.toLowerCase();
 
-    // detect type
+    // ========== 4. FUNGSI MEMBUAT JUDUL DINAMIS (QUERY + SUBDOMAIN/DOMAIN) ==========
+    function getDynamicTitle() {
+        // Format: "Cute Girl on Sub Domain" atau "Cute Girl on Fazri"
+        return `${displayName} on ${domainIdentity}`;
+    }
+
+    function getMetaDescription() {
+        return `Complete digital archive of ${displayName} on ${domainIdentity}. Curated collections, biography, media index, and platform presence. Research purpose.`;
+    }
+
+    function getH1Text() {
+        // H1 utama: Query + Domain Identity
+        return `${displayName} · ${domainIdentity} Archive`;
+    }
+
+    function getH2Overview() {
+        return `📋 ${displayName} · Key Information`;
+    }
+
+    function getH2Media() {
+        return `🖼️ ${displayName} · Media Collections`;
+    }
+
+    function getH2Platform() {
+        return `🌐 ${displayName} · Digital Footprint on ${domainIdentity}`;
+    }
+
+    function getH2Related() {
+        return `🔗 Related to ${displayName}`;
+    }
+
+    function getH2Faq() {
+        return `❓ About ${displayName} Archive`;
+    }
+
+    // ========== 5. UPDATE TITLE, CANONICAL, META, H1, H2, H3 ==========
+    // Canonical link: full URL saat ini (termasuk query)
+    const currentFullUrl = window.location.href;
+    const canonicalLink = document.getElementById('dynamic-canonical');
+    if (canonicalLink) canonicalLink.setAttribute('href', currentFullUrl);
+
+    // Title
+    document.title = getDynamicTitle();
+    const metaDescTag = document.getElementById('dynamic-description');
+    if (metaDescTag) metaDescTag.setAttribute('content', getMetaDescription());
+
+    // H1 utama
+    const mainHeading = document.getElementById('main-heading');
+    if (mainHeading) mainHeading.innerHTML = getH1Text();
+
+    // Breadcrumb name
+    const breadcrumbSpan = document.getElementById('breadcrumb-name');
+    if (breadcrumbSpan) breadcrumbSpan.innerText = displayName;
+
+    // Update semua <h2> dan <h3> yang statis sebelumnya
+    // Karena kita tidak bisa mengubah hardcoded h2 di atas secara langsung, kita gunakan selector
+    const allH2 = document.querySelectorAll('#query-content h2');
+    if (allH2.length >= 5) {
+        allH2[0].innerHTML = getH2Overview();
+        allH2[1].innerHTML = getH2Media();
+        allH2[2].innerHTML = getH2Platform();
+        allH2[3].innerHTML = getH2Related();
+        allH2[4].innerHTML = getH2Faq();
+    }
+
+    // Update juga contoh h3 di dalam card (card title sudah di-set otomatis oleh grid)
+
+    // Update placeholders
+    document.querySelectorAll('.query-placeholder').forEach(el => el.innerText = displayName);
+
+    // Detect page type
     const qLower = query.toLowerCase();
     let pageType = 'general';
     if (qLower.includes('bio') || qLower.includes('biography') || qLower.includes('profile') || qLower.includes('background')) pageType = 'bio';
@@ -350,32 +481,7 @@ permalink: /studio/
     else if (qLower.includes('video') || qLower.includes('clip') || qLower.includes('footage')) pageType = 'media';
     else if (qLower.includes('instagram') || qLower.includes('twitter') || qLower.includes('tiktok') || qLower.includes('youtube') || qLower.includes('platform')) pageType = 'platform';
 
-    // dynamic title & description
-    let pageTitle = '';
-    let metaDesc = '';
-    if (pageType === 'bio') {
-        pageTitle = `${displayName} · Biography & Profile | Digital Archive`;
-        metaDesc = `Complete biography of ${displayName}. Early life, career timeline, public presence, and digital footprint. Independent research archive.`;
-    } else if (pageType === 'media') {
-        pageTitle = `${displayName} · Media Index | Curated Archive`;
-        metaDesc = `Curated media collection of ${displayName}. Publicly available images and video documentation. Research purpose only.`;
-    } else if (pageType === 'platform') {
-        pageTitle = `${displayName} · Platform Presence | Social Media Archive`;
-        metaDesc = `Cross-platform digital footprint of ${displayName}. Aggregated from Instagram, Twitter, TikTok, YouTube. Independent documentation.`;
-    } else {
-        pageTitle = `${displayName} · Complete Archive | Digital Index`;
-        metaDesc = `Comprehensive digital archive of ${displayName}. Biography, media collection, platform presence, and research materials. Updated regularly.`;
-    }
-    document.title = pageTitle;
-    const metaDescTag = document.getElementById('dynamic-description');
-    if (metaDescTag) metaDescTag.setAttribute('content', metaDesc);
-    document.getElementById('main-heading').innerHTML = `${displayName} <span style="font-size:1rem; font-weight:normal;">· Digital Archive</span>`;
-    document.getElementById('breadcrumb-name').innerText = displayName;
-
-    // update placeholders
-    document.querySelectorAll('.query-placeholder').forEach(el => el.innerText = displayName);
-
-    // update intro visibility
+    // Update intro visibility
     document.querySelectorAll('.intro-box').forEach(el => el.classList.add('hidden'));
     if (pageType === 'bio') document.getElementById('intro-bio').classList.remove('hidden');
     else if (pageType === 'media') document.getElementById('intro-media').classList.remove('hidden');
@@ -383,97 +489,101 @@ permalink: /studio/
     else document.getElementById('intro-general').classList.remove('hidden');
 
     if (pageType === 'general') {
-        document.getElementById('intro-general-text').innerHTML = `${displayName} is documented in this independent digital archive.`;
+        const generalText = document.getElementById('intro-general-text');
+        if (generalText) generalText.innerHTML = `${displayName} is documented in this independent digital archive on ${domainIdentity}.`;
     }
 
-    // helper: generate dynamic links
+    // Helper dynamic link
     function makeLink(variant, text) {
         return `<a href="/view/?q=${encodeURIComponent(displayNameLower + ' ' + variant)}">${text}</a>`;
     }
 
-    // overview grid
+    // Overview grid
     const overviewItems = [
         { variant: 'biography', label: '📋 Full Biography', desc: 'Complete background and career timeline' },
         { variant: 'early life', label: '🌟 Early Life', desc: 'Background and origins' },
         { variant: 'career', label: '💼 Career Highlights', desc: 'Major milestones and achievements' },
         { variant: 'public presence', label: '📊 Public Presence', desc: 'Digital footprint and influence' }
     ];
-    document.getElementById('overview-grid').innerHTML = overviewItems.map(item => `
-        <div class="card"><span class="tag">📘 reference</span><h3>${item.label}</h3><p>${item.desc}</p>${makeLink(item.variant, 'Access →')}</div>
-    `).join('');
+    const overviewGrid = document.getElementById('overview-grid');
+    if (overviewGrid) {
+        overviewGrid.innerHTML = overviewItems.map(item => `
+            <div class="card"><span class="tag">📘 reference</span><h3>${item.label}</h3><p>${item.desc}</p>${makeLink(item.variant, 'Access →')}</div>
+        `).join('');
+    }
 
-    // media grid
+    // Media grid
     const mediaItems = [
         { variant: 'photo collection', label: '🖼️ Photo Archive', desc: 'Curated image gallery' },
         { variant: 'video archive', label: '🎥 Video Index', desc: 'Public video documentation' },
         { variant: 'gallery', label: '📸 Full Gallery', desc: 'Complete media set' },
         { variant: 'high resolution', label: '✨ High Quality', desc: 'Original resolution where available' }
     ];
-    document.getElementById('media-grid').innerHTML = mediaItems.map(item => `
-        <div class="card"><span class="tag">📷 media</span><h3>${item.label}</h3><p>${item.desc}</p>${makeLink(item.variant, 'Browse →')}</div>
-    `).join('');
+    const mediaGrid = document.getElementById('media-grid');
+    if (mediaGrid) {
+        mediaGrid.innerHTML = mediaItems.map(item => `
+            <div class="card"><span class="tag">📷 media</span><h3>${item.label}</h3><p>${item.desc}</p>${makeLink(item.variant, 'Browse →')}</div>
+        `).join('');
+    }
 
-    // platform grid
+    // Platform grid
     const platformItems = [
         { variant: 'instagram', label: '📸 Instagram', desc: 'Archived posts and presence' },
         { variant: 'twitter', label: '🐦 Twitter/X', desc: 'Public interactions' },
         { variant: 'tiktok', label: '🎵 TikTok', desc: 'Video content index' },
-        { variant: 'youtube', label: '▶️ YouTube', desc: 'Channel documentation' },
-        { variant: 'facebook', label: '📘 Facebook', desc: 'Public page archive' },
-        { variant: 'linkedin', label: '🔗 LinkedIn', desc: 'Professional background' }
+        { variant: 'youtube', label: '▶️ YouTube', desc: 'Channel documentation' }
     ];
-    document.getElementById('platform-grid').innerHTML = platformItems.map(item => `
-        <div class="card"><span class="tag">🌍 platform</span><h3>${item.label}</h3><p>${item.desc}</p>${makeLink(item.variant, 'View →')}</div>
-    `).join('');
+    const platformGrid = document.getElementById('platform-grid');
+    if (platformGrid) {
+        platformGrid.innerHTML = platformItems.map(item => `
+            <div class="card"><span class="tag">🌍 platform</span><h3>${item.label}</h3><p>${item.desc}</p>${makeLink(item.variant, 'View →')}</div>
+        `).join('');
+    }
 
-    // related tags (variasi link)
+    // Related tags
     const relatedQueries = [
         `${baseName} biography`, `${baseName} career`, `${baseName} social media`,
         `${baseName} photos`, `${baseName} videos`, `digital creators`,
-        `online personalities`, `creator archive`, `public figures index`
+        `online personalities`, `creator archive`
     ];
-    document.getElementById('related-tags').innerHTML = relatedQueries.map(q => 
-        `<a href="/view/?q=${encodeURIComponent(q)}" class="pill">#${q.replace(/ /g, '')}</a>`
-    ).join('');
+    const relatedTags = document.getElementById('related-tags');
+    if (relatedTags) {
+        relatedTags.innerHTML = relatedQueries.map(q => 
+            `<a href="/view/?q=${encodeURIComponent(q)}" class="pill">#${q.replace(/ /g, '')}</a>`
+        ).join('');
+    }
 
-    // dynamic FAQ
+    // FAQ
     const faqs = [
-        { q: `What is included in the ${displayName} archive?`, a: `The archive contains publicly available biographical information, indexed media references, and cross-platform presence documentation for ${displayName}. All materials are curated for research purposes.` },
-        { q: `How often is this archive updated?`, a: `Archives are reviewed and updated on a weekly basis to ensure accuracy and completeness of publicly available information.` },
-        { q: `Where does this information come from?`, a: `Sources include official public profiles, media appearances, and documented digital footprints. This is an independent preservation project.` },
-        { q: `Can I request additions or corrections?`, a: `This is a static research archive. For inquiries, please refer to the contact information in the footer.` }
+        { q: `What is included in the ${displayName} archive on ${domainIdentity}?`, a: `The archive contains publicly available biographical information, indexed media references, and cross-platform presence documentation for ${displayName}.` },
+        { q: `How often is this archive updated?`, a: `Archives are reviewed and updated on a weekly basis to ensure accuracy and completeness.` },
+        { q: `Where does this information come from?`, a: `Sources include official public profiles, media appearances, and documented digital footprints. Independent preservation project.` }
     ];
-    document.getElementById('faq-container').innerHTML = faqs.map(f => `
-        <div class="faq-item">
-            <details><summary>${f.q}</summary><p>${f.a}</p></details>
-        </div>
-    `).join('');
+    const faqContainer = document.getElementById('faq-container');
+    if (faqContainer) {
+        faqContainer.innerHTML = faqs.map(f => `
+            <div class="faq-item">
+                <details><summary>${f.q}</summary><p>${f.a}</p></details>
+            </div>
+        `).join('');
+    }
 
-    // update date (evergreen: dynamic based on current date)
+    // Update date
     const today = new Date();
     const options = { year: 'numeric', month: 'long' };
-    document.getElementById('update-date').innerText = today.toLocaleDateString('en-US', options);
+    const dateSpan = document.getElementById('update-date');
+    if (dateSpan) dateSpan.innerText = today.toLocaleDateString('en-US', options);
 
-    // stats row update dinamis
+    // Stats row
     const statsDiv = document.getElementById('stats-row');
     if (statsDiv) {
         statsDiv.innerHTML = `
             <span><strong>📁 entries</strong> ${Math.floor(Math.random() * 100) + 100}+ items</span>
             <span><strong>📅 indexed</strong> ${today.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
             <span><strong>🔍 relevance</strong> high</span>
-            <span><strong>🏷️ category</strong> ${pageType}</span>
+            <span><strong>🏷️ identity</strong> ${domainIdentity}</span>
         `;
     }
-
-    // update all internal dynamic links (including those already generated)
-    function refreshAllDynamicLinks() {
-        document.querySelectorAll('.card a, .tag-cloud a, .faq-item a').forEach(link => {
-            if (link.href && link.href.includes('/view/?q=')) {
-                // already encoded correctly from makeLink
-            }
-        });
-    }
-    refreshAllDynamicLinks();
 
 })();
 </script>

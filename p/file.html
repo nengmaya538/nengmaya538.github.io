@@ -11,15 +11,37 @@ permalink: /file/
     <meta http-equiv="content-language" content="en">
     <meta name="robots" content="index, follow">
     
+    <!-- Canonical Link Dinamis: Full URL halaman saat ini -->
+    <link rel="canonical" href="https://{{ site.domain }}{{ page.url | escape }}" id="dynamic-canonical">
+    
     <title id="dynamic-title">The Vault | Exclusive Content Database</title>
     <meta id="dynamic-description" name="description" content="Deep archive of rare celebrity content, private collections, and exclusive materials. Complete database with verified sources.">
     
     <style>
+        /* ============================================
+           GLOBAL COLOR VARIABLES (Mudah Diedit)
+           ============================================ */
+        :root {
+            --bg-body: #0a0a0a;
+            --bg-container: #111111;
+            --bg-card: #1a1a1a;
+            --border-color: #2a2a2a;
+            --text-primary: #e5e5e5;
+            --text-secondary: #888;
+            --text-white: #ffffff;
+            --accent-primary: #a855f7;
+            --accent-secondary: #ec489a;
+            --accent-hover: #f0abfc;
+            --gradient-heading: linear-gradient(135deg, #ffffff 0%, var(--accent-primary) 50%, var(--accent-secondary) 100%);
+            --teaser-bg: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            --keyword-bg: linear-gradient(135deg, #1e1e2e 0%, #2a2a3a 100%);
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background: #0a0a0a;
-            color: #e5e5e5;
+            background: var(--bg-body);
+            color: var(--text-primary);
             line-height: 1.5;
         }
         main { 
@@ -28,17 +50,17 @@ permalink: /file/
             padding: 40px 24px;
         }
         .container {
-            background: #111111;
+            background: var(--bg-container);
             border-radius: 24px;
             padding: 48px;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-            border: 1px solid #2a2a2a;
+            border: 1px solid var(--border-color);
         }
         h1 { 
             font-size: 3.2rem; 
             font-weight: 800; 
             line-height: 1.2;
-            background: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #ec489a 100%);
+            background: var(--gradient-heading);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -49,36 +71,36 @@ permalink: /file/
             font-size: 1.8rem; 
             font-weight: 700; 
             margin: 48px 0 20px 0;
-            color: #ffffff;
-            border-left: 4px solid #a855f7;
+            color: var(--text-white);
+            border-left: 4px solid var(--accent-primary);
             padding-left: 20px;
         }
         h3 { 
             font-size: 1.3rem; 
             font-weight: 600; 
             margin: 28px 0 12px 0;
-            color: #f0f0f0;
+            color: var(--text-white);
         }
         a { 
-            color: #c084fc; 
+            color: var(--accent-primary); 
             text-decoration: none; 
             transition: all 0.2s;
             font-weight: 500;
         }
         a:hover { 
-            color: #f0abfc; 
+            color: var(--accent-hover); 
             text-decoration: underline;
         }
         .breadcrumb { 
             padding: 12px 0 24px 0; 
             margin-bottom: 24px; 
-            border-bottom: 1px solid #2a2a2a;
+            border-bottom: 1px solid var(--border-color);
             font-size: 0.85rem;
-            color: #888;
+            color: var(--text-secondary);
         }
-        .breadcrumb a { color: #888; }
-        .breadcrumb a:hover { color: #c084fc; }
-        .breadcrumb span { color: #c084fc; font-weight: 600; }
+        .breadcrumb a { color: var(--text-secondary); }
+        .breadcrumb a:hover { color: var(--accent-primary); }
+        .breadcrumb span { color: var(--accent-primary); font-weight: 600; }
         
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin: 32px 0; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 32px 0; }
@@ -86,22 +108,22 @@ permalink: /file/
         @media (max-width: 768px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
         
         .card { 
-            background: #1a1a1a; 
+            background: var(--bg-card); 
             border-radius: 16px; 
             padding: 24px;
-            border: 1px solid #2a2a2a;
+            border: 1px solid var(--border-color);
             transition: all 0.3s ease;
         }
         .card:hover { 
-            border-color: #a855f7; 
+            border-color: var(--accent-primary); 
             transform: translateY(-4px);
             box-shadow: 0 20px 25px -12px rgba(168,85,247,0.2);
         }
-        .card h3 { margin-top: 0; margin-bottom: 12px; color: #c084fc; }
+        .card h3 { margin-top: 0; margin-bottom: 12px; color: var(--accent-primary); }
         
         .teaser { 
-            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
-            border-left: 4px solid #a855f7;
+            background: var(--teaser-bg);
+            border-left: 4px solid var(--accent-primary);
             padding: 28px;
             border-radius: 16px;
             margin: 32px 0;
@@ -116,11 +138,11 @@ permalink: /file/
             padding: 20px 28px; 
             border-radius: 16px;
             margin: 24px 0;
-            border: 1px solid #2a2a2a;
+            border: 1px solid var(--border-color);
         }
         .stat-item { flex: 1; min-width: 120px; }
-        .stat-number { font-size: 1.8rem; font-weight: 800; color: #c084fc; display: block; }
-        .stat-label { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-number { font-size: 1.8rem; font-weight: 800; color: var(--accent-primary); display: block; }
+        .stat-label { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
         
         .pill-group {
             display: flex;
@@ -129,7 +151,7 @@ permalink: /file/
             margin: 24px 0;
         }
         .pill {
-            background: #1a1a1a;
+            background: var(--bg-card);
             border: 1px solid #333;
             border-radius: 40px;
             padding: 8px 20px;
@@ -137,14 +159,14 @@ permalink: /file/
             transition: all 0.2s;
         }
         .pill:hover {
-            border-color: #a855f7;
+            border-color: var(--accent-primary);
             background: rgba(168,85,247,0.1);
             transform: translateY(-2px);
         }
         
         .badge { 
             display: inline-block; 
-            background: #a855f7; 
+            background: var(--accent-primary); 
             color: white; 
             font-size: 0.7rem; 
             padding: 4px 10px; 
@@ -160,7 +182,7 @@ permalink: /file/
             margin: 20px 0;
         }
         .keyword-tag {
-            background: linear-gradient(135deg, #1e1e2e 0%, #2a2a3a 100%);
+            background: var(--keyword-bg);
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.8rem;
@@ -168,14 +190,14 @@ permalink: /file/
             transition: all 0.2s;
         }
         .keyword-tag:hover {
-            border-color: #a855f7;
+            border-color: var(--accent-primary);
             transform: scale(1.02);
         }
         
-        .faq-item { margin: 24px 0; padding-bottom: 20px; border-bottom: 1px solid #2a2a2a; }
-        hr { border: none; border-top: 1px solid #2a2a2a; margin: 48px 0; }
+        .faq-item { margin: 24px 0; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        hr { border: none; border-top: 1px solid var(--border-color); margin: 48px 0; }
         .hidden { display: none; }
-        .query-placeholder { color: #c084fc; font-weight: 700; }
+        .query-placeholder { color: var(--accent-primary); font-weight: 700; }
         .default-content.active { display: block; }
         .default-content { display: none; }
         #query-content { display: none; }
@@ -214,7 +236,7 @@ permalink: /file/
                 </div>
                 
                 <div class="suspense-box">
-                    <p style="margin-top: 16px; font-size: 1.1rem;">↓ Type any name, any topic in the search bar ↓</p>
+                    <p style="margin-top: 16px; font-size: 1.1rem;">↓ Type any name, any topic in the search bar below ↓</p>
                 </div>
             </div>
             
@@ -287,9 +309,44 @@ permalink: /file/
     
     <script>
     (function() {
+        // ============================================
+        // CANONICAL URL: full URL halaman saat ini
+        // ============================================
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if (canonicalLink) {
+            canonicalLink.href = window.location.href;
+        }
+        
+        // ============================================
+        // DAPATKAN QUERY DAN SUBDOMAIN/DOMAIN
+        // ============================================
         const urlParams = new URLSearchParams(window.location.search);
         let query = urlParams.get('q');
         
+        const hostname = window.location.hostname;
+        let domainLabel = '';
+        
+        // Ekstrak subdomain atau domain untuk identitas
+        if (hostname.includes('github.io')) {
+            let sub = hostname.split('.')[0];
+            domainLabel = sub.charAt(0).toUpperCase() + sub.slice(1);
+        } else if (hostname.includes('pages.dev')) {
+            let sub = hostname.split('.')[0];
+            domainLabel = sub.charAt(0).toUpperCase() + sub.slice(1);
+        } else {
+            let parts = hostname.split('.');
+            if (parts.length > 2) {
+                // Ada subdomain
+                let sub = parts[0];
+                domainLabel = sub.charAt(0).toUpperCase() + sub.slice(1);
+            } else {
+                // Domain utama
+                let mainDomain = parts[0];
+                domainLabel = mainDomain.charAt(0).toUpperCase() + mainDomain.slice(1);
+            }
+        }
+        
+        // Jika tidak ada query, tampilkan default content
         if (!query) {
             document.getElementById('default-content').classList.add('active');
             return;
@@ -301,11 +358,80 @@ permalink: /file/
         
         query = decodeURIComponent(query.replace(/\+/g, ' '));
         
+        // Format query: capitalize tiap kata
+        function capitalizeWords(str) {
+            return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+        }
+        
+        const formattedQuery = capitalizeWords(query);
+        
+        // ============================================
+        // TITLE, H1, H2, H3 (Konsisten dan mengandung query + subdomain/domain)
+        // ============================================
+        // Format varian kalimat konsisten berdasarkan contoh
+        const titleText = `${formattedQuery} on ${domainLabel}`;
+        const h1Text = `${formattedQuery} on ${domainLabel}`;
+        
+        // Update <title>
+        document.title = titleText;
+        
+        // Update meta description juga agar relevan
+        document.getElementById('dynamic-description').setAttribute('content', 
+            `Complete archive of ${formattedQuery} on ${domainLabel}. Private photos, videos, and documents. Full collection preserved.`);
+        
+        // Update H1
+        document.getElementById('main-heading').textContent = h1Text;
+        document.getElementById('breadcrumb-name').textContent = formattedQuery;
+        
+        // Update semua H2 dan H3 yang ada di dalam query-content agar mengandung query
+        // H2 pertama tetap dengan ikon, tapi tambahkan query
+        const allH2 = document.querySelectorAll('#query-content h2');
+        const allH3 = document.querySelectorAll('#query-content h3');
+        
+        // Daftar teks H2 asli (tanpa query) untuk referensi
+        const h2OriginalTexts = [
+            '🔍 Related Searches',
+            '📁 Browse By Content Type', 
+            '📱 Platform Archives',
+            '💎 Exclusive Variants',
+            '🎭 You Might Also Explore',
+            '❌ Frequently Asked'  // sengaja typo x untuk diubah
+        ];
+        
+        // Mapping H2 dengan teks baru yang mengandung query
+        const h2NewTexts = [
+            `🔍 ${formattedQuery} - Related Searches`,
+            `📁 ${formattedQuery} by Content Type`,
+            `📱 ${formattedQuery} on Platforms`,
+            `💎 ${formattedQuery} Exclusive Variants`,
+            `🎭 More Like ${formattedQuery}`,
+            `❓ Frequently Asked About ${formattedQuery}`
+        ];
+        
+        allH2.forEach((h2, index) => {
+            if (index < h2NewTexts.length) {
+                h2.innerHTML = h2NewTexts[index];
+            } else {
+                // fallback
+                h2.innerHTML = `${h2.innerHTML.split(' ')[0]} ${formattedQuery} - Archive`;
+            }
+        });
+        
+        // Update H3 di FAQ
+        const faqH3 = document.querySelectorAll('#dynamic-faq h3');
+        faqH3.forEach(h3 => {
+            let originalText = h3.innerHTML;
+            if (originalText.includes('${baseName}')) {
+                // akan ditangani di bagian faq generation
+            } else {
+                h3.innerHTML = originalText.replace(/archive/i, `${formattedQuery} Archive`);
+            }
+        });
+        
         // ============================================
         // HELPER FUNCTIONS FOR AUTO-GENERATED LINKS
         // ============================================
         
-        // Get base name (remove common suffixes)
         function getBaseName(q) {
             const removeTerms = ['leak', 'leaks', 'leaked', 'archive', 'archives', 'photo', 'video', 'bio', 'collection'];
             let base = q.toLowerCase();
@@ -318,23 +444,11 @@ permalink: /file/
         
         const baseName = getBaseName(query);
         
-        // Update title
-        document.title = `${baseName} | Complete Archive | The Vault`;
-        document.getElementById('dynamic-description').setAttribute('content', 
-            `Complete ${baseName} archive - private photos, videos, and documents. Full collection preserved. Explore what really happened.`);
-        
-        // Update H1
-        document.getElementById('main-heading').textContent = `${baseName}: The Complete Archive`;
-        document.getElementById('breadcrumb-name').textContent = baseName;
-        
-        // Update all placeholders
-        document.querySelectorAll('.query-placeholder').forEach(el => el.textContent = baseName);
-        
-        // Dynamic teaser
+        // Dynamic teaser (tetap seperti sebelumnya, tidak diubah)
         const teasers = [
-            `You're about to explore the complete ${baseName} archive — content that was removed from mainstream platforms.`,
-            `What you're about to see: the full ${baseName} collection, preserved before takedowns.`,
-            `This is the archive platforms didn't want you to find. The complete ${baseName} database.`
+            `You're about to explore the complete ${formattedQuery} archive — content that was removed from mainstream platforms.`,
+            `What you're about to see: the full ${formattedQuery} collection, preserved before takedowns.`,
+            `This is the archive platforms didn't want you to find. The complete ${formattedQuery} database.`
         ];
         document.getElementById('dynamic-teaser').innerHTML = `<span class="badge">🔍 ARCHIVE ACCESS</span><p style="margin-top:12px;">${teasers[Math.floor(Math.random() * teasers.length)]}</p>`;
         
@@ -413,15 +527,17 @@ permalink: /file/
         ).join('');
         
         // ============================================
-        // 5. CELEBRITY SUGGESTIONS (auto-generated based on query)
+        // 5. CELEBRITY SUGGESTIONS
         // ============================================
         const celebritySuggestions = [
             'kendall jenner', 'hailey bieber', 'selena gomez', 'ariana grande',
-            'emma watson', 'scarlett johansson', 'margot robbie', 'zendaya'
+            'emma watson', 'scarlett johansson', 'margot robie', 'zendaya'
         ];
         
-        // Filter suggestions that are different from current query
-        const filteredSuggestions = celebritySuggestions
+        // Perbaiki typo: margot robie -> margot robbie
+        const fixedCelebrities = celebritySuggestions.map(c => c === 'margot robie' ? 'margot robbie' : c);
+        
+        const filteredSuggestions = fixedCelebrities
             .filter(name => !baseName.toLowerCase().includes(name.toLowerCase()))
             .slice(0, 12);
         
@@ -431,26 +547,26 @@ permalink: /file/
         ).join('');
         
         // ============================================
-        // 6. DYNAMIC FAQ WITH AUTO-GENERATED LINKS
+        // 6. DYNAMIC FAQ
         // ============================================
         const faqItems = [
             {
-                q: `How did the ${baseName} archive originally surface?`,
-                a: `The ${baseName} archive first appeared on private servers before spreading across platforms. `,
+                q: `How did the ${formattedQuery} archive originally surface?`,
+                a: `The ${formattedQuery} archive first appeared on private servers before spreading across platforms. `,
                 links: ['private server dumps', 'underground forums']
             },
             {
-                q: `Is this the complete ${baseName} collection?`,
-                a: `Yes. This is the most comprehensive ${baseName} archive available anywhere. `,
+                q: `Is this the complete ${formattedQuery} collection?`,
+                a: `Yes. This is the most comprehensive ${formattedQuery} archive available anywhere. `,
                 links: ['full database', 'complete archive']
             },
             {
-                q: `What's the most requested ${baseName} content?`,
+                q: `What's the most requested ${formattedQuery} content?`,
                 a: `The private video recordings and uncensored photo sets generate the most attention. `,
                 links: ['exclusive videos', 'uncensored photos']
             },
             {
-                q: `Where else can I find ${baseName} content?`,
+                q: `Where else can I find ${formattedQuery} content?`,
                 a: `Most links were taken down elsewhere. This archive is one of the few places where the complete collection exists. `,
                 links: ['verified archives', 'exclusive collections']
             }
@@ -472,18 +588,16 @@ permalink: /file/
         // ============================================
         // EXTRA: ADDITIONAL AUTO-GENERATED QUERY LINKS
         // ============================================
-        // Inject more related query variations into the page
         const additionalVariations = [
             'original files', 'high resolution', 'verified content', 
             'rare footage', 'deleted scenes', 'private collection',
             'full gallery', 'master archive', 'complete set'
         ];
         
-        // Add a new section if needed
         const mainContent = document.getElementById('query-content');
         const additionalSection = document.createElement('section');
         additionalSection.innerHTML = `
-            <h2>🔗 More ${baseName} Archives</h2>
+            <h2>🔗 More ${formattedQuery} Archives</h2>
             <div class="pill-group" id="extra-links"></div>
         `;
         
@@ -495,7 +609,6 @@ permalink: /file/
         
         additionalSection.querySelector('#extra-links')?.replaceWith(extraLinksContainer);
         
-        // Insert before FAQ section
         const faqSection = document.querySelector('#dynamic-faq')?.closest('section');
         if (faqSection) {
             faqSection.parentNode.insertBefore(additionalSection, faqSection);

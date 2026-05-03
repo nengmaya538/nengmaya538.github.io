@@ -12,10 +12,67 @@ permalink: /blog/
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     
+    <!-- CANONICAL LINK DINAMIS - Full URL dengan query dan subdomain -->
+    <link rel="canonical" href="https://{{ site.domain | default: page.url | replace:'/','' }}{{ page.url | replace:'index.html','' }}{{ page.url | remove:'/blog/' }}">
+    <script>
+        // Dynamic canonical URL (for client-side)
+        var canonicalURL = window.location.href.split('#')[0].split('?')[0];
+        if(window.location.search) canonicalURL += window.location.search;
+        var linkCanonical = document.querySelector('link[rel="canonical"]');
+        if(linkCanonical) {
+            linkCanonical.href = canonicalURL;
+        } else {
+            var canonical = document.createElement('link');
+            canonical.rel = 'canonical';
+            canonical.href = canonicalURL;
+            document.head.appendChild(canonical);
+        }
+    </script>
+    
     <title id="dynamic-title">Field Notes | Media Research Journal</title>
     <meta id="dynamic-description" name="description" content="Independent research journal documenting contemporary media, visual culture, and public figures.">
     
     <style>
+        /* ============================================
+           GLOBAL COLOR SYSTEM - Mudah Diedit
+           Edit nilai di bawah ini untuk mengubah warna seluruh website
+           ============================================ */
+        :root {
+            /* Warna Utama */
+            --color-primary: #d4af37;      /* Emas - untuk aksen, link, border */
+            --color-primary-dark: #b8960c;  /* Emas gelap - untuk hover */
+            --color-primary-light: #f0e6c0; /* Emas terang - untuk background soft */
+            
+            /* Warna Background */
+            --color-bg-main: #fffef7;       /* Background utama - putih hangat */
+            --color-bg-card: #fefcf8;       /* Background card */
+            --color-bg-tag: #f0ede8;        /* Background tag */
+            --color-bg-highlight: #fef5e6;  /* Background highlight */
+            
+            /* Warna Text */
+            --color-text-primary: #1a1a1a;  /* Text utama - hitam lembut */
+            --color-text-secondary: #5a5a5a; /* Text sekunder - abu-abu */
+            --color-text-muted: #8a8a8a;    /* Text muted - abu-abu terang */
+            --color-text-meta: #b8a67a;     /* Text meta - emas gelap */
+            
+            /* Warna Border */
+            --color-border: #e8e6e0;        /* Border utama */
+            --color-border-light: #f0ede8;  /* Border lebih soft */
+            
+            /* Warna Link */
+            --color-link: var(--color-primary);
+            --color-link-hover: var(--color-primary-dark);
+            
+            /* Warna Badge */
+            --color-badge-bg: #1a1a1a;
+            --color-badge-text: #fffef7;
+            
+            /* Typography Scale */
+            --font-serif: 'Georgia', 'Times New Roman', Times, serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: monospace;
+        }
+        
         /* MINIMALIST RESET */
         * {
             margin: 0;
@@ -24,15 +81,15 @@ permalink: /blog/
         }
         
         body {
-            font-family: 'Georgia', 'Times New Roman', Times, serif;
-            background: #fffef7;
-            color: #1a1a1a;
+            font-family: var(--font-serif);
+            background: var(--color-bg-main);
+            color: var(--color-text-primary);
             line-height: 1.6;
         }
         
         /* TYPOGRAPHY - CLASSIC BOOK STYLE */
         h1, h2, h3 {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: var(--font-sans);
             font-weight: 500;
             letter-spacing: -0.01em;
         }
@@ -42,7 +99,7 @@ permalink: /blog/
             font-weight: 400;
             margin-bottom: 1rem;
             line-height: 1.2;
-            border-left: 3px solid #d4af37;
+            border-left: 3px solid var(--color-primary);
             padding-left: 1.5rem;
         }
         
@@ -61,10 +118,10 @@ permalink: /blog/
         
         .subhead {
             font-size: 1.1rem;
-            color: #5a5a5a;
+            color: var(--color-text-secondary);
             font-style: italic;
             margin-bottom: 2rem;
-            border-bottom: 1px solid #e8e6e0;
+            border-bottom: 1px solid var(--color-border);
             padding-bottom: 1rem;
         }
         
@@ -79,7 +136,7 @@ permalink: /blog/
         .journal-header {
             text-align: center;
             padding: 2rem 0 1rem;
-            border-bottom: 1px solid #e8e6e0;
+            border-bottom: 1px solid var(--color-border);
             margin-bottom: 2rem;
         }
         
@@ -87,7 +144,7 @@ permalink: /blog/
             font-size: 0.75rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #b8a67a;
+            color: var(--color-text-meta);
             margin-bottom: 0.5rem;
         }
         
@@ -99,39 +156,39 @@ permalink: /blog/
         
         .journal-meta {
             font-size: 0.75rem;
-            color: #8a8a8a;
+            color: var(--color-text-muted);
             margin-top: 0.5rem;
         }
         
         /* BREADCRUMB */
         .breadcrumb {
             font-size: 0.75rem;
-            font-family: monospace;
-            color: #8a8a8a;
+            font-family: var(--font-mono);
+            color: var(--color-text-muted);
             margin-bottom: 2rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
         .breadcrumb a {
-            color: #8a8a8a;
+            color: var(--color-text-muted);
             text-decoration: none;
         }
         
         .breadcrumb a:hover {
-            color: #d4af37;
+            color: var(--color-primary);
         }
         
         .breadcrumb span {
-            color: #1a1a1a;
+            color: var(--color-text-primary);
         }
         
         /* NOTES & CARDS */
         .note-card {
             margin: 1.5rem 0;
             padding: 1.5rem;
-            background: #fefcf8;
-            border-left: 2px solid #e8e6e0;
+            background: var(--color-bg-card);
+            border-left: 2px solid var(--color-border);
         }
         
         .grid-2 {
@@ -154,7 +211,7 @@ permalink: /blog/
         }
         
         .entry {
-            border-bottom: 1px solid #f0ede8;
+            border-bottom: 1px solid var(--color-border-light);
             padding: 1rem 0;
         }
         
@@ -165,14 +222,14 @@ permalink: /blog/
         
         .entry p {
             font-size: 0.85rem;
-            color: #5a5a5a;
+            color: var(--color-text-secondary);
             margin-bottom: 0.5rem;
         }
         
         .entry-link {
             font-size: 0.8rem;
-            font-family: monospace;
-            color: #d4af37;
+            font-family: var(--font-mono);
+            color: var(--color-primary);
             text-decoration: none;
         }
         
@@ -187,8 +244,8 @@ permalink: /blog/
             flex-wrap: wrap;
             margin: 2rem 0;
             padding: 1.5rem 0;
-            border-top: 1px solid #e8e6e0;
-            border-bottom: 1px solid #e8e6e0;
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
         }
         
         .stat {
@@ -199,14 +256,14 @@ permalink: /blog/
         .stat-number {
             font-size: 1.8rem;
             font-weight: 400;
-            font-family: monospace;
+            font-family: var(--font-mono);
         }
         
         .stat-label {
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #8a8a8a;
+            color: var(--color-text-muted);
         }
         
         /* FAQ SECTION */
@@ -217,19 +274,19 @@ permalink: /blog/
         .faq-item {
             margin: 1rem 0;
             padding: 1rem 0;
-            border-bottom: 1px solid #f0ede8;
+            border-bottom: 1px solid var(--color-border-light);
         }
         
         .faq-q {
             font-weight: 500;
-            font-family: monospace;
+            font-family: var(--font-mono);
             font-size: 0.85rem;
             margin-bottom: 0.25rem;
         }
         
         .faq-a {
             font-size: 0.85rem;
-            color: #5a5a5a;
+            color: var(--color-text-secondary);
             line-height: 1.5;
         }
         
@@ -243,19 +300,20 @@ permalink: /blog/
         
         .tag {
             font-size: 0.7rem;
-            font-family: monospace;
-            background: #f0ede8;
+            font-family: var(--font-mono);
+            background: var(--color-bg-tag);
             padding: 0.2rem 0.6rem;
             color: #4a4a4a;
         }
         
         /* LINKS */
         a {
-            color: #d4af37;
+            color: var(--color-link);
             text-decoration: none;
         }
         
         a:hover {
+            color: var(--color-link-hover);
             text-decoration: underline;
         }
         
@@ -263,17 +321,17 @@ permalink: /blog/
         hr {
             margin: 3rem 0;
             border: none;
-            border-top: 1px solid #e8e6e0;
+            border-top: 1px solid var(--color-border);
         }
         
         /* FOOTNOTE */
         .footnote {
             font-size: 0.75rem;
-            color: #8a8a8a;
-            font-family: monospace;
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
             margin-top: 2rem;
             padding-top: 1rem;
-            border-top: 1px solid #e8e6e0;
+            border-top: 1px solid var(--color-border);
         }
         
         /* UTILITY */
@@ -283,8 +341,8 @@ permalink: /blog/
         
         .query-placeholder {
             font-weight: 500;
-            font-family: monospace;
-            background: #fef5e6;
+            font-family: var(--font-mono);
+            background: var(--color-bg-highlight);
             padding: 0 0.2rem;
         }
         
@@ -305,23 +363,23 @@ permalink: /blog/
         
         .badge {
             font-size: 0.65rem;
-            font-family: monospace;
-            background: #1a1a1a;
-            color: #fffef7;
+            font-family: var(--font-mono);
+            background: var(--color-badge-bg);
+            color: var(--color-badge-text);
             padding: 0.2rem 0.6rem;
             margin-right: 0.5rem;
         }
         
         .reference {
-            font-family: monospace;
+            font-family: var(--font-mono);
             font-size: 0.7rem;
-            color: #b8a67a;
+            color: var(--color-text-meta);
             margin-top: 0.25rem;
         }
         
         .section-note {
             font-size: 0.8rem;
-            color: #8a8a8a;
+            color: var(--color-text-muted);
             margin-top: 0.25rem;
         }
     </style>
@@ -393,7 +451,7 @@ permalink: /blog/
                     <a href="/">INDEX</a> / <a href="/docs/">JOURNAL</a> / <span id="breadcrumb-name"></span>
                 </div>
                 
-                <!-- H1 -->
+                <!-- H1 - Paling atas, tidak ada section lain yang menghalangi -->
                 <h1 id="main-heading"></h1>
                 
                 <!-- STATUS BADGE -->
@@ -403,7 +461,7 @@ permalink: /blog/
                     <span class="tag">March 2026</span>
                 </div>
                 
-                <!-- INTRO VARIAN - JOURNAL STYLE -->
+                <!-- INTRO VARIANTS - JOURNAL STYLE -->
                 <div id="intro-leak" class="intro-varian hidden">
                     <div class="intro-text">This section documents materials that entered public circulation through alternative pathways. The archive includes visual records, video files, and supporting documentation—each with available provenance information.</div>
                     
@@ -545,7 +603,7 @@ permalink: /blog/
                 <hr>
                 
                 <!-- SECTION 1: Research Notes -->
-                <h2>Research Notes</h2>
+                <h2 id="section-research-notes">Research Notes</h2>
                 <p>The <strong><span class="query-placeholder"></span></strong> archive is organized into six primary research categories. Each section includes verified materials with available metadata.</p>
                 
                 <div class="tags">
@@ -556,7 +614,7 @@ permalink: /blog/
                 </div>
                 
                 <!-- SECTION 2: Visual Archive -->
-                <h2>Visual Archive</h2>
+                <h2 id="section-visual-archive">Visual Archive</h2>
                 <div class="grid-2">
                     <div class="entry"><a href="" class="dynamic-link" data-variant="professional+photoshoot">Studio photography</a> <span class="reference">/ editorial work</span></div>
                     <div class="entry"><a href="" class="dynamic-link" data-variant="candid">Candid documentation</a> <span class="reference">/ unposed moments</span></div>
@@ -569,7 +627,7 @@ permalink: /blog/
                 </div>
                 
                 <!-- SECTION 3: Video Archive -->
-                <h2>Video Archive</h2>
+                <h2 id="section-video-archive">Video Archive</h2>
                 <iframe src="https://www.youtube.com/embed/y_fgAJCJ_cA" loading="lazy" style="width:100%;aspect-ratio:9/16;border:0;" allow="fullscreen"></iframe>
                 <div class="grid-2">
                     <div class="entry"><a href="" class="dynamic-link" data-variant="performances">Live performances</a></div>
@@ -581,7 +639,7 @@ permalink: /blog/
                 </div>
                 
                 <!-- SECTION 4: Biographical Notes -->
-                <h2>Biographical Notes</h2>
+                <h2 id="section-biographical-notes">Biographical Notes</h2>
                 <div class="grid-2">
                     <div class="entry"><a href="" class="dynamic-link" data-variant="early+life">Early life</a></div>
                     <div class="entry"><a href="" class="dynamic-link" data-variant="age">Age</a></div>
@@ -594,7 +652,7 @@ permalink: /blog/
                 </div>
                 
                 <!-- SECTION 5: Special Collections -->
-                <h2>Special Collections</h2>
+                <h2 id="section-special-collections">Special Collections</h2>
                 <div class="grid-2">
                     <div class="entry"><a href="" class="dynamic-link" data-variant="behind+the+scenes">BTS archive</a></div>
                     <div class="entry"><a href="" class="dynamic-link" data-variant="private+gatherings">Private events</a></div>
@@ -605,7 +663,7 @@ permalink: /blog/
                 </div>
                 
                 <!-- SECTION 6: Platform Notes -->
-                <h2>Platform Notes</h2>
+                <h2 id="section-platform-notes">Platform Notes</h2>
                 <div class="grid-2">
                     <div class="entry"><a href="" class="dynamic-link" data-variant="instagram">Instagram</a></div>
                     <div class="entry"><a href="" class="dynamic-link" data-variant="facebook">Facebook</a></div>
@@ -654,7 +712,56 @@ permalink: /blog/
     
     <script>
     (function() {
-        // Ambil query dari URL
+        // GET SUBDOMAIN ATAU DOMAIN
+        function getDomainIdentifier() {
+            const hostname = window.location.hostname;
+            // Hapus www. jika ada
+            const cleanHost = hostname.replace(/^www\./, '');
+            const parts = cleanHost.split('.');
+            
+            // Cek apakah ada subdomain (lebih dari 2 bagian)
+            if (parts.length > 2) {
+                // Ambil subdomain (bagian pertama)
+                let subdomain = parts[0];
+                // Capitalize first letter
+                return subdomain.charAt(0).toUpperCase() + subdomain.slice(1);
+            } else {
+                // Domain utama (tanpa subdomain)
+                let domain = parts[0];
+                // Capitalize first letter
+                return domain.charAt(0).toUpperCase() + domain.slice(1);
+            }
+        }
+        
+        // FORMAT QUERY STRING (capitalize each word)
+        function formatQuery(query) {
+            return query.split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+        }
+        
+        // GENERATE TITLE PATTERN (konsisten untuk semua heading)
+        function generateHeadingText(query, domainId) {
+            // Pattern: "[Query] on [Domain/Subdomain] | Field Notes"
+            // Contoh: "Cute Girl on Fazri | Field Notes"
+            return `${query} on ${domainId} | Field Notes`;
+        }
+        
+        // GENERATE H2 ALTERNATIVE (untuk variasi section)
+        function generateH2Text(query, domainId, sectionName) {
+            // Pattern: "[Section]: [Query] Archive · [Domain]"
+            // Contoh: "Research Notes: Cute Girl Archive · Fazri"
+            return `${sectionName}: ${query} Archive · ${domainId}`;
+        }
+        
+        // GENERATE H3 TEXT
+        function generateH3Text(query, domainId, category) {
+            // Pattern: "[Category] · [Query] on [Domain]"
+            // Contoh: "Visual Materials · Cute Girl on Fazri"
+            return `${category} · ${query} on ${domainId}`;
+        }
+        
+        // AMBIL QUERY DARI URL
         const urlParams = new URLSearchParams(window.location.search);
         let query = urlParams.get('q');
         
@@ -669,28 +776,79 @@ permalink: /blog/
         document.getElementById('default-content').style.display = 'none';
         document.getElementById('query-content').style.display = 'block';
         
-        // Decode query
+        // Decode dan format query
         query = decodeURIComponent(query.replace(/\+/g, ' '));
-        const originalQuery = query;
+        const formattedQuery = formatQuery(query);
+        const domainId = getDomainIdentifier();
         
-        // Daftar kata yang akan dihapus untuk mendapatkan base name
-        const removeTerms = [
-            '2025', '2024'
-        ];
+        // TEXT UNTUK TITLE, H1, H2, H3 (konsisten)
+        const mainTitleText = generateHeadingText(formattedQuery, domainId);
         
-        // Fungsi untuk mendapatkan base name
-        function getBaseName(query) {
-            let base = query.toLowerCase();
-            removeTerms.forEach(term => {
-                const regex = new RegExp('\\b' + term + '\\s*', 'gi');
-                base = base.replace(regex, '');
-            });
-            return base.trim() || query;
+        // UPDATE <title>
+        document.title = mainTitleText;
+        
+        // UPDATE H1 (paling atas, tidak ada yang menghalangi)
+        const h1Element = document.getElementById('main-heading');
+        if (h1Element) {
+            h1Element.textContent = mainTitleText;
         }
         
-        const baseName = getBaseName(query);
+        // UPDATE SEMUA H2
+        const h2Elements = document.querySelectorAll('#query-content h2');
+        const sectionNames = [
+            'Research Notes',
+            'Visual Archive',
+            'Video Archive',
+            'Biographical Notes',
+            'Special Collections',
+            'Platform Notes',
+            'Related Journals',
+            'Research FAQs',
+            'Archive Notes'
+        ];
         
-        // Deteksi tipe query
+        h2Elements.forEach((h2, index) => {
+            if (index < sectionNames.length) {
+                h2.textContent = generateH2Text(formattedQuery, domainId, sectionNames[index]);
+            }
+        });
+        
+        // UPDATE SEMUA H3 (dynamic)
+        const h3Elements = document.querySelectorAll('#query-content h3');
+        const categories = [
+            '📷 Visual Materials',
+            '🎥 Audiovisual',
+            '📄 Documentation',
+            'Primary Collections',
+            'Thematic Archives',
+            'Performance Archive',
+            'Interview Collection',
+            'Production Notes',
+            'Personal Records',
+            'Professional Timeline',
+            'Social Platforms',
+            'Community Archives'
+        ];
+        
+        h3Elements.forEach((h3, index) => {
+            if (index < categories.length) {
+                h3.textContent = generateH3Text(formattedQuery, domainId, categories[index]);
+            }
+        });
+        
+        // Update meta description
+        document.getElementById('dynamic-description').setAttribute('content', 
+            `${formattedQuery} research archive on ${domainId}: visual documentation, video recordings, biographical notes, and special collections. Independent research journal.`);
+        
+        // Update breadcrumb
+        document.getElementById('breadcrumb-name').textContent = formattedQuery;
+        
+        // Update semua placeholder dengan formattedQuery
+        document.querySelectorAll('.query-placeholder').forEach(el => {
+            el.textContent = formattedQuery;
+        });
+        
+        // Tampilkan intro yang sesuai
         const queryLower = query.toLowerCase();
         let queryType = 'general';
         
@@ -706,50 +864,21 @@ permalink: /blog/
             queryType = 'platform';
         }
         
-        // Update title - gaya journal akademik
-        let title;
-        if (queryType === 'leak') title = `${query} | Field Notes · Alternative Media Archive`;
-        else if (queryType === 'photo') title = `${query} | Field Notes · Visual Studies Archive`;
-        else if (queryType === 'video') title = `${query} | Field Notes · Moving Image Collection`;
-        else if (queryType === 'bio') title = `${query} | Field Notes · Biographical Research`;
-        else if (queryType === 'platform') title = `${query} | Field Notes · Digital Platform Archive`;
-        else title = `${query} | Field Notes · Complete Research Entry`;
-        
-        document.title = title;
-        document.getElementById('dynamic-description').setAttribute('content', 
-            `${query} research archive: visual documentation, video recordings, biographical notes, and special collections. Independent research journal.`);
-        
-        // Update H1
-        document.getElementById('main-heading').textContent = title;
-        
-        // Update breadcrumb
-        document.getElementById('breadcrumb-name').textContent = baseName;
-        
-        // Update semua placeholder dengan baseName
-        document.querySelectorAll('.query-placeholder').forEach(el => {
-            el.textContent = baseName;
-        });
-        
-        // Tampilkan intro yang sesuai
         document.querySelectorAll('.intro-varian').forEach(el => el.classList.add('hidden'));
-        document.getElementById(`intro-${queryType}`).classList.remove('hidden');
+        const introElement = document.getElementById(`intro-${queryType}`);
+        if (introElement) introElement.classList.remove('hidden');
         
         // Update semua dynamic links
         function updateLinks() {
             document.querySelectorAll('.dynamic-link').forEach(link => {
                 const variant = link.getAttribute('data-variant');
                 if (variant) {
-                    link.href = `/docs/?q=${encodeURIComponent(baseName + ' ' + variant)}`;
+                    link.href = `/docs/?q=${encodeURIComponent(formattedQuery + ' ' + variant)}`;
                 }
             });
         }
         
         updateLinks();
-        
-        // Update semua link yang perlu base name di text
-        document.querySelectorAll('.base-placeholder').forEach(el => {
-            el.textContent = baseName;
-        });
         
     })();
     </script>

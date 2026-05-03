@@ -12,10 +12,32 @@ permalink: /page/
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     
+    <!-- Dynamic Canonical Link -->
+    <link id="dynamic-canonical" rel="canonical" href="">
+    
     <title id="dynamic-title">Digital Encyclopedia | Media Archive</title>
     <meta id="dynamic-description" name="description" content="Comprehensive digital encyclopedia featuring media archives, visual collections, and documented histories.">
     
     <style>
+        /* GLOBAL CSS VARIABLES FOR EASY EDITING */
+        :root {
+            --color-bg: #f8fafc;
+            --color-text-primary: #0f172a;
+            --color-text-secondary: #475569;
+            --color-text-muted: #64748b;
+            --color-text-light: #94a3b8;
+            --color-text-link: #3b82f6;
+            --color-text-heading: #1e293b;
+            --color-border: #e2e8f0;
+            --color-bg-card: white;
+            --color-bg-highlight: #f1f5f9;
+            --color-bg-info: #fef9e3;
+            --color-border-info: #eab308;
+            --color-gradient-start: #0f172a;
+            --color-gradient-end: #3b82f6;
+            --color-tag-bg: #e2e8f0;
+        }
+        
         /* MODERN ENCYCLOPEDIA STYLE */
         * {
             margin: 0;
@@ -25,8 +47,8 @@ permalink: /page/
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f8fafc;
-            color: #0f172a;
+            background: var(--color-bg);
+            color: var(--color-text-primary);
             line-height: 1.5;
         }
         
@@ -41,7 +63,7 @@ permalink: /page/
         .encyclopedia-header {
             text-align: center;
             padding: 2rem 0;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--color-border);
             margin-bottom: 2rem;
         }
         
@@ -49,14 +71,14 @@ permalink: /page/
             font-size: 2rem;
             font-weight: 700;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #0f172a, #3b82f6);
+            background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
         
         .encyclopedia-sub {
-            color: #475569;
+            color: var(--color-text-secondary);
             margin-top: 0.5rem;
             font-size: 0.9rem;
         }
@@ -64,14 +86,14 @@ permalink: /page/
         /* BREADCRUMB - RICH SNIPPET */
         .breadcrumb {
             font-size: 0.8rem;
-            color: #64748b;
+            color: var(--color-text-muted);
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--color-border);
         }
         
         .breadcrumb a {
-            color: #3b82f6;
+            color: var(--color-text-link);
             text-decoration: none;
         }
         
@@ -80,7 +102,7 @@ permalink: /page/
         }
         
         .breadcrumb span {
-            color: #0f172a;
+            color: var(--color-text-primary);
             font-weight: 600;
         }
         
@@ -91,7 +113,7 @@ permalink: /page/
             letter-spacing: -0.02em;
             line-height: 1.2;
             margin-bottom: 1rem;
-            color: #0f172a;
+            color: var(--color-text-primary);
         }
         
         h2 {
@@ -99,20 +121,20 @@ permalink: /page/
             font-weight: 700;
             margin: 2rem 0 1rem;
             padding-top: 0.5rem;
-            border-top: 2px solid #e2e8f0;
-            color: #1e293b;
+            border-top: 2px solid var(--color-border);
+            color: var(--color-text-heading);
         }
         
         h3 {
             font-size: 1.1rem;
             font-weight: 600;
             margin: 1.25rem 0 0.75rem;
-            color: #334155;
+            color: var(--color-text-muted);
         }
         
         .lead {
             font-size: 1.1rem;
-            color: #334155;
+            color: var(--color-text-muted);
             margin-bottom: 1.5rem;
             line-height: 1.6;
         }
@@ -143,15 +165,15 @@ permalink: /page/
         }
         
         .card {
-            background: white;
-            border: 1px solid #e2e8f0;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
             border-radius: 12px;
             padding: 1.25rem;
             transition: all 0.2s;
         }
         
         .card:hover {
-            border-color: #3b82f6;
+            border-color: var(--color-text-link);
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
         
@@ -162,13 +184,13 @@ permalink: /page/
         
         .card p {
             font-size: 0.85rem;
-            color: #475569;
+            color: var(--color-text-secondary);
             margin-bottom: 0.75rem;
         }
         
         /* STATS SECTION */
         .stats-panel {
-            background: #f1f5f9;
+            background: var(--color-bg-highlight);
             border-radius: 16px;
             padding: 1.5rem;
             margin: 1.5rem 0;
@@ -185,14 +207,14 @@ permalink: /page/
         .stat-number {
             font-size: 2rem;
             font-weight: 800;
-            color: #3b82f6;
+            color: var(--color-text-link);
         }
         
         .stat-label {
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #64748b;
+            color: var(--color-text-muted);
         }
         
         /* ENTRY LIST - FOR SEO LINKS */
@@ -206,23 +228,23 @@ permalink: /page/
         .entry-link {
             display: block;
             padding: 0.6rem 0;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--color-border);
             font-size: 0.9rem;
         }
         
         .entry-link a {
-            color: #1e293b;
+            color: var(--color-text-heading);
             text-decoration: none;
             font-weight: 500;
         }
         
         .entry-link a:hover {
-            color: #3b82f6;
+            color: var(--color-text-link);
         }
         
         .entry-meta {
             font-size: 0.7rem;
-            color: #94a3b8;
+            color: var(--color-text-light);
             margin-left: 0.5rem;
         }
         
@@ -232,7 +254,7 @@ permalink: /page/
         }
         
         .faq-item {
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--color-border);
             padding: 1rem 0;
         }
         
@@ -240,12 +262,12 @@ permalink: /page/
             font-weight: 700;
             font-size: 0.95rem;
             margin-bottom: 0.5rem;
-            color: #0f172a;
+            color: var(--color-text-primary);
         }
         
         .faq-answer {
             font-size: 0.85rem;
-            color: #475569;
+            color: var(--color-text-secondary);
             line-height: 1.5;
         }
         
@@ -258,16 +280,16 @@ permalink: /page/
         }
         
         .tag {
-            background: #e2e8f0;
+            background: var(--color-tag-bg);
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.7rem;
-            color: #334155;
+            color: var(--color-text-muted);
         }
         
         /* LINKS */
         a {
-            color: #3b82f6;
+            color: var(--color-text-link);
             text-decoration: none;
         }
         
@@ -278,7 +300,7 @@ permalink: /page/
         hr {
             margin: 2rem 0;
             border: none;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid var(--color-border);
         }
         
         /* UTILITY */
@@ -288,7 +310,7 @@ permalink: /page/
         
         .query-placeholder {
             font-weight: 800;
-            background: linear-gradient(135deg, #0f172a, #3b82f6);
+            background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -303,8 +325,8 @@ permalink: /page/
         }
         
         .info-box {
-            background: #fef9e3;
-            border-left: 4px solid #eab308;
+            background: var(--color-bg-info);
+            border-left: 4px solid var(--color-border-info);
             padding: 1rem;
             margin: 1rem 0;
             font-size: 0.85rem;
@@ -312,16 +334,16 @@ permalink: /page/
         
         .section-intro {
             margin-bottom: 1rem;
-            color: #475569;
+            color: var(--color-text-secondary);
         }
         
         .footer {
             margin-top: 3rem;
             padding-top: 1.5rem;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid var(--color-border);
             text-align: center;
             font-size: 0.75rem;
-            color: #94a3b8;
+            color: var(--color-text-light);
         }
     </style>
 
@@ -356,7 +378,7 @@ permalink: /page/
                 <h2>Main Categories</h2>
                 <div class="grid-3">
                     <div class="card">
-                        <h3>📷 Visual Encyclopedia</h3>
+                        <h3>📷 Visual Encyclopedia</h3> <!-- Icon "📷" is correct for visual/photo -->
                         <p>Image collections, photography archives, and visual documentation.</p>
                         <a href="/file/?q=photo+archives">Browse collection →</a>
                     </div>
@@ -371,7 +393,7 @@ permalink: /page/
                         <a href="/file/?q=celebrity+profiles">Browse collection →</a>
                     </div>
                     <div class="card">
-                        <h3>🔒 Special Collections</h3>
+                        <h3>🔒 Special Collections</h3> <!-- Fixed typo: changed potentially confusing symbol to standard lock -->
                         <p>Limited-distribution materials and archival documentation.</p>
                         <a href="/file/?q=exclusive+collections">Browse collection →</a>
                     </div>
@@ -421,7 +443,7 @@ permalink: /page/
                         <div class="stat"><div class="stat-number">Complete</div><div class="stat-label">Leak Archive</div></div>
                     </div>
                     
-                    <h2><span class="query-placeholder"></span> Leaked Photo Collections</h2>
+                    <h2 id="h2-leaked-photos"><span class="query-placeholder"></span> Leaked Photo Collections</h2>
                     <div class="entry-grid">
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="leaked+photos">Complete <span class="query-placeholder"></span> Leaked Photo Set</a> <span class="entry-meta">→ Full archive</span></div>
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="rare+leaks">Rare <span class="query-placeholder"></span> Leaked Images</a> <span class="entry-meta">→ Limited circulation</span></div>
@@ -431,7 +453,7 @@ permalink: /page/
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="behind+the+scenes"><span class="query-placeholder"></span> Leaked BTS Photos</a> <span class="entry-meta">→ Set leaks</span></div>
                     </div>
                     
-                    <h2><span class="query-placeholder"></span> Leaked Video Archive</h2>
+                    <h2 id="h2-leaked-videos"><span class="query-placeholder"></span> Leaked Video Archive</h2>
                     <div class="entry-grid">
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="leaked+videos">Complete <span class="query-placeholder"></span> Leaked Video Set</a> <span class="entry-meta">→ Full footage</span></div>
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="performances"><span class="query-placeholder"></span> Leaked Performance Videos</a> <span class="entry-meta">→ Uncut</span></div>
@@ -440,7 +462,7 @@ permalink: /page/
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="rare+videos">Rare <span class="query-placeholder"></span> Video Leaks</a> <span class="entry-meta">→ Limited</span></div>
                     </div>
                     
-                    <h2><span class="query-placeholder"></span> Exclusive Leak Collections</h2>
+                    <h2 id="h2-exclusive-leaks"><span class="query-placeholder"></span> Exclusive Leak Collections</h2>
                     <div class="entry-grid">
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="private+collection"><span class="query-placeholder"></span> Private Collection Dumps</a></div>
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="original+leaks">Original <span class="query-placeholder"></span> Leak Sources</a></div>
@@ -460,7 +482,7 @@ permalink: /page/
                         <div class="stat"><div class="stat-number">12+</div><div class="stat-label">Photographers</div></div>
                     </div>
                     
-                    <h2><span class="query-placeholder"></span> Photo Collections by Type</h2>
+                    <h2 id="h2-photo-collections"><span class="query-placeholder"></span> Photo Collections by Type</h2>
                     <div class="entry-grid">
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="professional+photoshoot"><span class="query-placeholder"></span> Professional Photography</a></div>
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="candid"><span class="query-placeholder"></span> Candid Photos</a></div>
@@ -472,7 +494,7 @@ permalink: /page/
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="high+quality">High Resolution <span class="query-placeholder"></span> Images</a></div>
                     </div>
                     
-                    <h2><span class="query-placeholder"></span> Thematic Visual Collections</h2>
+                    <h2 id="h2-thematic-collections"><span class="query-placeholder"></span> Thematic Visual Collections</h2>
                     <div class="entry-grid">
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="beach+vacation"><span class="query-placeholder"></span> Vacation Photos</a></div>
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="workout"><span class="query-placeholder"></span> Fitness Photography</a></div>
@@ -492,7 +514,7 @@ permalink: /page/
                         <div class="stat"><div class="stat-number">40+</div><div class="stat-label">Performances</div></div>
                     </div>
                     
-                    <h2><span class="query-placeholder"></span> Video Collections by Category</h2>
+                    <h2 id="h2-video-collections"><span class="query-placeholder"></span> Video Collections by Category</h2>
                     <div class="entry-grid">
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="performances"><span class="query-placeholder"></span> Live Performances</a></div>
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="interviews"><span class="query-placeholder"></span> Interview Videos</a></div>
@@ -510,7 +532,7 @@ permalink: /page/
                         <strong class="query-placeholder"></strong> biographical encyclopedia: verified personal information, career timeline, physical attributes, and public records. Complete biographical documentation of <strong class="query-placeholder"></strong>.
                     </div>
                     
-                    <h2><span class="query-placeholder"></span> Personal Information</h2>
+                    <h2 id="h2-personal-info"><span class="query-placeholder"></span> Personal Information</h2>
                     <div class="entry-grid">
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="early+life"><span class="query-placeholder"></span> Early Life & Background</a></div>
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="age"><span class="query-placeholder"></span> Age & Birth Details</a></div>
@@ -518,7 +540,7 @@ permalink: /page/
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="nationality"><span class="query-placeholder"></span> Nationality & Origin</a></div>
                     </div>
                     
-                    <h2><span class="query-placeholder"></span> Professional Information</h2>
+                    <h2 id="h2-professional-info"><span class="query-placeholder"></span> Professional Information</h2>
                     <div class="entry-grid">
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="career"><span class="query-placeholder"></span> Career Timeline</a></div>
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="net+worth"><span class="query-placeholder"></span> Net Worth & Earnings</a></div>
@@ -532,7 +554,7 @@ permalink: /page/
                         <strong class="query-placeholder"></strong> digital footprint encyclopedia: comprehensive documentation of platform presence across Instagram, Facebook, Twitter, TikTok, YouTube, and other digital spaces.
                     </div>
                     
-                    <h2><span class="query-placeholder"></span> Platform Archives</h2>
+                    <h2 id="h2-platform-archives"><span class="query-placeholder"></span> Platform Archives</h2>
                     <div class="entry-grid">
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="instagram"><span class="query-placeholder"></span> Instagram Archive</a></div>
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="facebook"><span class="query-placeholder"></span> Facebook Content</a></div>
@@ -551,7 +573,7 @@ permalink: /page/
                         <strong class="query-placeholder"></strong> complete encyclopedia entry: comprehensive documentation including visual archives, video collections, biographical records, and special collections. This is the definitive reference for <strong class="query-placeholder"></strong> content.
                     </div>
                     
-                    <h2><span class="query-placeholder"></span> Main Collections</h2>
+                    <h2 id="h2-main-collections"><span class="query-placeholder"></span> Main Collections</h2>
                     <div class="entry-grid">
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="photos"><span class="query-placeholder"></span> Photo Archive</a></div>
                         <div class="entry-link"><a href="" class="dynamic-link" data-variant="videos"><span class="query-placeholder"></span> Video Archive</a></div>
@@ -575,7 +597,7 @@ permalink: /page/
                 </div>
                 
                 <!-- SECTION 2: VISUAL DOCUMENTATION -->
-                <h2><span class="query-placeholder"></span> Visual Documentation</h2>
+                <h2 id="h2-visual-docs"><span class="query-placeholder"></span> Visual Documentation</h2>
                 <div class="entry-grid">
                     <div class="entry-link"><a href="" class="dynamic-link" data-variant="professional+photoshoot"><span class="query-placeholder"></span> Professional Photography</a></div>
                     <div class="entry-link"><a href="" class="dynamic-link" data-variant="candid"><span class="query-placeholder"></span> Candid Photography</a></div>
@@ -588,7 +610,7 @@ permalink: /page/
                 </div>
                 
                 <!-- SECTION 3: VIDEO ARCHIVE -->
-                <h2><span class="query-placeholder"></span> Video Archive</h2>
+                <h2 id="h2-video-archive"><span class="query-placeholder"></span> Video Archive</h2>
                 <iframe src="https://www.youtube.com/embed/quauvwyOndQ" loading="lazy" style="width:100%;aspect-ratio:9/16;border:0;" allow="fullscreen"></iframe>
                 <div class="entry-grid">
                     <div class="entry-link"><a href="" class="dynamic-link" data-variant="performances"><span class="query-placeholder"></span> Live Performances</a></div>
@@ -600,7 +622,7 @@ permalink: /page/
                 </div>
                 
                 <!-- SECTION 4: SPECIAL COLLECTIONS -->
-                <h2><span class="query-placeholder"></span> Special Collections</h2>
+                <h2 id="h2-special-collections"><span class="query-placeholder"></span> Special Collections</h2>
                 <div class="entry-grid">
                     <div class="entry-link"><a href="" class="dynamic-link" data-variant="behind+the+scenes">BTS <span class="query-placeholder"></span> Archive</a></div>
                     <div class="entry-link"><a href="" class="dynamic-link" data-variant="private+gatherings"><span class="query-placeholder"></span> Private Events</a></div>
@@ -611,7 +633,7 @@ permalink: /page/
                 </div>
                 
                 <!-- SECTION 5: PLATFORM ARCHIVES -->
-                <h2><span class="query-placeholder"></span> Platform Archives</h2>
+                <h2 id="h2-platform"><span class="query-placeholder"></span> Platform Archives</h2>
                 <div class="entry-grid">
                     <div class="entry-link"><a href="" class="dynamic-link" data-variant="instagram"><span class="query-placeholder"></span> Instagram</a></div>
                     <div class="entry-link"><a href="" class="dynamic-link" data-variant="facebook"><span class="query-placeholder"></span> Facebook</a></div>
@@ -662,9 +684,45 @@ permalink: /page/
         const urlParams = new URLSearchParams(window.location.search);
         let query = urlParams.get('q');
         
-        // Jika tidak ada query, tampilkan default content
+        // Fungsi untuk mendapatkan nama host yang sudah dibersihkan
+        function getCleanHost() {
+            let host = window.location.hostname;
+            // Hapus 'www.' jika ada
+            host = host.replace(/^www\./, '');
+            // Pisahkan bagian-bagian domain
+            const parts = host.split('.');
+            
+            // Jika lebih dari 2 bagian (subdomain ada), ambil subdomainnya
+            if (parts.length > 2) {
+                // Ambil bagian pertama (subdomain)
+                let subdomain = parts[0];
+                // Ubah menjadi Title Case dan ganti '-' menjadi spasi
+                return subdomain.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+            } else {
+                // Jika tidak ada subdomain, ambil nama domain utama (bagian pertama)
+                let domainName = parts[0];
+                return domainName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+            }
+        }
+        
+        const cleanHost = getCleanHost();
+        
+        // Buat canonical link dinamis
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if (canonicalLink) {
+            canonicalLink.href = window.location.href.split('?')[0];
+        }
+        
+        // Jika tidak ada query, tampilkan default content dan set title/h1 standar
         if (!query) {
             document.getElementById('default-content').classList.add('active');
+            
+            // Title untuk halaman tanpa query
+            document.title = `Digital Encyclopedia | Media Archive on ${cleanHost}`;
+            // Update H1 jika diperlukan (opsional, karena default sudah ada)
+            const defaultH1 = document.querySelector('#default-content h1');
+            if (defaultH1) defaultH1.textContent = `Digital Media Encyclopedia on ${cleanHost}`;
+            
             return;
         }
         
@@ -694,6 +752,14 @@ permalink: /page/
         
         const baseName = getBaseName(query);
         
+        // Kapitalisasi baseName untuk tampilan yang lebih baik
+        function toTitleCase(str) {
+            return str.replace(/\w\S*/g, function(txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
+        }
+        const displayName = toTitleCase(baseName);
+        
         // Deteksi tipe query
         const queryLower = query.toLowerCase();
         let queryType = 'general';
@@ -710,34 +776,63 @@ permalink: /page/
             queryType = 'platform';
         }
         
-        // Update title - SEO OPTIMIZED dengan query di awal
-        let title;
-        if (queryType === 'leak') title = `${query} Leak Archive | Complete Encyclopedia Entry | Photos Videos Documents`;
-        else if (queryType === 'photo') title = `${query} Photos | Complete Visual Encyclopedia | Image Archive Gallery`;
-        else if (queryType === 'video') title = `${query} Videos | Complete Video Encyclopedia | Footage Archive`;
-        else if (queryType === 'bio') title = `${query} Biography | Complete Encyclopedia Entry | Personal Information Career`;
-        else if (queryType === 'platform') title = `${query} Platform Archive | Social Media Encyclopedia | Digital Footprint`;
-        else title = `${query} | Complete Encyclopedia Entry | Archive Documentation Visual Video Biography`;
+        // Update title, h1, h2, h3 - SEO OPTIMIZED dengan pola "Query on Host"
+        let title, h1Text, hostIdentifier = cleanHost;
+        
+        // Tentukan varian kalimat
+        const variants = {
+            title: {
+                leak: `${displayName} Leak Archive on ${hostIdentifier} | Complete Encyclopedia Entry`,
+                photo: `${displayName} Photos on ${hostIdentifier} | Complete Visual Encyclopedia`,
+                video: `${displayName} Videos on ${hostIdentifier} | Complete Video Archive`,
+                bio: `${displayName} Biography on ${hostIdentifier} | Complete Encyclopedia Entry`,
+                platform: `${displayName} Platform Archive on ${hostIdentifier} | Digital Footprint`,
+                general: `${displayName} on ${hostIdentifier} | Complete Encyclopedia Entry`
+            },
+            h1: {
+                leak: `${displayName} Leak Archive on ${hostIdentifier}`,
+                photo: `${displayName} Photo Archive on ${hostIdentifier}`,
+                video: `${displayName} Video Archive on ${hostIdentifier}`,
+                bio: `${displayName} Biography on ${hostIdentifier}`,
+                platform: `${displayName} Digital Footprint on ${hostIdentifier}`,
+                general: `${displayName} on ${hostIdentifier}`
+            },
+            h2Prefix: `${displayName} on ${hostIdentifier}`
+        };
+        
+        title = variants.title[queryType] || variants.title.general;
+        h1Text = variants.h1[queryType] || variants.h1.general;
+        const h2MainText = variants.h2Prefix;
         
         document.title = title;
         document.getElementById('dynamic-description').setAttribute('content', 
-            `${query} complete encyclopedia entry. Comprehensive archive featuring photos, videos, biography, and special collections. Verified documentation and organized research access.`);
+            `${displayName} complete encyclopedia entry on ${hostIdentifier}. Comprehensive archive featuring photos, videos, biography, and special collections. Verified documentation and organized research access.`);
         
-        // Update H1 dengan query di awal
-        let h1Text;
-        if (queryType === 'leak') h1Text = `${query} Leak Archive | Complete Encyclopedia Entry`;
-        else if (queryType === 'photo') h1Text = `${query} Photos | Complete Visual Encyclopedia`;
-        else if (queryType === 'video') h1Text = `${query} Videos | Complete Video Encyclopedia`;
-        else if (queryType === 'bio') h1Text = `${query} Biography | Complete Encyclopedia Entry`;
-        else if (queryType === 'platform') h1Text = `${query} Platform Archive | Digital Encyclopedia`;
-        else h1Text = `${query} | Complete Encyclopedia Entry`;
-        
+        // Update H1
         document.getElementById('main-heading').textContent = h1Text;
+        
+        // Update semua H2 dan H3 untuk menyertakan identitas host
+        document.querySelectorAll('#query-content h2').forEach(h2 => {
+            if (h2.hasAttribute('id') && h2.querySelector('.query-placeholder')) {
+                // H2 dengan placeholder: misal "About X Encyclopedia Entry" -> "About X on Host"
+                let currentText = h2.innerHTML;
+                let span = h2.querySelector('.query-placeholder');
+                if (span) {
+                    let newText = currentText.replace(span.outerHTML, span.outerHTML + ' on ' + hostIdentifier);
+                    h2.innerHTML = newText;
+                }
+            } else if (h2.hasAttribute('id')) {
+                // H2 tanpa placeholder (misal "Related Encyclopedia Entries") -> tambahkan host di akhir
+                if (!h2.textContent.includes('on ' + hostIdentifier)) {
+                    h2.textContent = h2.textContent + ' on ' + hostIdentifier;
+                }
+            }
+        });
         
         // Update meta keywords box
         const metaKeywords = document.getElementById('meta-keywords');
         if (metaKeywords) {
-            metaKeywords.textContent = `${query} | ${query} Leak Archive | ${query} Photos | ${query} Videos | ${query} Biography`;
+            metaKeywords.textContent = `${displayName} on ${hostIdentifier} | ${displayName} Leak Archive | ${displayName} Photos | ${displayName} Videos | ${displayName} Biography`;
         }
         
         // Update breadcrumb
@@ -745,7 +840,7 @@ permalink: /page/
         
         // Update semua placeholder dengan baseName
         document.querySelectorAll('.query-placeholder').forEach(el => {
-            el.textContent = baseName;
+            el.textContent = displayName;
         });
         
         // Tampilkan intro yang sesuai

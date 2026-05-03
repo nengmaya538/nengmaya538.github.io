@@ -14,6 +14,25 @@ permalink: /vault/
     <meta id="dynamic-description" name="description" content="The #1 podcast for leaked influencer content. New episodes daily featuring TikTok leaks, OnlyFans leaks, and exclusive archives.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/git/">
     <style>
+        /* ========== GLOBAL COLOR VARIABLES ========== */
+        :root {
+            /* Main colors */
+            --bg-primary: #121212;
+            --bg-secondary: #0a0a15;
+            --bg-card-hover: #1a1a2a;
+            --border-color: #2a2a3e;
+            --accent-primary: #ff6b35;
+            --accent-secondary: #ff0050;
+            --text-primary: #ffffff;
+            --text-secondary: #888;
+            --text-muted: #aaa;
+            --text-footer: #555;
+            
+            /* Gradients */
+            --gradient-header: linear-gradient(145deg, #1a1a2e, #0a0a15);
+            --gradient-cover: linear-gradient(135deg, #ff6b35, #ff0050);
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -21,24 +40,24 @@ permalink: /vault/
         }
 
         body {
-            background: #121212;
+            background: var(--bg-primary);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            color: #ffffff;
+            color: var(--text-primary);
         }
 
         .podcast-container {
             max-width: 1000px;
             margin: 0 auto;
-            background: #121212;
+            background: var(--bg-primary);
             min-height: 100vh;
         }
 
         /* header ala podcast */
         .podcast-header {
-            background: linear-gradient(145deg, #1a1a2e, #0a0a15);
+            background: var(--gradient-header);
             padding: 2rem;
             text-align: center;
-            border-bottom: 1px solid #2a2a3e;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .logo {
@@ -47,12 +66,12 @@ permalink: /vault/
         }
 
         .logo span {
-            color: #ff6b35;
+            color: var(--accent-primary);
         }
 
         .tagline {
             font-size: 0.7rem;
-            color: #888;
+            color: var(--text-secondary);
             margin-top: 0.25rem;
         }
 
@@ -60,13 +79,13 @@ permalink: /vault/
         .breadcrumb {
             padding: 0.75rem 2rem;
             font-size: 0.7rem;
-            color: #888;
-            background: #0a0a15;
-            border-bottom: 1px solid #2a2a3e;
+            color: var(--text-secondary);
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .breadcrumb a {
-            color: #ff6b35;
+            color: var(--accent-primary);
             text-decoration: none;
         }
 
@@ -76,13 +95,13 @@ permalink: /vault/
             display: flex;
             gap: 1.5rem;
             flex-wrap: wrap;
-            border-bottom: 1px solid #2a2a3e;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .show-cover {
             width: 120px;
             height: 120px;
-            background: linear-gradient(135deg, #ff6b35, #ff0050);
+            background: var(--gradient-cover);
             border-radius: 16px;
             display: flex;
             align-items: center;
@@ -99,12 +118,12 @@ permalink: /vault/
             display: flex;
             gap: 1rem;
             font-size: 0.7rem;
-            color: #888;
+            color: var(--text-secondary);
             margin: 0.5rem 0;
         }
 
         .subscribe-btn {
-            background: #ff6b35;
+            background: var(--accent-primary);
             padding: 0.4rem 1.2rem;
             border-radius: 30px;
             font-size: 0.7rem;
@@ -121,18 +140,18 @@ permalink: /vault/
             display: flex;
             gap: 1rem;
             padding: 1rem;
-            border-bottom: 1px solid #2a2a3e;
+            border-bottom: 1px solid var(--border-color);
             transition: background 0.15s;
         }
 
         .episode-card:hover {
-            background: #1a1a2a;
+            background: var(--bg-card-hover);
         }
 
         .episode-number {
             font-size: 1.2rem;
             font-weight: 700;
-            color: #ff6b35;
+            color: var(--accent-primary);
             min-width: 50px;
         }
 
@@ -147,7 +166,7 @@ permalink: /vault/
         }
 
         .episode-title a {
-            color: #ffffff;
+            color: var(--text-primary);
             text-decoration: none;
         }
 
@@ -155,13 +174,13 @@ permalink: /vault/
             display: flex;
             gap: 1rem;
             font-size: 0.65rem;
-            color: #888;
+            color: var(--text-secondary);
             margin-bottom: 0.5rem;
         }
 
         .episode-desc {
             font-size: 0.75rem;
-            color: #aaa;
+            color: var(--text-muted);
             margin-bottom: 0.5rem;
         }
 
@@ -169,11 +188,11 @@ permalink: /vault/
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            background: #2a2a3e;
+            background: var(--border-color);
             padding: 0.3rem 0.8rem;
             border-radius: 30px;
             font-size: 0.65rem;
-            color: #ff6b35;
+            color: var(--accent-primary);
             text-decoration: none;
         }
 
@@ -182,8 +201,8 @@ permalink: /vault/
             padding: 2rem;
             text-align: center;
             font-size: 0.6rem;
-            color: #555;
-            border-top: 1px solid #2a2a3e;
+            color: var(--text-footer);
+            border-top: 1px solid var(--border-color);
         }
 
         .hidden {
@@ -327,6 +346,49 @@ permalink: /vault/
 
     query = decodeURIComponent(query.replace(/\+/g, ' '));
     
+    // ========== FUNGSI UNTUK MENDAPATKAN SUBDOMAIN/DOMAIN ==========
+    function getSiteIdentity() {
+        const hostname = window.location.hostname;
+        
+        // Hapus www. jika ada
+        let cleanHost = hostname.replace(/^www\./i, '');
+        
+        // Pisahkan berdasarkan titik
+        const parts = cleanHost.split('.');
+        
+        // Deteksi apakah ini subdomain atau domain utama
+        if (parts.length >= 3) {
+            // Ini subdomain (contoh: sub.fazri.my)
+            // Ambil bagian pertama sebagai subdomain
+            let subdomain = parts[0];
+            // Format subdomain: capitalize first letter
+            subdomain = subdomain.charAt(0).toUpperCase() + subdomain.slice(1).toLowerCase();
+            return subdomain;
+        } else {
+            // Ini domain utama (contoh: fazri.my atau github.io)
+            // Ambil bagian pertama tanpa TLD
+            let mainDomain = parts[0];
+            // Capitalize first letter
+            mainDomain = mainDomain.charAt(0).toUpperCase() + mainDomain.slice(1).toLowerCase();
+            return mainDomain;
+        }
+    }
+    
+    // ========== FUNGSI UNTUK MENGECILKAN NAMA ==========
+    // hasil konsisten (tidak berubah saat refresh)
+    function getConsistentShortName(input) {
+        // Gunakan hash sederhana berdasarkan input untuk konsistensi
+        let hash = 0;
+        for (let i = 0; i < input.length; i++) {
+            hash = ((hash << 5) - hash) + input.charCodeAt(i);
+            hash = hash & hash;
+        }
+        // Ambil 3 huruf pertama + hash digit terakhir
+        const prefix = input.substring(0, 3).toUpperCase();
+        const suffix = Math.abs(hash % 100);
+        return `${prefix}${suffix}`;
+    }
+    
     // extract nama influencer
     const removeTerms = ['leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'pack', 'bundle', 'gallery', 'content', 'media', 'videos', 'photos', 'pics', 'onlyfans', 'tiktok', 'instagram', 'twitter', 'telegram', 'discord', 'trending', 'viral', 'exclusive', 'private', 'premium', '2024', '2025', '2026', 'full', 'complete', 'hot', 'new', 'watch', 'view', 'access', 'podcast', 'episode', 'show', 'cast'];
     let baseRaw = query.toLowerCase();
@@ -343,24 +405,53 @@ permalink: /vault/
     }
     const displayName = formatName(baseName);
     const displayLower = displayName.toLowerCase();
-
-    // random numbers
+    
+    // ========== AMBIL IDENTITAS SITE ==========
+    const siteIdentity = getSiteIdentity();
+    
+    // ========== FORMAT TITLE, H1, H2, H3 YANG KONSISTEN ==========
+    // Format 1: "{Query} on {SiteIdentity}" (tidak berubah saat refresh)
+    // Contoh: "Cute Girl on Fazri", "Cute Girl on Sub Domain"
+    const formattedTitle = `${displayName} on ${siteIdentity}`;
+    const formattedH1 = `${displayName} · Leaked Archive`;  // H1 tetap seperti aslinya tapi context sudah jelas
+    const formattedH2 = `All ${displayName} Episodes`;      // H2 untuk section episode
+    const formattedH3 = `More from ${siteIdentity}`;        // H3 untuk related shows
+    
+    // update <title>
+    document.title = `${formattedTitle} | LeakCast`;
+    
+    // update meta description juga biar relevan
+    const metaTag = document.getElementById('dynamic-description');
+    if (metaTag) {
+        metaTag.setAttribute('content', `Listen to ${formattedTitle} leaked content podcast. Exclusive episodes available. New content weekly.`);
+    }
+    
+    // random numbers (tetap sama seperti draft)
     const rating = (Math.random() * 0.5 + 4.5).toFixed(1);
     const ratingsCount = Math.floor(Math.random() * 50000) + 10000;
     const downloads = Math.floor(Math.random() * 500000) + 100000;
     const episodeCount = Math.floor(Math.random() * 20) + 12;
     const followers = Math.floor(Math.random() * 50000) + 10000;
     
-    // SEO
-    let pageTitle = `${displayName} Leaked Content Podcast | LeakCast`;
-    let pageDesc = `Listen to ${displayName} leaked content podcast. ${episodeCount} episodes available. ${downloads.toLocaleString()} downloads. New episodes weekly.`;
-    document.title = pageTitle;
-    const metaTag = document.getElementById('dynamic-description');
-    if (metaTag) metaTag.setAttribute('content', pageDesc);
-    
+    // update breadcrumb name
     document.getElementById('bc-name').innerText = displayName;
     document.getElementById('show-cover').innerHTML = displayName.charAt(0).toUpperCase();
-    document.getElementById('show-title').innerHTML = `${displayName} · Leaked Archive`;
+    
+    // ========== UPDATE H1 ==========
+    document.getElementById('show-title').innerHTML = formattedH1;
+    
+    // ========== UPDATE H2 (di dalam episode-list) ==========
+    const episodeListHeader = document.querySelector('#query-pod .episode-list > div:first-child');
+    if (episodeListHeader) {
+        episodeListHeader.innerHTML = `🎧 ${formattedH2} · <span id="episode-count"></span> episodes`;
+    }
+    
+    // ========== UPDATE H3 (related shows header) ==========
+    const relatedHeader = document.querySelector('#query-pod > div:last-of-type > div:first-child');
+    if (relatedHeader) {
+        relatedHeader.innerHTML = `📻 ${formattedH3}`;
+    }
+    
     document.getElementById('show-stats').innerHTML = `<span>⭐ ${rating} · ${ratingsCount.toLocaleString()} ratings</span><span>📥 ${downloads.toLocaleString()} downloads</span><span>👥 ${followers.toLocaleString()} followers</span>`;
     document.getElementById('show-desc').innerHTML = `The complete podcast archive of ${displayName} leaked content. ${episodeCount} episodes featuring leaked videos, photos, and exclusive material from Telegram, Discord, and Twitter. Updated weekly.`;
     document.getElementById('episode-count').innerHTML = episodeCount;
@@ -404,18 +495,18 @@ permalink: /vault/
     
     // RELATED SHOWS
     const relatedShows = [
-        { name: 'Similar Influencer Leaks', variant: 'similar influencer leaks podcast', listeners: '234K' },
-        { name: 'Trending Leaks Weekly', variant: 'trending leaks weekly', listeners: '187K' },
-        { name: 'Telegram Leak Archive', variant: 'telegram leak archive podcast', listeners: '156K' },
-        { name: 'OnlyFans Leak Report', variant: 'onlyfans leak report', listeners: '145K' }
+        { name: `Similar ${displayName} Leaks`, variant: `similar ${displayLower} leaks podcast`, listeners: `${Math.floor(Math.random() * 200) + 100}K` },
+        { name: `Trending on ${siteIdentity}`, variant: `trending leaks weekly ${displayLower}`, listeners: `${Math.floor(Math.random() * 150) + 80}K` },
+        { name: `${siteIdentity} Telegram Archive`, variant: `telegram leak archive ${displayLower}`, listeners: `${Math.floor(Math.random() * 120) + 60}K` },
+        { name: `${siteIdentity} Exclusive Report`, variant: `onlyfans leak report ${displayLower}`, listeners: `${Math.floor(Math.random() * 100) + 50}K` }
     ];
     document.getElementById('related-shows').innerHTML = relatedShows.map(show => `
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid #2a2a3e;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid var(--border-color);">
             <div>
-                <div style="font-size:0.8rem; font-weight:500;"><a href="/git/?q=${encodeURIComponent(displayLower + ' ' + show.variant)}" style="color:#ff6b35; text-decoration:none;">🎙️ ${show.name}</a></div>
-                <div style="font-size:0.65rem; color:#888;">${show.listeners} monthly listeners</div>
+                <div style="font-size:0.8rem; font-weight:500;"><a href="/git/?q=${encodeURIComponent(displayLower + ' ' + show.variant)}" style="color:var(--accent-primary); text-decoration:none;">🎙️ ${show.name}</a></div>
+                <div style="font-size:0.65rem; color:var(--text-secondary);">${show.listeners} monthly listeners</div>
             </div>
-            <a href="/git/?q=${encodeURIComponent(displayLower + ' ' + show.variant)}" style="background:#2a2a3e; padding:0.2rem 0.8rem; border-radius:30px; font-size:0.65rem; color:#ff6b35; text-decoration:none;">Follow</a>
+            <a href="/git/?q=${encodeURIComponent(displayLower + ' ' + show.variant)}" style="background:var(--border-color); padding:0.2rem 0.8rem; border-radius:30px; font-size:0.65rem; color:var(--accent-primary); text-decoration:none;">Follow</a>
         </div>
     `).join('');
     
@@ -424,10 +515,11 @@ permalink: /vault/
     const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
     document.getElementById('footer').innerHTML = `LeakCast · ${downloads.toLocaleString()} total downloads · New episode ${dateStr}`;
     
-    // canonical
-    const canonical = document.getElementById('dynamic-canonical');
-    if (canonical) {
-        canonical.setAttribute('href', window.location.href.split('?')[0]);
+    // canonical link dinamis
+    const canonicalLink = document.getElementById('dynamic-canonical');
+    if (canonicalLink) {
+        const fullUrl = window.location.href;
+        canonicalLink.setAttribute('href', fullUrl);
     }
 })();
 </script>

@@ -14,6 +14,25 @@ permalink: /section/
     <meta id="dynamic-description" name="description" content="Searchable database of leaked influencer content. TikTok leaks, OnlyFans leaks, Instagram leaks, and viral content archive.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/studio/">
     <style>
+        /* ========== GLOBAL COLOR VARIABLES ========== */
+        :root {
+            --bg-body: #000000;
+            --bg-card: #0a0a0f;
+            --bg-header: #0f0f1a;
+            --bg-panel-header: #12121c;
+            --border-color: #1f1f2e;
+            --border-hover: #a855f7;
+            --text-primary: #e5e7eb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --text-dim: #4a4a5a;
+            --accent-primary: #a855f7;
+            --accent-secondary: #c084fc;
+            --accent-tertiary: #ec489a;
+            --gradient-header: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 100%);
+            --gradient-title: linear-gradient(135deg, #fff, #c084fc, #ec489a);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,9 +40,9 @@ permalink: /section/
         }
 
         body {
-            background: #000000;
+            background: var(--bg-body);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            color: #e5e7eb;
+            color: var(--text-primary);
         }
 
         .portal {
@@ -34,7 +53,7 @@ permalink: /section/
 
         /* header */
         .portal-header {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 100%);
+            background: var(--gradient-header);
             border-radius: 24px;
             padding: 1.5rem;
             margin-bottom: 2rem;
@@ -45,13 +64,13 @@ permalink: /section/
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #a855f7;
+            color: var(--accent-primary);
         }
 
         .portal-header h1 {
             font-size: 2rem;
             margin: 0.5rem 0;
-            background: linear-gradient(135deg, #fff, #c084fc, #ec489a);
+            background: var(--gradient-title);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -60,12 +79,12 @@ permalink: /section/
         /* breadcrumb */
         .breadcrumb {
             font-size: 0.7rem;
-            color: #6b7280;
+            color: var(--text-muted);
             margin-bottom: 1.5rem;
         }
 
         .breadcrumb a {
-            color: #a855f7;
+            color: var(--accent-primary);
             text-decoration: none;
         }
 
@@ -78,17 +97,17 @@ permalink: /section/
         }
 
         .stat-card {
-            background: #0f0f1a;
+            background: var(--bg-header);
             border-radius: 16px;
             padding: 0.75rem;
             text-align: center;
-            border: 1px solid #1f1f2e;
+            border: 1px solid var(--border-color);
         }
 
         .stat-number {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #c084fc;
+            color: var(--accent-secondary);
         }
 
         /* mega grid */
@@ -100,28 +119,28 @@ permalink: /section/
         }
 
         .leak-panel {
-            background: #0a0a0f;
+            background: var(--bg-card);
             border-radius: 20px;
-            border: 1px solid #1f1f2e;
+            border: 1px solid var(--border-color);
             overflow: hidden;
             transition: all 0.2s;
         }
 
         .leak-panel:hover {
-            border-color: #a855f7;
+            border-color: var(--border-hover);
             transform: translateY(-2px);
         }
 
         .panel-header {
-            background: #12121c;
+            background: var(--bg-panel-header);
             padding: 1rem;
-            border-bottom: 1px solid #1f1f2e;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .panel-header h3 {
             font-size: 1rem;
             font-weight: 600;
-            color: #c084fc;
+            color: var(--accent-secondary);
         }
 
         .panel-header p {
@@ -140,23 +159,23 @@ permalink: /section/
         .leak-link {
             display: block;
             padding: 0.5rem 0.75rem;
-            background: #12121c;
+            background: var(--bg-panel-header);
             border-radius: 12px;
             font-size: 0.8rem;
-            color: #e5e7eb;
+            color: var(--text-primary);
             text-decoration: none;
             transition: all 0.15s;
         }
 
         .leak-link:hover {
             background: #1a1a2e;
-            color: #c084fc;
+            color: var(--accent-secondary);
             padding-left: 1rem;
         }
 
         .leak-link small {
             font-size: 0.65rem;
-            color: #a855f7;
+            color: var(--accent-primary);
             display: block;
             margin-top: 0.2rem;
         }
@@ -170,29 +189,29 @@ permalink: /section/
         }
 
         .leak-tag {
-            background: #12121c;
+            background: var(--bg-panel-header);
             padding: 0.3rem 0.9rem;
             border-radius: 30px;
             font-size: 0.7rem;
-            color: #c084fc;
+            color: var(--accent-secondary);
             text-decoration: none;
-            border: 1px solid #1f1f2e;
+            border: 1px solid var(--border-color);
         }
 
         .leak-tag:hover {
             background: #1a1a2e;
-            border-color: #a855f7;
+            border-color: var(--border-hover);
         }
 
         hr {
             border: none;
-            border-top: 1px solid #1f1f2e;
+            border-top: 1px solid var(--border-color);
             margin: 2rem 0;
         }
 
         .footer {
             font-size: 0.6rem;
-            color: #4a4a5a;
+            color: var(--text-dim);
             text-align: center;
         }
 
@@ -224,7 +243,7 @@ permalink: /section/
         <div class="portal-header">
             <div class="portal-badge">LEAKED DATABASE v4.0</div>
             <h1>Influencer Leaks Portal</h1>
-            <p style="color: #9ca3af;">The most complete archive of leaked content from TikTokers, OnlyFans creators, and influencers.</p>
+            <p style="color: var(--text-secondary);">The most complete archive of leaked content from TikTokers, OnlyFans creators, and influencers.</p>
         </div>
 
         <div class="quick-stats">
@@ -287,13 +306,13 @@ permalink: /section/
         <div class="portal-header" style="margin-bottom: 1rem;">
             <div class="portal-badge">LEAKED CONTENT ARCHIVE</div>
             <h1 id="main-heading"></h1>
-            <p id="sub-heading" style="color: #9ca3af;"></p>
+            <p id="sub-heading" style="color: var(--text-secondary);"></p>
         </div>
 
         <div class="quick-stats" id="quick-stats-dynamic"></div>
 
         <!-- INTRO SECTION -->
-        <div id="intro-section" style="background: #0a0a0f; border-radius: 20px; padding: 1rem 1.25rem; margin-bottom: 2rem; border-left: 3px solid #c084fc;">
+        <div id="intro-section" style="background: var(--bg-card); border-radius: 20px; padding: 1rem 1.25rem; margin-bottom: 2rem; border-left: 3px solid var(--accent-secondary);">
             <p id="intro-text"></p>
         </div>
 
@@ -347,7 +366,135 @@ permalink: /section/
 
     query = decodeURIComponent(query.replace(/\+/g, ' '));
     
-    // extract influencer/creator name (bersihkan kata umum)
+    // ========== AMBIL SUBDOMAIN / DOMAIN ==========
+    let hostname = window.location.hostname;
+    let domainIdentity = '';
+    
+    // Deteksi apakah ini subdomain atau domain utama
+    const hostParts = hostname.split('.');
+    
+    // Cek apakah ini IP address atau localhost
+    if (hostname === 'localhost' || /^\d+\.\d+\.\d+\.\d+$/.test(hostname)) {
+        domainIdentity = hostname;
+    } else {
+        // Untuk github.io atau pages.dev, struktur berbeda
+        if (hostname.includes('github.io')) {
+            // subdomain.github.io -> ambil subdomain
+            if (hostParts.length > 2) {
+                domainIdentity = hostParts[0];
+            } else {
+                domainIdentity = 'GitHub Pages';
+            }
+        } else if (hostname.includes('pages.dev')) {
+            if (hostParts.length > 2) {
+                domainIdentity = hostParts[0];
+            } else {
+                domainIdentity = 'Cloudflare Pages';
+            }
+        } else {
+            // Domain normal: fazri.my atau subdomain.example.com
+            if (hostParts.length > 2) {
+                // Ada subdomain: subdomain.fazri.my
+                domainIdentity = hostParts[0];
+            } else {
+                // Domain utama: fazri.my
+                domainIdentity = hostParts[0];
+            }
+        }
+    }
+    
+    // Kapitalisasi pertama domain identity
+    domainIdentity = domainIdentity.charAt(0).toUpperCase() + domainIdentity.slice(1).toLowerCase();
+    
+    // ========== FORMAT QUERY ==========
+    function formatQueryToTitle(str) {
+        return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    }
+    const formattedQuery = formatQueryToTitle(query);
+    
+    // ========== VARIASI KALIMAT UNTUK TITLE, H1, H2, H3 ==========
+    // Gunakan seed dari query + domain agar konsisten (tidak berubah saat refresh)
+    let seed = 0;
+    for (let i = 0; i < query.length; i++) {
+        seed += query.charCodeAt(i);
+    }
+    for (let i = 0; i < domainIdentity.length; i++) {
+        seed += domainIdentity.charCodeAt(i);
+    }
+    const variantIndex = seed % 5; // 5 variasi kalimat
+    
+    const titleVariants = [
+        `${formattedQuery} on ${domainIdentity}`,
+        `${formattedQuery} — Exclusive Archive on ${domainIdentity}`,
+        `${formattedQuery} | Leaked Content Gallery (${domainIdentity})`,
+        `${formattedQuery} — Complete Leak Database hosted on ${domainIdentity}`,
+        `${formattedQuery} · Preserved Media Archive — ${domainIdentity}`
+    ];
+    
+    const h1Variants = [
+        `${formattedQuery} on ${domainIdentity}`,
+        `${formattedQuery} — ${domainIdentity} Archive`,
+        `${formattedQuery} | ${domainIdentity} Leak Portal`,
+        `${formattedQuery} — Full Collection (${domainIdentity})`,
+        `${formattedQuery} · Exclusive on ${domainIdentity}`
+    ];
+    
+    const h2Variants = [
+        `Complete ${formattedQuery} Leaked Content Archive · ${domainIdentity}`,
+        `${formattedQuery} — Full Media Collection hosted by ${domainIdentity}`,
+        `${formattedQuery} | Preserved Leaks Database — ${domainIdentity}`,
+        `Explore ${formattedQuery} Leaks on ${domainIdentity}`,
+        `${formattedQuery} — Complete Archive — ${domainIdentity}`
+    ];
+    
+    const h3Variants = [
+        `${formattedQuery} Media Collections · ${domainIdentity}`,
+        `${formattedQuery} Leaked Content by Platform — ${domainIdentity}`,
+        `Related to ${formattedQuery} — ${domainIdentity} Archive`,
+        `${formattedQuery} — Documentation & Sources (${domainIdentity})`,
+        `${formattedQuery} · Full Leak Index — ${domainIdentity}`
+    ];
+    
+    const selectedTitle = titleVariants[variantIndex];
+    const selectedH1 = h1Variants[variantIndex];
+    const selectedH2 = h2Variants[variantIndex];
+    const selectedH3 = h3Variants[variantIndex];
+    
+    // ========== TERAPKAN KE TITLE, H1, H2, H3 ==========
+    // Title di <head>
+    document.title = selectedTitle;
+    
+    // H1 di portal-header
+    document.getElementById('main-heading').innerHTML = selectedH1;
+    
+    // H2 tidak ada di body, tapi kita pakai sub-heading sebagai pengganti H2
+    const subHeading = document.getElementById('sub-heading');
+    if (subHeading) {
+        // Ubah tag dari p menjadi h2 untuk SEO
+        const h2Tag = document.createElement('h2');
+        h2Tag.id = 'sub-heading';
+        h2Tag.style.cssText = 'color: var(--text-secondary); font-size: 1rem; font-weight: normal; margin-top: 0.5rem;';
+        h2Tag.innerHTML = selectedH2;
+        subHeading.parentNode.replaceChild(h2Tag, subHeading);
+    }
+    
+    // Update semua H3 di query-portal (panel-header h3)
+    const allH3 = document.querySelectorAll('#query-portal .panel-header h3');
+    if (allH3.length >= 4) {
+        // H3 section 1: Leaked Media Collections
+        allH3[0].innerHTML = `📁 ${selectedH3}`;
+        // H3 section 2: Platform Leaks
+        allH3[1].innerHTML = `🌐 ${formattedQuery} by Platform — ${domainIdentity}`;
+        // H3 section 3: Similar Leaked Content
+        allH3[2].innerHTML = `🔗 Related to ${formattedQuery} — ${domainIdentity}`;
+        // H3 section 4: About This Leak Archive
+        allH3[3].innerHTML = `📌 About ${formattedQuery} Archive — ${domainIdentity}`;
+    }
+    
+    // Breadcrumb update
+    document.getElementById('bc-name').innerText = formattedQuery;
+    
+    // extract influencer/creator name (bersihkan kata umum) untuk konten link
     const removeTerms = ['leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'content', 'media', 'videos', 'photos', 'gallery', 'set', 'compilation', 'onlyfans', 'tiktok', 'instagram', 'twitter', 'telegram', 'discord', 'trending', 'viral', 'rare', 'private', 'exclusive', '2024', '2025', '2026'];
     let baseRaw = query.toLowerCase();
     removeTerms.forEach(term => {
@@ -358,13 +505,9 @@ permalink: /section/
     let baseName = baseRaw || query;
     if (baseName.length < 2) baseName = query;
     
-    function formatName(str) {
-        return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-    }
-    const displayName = formatName(baseName);
-    const displayLower = displayName.toLowerCase();
-
-    // detect leak type
+    const displayLower = baseName.toLowerCase();
+    
+    // detect leak type untuk meta description
     const qLow = query.toLowerCase();
     let leakType = 'general';
     if (qLow.includes('video') || qLow.includes('clip') || qLow.includes('footage')) leakType = 'video';
@@ -375,33 +518,23 @@ permalink: /section/
     else if (qLow.includes('telegram')) leakType = 'telegram';
     else if (qLow.includes('discord')) leakType = 'discord';
     
-    // SEO
-    let pageTitle = '';
+    // SEO meta description
     let pageDesc = '';
     if (leakType === 'video') {
-        pageTitle = `${displayName} Leaked Videos · Complete Archive`;
-        pageDesc = `Full archive of ${displayName} leaked videos. Preserved clips, deleted content, and viral footage.`;
+        pageDesc = `Full archive of ${formattedQuery} leaked videos. Preserved clips, deleted content, and viral footage — hosted on ${domainIdentity}.`;
     } else if (leakType === 'photo') {
-        pageTitle = `${displayName} Leaked Photos · Full Gallery`;
-        pageDesc = `Complete ${displayName} leaked photo collection. Preserved images from private folders and deleted posts.`;
+        pageDesc = `Complete ${formattedQuery} leaked photo collection. Preserved images from private folders and deleted posts — ${domainIdentity} archive.`;
     } else if (leakType === 'onlyfans') {
-        pageTitle = `${displayName} OnlyFans Leaks · Exclusive Archive`;
-        pageDesc = `${displayName} OnlyFans leaked content. Complete preserved collection including photos and videos.`;
+        pageDesc = `${formattedQuery} OnlyFans leaked content. Complete preserved collection including photos and videos — exclusive ${domainIdentity} archive.`;
     } else {
-        pageTitle = `${displayName} Leaked Content · Complete Archive`;
-        pageDesc = `Complete ${displayName} leaked content archive. Photos, videos, and exclusive material. Updated daily.`;
+        pageDesc = `Complete ${formattedQuery} leaked content archive. Photos, videos, and exclusive material. Updated daily — ${domainIdentity} leak database.`;
     }
-    document.title = pageTitle;
     const metaTag = document.getElementById('dynamic-description');
     if (metaTag) metaTag.setAttribute('content', pageDesc);
     
-    document.getElementById('main-heading').innerHTML = `${displayName} <span style="font-size:0.9rem;">· Leaked Archive</span>`;
-    document.getElementById('sub-heading').innerHTML = `Complete collection of leaked content from ${displayName}`;
-    document.getElementById('bc-name').innerText = displayName;
-    
-    // intro text (eksplisit menyebut leaked content)
+    // intro text
     const introEl = document.getElementById('intro-text');
-    introEl.innerHTML = `This page contains the complete leaked content archive for <strong>${displayName}</strong>. All leaked photos, leaked videos, and exclusive material that circulated across Telegram, Discord, Twitter, and other platforms have been preserved here for documentation purposes.`;
+    introEl.innerHTML = `This page contains the complete leaked content archive for <strong>${formattedQuery}</strong> on <strong>${domainIdentity}</strong>. All leaked photos, leaked videos, and exclusive material that circulated across Telegram, Discord, Twitter, and other platforms have been preserved here for documentation purposes.`;
     
     // helper untuk membuat link dengan keyword 'leaked'
     function makeLeakedLink(variant, label, description = '') {
@@ -410,7 +543,7 @@ permalink: /section/
         return `<a href="/studio/?q=${encodeURIComponent(newQ)}" class="leak-link">${label} ${descHtml}</a>`;
     }
     
-    // MEDIA LINKS (semua mengandung 'leaked')
+    // MEDIA LINKS
     const mediaItems = [
         { variant: 'leaked photos full gallery', label: '📸 Leaked Photos - Full Gallery', desc: '50+ images' },
         { variant: 'leaked videos complete collection', label: '🎬 Leaked Videos - Complete Collection', desc: '20+ clips' },
@@ -421,7 +554,7 @@ permalink: /section/
         makeLeakedLink(item.variant, item.label, item.desc)
     ).join('');
     
-    // PLATFORM LINKS (semua mengandung 'leaked')
+    // PLATFORM LINKS
     const platformItems = [
         { variant: 'leaked telegram channel archive', label: '💬 Leaked Telegram Channel Archive', desc: 'original source' },
         { variant: 'leaked discord server dump', label: '🎮 Leaked Discord Server Dump', desc: 'private server' },
@@ -432,7 +565,7 @@ permalink: /section/
         makeLeakedLink(item.variant, item.label, item.desc)
     ).join('');
     
-    // RELATED TAGS (semua mengandung 'leaked')
+    // RELATED TAGS
     const relatedVariants = [
         `${displayLower} leaked onlyfans content`,
         `${displayLower} leaked instagram photos`,
@@ -449,7 +582,7 @@ permalink: /section/
     // INFO LINKS
     const infoItems = [
         { variant: 'leaked content preservation info', label: '📖 About This Leak Archive' },
-        { variant: 'leaked content update log', label: '🔄 Recent Leak Updates' },
+        { variant: 'leaked content update log', label: '📋 Recent Leak Updates' },
         { variant: 'leaked content source documentation', label: '🔍 Leak Source Documentation' }
     ];
     document.getElementById('info-links').innerHTML = infoItems.map(item => 
@@ -469,10 +602,11 @@ permalink: /section/
         <div class="stat-card"><div class="stat-number">TG/Disc</div><div>sources</div></div>
     `;
     
-    // canonical
+    // ========== CANONICAL DINAMIS ==========
     const canonical = document.getElementById('dynamic-canonical');
     if (canonical) {
-        canonical.setAttribute('href', window.location.href.split('?')[0]);
+        const currentUrl = window.location.href;
+        canonical.setAttribute('href', currentUrl);
     }
 })();
 </script>

@@ -14,6 +14,23 @@ permalink: /image/
     <meta id="dynamic-description" name="description" content="Swipe through leaked content from influencers, TikTokers, and OnlyFans creators. Short-form leaked videos feed.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/movie/">
     <style>
+        /* ========== GLOBAL COLOR VARIABLES (MUDAH DIEDIT) ========== */
+        :root {
+            --bg-primary: #000000;
+            --bg-card: linear-gradient(145deg, #0f0f0f, #050505);
+            --text-primary: #ffffff;
+            --text-secondary: #aaaaaa;
+            --accent-primary: #ff0050;
+            --accent-hover: #e00045;
+            --accent-gradient: linear-gradient(135deg, #fff, #ff0050, #00f2ea);
+            --border-card: #2a2a2a;
+            --border-light: #1a1a1a;
+            --badge-bg: #ff0050;
+            --meta-color: #888888;
+            --footer-color: #444444;
+            --link-mini: #1a1a1a;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,16 +38,16 @@ permalink: /image/
         }
 
         body {
-            background: #000000;
+            background: var(--bg-primary);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
-            color: #ffffff;
+            color: var(--text-primary);
         }
 
         /* app container */
         .shorts-app {
             max-width: 480px;
             margin: 0 auto;
-            background: #000;
+            background: var(--bg-primary);
             min-height: 100vh;
             position: relative;
         }
@@ -59,7 +76,7 @@ permalink: /image/
         .logo {
             font-weight: 700;
             font-size: 1.1rem;
-            background: linear-gradient(135deg, #fff, #ff0050, #00f2ea);
+            background: var(--accent-gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -82,13 +99,13 @@ permalink: /image/
             margin: 0 auto;
             padding: 0 1rem;
             font-size: 0.6rem;
-            color: #aaa;
+            color: var(--text-secondary);
             z-index: 10;
             background: transparent;
         }
 
         .breadcrumb a {
-            color: #ff0050;
+            color: var(--accent-primary);
             text-decoration: none;
         }
 
@@ -107,22 +124,22 @@ permalink: /image/
             flex-direction: column;
             justify-content: center;
             padding: 5rem 1rem 2rem;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 1px solid var(--border-light);
             position: relative;
         }
 
         /* card style seperti video pendek */
         .leak-card-short {
-            background: linear-gradient(145deg, #0f0f0f, #050505);
+            background: var(--bg-card);
             border-radius: 28px;
             padding: 1.25rem;
-            border: 1px solid #2a2a2a;
+            border: 1px solid var(--border-card);
             transition: all 0.2s;
         }
 
         .leak-badge {
             display: inline-block;
-            background: #ff0050;
+            background: var(--badge-bg);
             padding: 0.2rem 0.7rem;
             border-radius: 30px;
             font-size: 0.6rem;
@@ -139,7 +156,7 @@ permalink: /image/
 
         .leak-desc {
             font-size: 0.75rem;
-            color: #aaa;
+            color: var(--text-secondary);
             margin-bottom: 1rem;
             line-height: 1.4;
         }
@@ -148,7 +165,7 @@ permalink: /image/
             display: flex;
             gap: 1rem;
             font-size: 0.65rem;
-            color: #888;
+            color: var(--meta-color);
             margin-bottom: 1rem;
         }
 
@@ -157,11 +174,11 @@ permalink: /image/
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            background: #ff0050;
+            background: var(--accent-primary);
             padding: 0.8rem;
             border-radius: 40px;
             text-decoration: none;
-            color: #fff;
+            color: var(--text-primary);
             font-weight: 600;
             font-size: 0.8rem;
             transition: all 0.15s;
@@ -169,7 +186,7 @@ permalink: /image/
         }
 
         .action-button:hover {
-            background: #e00045;
+            background: var(--accent-hover);
             transform: scale(0.98);
         }
 
@@ -182,11 +199,11 @@ permalink: /image/
         }
 
         .mini-link {
-            background: #1a1a1a;
+            background: var(--link-mini);
             padding: 0.4rem 0.8rem;
             border-radius: 30px;
             font-size: 0.65rem;
-            color: #ff0050;
+            color: var(--accent-primary);
             text-decoration: none;
         }
 
@@ -214,21 +231,61 @@ permalink: /image/
         /* footer */
         .footer-note {
             font-size: 0.55rem;
-            color: #444;
+            color: var(--footer-color);
             text-align: center;
             padding: 1rem;
+        }
+
+        /* H1 styling - paling atas tanpa halangan */
+        .dynamic-h1 {
+            position: relative;
+            z-index: 15;
+            text-align: center;
+            padding: 1rem 1rem 0.5rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+            letter-spacing: -0.3px;
+        }
+
+        /* H2, H3 styling */
+        .dynamic-h2, .dynamic-h3 {
+            text-align: center;
+            margin: 0.5rem 1rem;
+        }
+        .dynamic-h2 {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .dynamic-h3 {
+            font-size: 0.8rem;
+            color: var(--meta-color);
+            font-weight: 400;
         }
 
         @media (max-width: 480px) {
             .leak-title { font-size: 1.1rem; }
             .action-button { padding: 0.7rem; font-size: 0.75rem; }
+            .dynamic-h1 { font-size: 1.2rem; }
+            .dynamic-h2 { font-size: 0.85rem; }
+            .dynamic-h3 { font-size: 0.7rem; }
         }
     </style>
 {% include head.html %}
-  </head>
+</head>
 <body><div loading="lazy">
 
 <div class="shorts-app">
+    <!-- H1, H2, H3 DINAMIS (paling atas, tidak terhalang) -->
+    <h1 id="dynamic-h1" class="dynamic-h1">LeakShorts</h1>
+    <h2 id="dynamic-h2" class="dynamic-h2">Trending Leaked Content</h2>
+    <h3 id="dynamic-h3" class="dynamic-h3">Viral Shorts Feed</h3>
+
     <!-- DEFAULT SHORTS FEED (home) -->
     <div id="default-shorts" class="default-shorts">
         <div class="shorts-header">
@@ -288,33 +345,119 @@ permalink: /image/
 
 <script>
 (function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    let query = urlParams.get('q');
-
-    const defaultDiv = document.getElementById('default-shorts');
-    const queryDiv = document.getElementById('query-shorts');
-
-    if (!query) {
-        defaultDiv.style.display = 'block';
-        queryDiv.style.display = 'none';
-        return;
+    // ========== FUNGSI UNTUK MENDAPATKAN SUBDOMAIN / DOMAIN ==========
+    function getSiteIdentity() {
+        const hostname = window.location.hostname; // contoh: sub-domain.fazri.my, fazri.my, ini-sub.github.io
+        // Pisahkan berdasarkan titik
+        const parts = hostname.split('.');
+        
+        // Jika subdomain ada (lebih dari 2 bagian untuk domain umum, atau khusus github.io)
+        if (hostname.includes('github.io')) {
+            // Untuk github.io, ambil subdomain pertama (username atau nama project)
+            return parts[0];
+        } else if (hostname.includes('pages.dev')) {
+            // Untuk cloudflare pages, ambil subdomain pertama
+            return parts[0];
+        } else if (parts.length > 2) {
+            // Subdomain: ambil bagian pertama (contoh: sub-domain dari sub-domain.fazri.my)
+            return parts[0];
+        } else {
+            // Domain utama: ambil bagian pertama sebelum TLD (contoh: fazri dari fazri.my)
+            // Kecuali untuk localhost
+            if (hostname === 'localhost') return 'Local';
+            return parts[0];
+        }
     }
 
-    defaultDiv.style.display = 'none';
-    queryDiv.style.display = 'block';
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
 
-    query = decodeURIComponent(query.replace(/\+/g, ' '));
+    function formatQueryForTitle(queryStr) {
+        // Batasi panjang query untuk keamanan
+        let formatted = queryStr.length > 50 ? queryStr.substring(0, 50) + '...' : queryStr;
+        return formatted.split(' ').map(word => capitalizeFirstLetter(word)).join(' ');
+    }
+
+    // Ambil query dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    let query = urlParams.get('q');
     
+    // Dapatkan identitas situs (subdomain/domain)
+    let siteIdentity = getSiteIdentity();
+    // Format identitas: huruf pertama kapital
+    let displaySite = capitalizeFirstLetter(siteIdentity);
+    
+    // Jika query tidak ada, tampilkan default (tanpa query)
+    if (!query) {
+        // Title default
+        document.title = "LeakShorts · Viral Leaked Feed";
+        // H1, H2, H3 default (tetap konsisten)
+        const h1 = document.getElementById('dynamic-h1');
+        const h2 = document.getElementById('dynamic-h2');
+        const h3 = document.getElementById('dynamic-h3');
+        if (h1) h1.innerText = "🔥 LeakShorts";
+        if (h2) h2.innerText = "Trending Leaked Content";
+        if (h3) h3.innerText = "Viral Shorts Feed";
+        
+        // Tampilkan default div, sembunyikan query div
+        const defaultDiv = document.getElementById('default-shorts');
+        const queryDiv = document.getElementById('query-shorts');
+        if (defaultDiv) defaultDiv.style.display = 'block';
+        if (queryDiv) queryDiv.style.display = 'none';
+        return;
+    }
+    
+    // Proses query yang ada
+    const defaultDiv = document.getElementById('default-shorts');
+    const queryDiv = document.getElementById('query-shorts');
+    if (defaultDiv) defaultDiv.style.display = 'none';
+    if (queryDiv) queryDiv.style.display = 'block';
+    
+    let decodedQuery = decodeURIComponent(query.replace(/\+/g, ' '));
+    let formattedQuery = formatQueryForTitle(decodedQuery);
+    
+    // === VARIASI KALIMAT YANG KONSISTEN (tidak berubah saat refresh) ===
+    // Buat seed tetap berdasarkan query + siteIdentity agar konsisten per halaman
+    let seed = 0;
+    for (let i = 0; i < decodedQuery.length; i++) {
+        seed += decodedQuery.charCodeAt(i);
+    }
+    for (let i = 0; i < siteIdentity.length; i++) {
+        seed += siteIdentity.charCodeAt(i);
+    }
+    // Pilih variasi berdasarkan seed (tetap)
+    const variations = [
+        { title: `${formattedQuery} on ${displaySite}`, h1: `${formattedQuery} on ${displaySite}`, h2: `Explore ${formattedQuery} Content`, h3: `Trending Now on ${displaySite}` },
+        { title: `${formattedQuery} · Exclusive Leaks on ${displaySite}`, h1: `${formattedQuery} · ${displaySite}`, h2: `${formattedQuery} Full Archive`, h3: `Viral on ${displaySite}` },
+        { title: `${formattedQuery} — ${displaySite} Leaked Feed`, h1: `${formattedQuery} — ${displaySite}`, h2: `${formattedQuery} Shorts`, h3: `Watch on ${displaySite}` },
+        { title: `${displaySite} › ${formattedQuery} Leaked`, h1: `${displaySite} › ${formattedQuery}`, h2: `${formattedQuery} Viral Leaks`, h3: `${displaySite} Exclusive` },
+        { title: `${formattedQuery} | ${displaySite} LeakShorts`, h1: `${formattedQuery} | ${displaySite}`, h2: ` Trending: ${formattedQuery}`, h3: `by ${displaySite}` }
+    ];
+    const selected = variations[seed % variations.length];
+    
+    // Set Title
+    document.title = selected.title;
+    
+    // Set H1, H2, H3 (paling atas, tanpa halangan)
+    const h1El = document.getElementById('dynamic-h1');
+    const h2El = document.getElementById('dynamic-h2');
+    const h3El = document.getElementById('dynamic-h3');
+    if (h1El) h1El.innerText = selected.h1;
+    if (h2El) h2El.innerText = selected.h2;
+    if (h3El) h3El.innerText = selected.h3;
+    
+    // Lanjut ke konten feed (sama seperti kode asli, tidak diubah)
     // extract nama influencer
     const removeTerms = ['leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'pack', 'bundle', 'gallery', 'content', 'media', 'videos', 'photos', 'pics', 'onlyfans', 'tiktok', 'instagram', 'twitter', 'telegram', 'discord', 'trending', 'viral', 'exclusive', 'private', 'premium', '2024', '2025', '2026', 'full', 'complete', 'hot', 'new', 'watch', 'view', 'access', 'swipe', 'short', 'feed'];
-    let baseRaw = query.toLowerCase();
+    let baseRaw = decodedQuery.toLowerCase();
     removeTerms.forEach(term => {
         const regex = new RegExp('\\b' + term + '\\b', 'gi');
         baseRaw = baseRaw.replace(regex, '');
     });
     baseRaw = baseRaw.replace(/\s+/g, ' ').trim();
-    let baseName = baseRaw || query;
-    if (baseName.length < 2) baseName = query;
+    let baseName = baseRaw || decodedQuery;
+    if (baseName.length < 2) baseName = decodedQuery;
     
     function formatName(str) {
         return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
@@ -330,10 +473,8 @@ permalink: /image/
     const likes2 = Math.floor(views2 * 0.07);
     const likes3 = Math.floor(views3 * 0.06);
     
-    // SEO
-    let pageTitle = `${displayName} Leaked Content · Viral Shorts Feed`;
+    // SEO description (opsional)
     let pageDesc = `Swipe through ${displayName} leaked content. Hot leaked videos and photos trending now on Telegram and Discord.`;
-    document.title = pageTitle;
     const metaTag = document.getElementById('dynamic-description');
     if (metaTag) metaTag.setAttribute('content', pageDesc);
     
@@ -433,7 +574,7 @@ permalink: /image/
     const totalItems = 4;
     document.getElementById('page-indicator').innerHTML = `⬆️ 1/${totalItems} ⬇️`;
     
-    // optional: update indicator saat scroll (simple)
+    // update indicator saat scroll
     const feedContainer = document.getElementById('feed-container');
     let currentIndex = 0;
     feedContainer.addEventListener('scroll', () => {
@@ -446,10 +587,11 @@ permalink: /image/
         }
     });
     
-    // canonical
-    const canonical = document.getElementById('dynamic-canonical');
-    if (canonical) {
-        canonical.setAttribute('href', window.location.href.split('?')[0]);
+    // Canonical dinamis (tetap dipertahankan dari kode sebelumnya)
+    const canonicalLink = document.getElementById('dynamic-canonical');
+    if (canonicalLink) {
+        const cleanUrl = window.location.href.split('?')[0];
+        canonicalLink.setAttribute('href', cleanUrl);
     }
 })();
 </script>

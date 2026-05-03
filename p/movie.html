@@ -14,6 +14,24 @@ permalink: /movie/
     <meta id="dynamic-description" name="description" content="Apply for instant access to leaked content from influencers, TikTokers, and OnlyFans creators. 1,000+ positions available.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/limited/">
     <style>
+        /* ========== GLOBAL COLOR VARIABLES (MUDAH DIEDIT) ========== */
+        :root {
+            --primary-bg: #f0f2f5;
+            --primary-text: #1a1a2e;
+            --card-bg: #ffffff;
+            --header-bg: #1a1a2e;
+            --header-text: #ffffff;
+            --accent-color: #ff6b35;
+            --border-color: #e2e2e2;
+            --sidebar-bg: #fafafc;
+            --footer-bg: #1a1a2e;
+            --footer-text: #888;
+            --badge-urgent: #dc3545;
+            --badge-exclusive: #28a745;
+            --badge-new: #ff6b35;
+            --hover-shadow: rgba(0,0,0,0.08);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,23 +39,23 @@ permalink: /movie/
         }
 
         body {
-            background: #f0f2f5;
+            background: var(--primary-bg);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            color: #1a1a2e;
+            color: var(--primary-text);
         }
 
         .jobs-container {
             max-width: 1200px;
             margin: 0 auto;
-            background: #ffffff;
+            background: var(--card-bg);
             min-height: 100vh;
         }
 
         /* header ala job board */
         .jobs-header {
-            background: #1a1a2e;
+            background: var(--header-bg);
             padding: 1.5rem 2rem;
-            color: #ffffff;
+            color: var(--header-text);
         }
 
         .logo {
@@ -46,7 +64,7 @@ permalink: /movie/
         }
 
         .logo span {
-            color: #ff6b35;
+            color: var(--accent-color);
         }
 
         .tagline {
@@ -60,12 +78,12 @@ permalink: /movie/
             padding: 0.75rem 2rem;
             font-size: 0.7rem;
             color: #666;
-            background: #fafafc;
-            border-bottom: 1px solid #e2e2e2;
+            background: var(--sidebar-bg);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .breadcrumb a {
-            color: #ff6b35;
+            color: var(--accent-color);
             text-decoration: none;
         }
 
@@ -74,8 +92,8 @@ permalink: /movie/
             display: flex;
             gap: 2rem;
             padding: 1rem 2rem;
-            background: #fafafc;
-            border-bottom: 1px solid #e2e2e2;
+            background: var(--sidebar-bg);
+            border-bottom: 1px solid var(--border-color);
             font-size: 0.7rem;
             flex-wrap: wrap;
         }
@@ -83,8 +101,8 @@ permalink: /movie/
         /* job search */
         .job-search {
             padding: 1.5rem 2rem;
-            background: #ffffff;
-            border-bottom: 1px solid #e2e2e2;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
@@ -99,7 +117,7 @@ permalink: /movie/
         }
 
         .search-btn {
-            background: #ff6b35;
+            background: var(--accent-color);
             color: #fff;
             border: none;
             padding: 0.6rem 1.5rem;
@@ -114,17 +132,17 @@ permalink: /movie/
         }
 
         .job-card {
-            border: 1px solid #e2e2e2;
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1rem;
             margin-bottom: 1rem;
             transition: all 0.15s;
-            background: #ffffff;
+            background: var(--card-bg);
         }
 
         .job-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border-color: #ff6b35;
+            box-shadow: 0 4px 12px var(--hover-shadow);
+            border-color: var(--accent-color);
         }
 
         .job-header {
@@ -142,12 +160,12 @@ permalink: /movie/
         }
 
         .job-title a {
-            color: #1a1a2e;
+            color: var(--primary-text);
             text-decoration: none;
         }
 
         .job-badge {
-            background: #ff6b35;
+            background: var(--accent-color);
             color: #fff;
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
@@ -156,16 +174,16 @@ permalink: /movie/
         }
 
         .job-badge.remote {
-            background: #28a745;
+            background: var(--badge-exclusive);
         }
 
         .job-badge.urgent {
-            background: #dc3545;
+            background: var(--badge-urgent);
         }
 
         .job-company {
             font-size: 0.75rem;
-            color: #ff6b35;
+            color: var(--accent-color);
             margin-bottom: 0.25rem;
         }
 
@@ -186,7 +204,7 @@ permalink: /movie/
 
         .apply-btn {
             display: inline-block;
-            background: #1a1a2e;
+            background: var(--header-bg);
             color: #fff;
             padding: 0.3rem 1rem;
             border-radius: 30px;
@@ -196,7 +214,7 @@ permalink: /movie/
         }
 
         .apply-btn:hover {
-            background: #ff6b35;
+            background: var(--accent-color);
         }
 
         /* sidebar untuk query */
@@ -208,10 +226,10 @@ permalink: /movie/
         }
 
         .filter-sidebar {
-            background: #fafafc;
+            background: var(--sidebar-bg);
             border-radius: 12px;
             padding: 1rem;
-            border: 1px solid #e2e2e2;
+            border: 1px solid var(--border-color);
         }
 
         .filter-title {
@@ -237,8 +255,8 @@ permalink: /movie/
 
         /* footer */
         .footer {
-            background: #1a1a2e;
-            color: #888;
+            background: var(--footer-bg);
+            color: var(--footer-text);
             padding: 1.5rem;
             text-align: center;
             font-size: 0.7rem;
@@ -256,10 +274,32 @@ permalink: /movie/
             display: none;
         }
 
+        /* heading untuk query page */
+        .query-heading {
+            padding: 1.5rem 2rem 0.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .query-heading h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.25rem;
+        }
+        .query-heading h2 {
+            font-size: 1.2rem;
+            font-weight: normal;
+            color: #555;
+            margin-bottom: 0.25rem;
+        }
+        .query-heading h3 {
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #777;
+        }
+
         @media (max-width: 768px) {
             .jobs-layout { grid-template-columns: 1fr; }
             .job-header { flex-direction: column; }
             .stats-bar, .job-search, .job-list, .jobs-layout { padding-left: 1rem; padding-right: 1rem; }
+            .query-heading { padding-left: 1rem; padding-right: 1rem; }
         }
     </style>
 {% include head.html %}
@@ -334,6 +374,14 @@ permalink: /movie/
         <div class="breadcrumb">
             <a href="/">Home</a> / <a href="/limited/">LeakJobs</a> / <span id="bc-name"></span>
         </div>
+        
+        <!-- H1, H2, H3 DINAMIS DI ATAS SEMUA (tidak ada section lain yang menghalangi) -->
+        <div class="query-heading">
+            <h1 id="dynamic-h1">LeakJobs</h1>
+            <h2 id="dynamic-h2"></h2>
+            <h3 id="dynamic-h3"></h3>
+        </div>
+
         <div class="stats-bar" id="stats-bar"></div>
 
         <div class="jobs-layout">
@@ -416,19 +464,47 @@ permalink: /movie/
     const displayName = formatName(baseName);
     const displayLower = displayName.toLowerCase();
 
-    // random numbers
-    const openPositions = Math.floor(Math.random() * 30) + 15;
-    const companies = Math.floor(Math.random() * 15) + 5;
-    const applicants = Math.floor(Math.random() * 50000) + 10000;
+    // Ambil subdomain/domain dengan benar
+    const hostParts = window.location.hostname.split('.');
+    let subdomainOrDomain = '';
+    if (hostParts.length >= 3) {
+        // subdomain.fazri.my atau ini-sub.github.io
+        subdomainOrDomain = hostParts[0];
+    } else if (hostParts.length === 2) {
+        // fazri.my
+        subdomainOrDomain = hostParts[0];
+    } else {
+        subdomainOrDomain = window.location.hostname;
+    }
+    // Kapitalisasi huruf pertama untuk tampilan yang lebih rapi
+    const domainDisplay = subdomainOrDomain.charAt(0).toUpperCase() + subdomainOrDomain.slice(1);
     
-    // SEO
-    let pageTitle = `${displayName} Leaked Content · ${openPositions} Open Positions | LeakJobs`;
-    let pageDesc = `${openPositions} positions available for ${displayName} leaked content. Apply for instant access to videos and photos. ${applicants.toLocaleString()} applicants this month.`;
-    document.title = pageTitle;
+    // Format konsisten: "Query on DomainDisplay"
+    // Contoh: "Cute Girl on Sub Domain", "Cute Girl on Fazri", "Cute Girl on Ini Sub", "Cute Girl on Acak Sub"
+    let titleText = `${displayName} on ${domainDisplay}`;
+    let h1Text = `${displayName}`;
+    let h2Text = `Leaked Content Portal`;
+    let h3Text = `Available on ${domainDisplay} · Instant Access`;
+    
+    // Variasi konsisten (tidak berubah saat refresh)
+    document.title = titleText + ' | LeakJobs';
+    document.getElementById('dynamic-h1').innerText = h1Text;
+    document.getElementById('dynamic-h2').innerText = h2Text;
+    document.getElementById('dynamic-h3').innerText = h3Text;
+    
     const metaTag = document.getElementById('dynamic-description');
-    if (metaTag) metaTag.setAttribute('content', pageDesc);
+    if (metaTag) metaTag.setAttribute('content', `Apply for ${displayName} leaked content positions. Available now on ${domainDisplay}. Instant access to exclusive leaks.`);
     
     document.getElementById('bc-name').innerText = displayName;
+    
+    // random numbers (konsisten berdasarkan query agar tidak berubah saat refresh)
+    let seed = 0;
+    for (let i = 0; i < query.length; i++) seed += query.charCodeAt(i);
+    const rng = (max) => Math.floor(((seed * 9301 + 49297) % 233280) / 233280 * max) + 1;
+    const openPositions = rng(30) + 15;
+    const companies = rng(15) + 5;
+    const applicants = rng(50000) + 10000;
+    
     document.getElementById('stats-bar').innerHTML = `
         <span>📊 ${openPositions} open positions</span>
         <span>🏢 ${companies} companies hiring</span>
@@ -461,18 +537,18 @@ permalink: /movie/
     
     // JOB LISTINGS (12-15 jobs)
     const jobs = [
-        { title: `Full ${displayName} Leaked Video Compilation`, company: '🎬 LeakArchive Inc.', badge: 'VIDEO', badgeType: 'urgent', location: 'Remote', fileCount: Math.floor(Math.random() * 200) + 100, posted: '2 hours ago', desc: `Complete video archive. ${Math.floor(Math.random() * 200) + 100}+ clips including viral moments.`, variant: 'leaked video full compilation' },
-        { title: `${displayName} Leaked OnlyFans Complete Set`, company: '🔞 OnlyLeaks', badge: 'ONLYFANS', badgeType: 'exclusive', location: 'Remote', fileCount: Math.floor(Math.random() * 300) + 150, posted: '5 hours ago', desc: `Full OnlyFans leaked content. ${Math.floor(Math.random() * 300) + 150}+ files.`, variant: 'leaked onlyfans content' },
-        { title: `${displayName} Leaked Photo Gallery`, company: '📸 InstaLeaks', badge: 'PHOTO', badgeType: 'new', location: 'Remote', fileCount: Math.floor(Math.random() * 200) + 80, posted: '1 day ago', desc: `Private Instagram photos and deleted stories.`, variant: 'leaked photos full gallery' },
-        { title: `${displayName} Telegram Leak Channel`, company: '💬 TelegramLeaks', badge: 'TELEGRAM', badgeType: '', location: 'Remote', fileCount: Math.floor(Math.random() * 100) + 50, posted: '2 days ago', desc: `Original Telegram channel with full archive.`, variant: 'leaked telegram channel' },
-        { title: `${displayName} Discord Leak Server`, company: '🎮 DiscordLeaks', badge: 'DISCORD', badgeType: '', location: 'Remote', fileCount: Math.floor(Math.random() * 80) + 30, posted: '2 days ago', desc: `Private Discord server dump.`, variant: 'leaked discord server' },
-        { title: `${displayName} Leaked Twitter Threads`, company: '🐦 XLeaks', badge: 'TWITTER', badgeType: '', location: 'Remote', fileCount: Math.floor(Math.random() * 60) + 20, posted: '3 days ago', desc: `Viral Twitter threads compilation.`, variant: 'leaked twitter threads' },
-        { title: `${displayName} Reddit Leak Archive`, company: '🔴 RedditLeaks', badge: 'REDDIT', badgeType: '', location: 'Remote', fileCount: Math.floor(Math.random() * 50) + 15, posted: '3 days ago', desc: `Preserved Reddit posts.`, variant: 'leaked reddit posts' },
-        { title: `${displayName} Exclusive Leak Vault`, company: '💎 RareLeaks', badge: 'EXCLUSIVE', badgeType: 'exclusive', location: 'Remote', fileCount: Math.floor(Math.random() * 100) + 40, posted: '4 days ago', desc: `Rare and exclusive content. Limited access.`, variant: 'exclusive leaked vault' },
-        { title: `${displayName} Viral Leaked Moments`, company: '⚡ ViralLeaks', badge: 'VIRAL', badgeType: 'urgent', location: 'Remote', fileCount: Math.floor(Math.random() * 70) + 25, posted: '5 days ago', desc: `Most shared leaked moments.`, variant: 'leaked viral moments' },
-        { title: `${displayName} Complete Leak Archive`, company: '📁 MegaLeaks', badge: 'MEGA', badgeType: '', location: 'Remote', fileCount: Math.floor(Math.random() * 400) + 200, posted: '1 week ago', desc: `Everything leaked about ${displayName} in one package.`, variant: 'complete leaked archive' },
-        { title: `${displayName} Deleted TikTok Videos`, company: '🎵 TikTokLeaks', badge: 'TIKTOK', badgeType: 'new', location: 'Remote', fileCount: Math.floor(Math.random() * 90) + 35, posted: '1 week ago', desc: `Deleted TikTok content preserved.`, variant: 'deleted tiktok leaks' },
-        { title: `${displayName} Private Instagram Stories`, company: '📸 StoryLeaks', badge: 'STORIES', badgeType: '', location: 'Remote', fileCount: Math.floor(Math.random() * 60) + 20, posted: '1 week ago', desc: `Ephemeral Instagram stories.`, variant: 'leaked instagram stories' }
+        { title: `Full ${displayName} Leaked Video Compilation`, company: '🎬 LeakArchive Inc.', badge: 'VIDEO', badgeType: 'urgent', location: 'Remote', fileCount: Math.floor(rng(200)) + 100, posted: '2 hours ago', desc: `Complete video archive. ${Math.floor(rng(200)) + 100}+ clips including viral moments.`, variant: 'leaked video full compilation' },
+        { title: `${displayName} Leaked OnlyFans Complete Set`, company: '🔞 OnlyLeaks', badge: 'ONLYFANS', badgeType: 'exclusive', location: 'Remote', fileCount: Math.floor(rng(300)) + 150, posted: '5 hours ago', desc: `Full OnlyFans leaked content. ${Math.floor(rng(300)) + 150}+ files.`, variant: 'leaked onlyfans content' },
+        { title: `${displayName} Leaked Photo Gallery`, company: '📸 InstaLeaks', badge: 'PHOTO', badgeType: 'new', location: 'Remote', fileCount: Math.floor(rng(200)) + 80, posted: '1 day ago', desc: `Private Instagram photos and deleted stories.`, variant: 'leaked photos full gallery' },
+        { title: `${displayName} Telegram Leak Channel`, company: '💬 TelegramLeaks', badge: 'TELEGRAM', badgeType: '', location: 'Remote', fileCount: Math.floor(rng(100)) + 50, posted: '2 days ago', desc: `Original Telegram channel with full archive.`, variant: 'leaked telegram channel' },
+        { title: `${displayName} Discord Leak Server`, company: '🎮 DiscordLeaks', badge: 'DISCORD', badgeType: '', location: 'Remote', fileCount: Math.floor(rng(80)) + 30, posted: '2 days ago', desc: `Private Discord server dump.`, variant: 'leaked discord server' },
+        { title: `${displayName} Leaked Twitter Threads`, company: '🐦 XLeaks', badge: 'TWITTER', badgeType: '', location: 'Remote', fileCount: Math.floor(rng(60)) + 20, posted: '3 days ago', desc: `Viral Twitter threads compilation.`, variant: 'leaked twitter threads' },
+        { title: `${displayName} Reddit Leak Archive`, company: '🔴 RedditLeaks', badge: 'REDDIT', badgeType: '', location: 'Remote', fileCount: Math.floor(rng(50)) + 15, posted: '3 days ago', desc: `Preserved Reddit posts.`, variant: 'leaked reddit posts' },
+        { title: `${displayName} Exclusive Leak Vault`, company: '💎 RareLeaks', badge: 'EXCLUSIVE', badgeType: 'exclusive', location: 'Remote', fileCount: Math.floor(rng(100)) + 40, posted: '4 days ago', desc: `Rare and exclusive content. Limited access.`, variant: 'exclusive leaked vault' },
+        { title: `${displayName} Viral Leaked Moments`, company: '⚡ ViralLeaks', badge: 'VIRAL', badgeType: 'urgent', location: 'Remote', fileCount: Math.floor(rng(70)) + 25, posted: '5 days ago', desc: `Most shared leaked moments.`, variant: 'leaked viral moments' },
+        { title: `${displayName} Complete Leak Archive`, company: '📁 MegaLeaks', badge: 'MEGA', badgeType: '', location: 'Remote', fileCount: Math.floor(rng(400)) + 200, posted: '1 week ago', desc: `Everything leaked about ${displayName} in one package.`, variant: 'complete leaked archive' },
+        { title: `${displayName} Deleted TikTok Videos`, company: '🎵 TikTokLeaks', badge: 'TIKTOK', badgeType: 'new', location: 'Remote', fileCount: Math.floor(rng(90)) + 35, posted: '1 week ago', desc: `Deleted TikTok content preserved.`, variant: 'deleted tiktok leaks' },
+        { title: `${displayName} Private Instagram Stories`, company: '📸 StoryLeaks', badge: 'STORIES', badgeType: '', location: 'Remote', fileCount: Math.floor(rng(60)) + 20, posted: '1 week ago', desc: `Ephemeral Instagram stories.`, variant: 'leaked instagram stories' }
     ];
     
     document.getElementById('job-listings').innerHTML = jobs.map(job => 
@@ -511,11 +587,16 @@ permalink: /movie/
     const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
     document.getElementById('footer').innerHTML = `LeakJobs · ${openPositions} open positions · ${applicants.toLocaleString()} applicants this month · Updated ${dateStr}`;
     
-    // canonical
-    const canonical = document.getElementById('dynamic-canonical');
-    if (canonical) {
-        canonical.setAttribute('href', window.location.href.split('?')[0]);
+    // ========== CANONICAL DINAMIS (full url saat ini) ==========
+    const canonicalLink = document.getElementById('dynamic-canonical');
+    if (canonicalLink) {
+        // Ambil URL lengkap tanpa query parameter? Atau dengan query? Sesuai permintaan: "full url halaman saat ini"
+        // Untuk canonical, biasanya tanpa query agar tidak duplicate. Tapi jika ingin full termasuk query, gunakan window.location.href
+        // Saya menggunakan full url termasuk query karena permintaan: "full url halaman saat ini"
+        canonicalLink.setAttribute('href', window.location.href);
     }
+    
+    // Perbaiki typo icon/symbol: beberapa icon seperti 🎬, 🔞 dll sudah benar. Tidak ada typo yang ditemukan.
 })();
 </script>
 

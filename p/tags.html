@@ -11,30 +11,44 @@ permalink: /tags/
     <meta http-equiv="content-language" content="en">
     <meta name="robots" content="index, follow">
     
+    <!-- Canonical link dinamis: full URL halaman saat ini -->
+    <link rel="canonical" id="dynamic-canonical" href="">
     
-    <!-- Title akan di-update JavaScript -->
+    <!-- Title akan di-update JavaScript (mengandung query + identitas domain) -->
     <title id="dynamic-title">Search Exclusive Content Archive</title>
     
     <!-- Meta Description akan di-update JavaScript -->
     <meta id="dynamic-description" name="description" content="Browse our comprehensive collections of celebrity content, including photos, videos, biographies, and exclusive material.">
     
-   
-    
+    <!-- CSS Global dengan warna mudah diedit -->
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; max-width: 1000px; margin: 0 auto; padding: 20px; }
-        h1 { color: #333; font-size: 2.2em; }
-        h2 { color: #444; margin-top: 40px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
-        a { color: #0066cc; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        :root {
+            /* Warna Global - Gampang diedit nanti */
+            --primary-color: #0066cc;      /* Warna link utama */
+            --primary-hover: #004999;       /* Warna link saat hover */
+            --heading-color: #333;           /* Warna heading h1 */
+            --subheading-color: #444;        /* Warna heading h2 */
+            --text-color: #222;              /* Warna teks utama */
+            --border-color: #f0f0f0;         /* Warna border */
+            --bg-light: #f9f9f9;             /* Background section */
+            --breadcrumb-text: #666;         /* Teks breadcrumb */
+            --breadcrumb-active: #333;        /* Teks breadcrumb aktif */
+        }
+        
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; max-width: 1000px; margin: 0 auto; padding: 20px; color: var(--text-color); }
+        h1 { color: var(--heading-color); font-size: 2.2em; }
+        h2 { color: var(--subheading-color); margin-top: 40px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        a { color: var(--primary-color); text-decoration: none; }
+        a:hover { color: var(--primary-hover); text-decoration: underline; }
         section { margin: 40px 0; }
-        .breadcrumb { padding: 10px 0; margin-bottom: 20px; border-bottom: 1px solid #eee; }
-        .breadcrumb a { color: #666; }
-        .breadcrumb span { color: #333; font-weight: bold; }
-        .quick-facts { background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 30px 0; }
+        .breadcrumb { padding: 10px 0; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        .breadcrumb a { color: var(--breadcrumb-text); }
+        .breadcrumb span { color: var(--breadcrumb-active); font-weight: bold; }
+        .quick-facts { background: var(--bg-light); padding: 20px; border-radius: 8px; margin: 30px 0; }
         .faq-item { margin: 25px 0; }
         ul { list-style: none; padding: 0; }
         li { margin-bottom: 8px; }
-        hr { border: none; border-top: 1px solid #eee; margin: 30px 0; }
+        hr { border: none; border-top: 1px solid var(--border-color); margin: 30px 0; }
         .hidden { display: none; }
         .query-placeholder { font-weight: bold; }
         [data-query-section] { display: none; }
@@ -48,10 +62,14 @@ permalink: /tags/
 
     <main>
         <!-- ============================================
+             H1 BERADA PALING ATAS - TIDAK ADA SECTION LAIN YANG MENGHALANGI
+             ============================================ -->
+        <h1 id="main-heading">Loading...</h1>
+        
+        <!-- ============================================
              DEFAULT CONTENT (tampil jika tidak ada query)
              ============================================ -->
         <div id="default-content" class="default-content active">
-            <h1>Leak Archives • Exclusive Dumps • Private Collections</h1>
             <p>Underground leaks. Unreleased drops. Content that was never meant to see the light. Start digging below.</p>
             
             <section>
@@ -68,7 +86,7 @@ permalink: /tags/
         
         <!-- ============================================
              QUERY-BASED CONTENT (disembunyikan sampai ada query)
-             Semua konten ini sudah ada di HTML u
+             Semua konten ini sudah ada di HTML
              ============================================ -->
         <div id="query-content" style="display: none;">
             <!-- BREADCRUMB -->
@@ -76,11 +94,6 @@ permalink: /tags/
                 <a href="/">Home</a> » <a href="/labels/">Leak Index</a> » 
                 <span id="breadcrumb-name"></span>
             </div>
-            
-            <!-- H1 -->
-            <h1 id="main-heading"></h1>
-            
-            
             
             <!-- INTRO PARAGRAPH (berbagai varian) -->
             <div id="intro-leak" class="intro-varian hidden">
@@ -186,7 +199,7 @@ permalink: /tags/
                     <li><a href="" class="dynamic-link" data-variant="twitter"><span class="query-placeholder"></span> Twitter/X Leaks</a> – deleted tweet archives, private account scrapes</li>
                     <li><a href="" class="dynamic-link" data-variant="tiktok"><span class="query-placeholder"></span> TikTok Leaks</a> – backend video exports, private content dumps</li>
                     <li><a href="" class="dynamic-link" data-variant="youtube"><span class="query-placeholder"></span> YouTube Leaks</a> – unlisted video archives, deleted content repositories</li>
-                    <li><a href="" class="dynamic-link" data-variant="snapchat"><span class="query-placeholder"></span> Snapchat Leaks</span> – ephemeral content captures, private story dumps</li>
+                    <li><a href="" class="dynamic-link" data-variant="snapchat"><span class="query-placeholder"></span> Snapchat Leaks</a> – ephemeral content captures, private story dumps</li>
                     <li><a href="" class="dynamic-link" data-variant="discord"><span class="query-placeholder"></span> Discord Leaks</a> – private server exports, leaked DM archives</li>
                     <li><a href="" class="dynamic-link" data-variant="telegram"><span class="query-placeholder"></span> Telegram Leaks</a> – channel dumps, private group exports</li>
                     <li><a href="" class="dynamic-link" data-variant="reddit"><span class="query-placeholder"></span> Reddit Leaks</a> – removed thread archives, private subreddit exports</li>
@@ -283,13 +296,122 @@ permalink: /tags/
     
     <script>
     (function() {
-        // Ambil query dari URL
+        // ========== CANONICAL LINK DINAMIS ==========
+        var canonicalUrl = window.location.href;
+        var canonicalTag = document.getElementById('dynamic-canonical');
+        if (canonicalTag) {
+            canonicalTag.setAttribute('href', canonicalUrl);
+        }
+        
+        // ========== FUNGSI EKSTRAK IDENTITAS DOMAIN/SUBDOMAIN ==========
+        function getDomainIdentity() {
+            var hostname = window.location.hostname;
+            // Hapus "www." jika ada
+            hostname = hostname.replace(/^www\./i, '');
+            
+            // Pisahkan berdasarkan titik
+            var parts = hostname.split('.');
+            
+            // Deteksi apakah ini subdomain atau domain utama
+            // Cek apakah ini github.io atau pages.dev (platform hosting)
+            if (hostname.indexOf('github.io') !== -1 || hostname.indexOf('pages.dev') !== -1) {
+                // Untuk github.io atau pages.dev, ambil subdomain pertama
+                if (parts.length >= 3) {
+                    return parts[0];
+                } else {
+                    return hostname;
+                }
+            }
+            
+            // Untuk domain custom: cek apakah ada subdomain
+            // Jika parts.length > 2, kemungkinan ada subdomain (contoh: sub.example.com)
+            if (parts.length > 2) {
+                // Ambil subdomain pertama
+                return parts[0];
+            } else {
+                // Tidak ada subdomain, ambil domain utama (contoh: fazri.my)
+                return parts[0];
+            }
+        }
+        
+        function capitalizeFirst(str) {
+            if (!str) return str;
+            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        }
+        
+        function formatQueryForDisplay(query) {
+            // Kapitalisasi setiap kata
+            var words = query.split(' ');
+            var formatted = words.map(function(word) {
+                return capitalizeFirst(word);
+            }).join(' ');
+            return formatted;
+        }
+        
+        // Variasi template untuk title/h1/h2/h3 (konsisten per halaman)
+        // Gunakan array variasi dan pilih berdasarkan hash dari query agar konsisten
+        function getConsistentVariant(query, domainId, type) {
+            // Buat hash sederhana dari query + domain untuk konsistensi
+            var hash = 0;
+            var str = query + domainId;
+            for (var i = 0; i < str.length; i++) {
+                hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                hash |= 0;
+            }
+            var variantIndex = Math.abs(hash) % 6; // 6 variasi
+            
+            var templates = {
+                title: [
+                    '{query} on {domain}',
+                    '{query} — Exclusive on {domain}',
+                    '{query} | {domain} Archive',
+                    '{query} • {domain} Edition',
+                    '{query} - Full Collection on {domain}',
+                    '{domain}: {query} Complete Archive'
+                ],
+                h1: [
+                    '{query} on {domain}',
+                    '{query} — {domain} Exclusive',
+                    '{query} | {domain} Archive',
+                    '{query} • {domain} Complete',
+                    '{query} - Full {domain} Collection',
+                    '{domain}: {query} Leak Archive'
+                ],
+                h2: [
+                    '{query} on {domain}',
+                    '{query} — {domain} Archive',
+                    '{query} | {domain} Section',
+                    '{query} • {domain} Edition',
+                    '{query} - {domain} Collection',
+                    'Explore {query} on {domain}'
+                ],
+                h3: [
+                    '{query} on {domain}',
+                    '{query} - {domain} FAQ',
+                    '{query} | {domain} Guide',
+                    '{query} • {domain} Info',
+                    '{query} on {domain} Archive',
+                    'About {query} on {domain}'
+                ]
+            };
+            
+            var template = templates[type][variantIndex];
+            return template.replace('{query}', query).replace('{domain}', domainId);
+        }
+        
+        // ========== SISA SCRIPT TIDAK BERUBAH (kecuali update heading) ==========
         const urlParams = new URLSearchParams(window.location.search);
         let query = urlParams.get('q');
         
         // Jika tidak ada query, tampilkan default content
         if (!query) {
             document.getElementById('default-content').classList.add('active');
+            // Update H1 untuk halaman default (tanpa query)
+            var defaultH1 = document.getElementById('main-heading');
+            if (defaultH1) {
+                defaultH1.textContent = 'Leak Archives • Exclusive Dumps • Private Collections';
+            }
+            document.title = 'Leak Archives • Exclusive Dumps • Private Collections';
             return;
         }
         
@@ -300,14 +422,10 @@ permalink: /tags/
         
         // Decode query
         query = decodeURIComponent(query.replace(/\+/g, ' '));
-        const originalQuery = query;
         
         // Daftar kata yang akan dihapus untuk mendapatkan base name
-        const removeTerms = [
-            '2025', '2024'
-        ];
+        const removeTerms = ['2025', '2024'];
         
-        // Fungsi untuk mendapatkan base name
         function getBaseName(query) {
             let base = query.toLowerCase();
             removeTerms.forEach(term => {
@@ -318,8 +436,52 @@ permalink: /tags/
         }
         
         const baseName = getBaseName(query);
+        const formattedQuery = formatQueryForDisplay(baseName);
+        const domainIdentity = getDomainIdentity();
+        const domainDisplay = capitalizeFirst(domainIdentity);
         
-        // Deteksi tipe query
+        // Update Title dengan template konsisten
+        var newTitle = getConsistentVariant(formattedQuery, domainDisplay, 'title');
+        document.title = newTitle;
+        
+        // Update H1 (paling atas, tidak ada section yang menghalangi)
+        var h1Element = document.getElementById('main-heading');
+        if (h1Element) {
+            h1Element.textContent = getConsistentVariant(formattedQuery, domainDisplay, 'h1');
+        }
+        
+        // Update semua H2 yang ada di dalam query-content
+        var allH2 = document.querySelectorAll('#query-content h2');
+        for (var i = 0; i < allH2.length; i++) {
+            var originalText = allH2[i].innerHTML;
+            // Hanya update yang masih mengandung placeholder atau belum diubah
+            if (originalText.indexOf('query-placeholder') !== -1 || originalText.indexOf(formattedQuery) === -1) {
+                allH2[i].textContent = getConsistentVariant(formattedQuery, domainDisplay, 'h2');
+            }
+        }
+        
+        // Update semua H3 yang ada di dalam query-content (FAQ questions)
+        var allH3 = document.querySelectorAll('#query-content h3');
+        for (var j = 0; j < allH3.length; j++) {
+            var h3Original = allH3[j].innerHTML;
+            if (h3Original.indexOf('query-placeholder') !== -1 || h3Original.indexOf(formattedQuery) === -1) {
+                allH3[j].textContent = getConsistentVariant(formattedQuery, domainDisplay, 'h3');
+            }
+        }
+        
+        // Update meta description
+        document.getElementById('dynamic-description').setAttribute('content', 
+            'Complete ' + formattedQuery + ' leak archive on ' + domainDisplay + ' - private photos, videos, documents, and exclusive data dumps. Full leak repository.');
+        
+        // Update breadcrumb
+        document.getElementById('breadcrumb-name').textContent = baseName;
+        
+        // Update semua placeholder dengan baseName
+        document.querySelectorAll('.query-placeholder').forEach(el => {
+            el.textContent = baseName;
+        });
+        
+        // Deteksi tipe query (untuk memilih intro yang sesuai)
         const queryLower = query.toLowerCase();
         let queryType = 'general';
         
@@ -335,40 +497,17 @@ permalink: /tags/
             queryType = 'platform';
         }
         
-        // Update title
-        let title;
-        if (queryType === 'leak') title = `${query} - Leak Archive | Complete Dump & Private Collection`;
-        else if (queryType === 'photo') title = `${query} - Leaked Photo Archive | Complete Image Dump`;
-        else if (queryType === 'video') title = `${query} - Leaked Video Archive | Private Footage Collection`;
-        else if (queryType === 'bio') title = `${query} - Leaked Documents & Private Records Archive`;
-        else if (queryType === 'platform') title = `${query} - Platform Leaks | Data Breach Archive`;
-        else title = `${query} - Complete Archive`;
-        
-        document.title = title;
-        document.getElementById('dynamic-description').setAttribute('content', 
-            `Complete ${query} leak archive - private photos, videos, documents, and exclusive data dumps. Full leak repository.`);
-        
-        // Update H1
-        document.getElementById('main-heading').textContent = title;
-        
-        // Update breadcrumb
-        document.getElementById('breadcrumb-name').textContent = baseName;
-        
-        // Update semua placeholder dengan baseName
-        document.querySelectorAll('.query-placeholder').forEach(el => {
-            el.textContent = baseName;
-        });
-        
         // Tampilkan intro yang sesuai
         document.querySelectorAll('.intro-varian').forEach(el => el.classList.add('hidden'));
-        document.getElementById(`intro-${queryType}`).classList.remove('hidden');
+        var introElement = document.getElementById('intro-' + queryType);
+        if (introElement) introElement.classList.remove('hidden');
         
         // Update semua dynamic links
         function updateLinks() {
             document.querySelectorAll('.dynamic-link').forEach(link => {
                 const variant = link.getAttribute('data-variant');
                 if (variant) {
-                    link.href = `/labels/?q=${encodeURIComponent(baseName + ' ' + variant)}`;
+                    link.href = '/labels/?q=' + encodeURIComponent(baseName + ' ' + variant);
                 }
             });
         }
@@ -383,8 +522,6 @@ permalink: /tags/
     })();
     </script>
     
-    
-
 <br /><br /><br />
 <nav>
 {% include /kw/p/tags.html %}

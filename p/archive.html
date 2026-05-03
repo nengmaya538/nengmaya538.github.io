@@ -11,21 +11,47 @@ permalink: /archive/
     <meta http-equiv="content-language" content="en">
     <meta name="robots" content="index, follow">
     
+    <!-- Canonical Link Dinamis - Full URL halaman saat ini -->
+    <link rel="canonical" href="https://{{ site.domain }}{{ page.url | remove: 'index.html' }}" id="dynamic-canonical">
     
-    <!-- Title akan di-update JavaScript -->
+    <!-- Title akan di-update JavaScript dengan query + subdomain/domain -->
     <title id="dynamic-title">Search Exclusive Content Archive</title>
     
     <!-- Meta Description akan di-update JavaScript -->
     <meta id="dynamic-description" name="description" content="Browse our comprehensive collections of celebrity content, including photos, videos, biographies, and exclusive material.">
     
-   
-    
+    <!-- GLOBAL COLOR VARIABLES - MUDAH DIEDIT -->
     <style>
+        /* ============================================
+           GLOBAL COLOR PALETTE
+           Edit nilai di bawah ini untuk mengubah warna seluruh website
+        ============================================ */
+        :root {
+            --bg-dark: #0a0a0a;        /* Background utama */
+            --bg-card: #111111;         /* Background container / card */
+            --bg-card-hover: #1a1a1a;   /* Background card saat hover */
+            --border-color: #2a2a2a;    /* Warna border */
+            --text-primary: #e5e5e5;    /* Warna teks utama */
+            --text-secondary: #888;     /* Warna teks sekunder */
+            --text-white: #ffffff;      /* Warna teks putih */
+            --accent-primary: #a855f7;  /* Warna aksen utama (purple) */
+            --accent-gradient-start: #ffffff; /* Gradient start untuk H1 */
+            --accent-gradient-end: #a855f7;   /* Gradient end untuk H1 */
+            --accent-hover: #f0abfc;    /* Warna link saat hover */
+            --teaser-bg-start: #1a1a2e; /* Background teaser start */
+            --teaser-bg-end: #0f0f1a;   /* Background teaser end */
+            --stat-bg: #0f0f0f;         /* Background stat bar */
+            --badge-bg: #a855f7;        /* Background badge */
+            --leak-alert-bg-start: #a855f7; /* Leak alert gradient start */
+            --leak-alert-bg-end: #6b21a5;   /* Leak alert gradient end */
+            --box-shadow: 0 20px 25px -12px rgba(168,85,247,0.2);
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background: #0a0a0a;
-            color: #e5e5e5;
+            background: var(--bg-dark);
+            color: var(--text-primary);
             line-height: 1.5;
         }
         main { 
@@ -34,17 +60,17 @@ permalink: /archive/
             padding: 40px 24px;
         }
         .container {
-            background: #111111;
+            background: var(--bg-card);
             border-radius: 24px;
             padding: 48px;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-            border: 1px solid #2a2a2a;
+            border: 1px solid var(--border-color);
         }
         h1 { 
             font-size: 3rem; 
             font-weight: 800; 
             line-height: 1.2;
-            background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%);
+            background: linear-gradient(135deg, var(--accent-gradient-start) 0%, var(--accent-gradient-end) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -55,8 +81,8 @@ permalink: /archive/
             font-size: 1.8rem; 
             font-weight: 700; 
             margin: 48px 0 20px 0;
-            color: #ffffff;
-            border-left: 4px solid #a855f7;
+            color: var(--text-white);
+            border-left: 4px solid var(--accent-primary);
             padding-left: 20px;
         }
         h3 { 
@@ -66,25 +92,25 @@ permalink: /archive/
             color: #f0f0f0;
         }
         a { 
-            color: #c084fc; 
+            color: var(--accent-primary); 
             text-decoration: none; 
             transition: color 0.2s;
             font-weight: 500;
         }
         a:hover { 
-            color: #f0abfc; 
+            color: var(--accent-hover); 
             text-decoration: underline;
         }
         .breadcrumb { 
             padding: 12px 0 24px 0; 
             margin-bottom: 24px; 
-            border-bottom: 1px solid #2a2a2a;
+            border-bottom: 1px solid var(--border-color);
             font-size: 0.85rem;
-            color: #888;
+            color: var(--text-secondary);
         }
-        .breadcrumb a { color: #888; }
-        .breadcrumb a:hover { color: #c084fc; }
-        .breadcrumb span { color: #c084fc; font-weight: 600; }
+        .breadcrumb a { color: var(--text-secondary); }
+        .breadcrumb a:hover { color: var(--accent-primary); }
+        .breadcrumb span { color: var(--accent-primary); font-weight: 600; }
         
         /* Card & Grid */
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin: 32px 0; }
@@ -93,22 +119,22 @@ permalink: /archive/
         @media (max-width: 768px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
         
         .card { 
-            background: #1a1a1a; 
+            background: var(--bg-card-hover); 
             border-radius: 16px; 
             padding: 24px;
-            border: 1px solid #2a2a2a;
+            border: 1px solid var(--border-color);
             transition: all 0.3s ease;
         }
         .card:hover { 
-            border-color: #a855f7; 
+            border-color: var(--accent-primary); 
             transform: translateY(-4px);
-            box-shadow: 0 20px 25px -12px rgba(168,85,247,0.2);
+            box-shadow: var(--box-shadow);
         }
-        .card h3 { margin-top: 0; margin-bottom: 12px; color: #c084fc; }
+        .card h3 { margin-top: 0; margin-bottom: 12px; color: var(--accent-primary); }
         
         .teaser { 
-            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
-            border-left: 4px solid #a855f7;
+            background: linear-gradient(135deg, var(--teaser-bg-start) 0%, var(--teaser-bg-end) 100%);
+            border-left: 4px solid var(--accent-primary);
             padding: 28px;
             border-radius: 16px;
             margin: 32px 0;
@@ -119,19 +145,19 @@ permalink: /archive/
             display: flex; 
             gap: 32px; 
             flex-wrap: wrap; 
-            background: #0f0f0f; 
+            background: var(--stat-bg); 
             padding: 20px 28px; 
             border-radius: 16px;
             margin: 24px 0;
-            border: 1px solid #2a2a2a;
+            border: 1px solid var(--border-color);
         }
         .stat-item { flex: 1; min-width: 120px; }
-        .stat-number { font-size: 1.8rem; font-weight: 800; color: #c084fc; display: block; }
-        .stat-label { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-number { font-size: 1.8rem; font-weight: 800; color: var(--accent-primary); display: block; }
+        .stat-label { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
         
         .suspense-box {
             background: rgba(168,85,247,0.1);
-            border: 1px dashed #a855f7;
+            border: 1px dashed var(--accent-primary);
             border-radius: 16px;
             padding: 24px;
             text-align: center;
@@ -141,20 +167,20 @@ permalink: /archive/
         .faq-item { 
             margin: 24px 0; 
             padding-bottom: 20px; 
-            border-bottom: 1px solid #2a2a2a;
+            border-bottom: 1px solid var(--border-color);
         }
         .faq-item h3 { margin-top: 0; cursor: pointer; }
         
-        hr { border: none; border-top: 1px solid #2a2a2a; margin: 48px 0; }
+        hr { border: none; border-top: 1px solid var(--border-color); margin: 48px 0; }
         .hidden { display: none; }
-        .query-placeholder { color: #c084fc; font-weight: 700; }
+        .query-placeholder { color: var(--accent-primary); font-weight: 700; }
         .default-content.active { display: block; }
         .default-content { display: none; }
         #query-content { display: none; }
         
         .badge { 
             display: inline-block; 
-            background: #a855f7; 
+            background: var(--badge-bg); 
             color: white; 
             font-size: 0.7rem; 
             padding: 4px 10px; 
@@ -169,7 +195,7 @@ permalink: /archive/
             font-weight: 600;
         }
         .leak-alert {
-            background: linear-gradient(90deg, #a855f7 0%, #6b21a5 100%);
+            background: linear-gradient(90deg, var(--leak-alert-bg-start) 0%, var(--leak-alert-bg-end) 100%);
             padding: 2px 12px;
             border-radius: 20px;
             font-size: 0.7rem;
@@ -182,7 +208,7 @@ permalink: /archive/
         button, .btn-link {
             background: none;
             border: none;
-            color: #c084fc;
+            color: var(--accent-primary);
             cursor: pointer;
             font-weight: 600;
         }
@@ -261,6 +287,9 @@ allowfullscreen="true"></iframe>
              QUERY-BASED CONTENT - SEMUA KONTEN DINAMIS
              ============================================ -->
         <div id="query-content" style="display: none;">
+            <!-- H1 PALING ATAS - TIDAK ADA SECTION LAIN YANG MENGHALANGI -->
+            <h1 id="main-heading"></h1>
+            
             <!-- BREADCRUMB -->
             <div class="breadcrumb">
                 <a href="/">Leak Archive</a> › 
@@ -268,9 +297,6 @@ allowfullscreen="true"></iframe>
                 <span id="breadcrumb-name"></span>
                 <span class="leak-alert">LEAKED CONTENT</span>
             </div>
-            
-            <!-- H1 - DENGAN QUERY TERSEMAT -->
-            <h1 id="main-heading"></h1>
             
             <!-- SUSPENSE INTRO - UNTUK SEMUA VARIAN -->
             <div class="teaser" style="background: linear-gradient(135deg, #2a1a3a 0%, #1a1a2a 100%);">
@@ -376,7 +402,7 @@ allowfullscreen="true"></iframe>
             
             <!-- SECTION 1: LEAK TIMELINE - NUANSA PENASARAN -->
             <section>
-                <h2>⏳ The <span class="query-placeholder"></span> Leak: How It Unfolded</h2>
+                <h2 id="section1-heading">⏳ The <span class="query-placeholder"></span> Leak: How It Unfolded</h2>
                 <iframe src="https://www.youtube.com/embed/PeBt_7112R4"
 style="width:100%;aspect-ratio:9/16;border:0;"
 loading="lazy"
@@ -410,7 +436,7 @@ allowfullscreen="true"></iframe>
             
             <!-- SECTION 2: WHAT'S INSIDE THE LEAK -->
             <section>
-                <h2>🔓 What's Actually Inside the <span class="query-placeholder"></span> Leak?</h2>
+                <h2 id="section2-heading">🔓 What's Actually Inside the <span class="query-placeholder"></span> Leak?</h2>
                 <iframe src="https://www.youtube.com/embed/B3X-FZwHGBY"
 style="width:100%;aspect-ratio:9/16;border:0;"
 loading="lazy"
@@ -432,7 +458,7 @@ allowfullscreen="true"></iframe>
             
             <!-- SECTION 3: PLATFORM-SPECIFIC LEAKS -->
             <section>
-                <h2>📱 Platform-by-Platform: What Got Deleted</h2>
+                <h2 id="section3-heading">📱 Platform-by-Platform: What Got Deleted</h2>
                 <div class="grid-4">
                 <iframe src="https://www.youtube.com/embed/slV3chErAxg"
 style="width:100%;aspect-ratio:9/16;border:0;"
@@ -455,7 +481,7 @@ allowfullscreen="true"></iframe>
             
             <!-- SECTION 4: EXCLUSIVE & RARE LEAKS -->
             <section>
-                <h2>🔒 Exclusive Leaks: Not Found Anywhere Else</h2>
+                <h2 id="section4-heading">🔒 Exclusive Leaks: Not Found Anywhere Else</h2>
                 <div class="grid-2">
                 <iframe src="https://www.youtube.com/embed/ZFgaTvEr4Wk"
 style="width:100%;aspect-ratio:9/16;border:0;"
@@ -474,7 +500,7 @@ allowfullscreen="true"></iframe>
             
             <!-- SECTION 5: BIO LEAKS -->
             <section>
-                <h2>📋 The Personal Files: What Documents Surfaced</h2>
+                <h2 id="section5-heading">📋 The Personal Files: What Documents Surfaced</h2>
                 <iframe src="https://www.youtube.com/embed/0GKIFv7_rFo"
 style="width:100%;aspect-ratio:9/16;border:0;"
 loading="lazy"
@@ -496,7 +522,7 @@ allowfullscreen="true"></iframe>
             
             <!-- SECTION 6: RELATED LEAKS -->
             <section>
-                <h2>🔍 You Might Also Investigate</h2>
+                <h2 id="section6-heading">🔍 You Might Also Investigate</h2>
                 <div class="grid-2">
                 <iframe src="https://www.youtube.com/embed/SBnOW38uBrs"
 style="width:100%;aspect-ratio:9/16;border:0;"
@@ -514,7 +540,7 @@ allowfullscreen="true"></iframe>
             
             <!-- SECTION 7: FAQ - PENASARAN -->
             <section>
-                <h2>❓ What People Are Asking About the <span class="query-placeholder"></span> Leak</h2>
+                <h2 id="section7-heading">❓ What People Are Asking About the <span class="query-placeholder"></span> Leak</h2>
                 <iframe src="https://www.youtube.com/embed/Jiik4zKyYYM"
 style="width:100%;aspect-ratio:9/16;border:0;"
 loading="lazy"
@@ -554,7 +580,7 @@ allowfullscreen="true"></iframe>
             
             <!-- SECTION 8: ARCHIVE STATEMENT -->
             <section>
-                <h2>📌 About This Leak Archive</h2>
+                <h2 id="section8-heading">📌 About This Leak Archive</h2>
                 <iframe src="https://www.youtube.com/embed/Ydkcl27HLHg"
 style="width:100%;aspect-ratio:9/16;border:0;"
 loading="lazy"
@@ -573,6 +599,12 @@ allowfullscreen="true"></iframe>
     
     <script>
     (function() {
+        // Set canonical link secara dinamis (full URL)
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if (canonicalLink) {
+            canonicalLink.href = window.location.href;
+        }
+
         // Ambil query dari URL
         const urlParams = new URLSearchParams(window.location.search);
         let query = urlParams.get('q');
@@ -609,7 +641,156 @@ allowfullscreen="true"></iframe>
         
         const baseName = getBaseName(query);
         
-        // Deteksi tipe query
+        // ============================================
+        // FUNGSI UNTUK MENDAPATKAN IDENTITAS SUBDOMAIN/DOMAIN
+        // Konsisten (tidak berubah saat refresh)
+        // ============================================
+        function getDomainIdentity() {
+            const hostname = window.location.hostname;
+            
+            // Daftar domain utama yang dikenal
+            const mainDomains = ['fazri.my', 'github.io', 'pages.dev'];
+            
+            // Cek apakah hostname adalah subdomain dari domain utama
+            for (let mainDomain of mainDomains) {
+                if (hostname.endsWith(mainDomain)) {
+                    // Ambil bagian subdomain (bagian sebelum domain utama)
+                    const subdomainPart = hostname.replace('.' + mainDomain, '');
+                    // Jika subdomainPart sama dengan hostname (berarti bukan subdomain), atau subdomainPart kosong
+                    if (subdomainPart === hostname || subdomainPart === '') {
+                        // Ini adalah domain utama (contoh: fazri.my)
+                        // Kapitalisasi huruf pertama
+                        const mainName = mainDomain.replace('.my', '').replace('.io', '').replace('.dev', '');
+                        return mainName.charAt(0).toUpperCase() + mainName.slice(1);
+                    } else {
+                        // Ini adalah subdomain (contoh: sub-domain.fazri.my)
+                        // Kapitalisasi huruf pertama
+                        return subdomainPart.split('.')[0].charAt(0).toUpperCase() + subdomainPart.split('.')[0].slice(1);
+                    }
+                }
+            }
+            
+            // Fallback: jika tidak ada pola yang cocok, gunakan hostname asli
+            // Hapus ekstensi TLD (.com, .net, dll) untuk tampilan lebih rapi
+            let identity = hostname.replace(/\.(com|net|org|id|my|io|dev|co|uk)$/i, '');
+            identity = identity.split('.')[0]; // Ambil bagian pertama
+            return identity.charAt(0).toUpperCase() + identity.slice(1);
+        }
+        
+        const domainIdentity = getDomainIdentity();
+        
+        // Kapitalisasi query untuk tampilan
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+        
+        const capitalizedQuery = capitalizeFirst(baseName);
+        
+        // ============================================
+        // VARIAN JUDUL YANG KONSISTEN (tidak berubah saat refresh)
+        // Menggunakan kombinasi query + subdomain/domain
+        // ============================================
+        
+        // Format pola dasar: "Query on DomainIdentity"
+        // Contoh: "Cute Girl on Sub Domain", "Cute Girl on Fazri", dll.
+        const titlePattern = `${capitalizedQuery} on ${domainIdentity}`;
+        
+        // Varian untuk H1 (bisa sedikit lebih deskriptif tapi tetap mengandung query + domain)
+        const h1Pattern = `${capitalizedQuery} — Complete Leak Archive on ${domainIdentity}`;
+        
+        // Varian untuk H2 sections (konsisten mengandung query + domain)
+        function getH2Text(baseText, sectionName) {
+            return `${baseText} ${sectionName} — ${capitalizedQuery} on ${domainIdentity}`;
+        }
+        
+        // Update title di <head>
+        document.title = `${titlePattern} | Exclusive Content Archive`;
+        document.getElementById('dynamic-description').setAttribute('content', 
+            `Complete ${capitalizedQuery} leak archive on ${domainIdentity} - private photos, videos, and documents that surfaced. Full collection of leaked content preserved before takedowns. Investigate what really happened.`);
+        
+        // Update H1 - PALING ATAS (tidak ada section lain yang menghalangi)
+        document.getElementById('main-heading').textContent = h1Pattern;
+        
+        // Update semua H2 yang ada di dalam #query-content
+        // Section 1
+        const section1H2 = document.getElementById('section1-heading');
+        if (section1H2) {
+            section1H2.innerHTML = `⏳ The ${capitalizedQuery} Leak on ${domainIdentity}: How It Unfolded`;
+        }
+        
+        // Section 2
+        const section2H2 = document.getElementById('section2-heading');
+        if (section2H2) {
+            section2H2.innerHTML = `🔓 What's Actually Inside the ${capitalizedQuery} Leak on ${domainIdentity}?`;
+        }
+        
+        // Section 3
+        const section3H2 = document.getElementById('section3-heading');
+        if (section3H2) {
+            section3H2.innerHTML = `📱 Platform-by-Platform on ${domainIdentity}: What Got Deleted`;
+        }
+        
+        // Section 4
+        const section4H2 = document.getElementById('section4-heading');
+        if (section4H2) {
+            section4H2.innerHTML = `🔒 Exclusive Leaks on ${domainIdentity}: Not Found Anywhere Else`;
+        }
+        
+        // Section 5
+        const section5H2 = document.getElementById('section5-heading');
+        if (section5H2) {
+            section5H2.innerHTML = `📋 The Personal Files on ${domainIdentity}: What Documents Surfaced`;
+        }
+        
+        // Section 6
+        const section6H2 = document.getElementById('section6-heading');
+        if (section6H2) {
+            section6H2.innerHTML = `🔍 You Might Also Investigate on ${domainIdentity}`;
+        }
+        
+        // Section 7
+        const section7H2 = document.getElementById('section7-heading');
+        if (section7H2) {
+            section7H2.innerHTML = `❓ What People Are Asking About the ${capitalizedQuery} Leak on ${domainIdentity}`;
+        }
+        
+        // Section 8
+        const section8H2 = document.getElementById('section8-heading');
+        if (section8H2) {
+            section8H2.innerHTML = `📌 About This Leak Archive on ${domainIdentity}`;
+        }
+        
+        // Update juga H3 yang ada di dalam card (opsional, tapi untuk konsistensi)
+        // H3 di dalam card biasanya statis, tapi kita update yang mengandung query-placeholder
+        document.querySelectorAll('#query-content h3').forEach(h3 => {
+            if (h3.innerHTML.includes('query-placeholder')) {
+                h3.innerHTML = h3.innerHTML.replace(/<span class="query-placeholder"><\/span>/g, capitalizedQuery);
+                h3.innerHTML = h3.innerHTML.replace(/<strong class="query-placeholder"><\/strong>/g, capitalizedQuery);
+            }
+        });
+        
+        // Update suspense message dengan nuansa penasaran
+        const suspenseMessages = [
+            `You're about to see what ${capitalizedQuery} on ${domainIdentity} never wanted public.`,
+            `Before the takedowns, before the deletions—this is what actually leaked from ${capitalizedQuery} on ${domainIdentity}.`,
+            `What you're about to discover was scrubbed from every platform. The complete ${capitalizedQuery} leak on ${domainIdentity}.`,
+            `They tried to erase it. We preserved it. The complete ${capitalizedQuery} leak on ${domainIdentity}.`,
+            `This is the archive platforms don't want you to find: ${capitalizedQuery} on ${domainIdentity}.`
+        ];
+        const suspenseEl = document.getElementById('suspense-message');
+        if (suspenseEl) {
+            suspenseEl.textContent = suspenseMessages[Math.floor(Math.random() * suspenseMessages.length)];
+        }
+        
+        // Update breadcrumb
+        document.getElementById('breadcrumb-name').textContent = `${capitalizedQuery} on ${domainIdentity}`;
+        
+        // Update semua placeholder dengan capitalizedQuery
+        document.querySelectorAll('.query-placeholder').forEach(el => {
+            el.textContent = capitalizedQuery;
+        });
+        
+        // Deteksi tipe query untuk menentukan intro yang tepat
         const queryLower = query.toLowerCase();
         let queryType = 'general';
         
@@ -625,54 +806,14 @@ allowfullscreen="true"></iframe>
             queryType = 'platform';
         }
         
-        // Update title - DENGAN QUERY TERSEMAT dan nuansa penasaran
-        let title;
-        if (queryType === 'leak') title = `${baseName} Leak: The Complete Archive | What Really Surfaced`;
-        else if (queryType === 'photo') title = `${baseName} Leaked Photos: The Complete Visual Archive | 400+ Images`;
-        else if (queryType === 'video') title = `${baseName} Leaked Videos: Private Footage Archive | 30+ Recordings`;
-        else if (queryType === 'bio') title = `${baseName} Personal Files Leak: Private Documents & Records`;
-        else if (queryType === 'platform') title = `${baseName} Platform Leaks: Deleted Instagram, Twitter & TikTok Content`;
-        else title = `${baseName} Complete Leak Archive: Photos, Videos & Private Files | Full Database`;
-        
-        document.title = title;
-        document.getElementById('dynamic-description').setAttribute('content', 
-            `Complete ${baseName} leak archive - private photos, videos, and documents that surfaced. Full collection of leaked content preserved before takedowns. Investigate what really happened.`);
-        
-        // Update H1 - DENGAN QUERY TERSEMAT
-        let h1Text;
-        if (queryType === 'leak') h1Text = `${baseName} Leak: The Complete Archive`;
-        else if (queryType === 'photo') h1Text = `${baseName} Leaked Photos: What Was Never Meant to Be Seen`;
-        else if (queryType === 'video') h1Text = `${baseName} Leaked Videos: The Footage Platforms Deleted`;
-        else if (queryType === 'bio') h1Text = `${baseName} Personal Files Leak: The Documents That Surfaced`;
-        else if (queryType === 'platform') h1Text = `${baseName} Platform Leaks: Deleted Content Archive`;
-        else h1Text = `${baseName} Complete Leak Archive: Photos • Videos • Private Files`;
-        
-        document.getElementById('main-heading').textContent = h1Text;
-        
-        // Update suspense message dengan nuansa penasaran
-        const suspenseMessages = [
-            `You're about to see what ${baseName} never wanted public.`,
-            `Before the takedowns, before the deletions—this is what actually leaked.`,
-            `What you're about to discover was scrubbed from every platform.`,
-            `They tried to erase it. We preserved it. The complete ${baseName} leak.`,
-            `This is the archive platforms don't want you to find.`
-        ];
-        const suspenseEl = document.getElementById('suspense-message');
-        if (suspenseEl) {
-            suspenseEl.textContent = suspenseMessages[Math.floor(Math.random() * suspenseMessages.length)];
-        }
-        
-        // Update breadcrumb
-        document.getElementById('breadcrumb-name').textContent = baseName;
-        
-        // Update semua placeholder dengan baseName
-        document.querySelectorAll('.query-placeholder').forEach(el => {
-            el.textContent = baseName;
-        });
-        
         // Tampilkan intro yang sesuai
         document.querySelectorAll('.intro-varian').forEach(el => el.classList.add('hidden'));
-        document.getElementById(`intro-${queryType}`).classList.remove('hidden');
+        const introElement = document.getElementById(`intro-${queryType}`);
+        if (introElement) {
+            introElement.classList.remove('hidden');
+        } else {
+            document.getElementById('intro-general').classList.remove('hidden');
+        }
         
         // Update semua dynamic links
         function updateLinks() {
@@ -704,14 +845,6 @@ decoding="async"
 referrerpolicy="strict-origin-when-cross-origin"
 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 allowfullscreen="true"></iframe>
-
-
-
-
-
-
-
-
 
 <br /><br />
 <nav>

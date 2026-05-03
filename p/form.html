@@ -2,7 +2,7 @@
 layout: null
 permalink: /form/
 ---
-  
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,18 +12,45 @@ permalink: /form/
     <meta name="robots" content="index, follow">
     <meta name="rating" content="RTA-5042-1996-1400-1577-RTA">
     
+    <!-- Canonical link dinamis - full URL saat ini (termasuk query & subdomain) -->
+    <link rel="canonical" href="https://{{ site.domain }}{{ page.url | replace:'/form/','/tab/' }}{% if page.url == '/form/' %}?{% endif %}{{ page.url | split:'?' | last }}{% if page.url != '/' %}{% if page.url contains '?' %}&{% else %}?{% endif %}q={% endif %}" id="dynamic-canonical">
+    
     <title id="dynamic-title">CONFIDENTIAL | Private Investigation Files</title>
     <meta id="dynamic-description" name="description" content="Private investigation records. Documented evidence and verified materials. Authorized personnel only.">
     
     <style>
+        /* ========= GLOBAL COLOR VARIABLES - MUDAH DIEDIT ========= */
+        :root {
+            --bg-body: #1e1b1a;
+            --bg-container: #231f1d;
+            --bg-card: #2a2422;
+            --bg-card-hover: #2f2825;
+            --bg-note: #2a2422;
+            --border-main: #4a3a2c;
+            --border-light: #3a3228;
+            --border-dashed: #4a3a2c;
+            --text-primary: #d4cfc4;
+            --text-secondary: #b4aa9a;
+            --text-gold: #e8d9b0;
+            --text-accent: #c9ad7a;
+            --text-muted: #6a5a4a;
+            --stamp-color: #9e7b5c;
+            --tab-bg: #4a3a2c;
+            --tag-border: #3a3228;
+            --tag-hover-bg: #2f2825;
+            --warning-color: #9e7b5c;
+            --redacted-bg: #1e1b1a;
+            --redacted-color: #3a3228;
+        }
+        
         @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
             font-family: 'Courier Prime', monospace;
-            background: #1e1b1a;
-            color: #d4cfc4;
+            background: var(--bg-body);
+            color: var(--text-primary);
             line-height: 1.5;
         }
         
@@ -40,7 +67,7 @@ permalink: /form/
             pointer-events: none;
             z-index: 0;
             font-family: 'Courier Prime', monospace;
-            color: #9e7b5c;
+            color: var(--stamp-color);
         }
         
         main { 
@@ -52,9 +79,9 @@ permalink: /form/
         }
         
         .container {
-            background: #231f1d;
+            background: var(--bg-container);
             padding: 40px;
-            border: 1px solid #4a3a2c;
+            border: 1px solid var(--border-main);
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             position: relative;
         }
@@ -64,12 +91,12 @@ permalink: /form/
             position: absolute;
             top: -12px;
             left: 40px;
-            background: #4a3a2c;
+            background: var(--tab-bg);
             padding: 4px 24px;
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #d4cfc4;
+            color: var(--text-primary);
             font-family: 'Courier Prime', monospace;
         }
         
@@ -79,10 +106,10 @@ permalink: /form/
             font-weight: 700; 
             line-height: 1.3;
             font-family: 'Playfair Display', serif;
-            color: #e8d9b0;
+            color: var(--text-gold);
             margin-bottom: 16px;
             letter-spacing: -0.3px;
-            border-left: 3px solid #9e7b5c;
+            border-left: 3px solid var(--stamp-color);
             padding-left: 20px;
         }
         
@@ -91,10 +118,10 @@ permalink: /form/
             font-weight: 700; 
             margin: 48px 0 20px 0;
             font-family: 'Courier Prime', monospace;
-            color: #e8d9b0;
+            color: var(--text-gold);
             text-transform: uppercase;
             letter-spacing: 2px;
-            border-bottom: 1px dashed #4a3a2c;
+            border-bottom: 1px dashed var(--border-dashed);
             padding-bottom: 8px;
         }
         
@@ -103,35 +130,35 @@ permalink: /form/
             font-weight: 700; 
             margin: 20px 0 12px 0;
             font-family: 'Courier Prime', monospace;
-            color: #c9ad7a;
+            color: var(--text-accent);
             letter-spacing: 1px;
         }
         
         /* Links - Evidence References */
         a { 
-            color: #c9ad7a; 
+            color: var(--text-accent); 
             text-decoration: none;
-            border-bottom: 1px dotted #4a3a2c;
+            border-bottom: 1px dotted var(--border-light);
             transition: all 0.2s;
         }
         
         a:hover { 
-            color: #e8d9b0;
-            border-bottom-color: #c9ad7a;
+            color: var(--text-gold);
+            border-bottom-color: var(--text-accent);
         }
         
         /* Breadcrumb - Case Reference */
         .breadcrumb { 
             font-family: 'Courier Prime', monospace;
             font-size: 0.65rem;
-            color: #6a5a4a;
+            color: var(--text-muted);
             margin-bottom: 32px;
             padding-bottom: 16px;
             border-bottom: 1px solid #2a2422;
             text-transform: uppercase;
         }
         
-        .breadcrumb a { color: #9e7b5c; border-bottom: none; }
+        .breadcrumb a { color: var(--stamp-color); border-bottom: none; }
         
         /* Grid - Evidence Cards */
         .grid-2, .grid-3, .grid-4 {
@@ -147,15 +174,15 @@ permalink: /form/
         
         /* Card - Evidence Folder */
         .card {
-            background: #2a2422;
-            border: 1px solid #3a3228;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
             padding: 20px;
             transition: all 0.2s;
         }
         
         .card:hover {
-            border-color: #9e7b5c;
-            background: #2f2825;
+            border-color: var(--stamp-color);
+            background: var(--bg-card-hover);
         }
         
         .card h3 { margin-top: 0; }
@@ -167,8 +194,8 @@ permalink: /form/
             flex-wrap: wrap;
             margin: 32px 0;
             padding: 24px;
-            background: #2a2422;
-            border-left: 3px solid #9e7b5c;
+            background: var(--bg-note);
+            border-left: 3px solid var(--stamp-color);
         }
         
         .stat {
@@ -180,7 +207,7 @@ permalink: /form/
             font-size: 1.8rem;
             font-weight: 700;
             font-family: 'Courier Prime', monospace;
-            color: #e8d9b0;
+            color: var(--text-gold);
             display: block;
             line-height: 1;
         }
@@ -189,14 +216,14 @@ permalink: /form/
             font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #9e7b5c;
+            color: var(--stamp-color);
             margin-top: 6px;
         }
         
         /* Redacted Style */
         .redacted {
-            background: #1e1b1a;
-            color: #3a3228;
+            background: var(--redacted-bg);
+            color: var(--redacted-color);
             padding: 0 4px;
             font-style: italic;
         }
@@ -205,14 +232,14 @@ permalink: /form/
         .case-note {
             margin: 32px 0;
             padding: 20px 24px;
-            background: #2a2422;
-            border-left: 3px solid #9e7b5c;
+            background: var(--bg-note);
+            border-left: 3px solid var(--stamp-color);
             font-family: 'Courier Prime', monospace;
             font-size: 0.85rem;
         }
         
         .case-note strong {
-            color: #e8d9b0;
+            color: var(--text-gold);
         }
         
         /* Evidence Tags */
@@ -225,7 +252,7 @@ permalink: /form/
         
         .evidence-tag {
             background: transparent;
-            border: 1px solid #3a3228;
+            border: 1px solid var(--tag-border);
             padding: 4px 14px;
             font-size: 0.65rem;
             text-transform: uppercase;
@@ -235,12 +262,12 @@ permalink: /form/
         
         .evidence-tag a {
             border-bottom: none;
-            color: #9e7b5c;
+            color: var(--stamp-color);
         }
         
         .evidence-tag:hover {
-            border-color: #c9ad7a;
-            background: #2f2825;
+            border-color: var(--text-accent);
+            background: var(--tag-hover-bg);
         }
         
         /* Timeline - Investigation Log */
@@ -258,7 +285,7 @@ permalink: /form/
         
         .log-date {
             font-family: 'Courier Prime', monospace;
-            color: #c9ad7a;
+            color: var(--text-accent);
             min-width: 100px;
         }
         
@@ -272,12 +299,12 @@ permalink: /form/
         .qa-question {
             font-weight: 700;
             font-family: 'Courier Prime', monospace;
-            color: #e8d9b0;
+            color: var(--text-gold);
             margin-bottom: 8px;
         }
         
         .qa-answer {
-            color: #b4aa9a;
+            color: var(--text-secondary);
             font-size: 0.85rem;
             line-height: 1.5;
         }
@@ -289,7 +316,7 @@ permalink: /form/
         }
         
         .hidden { display: none; }
-        .query-placeholder { color: #c9ad7a; font-weight: 700; background: #1e1b1a; padding: 2px 6px; }
+        .query-placeholder { color: var(--text-accent); font-weight: 700; background: var(--bg-body); padding: 2px 6px; }
         .default-content.active { display: block; }
         .default-content { display: none; }
         #query-content { display: none; }
@@ -299,15 +326,15 @@ permalink: /form/
             font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            background: #4a3a2c;
-            color: #d4cfc4;
+            background: var(--tab-bg);
+            color: var(--text-primary);
             padding: 4px 12px;
             margin-bottom: 24px;
         }
         
         .warning-note {
             font-size: 0.7rem;
-            color: #9e7b5c;
+            color: var(--warning-color);
             margin-top: 16px;
             padding-top: 16px;
             border-top: 1px solid #2a2422;
@@ -321,6 +348,17 @@ permalink: /form/
         }
     </style>
     
+<script>
+    // Set canonical URL secara dinamis (full URL halaman saat ini)
+    (function() {
+        var currentUrl = window.location.href;
+        var canonicalLink = document.getElementById('dynamic-canonical');
+        if (canonicalLink) {
+            canonicalLink.href = currentUrl;
+        }
+    })();
+</script>
+
 {% include head.html %}
   </head>
 <body><div loading="lazy">
@@ -335,7 +373,7 @@ permalink: /form/
             <div id="default-content" class="default-content active">
                 <div class="case-badge">CASE FILE REF: PI-2026-001</div>
                 <h1>Private Investigation Files<br>Documented Evidence Archive</h1>
-                <p style="font-size: 0.9rem; color: #b4aa9a; margin: 16px 0 24px 0;">Authorized access only. Complete investigation records, verified evidence, and documented materials.</p>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 16px 0 24px 0;">Authorized access only. Complete investigation records, verified evidence, and documented materials.</p>
                 
                 <div class="case-summary">
                     <div class="stat"><span class="stat-number">15,247</span><span class="stat-label">EVIDENCE ITEMS</span></div>
@@ -407,7 +445,7 @@ permalink: /form/
                 
                 <div id="case-badge" class="case-badge"></div>
                 <h1 id="main-heading"></h1>
-                <p id="file-id" style="font-size: 0.7rem; color: #9e7b5c; margin-bottom: 24px;"></p>
+                <p id="file-id" style="font-size: 0.7rem; color: var(--stamp-color); margin-bottom: 24px;"></p>
                 
                 <!-- CASE SUMMARY -->
                 <div class="case-summary" id="case-summary"></div>
@@ -418,37 +456,37 @@ permalink: /form/
                 <!-- ============================================
                      EVIDENCE CATALOG - AUTO GENERATED LINKS
                      ============================================ -->
-                <h2>EVIDENCE CATALOG</h2>
+                <h2 id="evidence-catalog-heading">EVIDENCE CATALOG</h2>
                 <div id="evidence-catalog" class="grid-2"></div>
                 
                 <!-- ============================================
                      SOURCE MATERIALS - AUTO GENERATED
                      ============================================ -->
-                <h2>SOURCE MATERIALS</h2>
+                <h2 id="source-materials-heading">SOURCE MATERIALS</h2>
                 <div id="source-materials" class="evidence-tags"></div>
                 
                 <!-- ============================================
                      PLATFORM RECORDS - AUTO GENERATED
                      ============================================ -->
-                <h2>PLATFORM RECORDS</h2>
+                <h2 id="platform-records-heading">PLATFORM RECORDS</h2>
                 <div id="platform-records" class="evidence-tags"></div>
                 
                 <!-- ============================================
                      INVESTIGATION TIMELINE - AUTO GENERATED
                      ============================================ -->
-                <h2>INVESTIGATION TIMELINE</h2>
+                <h2 id="timeline-heading">INVESTIGATION TIMELINE</h2>
                 <div id="investigation-timeline" class="investigation-log"></div>
                 
                 <!-- ============================================
                      RELATED CASE FILES - AUTO GENERATED
                      ============================================ -->
-                <h2>RELATED CASE FILES</h2>
+                <h2 id="related-heading">RELATED CASE FILES</h2>
                 <div id="related-cases" class="evidence-tags"></div>
                 
                 <!-- ============================================
                      CASE Q&A - AUTO GENERATED
                      ============================================ -->
-                <h2>CASE Q&A</h2>
+                <h2 id="qa-heading">CASE Q&A</h2>
                 <div id="case-qa"></div>
                 
                 <hr />
@@ -477,59 +515,176 @@ permalink: /form/
         
         query = decodeURIComponent(query.replace(/\+/g, ' '));
         
-        // Clean display name - case file format
-        function getDisplayName(q) {
-            const removeTerms = ['evidence', 'records', 'files', 'materials', 'archive', 'case'];
-            let name = q.toLowerCase();
-            removeTerms.forEach(term => {
-                name = name.replace(new RegExp('\\s*' + term + '\\s*$', 'i'), '');
-            });
-            return name.trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') || q;
+        // ============================================
+        // FUNGSI UNTUK MENDAPATKAN NAMA DOMAIN/SUBDOMAIN
+        // ============================================
+        function getDomainIdentifier() {
+            const hostname = window.location.hostname;
+            // Pisahkan subdomain dan domain utama
+            const parts = hostname.split('.');
+            
+            // Cek apakah ini localhost atau IP
+            if (hostname === 'localhost' || /^\d+\.\d+\.\d+\.\d+$/.test(hostname)) {
+                return hostname;
+            }
+            
+            // Untuk github.io atau pages.dev (custom domain dengan subdomain)
+            if (hostname.includes('github.io') || hostname.includes('pages.dev')) {
+                // Ambil subdomain pertama (nama repo/user)
+                if (parts.length >= 3) {
+                    return parts[0];
+                }
+                return hostname.split('.')[0];
+            }
+            
+            // Untuk subdomain biasa (subdomain.domain.com)
+            if (parts.length >= 3) {
+                return parts[0];
+            }
+            
+            // Untuk domain utama (domain.com)
+            return parts[0];
         }
         
-        const displayName = getDisplayName(query);
-        const caseNumber = `PI-${new Date().getFullYear()}-${Math.floor(Math.random() * 9000 + 1000)}`;
+        // ============================================
+        // FORMAT QUERY UNTUK TITLE (capitalize each word)
+        // ============================================
+        function formatQueryName(q) {
+            return q.split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+        }
         
-        // Update title
-        document.title = `CASE: ${displayName} | Confidential Investigation Files`;
+        // ============================================
+        // FORMAT DOMAIN UNTUK TITLE (capitalize first letter)
+        // ============================================
+        function formatDomainName(domain) {
+            return domain.charAt(0).toUpperCase() + domain.slice(1).toLowerCase();
+        }
+        
+        const rawQuery = query;
+        const formattedQuery = formatQueryName(rawQuery);
+        const domainId = getDomainIdentifier();
+        const formattedDomain = formatDomainName(domainId);
+        
+        // ============================================
+        // VARIAN JUDUL YANG KONSISTEN (tidak berubah saat refresh)
+        // Menggunakan kombinasi query + domain sebagai kunci stabil
+        // ============================================
+        
+        // Buat seed yang stabil berdasarkan query dan domain
+        const stableSeed = (rawQuery + domainId).split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const variantIndex = stableSeed % 6; // 6 varian berbeda
+        
+        const variants = [
+            {
+                titleTemplate: (q, d) => `${q} on ${d}`,
+                h1Template: (q, d) => `${q} — Investigation Files on ${d}`,
+                h2Format: (q, d) => `Evidence Related to ${q} on ${d}`,
+                h3Format: (q, d) => `Case: ${q} · ${d} Records`
+            },
+            {
+                titleTemplate: (q, d) => `${q} — ${d} Archive`,
+                h1Template: (q, d) => `${q} | Complete Dossier · ${d}`,
+                h2Format: (q, d) => `${q} Evidence Catalog · ${d}`,
+                h3Format: (q, d) => `${q} — ${d} Verified Materials`
+            },
+            {
+                titleTemplate: (q, d) => `${d} | ${q} Case File`,
+                h1Template: (q, d) => `${d} Investigation: ${q}`,
+                h2Format: (q, d) => `${q} Documentation — ${d}`,
+                h3Format: (q, d) => `${d} · ${q} Evidence Records`
+            },
+            {
+                titleTemplate: (q, d) => `${q} on ${d} — Confidential`,
+                h1Template: (q, d) => `${q} | Private Investigation · ${d}`,
+                h2Format: (q, d) => `${q} Related Materials · ${d}`,
+                h3Format: (q, d) => `${q} — ${d} Source Files`
+            },
+            {
+                titleTemplate: (q, d) => `${d} | Subject: ${q}`,
+                h1Template: (q, d) => `${d} Case Dossier: ${q}`,
+                h2Format: (q, d) => `${q} Evidence Log — ${d}`,
+                h3Format: (q, d) => `${d} · Verified ${q} Records`
+            },
+            {
+                titleTemplate: (q, d) => `${q} — ${d} Investigation`,
+                h1Template: (q, d) => `${q} | Complete Case Files · ${d}`,
+                h2Format: (q, d) => `${q} Materials Archive · ${d}`,
+                h3Format: (q, d) => `${d} — ${q} Evidence Documentation`
+            }
+        ];
+        
+        const selectedVariant = variants[variantIndex];
+        
+        // Generate title, h1, h2, h3
+        const dynamicTitle = selectedVariant.titleTemplate(formattedQuery, formattedDomain);
+        const dynamicH1 = selectedVariant.h1Template(formattedQuery, formattedDomain);
+        const dynamicH2Catalog = selectedVariant.h2Format(formattedQuery, formattedDomain);
+        const dynamicH2Source = selectedVariant.h2Format(formattedQuery, formattedDomain);
+        const dynamicH2Platform = selectedVariant.h2Format(formattedQuery, formattedDomain);
+        const dynamicH2Timeline = selectedVariant.h2Format(formattedQuery, formattedDomain);
+        const dynamicH2Related = selectedVariant.h2Format(formattedQuery, formattedDomain);
+        const dynamicH2QA = selectedVariant.h2Format(formattedQuery, formattedDomain);
+        const dynamicH3 = selectedVariant.h3Format(formattedQuery, formattedDomain);
+        
+        // Update title di <head>
+        document.title = `CASE: ${dynamicTitle} | Confidential Investigation Files`;
         document.getElementById('dynamic-description').setAttribute('content', 
-            `Confidential case file: ${displayName}. Verified evidence, documented records, investigation materials. Authorized access only.`);
+            `Confidential case file: ${formattedQuery} on ${formattedDomain}. Verified evidence, documented records, investigation materials. Authorized access only.`);
         
-        // Breadcrumb
-        document.getElementById('breadcrumb-name').textContent = displayName.toUpperCase();
+        // Update breadcrumb
+        document.getElementById('breadcrumb-name').textContent = formattedQuery.toUpperCase();
         
-        // Case badge
-        document.getElementById('case-badge').innerHTML = `CASE FILE: ${displayName.toUpperCase()} • STATUS: ACTIVE INVESTIGATION`;
+        // Update case badge
+        document.getElementById('case-badge').innerHTML = `CASE FILE: ${formattedQuery.toUpperCase()} • ${formattedDomain.toUpperCase()} • STATUS: ACTIVE`;
         
-        // Main heading
-        document.getElementById('main-heading').innerHTML = `${displayName}<br><span style="font-size: 0.9rem;">Subject Investigation File</span>`;
-        document.getElementById('file-id').innerHTML = `FILE NO: ${caseNumber} | OPENED: ${new Date().toLocaleDateString()} | CLASSIFICATION: CONFIDENTIAL`;
+        // Update H1 (paling atas, tidak ada section lain yang menghalangi)
+        document.getElementById('main-heading').innerHTML = `${dynamicH1}<br><span style="font-size: 0.9rem;">Subject Investigation File</span>`;
+        
+        // Update FILE ID
+        const caseNumber = `PI-${new Date().getFullYear()}-${Math.abs(stableSeed % 9000 + 1000)}`;
+        document.getElementById('file-id').innerHTML = `FILE NO: ${caseNumber} | ${formattedDomain.toUpperCase()} DIVISION | CLASSIFICATION: CONFIDENTIAL`;
         document.getElementById('case-number').innerHTML = caseNumber;
         
-        // Random evidence counts
-        const photoCount = Math.floor(Math.random() * 600) + 200;
-        const videoCount = Math.floor(Math.random() * 120) + 30;
-        const docCount = Math.floor(Math.random() * 70) + 15;
+        // Update semua H2
+        const h2Elements = {
+            'evidence-catalog-heading': dynamicH2Catalog,
+            'source-materials-heading': dynamicH2Source,
+            'platform-records-heading': dynamicH2Platform,
+            'timeline-heading': dynamicH2Timeline,
+            'related-heading': dynamicH2Related,
+            'qa-heading': dynamicH2QA
+        };
+        
+        for (const [id, text] of Object.entries(h2Elements)) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = text;
+        }
+        
+        // Random evidence counts (stabil berdasarkan seed)
+        const photoCount = 200 + (Math.abs(stableSeed % 400));
+        const videoCount = 30 + (Math.abs((stableSeed * 7) % 90));
+        const docCount = 15 + (Math.abs((stableSeed * 13) % 55));
         
         // Case summary
         document.getElementById('case-summary').innerHTML = `
             <div class="stat"><span class="stat-number">${photoCount}</span><span class="stat-label">PHOTOGRAPHIC EVIDENCE</span></div>
             <div class="stat"><span class="stat-number">${videoCount}</span><span class="stat-label">VIDEO RECORDS</span></div>
             <div class="stat"><span class="stat-number">${docCount}</span><span class="stat-label">DOCUMENTARY EVIDENCE</span></div>
-            <div class="stat"><span class="stat-number">${Math.floor(Math.random() * 30) + 12}</span><span class="stat-label">VERIFIED SOURCES</span></div>
+            <div class="stat"><span class="stat-number">${Math.abs((stableSeed * 19) % 30) + 12}</span><span class="stat-label">VERIFIED SOURCES</span></div>
         `;
         
         // Investigator's note
         const investigatorNotes = [
-            `INVESTIGATOR'S NOTE: Subject ${displayName} case file contains ${photoCount + videoCount + docCount} verified evidence items. All materials documented through standard investigation protocols.`,
-            `CASE NOTES: Evidence relating to ${displayName} has been compiled from multiple sources. Each item has undergone verification procedures.`,
-            `INVESTIGATION SUMMARY: The ${displayName} file represents comprehensive documentation of available evidence. Continued monitoring in progress.`
+            `INVESTIGATOR'S NOTE: Subject ${formattedQuery} case file on ${formattedDomain} contains ${photoCount + videoCount + docCount} verified evidence items. All materials documented through standard investigation protocols.`,
+            `CASE NOTES: Evidence relating to ${formattedQuery} on ${formattedDomain} has been compiled from multiple sources. Each item has undergone verification procedures.`,
+            `INVESTIGATION SUMMARY: The ${formattedQuery} file on ${formattedDomain} represents comprehensive documentation of available evidence. Continued monitoring in progress.`
         ];
-        document.getElementById('investigator-note').innerHTML = `<strong>${investigatorNotes[Math.floor(Math.random() * investigatorNotes.length)]}</strong>`;
+        const noteIndex = Math.abs(stableSeed % investigatorNotes.length);
+        document.getElementById('investigator-note').innerHTML = `<strong>${investigatorNotes[noteIndex]}</strong>`;
         
-        // ============================================
-        // 1. EVIDENCE CATALOG - AUTO GENERATED INTERNAL LINKS
-        // ============================================
+        // EVIDENCE CATALOG - dengan H3 yang mengandung query + domain
         const evidenceCatalog = [
             { label: "PHOTOGRAPHIC EVIDENCE", query: "photographic evidence", desc: `${photoCount} verified images` },
             { label: "VIDEO RECORDS", query: "video records", desc: `${videoCount} motion picture files` },
@@ -541,15 +696,13 @@ permalink: /form/
         
         document.getElementById('evidence-catalog').innerHTML = evidenceCatalog.map(ev => `
             <div class="card">
-                <h3>${ev.label}</h3>
+                <h3>${ev.label} — ${formattedDomain}</h3>
                 <p>${ev.desc}</p>
-                <div style="margin-top: 12px;"><a href="/tab/?q=${encodeURIComponent(displayName + ' ' + ev.query)}">ACCESS EVIDENCE →</a></div>
+                <div style="margin-top: 12px;"><a href="/tab/?q=${encodeURIComponent(formattedQuery + ' ' + ev.query)}">ACCESS EVIDENCE →</a></div>
             </div>
         `).join('');
         
-        // ============================================
-        // 2. SOURCE MATERIALS - AUTO GENERATED
-        // ============================================
+        // SOURCE MATERIALS
         const sourceMaterials = [
             'primary sources', 'verified records', 'private collection', 
             'archival materials', 'exclusive evidence', 'original files',
@@ -557,27 +710,23 @@ permalink: /form/
         ];
         
         document.getElementById('source-materials').innerHTML = sourceMaterials.map(src => `
-            <div class="evidence-tag"><a href="/tab/?q=${encodeURIComponent(displayName + ' ' + src)}">${src.toUpperCase()}</a></div>
+            <div class="evidence-tag"><a href="/tab/?q=${encodeURIComponent(formattedQuery + ' ' + src)}">${src.toUpperCase()} · ${formattedDomain.toUpperCase()}</a></div>
         `).join('');
         
-        // ============================================
-        // 3. PLATFORM RECORDS - AUTO GENERATED
-        // ============================================
+        // PLATFORM RECORDS
         const platforms = ['Instagram', 'Twitter', 'TikTok', 'Facebook', 'Discord', 'Telegram', 'Snapchat', 'YouTube'];
         
         document.getElementById('platform-records').innerHTML = platforms.map(p => `
-            <div class="evidence-tag"><a href="/tab/?q=${encodeURIComponent(displayName + ' ' + p.toLowerCase() + ' records')}">${p.toUpperCase()} RECORDS</a></div>
+            <div class="evidence-tag"><a href="/tab/?q=${encodeURIComponent(formattedQuery + ' ' + p.toLowerCase() + ' records')}">${p.toUpperCase()} · ${formattedDomain.toUpperCase()}</a></div>
         `).join('');
         
-        // ============================================
-        // 4. INVESTIGATION TIMELINE - AUTO GENERATED
-        // ============================================
+        // INVESTIGATION TIMELINE
         const timelineEvents = [
-            { date: "Q1 2024", event: `Initial evidence related to ${displayName} documented` },
-            { date: "Q3 2024", event: `Platform records compiled and verified` },
-            { date: "Q1 2025", event: `Complete ${displayName} evidence catalog established` },
-            { date: "Q4 2025", event: `Case file review and verification completed` },
-            { date: "Present", event: `Ongoing documentation of new evidence` }
+            { date: "Q1 2024", event: `Initial evidence related to ${formattedQuery} on ${formattedDomain} documented` },
+            { date: "Q3 2024", event: `Platform records compiled and verified for ${formattedDomain}` },
+            { date: "Q1 2025", event: `Complete ${formattedQuery} evidence catalog established on ${formattedDomain}` },
+            { date: "Q4 2025", event: `Case file review and verification completed for ${formattedDomain}` },
+            { date: "Present", event: `Ongoing documentation of new evidence for ${formattedQuery} on ${formattedDomain}` }
         ];
         
         document.getElementById('investigation-timeline').innerHTML = timelineEvents.map(ev => `
@@ -587,60 +736,54 @@ permalink: /form/
             </div>
         `).join('');
         
-        // ============================================
-        // 5. RELATED CASE FILES - AUTO GENERATED
-        // ============================================
+        // RELATED CASE FILES
         const relatedSubjects = [
             'kendall jenner', 'hailey bieber', 'gigi hadid', 'bella hadid',
             'emma watson', 'scarlett johansson', 'zendaya', 'margot robbie'
-        ].filter(name => !displayName.toLowerCase().includes(name.toLowerCase())).slice(0, 10);
+        ].filter(name => !formattedQuery.toLowerCase().includes(name.toLowerCase())).slice(0, 10);
         
         document.getElementById('related-cases').innerHTML = relatedSubjects.map(sub => `
-            <div class="evidence-tag"><a href="/tab/?q=${encodeURIComponent(sub)}">${sub.toUpperCase()} CASE FILE</a></div>
+            <div class="evidence-tag"><a href="/tab/?q=${encodeURIComponent(sub)}">${sub.toUpperCase()} · ${formattedDomain.toUpperCase()}</a></div>
         `).join('');
         
-        // ============================================
-        // 6. CASE Q&A (FAQ with auto links)
-        // ============================================
+        // CASE Q&A
         const caseQA = [
             {
-                q: `What is the scope of the ${displayName} investigation?`,
-                a: `This case file documents all available evidence related to ${displayName} from verified sources. `,
+                q: `What is the scope of the ${formattedQuery} investigation on ${formattedDomain}?`,
+                a: `This case file documents all available evidence related to ${formattedQuery} from verified sources on ${formattedDomain}. `,
                 links: ['investigation scope', 'case parameters']
             },
             {
-                q: `How is evidence verified?`,
-                a: `All materials undergo standard verification protocols before inclusion in case files. `,
+                q: `How is evidence verified for ${formattedDomain} records?`,
+                a: `All materials undergo standard verification protocols before inclusion in case files on ${formattedDomain}. `,
                 links: ['verification process', 'evidence standards']
             },
             {
-                q: `Can I access complete ${displayName} case files?`,
+                q: `Can I access complete ${formattedQuery} case files on ${formattedDomain}?`,
                 a: `Authorized personnel may request full case file access. Documentation is available for research purposes. `,
                 links: ['access request', 'case file access']
             },
             {
-                q: `Are new ${displayName} records being added?`,
-                a: `Yes. The investigation continues to document new evidence as it becomes available. `,
+                q: `Are new ${formattedQuery} records being added to ${formattedDomain}?`,
+                a: `Yes. The investigation continues to document new evidence as it becomes available on ${formattedDomain}. `,
                 links: ['new evidence', 'case updates']
             }
         ];
         
         document.getElementById('case-qa').innerHTML = caseQA.map(qa => {
             const linkHtml = qa.links.map(link => 
-                `<a href="/tab/?q=${encodeURIComponent(displayName + ' ' + link)}">${link}</a>`
+                `<a href="/tab/?q=${encodeURIComponent(formattedQuery + ' ' + link)}">${link}</a>`
             ).join(' • ');
             return `
                 <div class="case-qa">
                     <div class="qa-question">${qa.q}</div>
                     <div class="qa-answer">${qa.a}</div>
-                    ${linkHtml ? `<div style="margin-top: 12px; font-size:0.7rem; color:#9e7b5c;">REFERENCES: ${linkHtml}</div>` : ''}
+                    ${linkHtml ? `<div style="margin-top: 12px; font-size:0.7rem; color:var(--stamp-color);">REFERENCES: ${linkHtml}</div>` : ''}
                 </div>
             `;
         }).join('');
         
-        // ============================================
         // EXTRA: Add evidence reference
-        // ============================================
         const additionalRefs = [
             'case summary', 'evidence log', 'source verification', 'investigation notes'
         ];
@@ -648,10 +791,10 @@ permalink: /form/
         const caseSummaryDiv = document.getElementById('case-summary');
         if (caseSummaryDiv) {
             let refsHtml = `
-                <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #3a3228;">
-                    <div style="font-size:0.7rem; color:#9e7b5c; margin-bottom: 12px;">EVIDENCE REFERENCES:</div>
+                <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-light);">
+                    <div style="font-size:0.7rem; color:var(--stamp-color); margin-bottom: 12px;">EVIDENCE REFERENCES — ${formattedDomain.toUpperCase()}:</div>
                     <div class="evidence-tags" style="margin-top: 0;">
-                        ${additionalRefs.map(ref => `<div class="evidence-tag"><a href="/tab/?q=${encodeURIComponent(displayName + ' ' + ref)}">${ref.toUpperCase()}</a></div>`).join('')}
+                        ${additionalRefs.map(ref => `<div class="evidence-tag"><a href="/tab/?q=${encodeURIComponent(formattedQuery + ' ' + ref)}">${ref.toUpperCase()} · ${formattedDomain.toUpperCase()}</a></div>`).join('')}
                     </div>
                 </div>
             `;
@@ -662,8 +805,8 @@ permalink: /form/
         const caseNoteDiv = document.getElementById('investigator-note');
         if (caseNoteDiv) {
             caseNoteDiv.innerHTML += `
-                <div style="margin-top: 16px; font-size:0.7rem; color:#9e7b5c;">
-                    ⚠️ MATERIALS DOCUMENTED FOR INVESTIGATIVE PURPOSES • AUTHORIZED ACCESS ONLY
+                <div style="margin-top: 16px; font-size:0.7rem; color:var(--stamp-color);">
+                    ⚠️ MATERIALS DOCUMENTED FOR INVESTIGATIVE PURPOSES · ${formattedDomain.toUpperCase()} DIVISION · AUTHORIZED ACCESS ONLY
                 </div>
             `;
         }

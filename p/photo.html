@@ -14,6 +14,30 @@ permalink: /photo/
     <meta id="dynamic-description" name="description" content="Premium leak vault featuring exclusive leaked content from top influencers, TikTokers, and OnlyFans creators. Updated hourly.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/video/">
     <style>
+        /* ===== GLOBAL COLOR VARIABLES ===== */
+        :root {
+            --bg-primary: #0b0b10;
+            --bg-secondary: #0f0f18;
+            --bg-card: #0f0f18;
+            --bg-header: linear-gradient(135deg, #0f0f18 0%, #1a0a2e 100%);
+            --border-color: #1f1f2e;
+            --border-hover: #ec489a;
+            --border-light: #2a2a3e;
+            --text-primary: #e8e8f0;
+            --text-secondary: #9ca3af;
+            --text-muted: #4a4a5a;
+            --accent: #ec489a;
+            --accent-hover: #a855f7;
+            --accent-bg: rgba(236, 72, 153, 0.08);
+            --accent-border: rgba(236, 72, 153, 0.2);
+            --accent-glow: rgba(236, 72, 153, 0.2);
+            --tag-bg: #1a1a2a;
+            --hover-bg: #14141f;
+            --fomo-bg: linear-gradient(145deg, #1a0a2e, #0f0f18);
+            --fomo-border: #ec489a40;
+            --ribbon-bg: #ec489a;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,9 +45,9 @@ permalink: /photo/
         }
 
         body {
-            background: #0b0b10;
+            background: var(--bg-primary);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            color: #e8e8f0;
+            color: var(--text-primary);
         }
 
         .vault {
@@ -34,7 +58,7 @@ permalink: /photo/
 
         /* premium header */
         .premium-header {
-            background: linear-gradient(135deg, #0f0f18 0%, #1a0a2e 100%);
+            background: var(--bg-header);
             border-radius: 24px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
@@ -44,7 +68,7 @@ permalink: /photo/
 
         .premium-badge {
             display: inline-block;
-            background: #ec489a;
+            background: var(--accent);
             font-size: 0.6rem;
             padding: 0.2rem 0.8rem;
             border-radius: 20px;
@@ -55,7 +79,7 @@ permalink: /photo/
         .premium-header h1 {
             font-size: 2rem;
             margin: 0.5rem 0;
-            background: linear-gradient(135deg, #fff, #ec489a, #a855f7);
+            background: linear-gradient(135deg, #fff, var(--accent), var(--accent-hover));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -64,12 +88,12 @@ permalink: /photo/
         /* breadcrumb */
         .breadcrumb {
             font-size: 0.7rem;
-            color: #6b7280;
+            color: var(--text-muted);
             margin-bottom: 1rem;
         }
 
         .breadcrumb a {
-            color: #ec489a;
+            color: var(--accent);
             text-decoration: none;
         }
 
@@ -78,11 +102,11 @@ permalink: /photo/
             display: flex;
             flex-wrap: wrap;
             gap: 1.5rem;
-            background: rgba(236, 72, 153, 0.08);
+            background: var(--accent-bg);
             border-radius: 20px;
             padding: 0.75rem 1.25rem;
             margin-bottom: 1.5rem;
-            border: 1px solid rgba(236, 72, 153, 0.2);
+            border: 1px solid var(--accent-border);
             font-size: 0.7rem;
         }
 
@@ -95,21 +119,21 @@ permalink: /photo/
         }
 
         .vault-card {
-            background: #0f0f18;
+            background: var(--bg-card);
             border-radius: 20px;
-            border: 1px solid #1f1f2e;
+            border: 1px solid var(--border-color);
             overflow: hidden;
             transition: all 0.2s;
         }
 
         .vault-card:hover {
-            border-color: #ec489a;
+            border-color: var(--border-hover);
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.2);
+            box-shadow: 0 10px 25px -5px var(--accent-glow);
         }
 
         .card-ribbon {
-            background: #ec489a;
+            background: var(--ribbon-bg);
             padding: 0.25rem 1rem;
             font-size: 0.6rem;
             font-weight: 700;
@@ -133,7 +157,7 @@ permalink: /photo/
 
         .card-desc {
             font-size: 0.75rem;
-            color: #9ca3af;
+            color: var(--text-secondary);
             padding: 0.25rem 1rem;
             line-height: 1.4;
         }
@@ -143,7 +167,7 @@ permalink: /photo/
             gap: 1rem;
             padding: 0.5rem 1rem;
             font-size: 0.65rem;
-            color: #ec489a;
+            color: var(--accent);
         }
 
         .card-button {
@@ -155,23 +179,23 @@ permalink: /photo/
             border-radius: 40px;
             font-size: 0.7rem;
             font-weight: 600;
-            color: #ec489a;
+            color: var(--accent);
             text-decoration: none;
-            border: 1px solid #2a2a3e;
+            border: 1px solid var(--border-light);
             transition: all 0.15s;
         }
 
         .card-button:hover {
-            background: #ec489a;
+            background: var(--accent);
             color: #fff;
-            border-color: #ec489a;
+            border-color: var(--accent);
         }
 
         /* hot list */
         .hot-list {
-            background: #0f0f18;
+            background: var(--bg-card);
             border-radius: 20px;
-            border: 1px solid #1f1f2e;
+            border: 1px solid var(--border-color);
             margin: 1rem 0;
             overflow: hidden;
         }
@@ -190,11 +214,11 @@ permalink: /photo/
         }
 
         .hot-item:hover {
-            background: #14141f;
+            background: var(--hover-bg);
         }
 
         .hot-item a {
-            color: #ec489a;
+            color: var(--accent);
             text-decoration: none;
             font-size: 0.8rem;
             font-weight: 500;
@@ -205,7 +229,7 @@ permalink: /photo/
             background: #ec489a20;
             padding: 0.2rem 0.5rem;
             border-radius: 20px;
-            color: #ec489a;
+            color: var(--accent);
         }
 
         /* tag cloud */
@@ -217,31 +241,31 @@ permalink: /photo/
         }
 
         .vault-tag {
-            background: #1a1a2a;
+            background: var(--tag-bg);
             padding: 0.3rem 0.9rem;
             border-radius: 30px;
             font-size: 0.7rem;
-            color: #ec489a;
+            color: var(--accent);
             text-decoration: none;
-            border: 1px solid #2a2a3e;
+            border: 1px solid var(--border-light);
             transition: all 0.1s;
         }
 
         .vault-tag:hover {
-            background: #ec489a;
+            background: var(--accent);
             color: #fff;
-            border-color: #ec489a;
+            border-color: var(--accent);
         }
 
         hr {
             border: none;
-            border-top: 1px solid #1f1f2e;
+            border-top: 1px solid var(--border-color);
             margin: 1.5rem 0;
         }
 
         .footer {
             font-size: 0.6rem;
-            color: #4a4a5a;
+            color: var(--text-muted);
             text-align: center;
         }
 
@@ -332,6 +356,7 @@ permalink: /photo/
 
         <div class="premium-header" style="margin-bottom: 1rem;">
             <span class="premium-badge" id="vault-badge">🔥 EXCLUSIVE LEAK VAULT</span>
+            <!-- H1 di paling atas, tidak ada section lain yang menghalangi -->
             <h1 id="main-heading"></h1>
             <p id="urgency-line" style="color: #ec489a; font-size: 0.7rem;"></p>
         </div>
@@ -339,24 +364,24 @@ permalink: /photo/
         <div class="premium-stats" id="premium-stats-dynamic"></div>
 
         <!-- INTRO dengan FOMO -->
-        <div id="fomo-box" style="background: linear-gradient(145deg, #1a0a2e, #0f0f18); border-radius: 20px; padding: 1rem; margin-bottom: 1.5rem; border: 1px solid #ec489a40;">
+        <div id="fomo-box" style="background: var(--fomo-bg); border-radius: 20px; padding: 1rem; margin-bottom: 1.5rem; border: 1px solid var(--fomo-border);">
             <p id="intro-text" style="font-size: 0.85rem;"></p>
         </div>
 
         <!-- SECTION: LEAKED VAULT CARDS (dengan urgency) -->
-        <h3 style="font-size: 0.7rem; color: #ec489a; margin-bottom: 0.5rem;">🎯 HOT LEAKED CONTENT · LIMITED ACCESS</h3>
+        <h2 id="section-header-1" style="font-size: 0.7rem; color: #ec489a; margin-bottom: 0.5rem;">🎯 HOT LEAKED CONTENT · LIMITED ACCESS</h2>
         <div class="dashboard-grid" id="vault-cards"></div>
 
         <!-- SECTION: PLATFORM LEAKS (hot list style) -->
-        <h3 style="font-size: 0.7rem; color: #ec489a; margin: 1rem 0 0.5rem;">🌐 LEAK SOURCES · ORIGINAL CHANNELS</h3>
+        <h2 id="section-header-2" style="font-size: 0.7rem; color: #ec489a; margin: 1rem 0 0.5rem;">🌐 LEAK SOURCES · ORIGINAL CHANNELS</h2>
         <div class="hot-list" id="platform-hotlist"></div>
 
         <!-- SECTION: SIMILAR LEAKS (FOMO tags) -->
-        <h3 style="font-size: 0.7rem; color: #ec489a; margin: 1rem 0 0.5rem;">🔍 DON'T MISS THESE LEAKS</h3>
+        <h2 id="section-header-3" style="font-size: 0.7rem; color: #ec489a; margin: 1rem 0 0.5rem;">🔍 DON'T MISS THESE LEAKS</h2>
         <div class="tag-cloud" id="fomo-tags"></div>
 
         <!-- SECTION: VAULT INFO -->
-        <h3 style="font-size: 0.7rem; color: #ec489a; margin: 1rem 0 0.5rem;">📌 LEAK VAULT INFORMATION</h3>
+        <h2 id="section-header-4" style="font-size: 0.7rem; color: #ec489a; margin: 1rem 0 0.5rem;">📌 LEAK VAULT INFORMATION</h2>
         <div class="hot-list" id="vault-info"></div>
 
         <hr />
@@ -368,24 +393,178 @@ permalink: /photo/
 
 <script>
 (function() {
+    // ===== FUNGSI UNTUK MENDAPATKAN IDENTITAS DOMAIN/SUBDOMAIN =====
+    function getDomainIdentity() {
+        const hostname = window.location.hostname;
+        
+        // Handle localhost
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return 'Local';
+        }
+        
+        // Pisahkan subdomain dan domain utama
+        const parts = hostname.split('.');
+        
+        // Cek apakah ini menggunakan subdomain (lebih dari 2 parts)
+        if (parts.length >= 3) {
+            // Ambil subdomain (bagian pertama)
+            let subdomain = parts[0];
+            // Format subdomain: capitalize huruf pertama
+            subdomain = subdomain.charAt(0).toUpperCase() + subdomain.slice(1).toLowerCase();
+            return subdomain;
+        } else {
+            // Tanpa subdomain, ambil domain utama (tanpa TLD)
+            let mainDomain = parts[0];
+            mainDomain = mainDomain.charAt(0).toUpperCase() + mainDomain.slice(1).toLowerCase();
+            return mainDomain;
+        }
+    }
+    
+    // ===== FUNGSI UNTUK FORMAT QUERY =====
+    function formatQueryText(rawQuery) {
+        // Capitalize setiap kata
+        return rawQuery.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
+    }
+    
+    // ===== FUNGSI UNTUK MEMBUAT VARIAN KALIMAT YANG KONSISTEN =====
+    // Menggunakan seed berdasarkan query + domain agar tidak berubah saat refresh
+    function getConsistentVariant(seed, variants) {
+        // Hash sederhana dari seed string
+        let hash = 0;
+        for (let i = 0; i < seed.length; i++) {
+            hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+            hash |= 0;
+        }
+        // Pilih variant berdasarkan hash (konsisten untuk seed yang sama)
+        const index = Math.abs(hash) % variants.length;
+        return variants[index];
+    }
+    
     const urlParams = new URLSearchParams(window.location.search);
     let query = urlParams.get('q');
-
+    
     const defaultDiv = document.getElementById('default-vault');
     const queryDiv = document.getElementById('query-vault');
-
+    
     if (!query) {
         defaultDiv.style.display = 'block';
         queryDiv.style.display = 'none';
         return;
     }
-
+    
     defaultDiv.style.display = 'none';
     queryDiv.style.display = 'block';
-
+    
     query = decodeURIComponent(query.replace(/\+/g, ' '));
     
-    // extract nama influencer
+    // Format query untuk tampilan
+    const formattedQuery = formatQueryText(query);
+    const domainIdentity = getDomainIdentity();
+    
+    // Seed untuk konsistensi variant (query + domain)
+    const consistencySeed = query.toLowerCase() + domainIdentity.toLowerCase();
+    
+    // ===== VARIAN KALIMAT UNTUK TITLE, H1, H2, H3 =====
+    // Semua variant dalam array, akan dipilih secara konsisten berdasarkan seed
+    
+    // Variant untuk Title
+    const titleVariants = [
+        `${formattedQuery} on ${domainIdentity} · Leaked Content`,
+        `${formattedQuery} — Exclusive Leak Archive | ${domainIdentity}`,
+        `${formattedQuery} · Premium Leaked Vault — ${domainIdentity}`,
+        `${formattedQuery} | ${domainIdentity} Leak Hub`,
+        `${formattedQuery} — Full Leak Collection | ${domainIdentity}`
+    ];
+    
+    // Variant untuk H1
+    const h1Variants = [
+        `${formattedQuery} on ${domainIdentity}`,
+        `${formattedQuery} — ${domainIdentity} Leak Vault`,
+        `${formattedQuery} | Exclusive on ${domainIdentity}`,
+        `${formattedQuery} · Premium Leak Archive | ${domainIdentity}`,
+        `${formattedQuery} — Full Access on ${domainIdentity}`
+    ];
+    
+    // Variant untuk H2 (section headers)
+    const h2Section1Variants = [
+        `🎯 HOT LEAKED CONTENT · ${formattedQuery} on ${domainIdentity}`,
+        `🎯 TRENDING LEAKS — ${formattedQuery} | ${domainIdentity}`,
+        `🎯 EXCLUSIVE VAULT · ${formattedQuery} Archive on ${domainIdentity}`
+    ];
+    
+    const h2Section2Variants = [
+        `🌐 LEAK SOURCES · ${formattedQuery} Channels on ${domainIdentity}`,
+        `🌐 ORIGINAL LEAKS — ${formattedQuery} | ${domainIdentity}`,
+        `🌐 PLATFORM LEAKS · ${formattedQuery} Archive on ${domainIdentity}`
+    ];
+    
+    const h2Section3Variants = [
+        `🔍 RELATED LEAKS · Similar to ${formattedQuery} on ${domainIdentity}`,
+        `🔍 DON'T MISS — More ${formattedQuery} Content | ${domainIdentity}`,
+        `🔍 RECOMMENDED LEAKS · ${formattedQuery} Hub on ${domainIdentity}`
+    ];
+    
+    const h2Section4Variants = [
+        `📌 VAULT INFO · ${formattedQuery} Archive on ${domainIdentity}`,
+        `📌 LEAK DETAILS — ${formattedQuery} | ${domainIdentity}`,
+        `📌 ARCHIVE INFORMATION · ${formattedQuery} Hub on ${domainIdentity}`
+    ];
+    
+    // Pilih variant secara konsisten
+    const selectedTitle = getConsistentVariant(consistencySeed + '_title', titleVariants);
+    const selectedH1 = getConsistentVariant(consistencySeed + '_h1', h1Variants);
+    const selectedH2Section1 = getConsistentVariant(consistencySeed + '_h2s1', h2Section1Variants);
+    const selectedH2Section2 = getConsistentVariant(consistencySeed + '_h2s2', h2Section2Variants);
+    const selectedH2Section3 = getConsistentVariant(consistencySeed + '_h2s3', h2Section3Variants);
+    const selectedH2Section4 = getConsistentVariant(consistencySeed + '_h2s4', h2Section4Variants);
+    
+    // Terapkan ke Title
+    document.title = `🔥 ${selectedTitle}`;
+    
+    // Terapkan ke H1 (paling atas, tidak terhalang section lain)
+    const h1Element = document.getElementById('main-heading');
+    if (h1Element) {
+        h1Element.innerHTML = selectedH1;
+        // Hapus span tambahan jika ada dari script lama
+        const existingSpan = h1Element.querySelector('span');
+        if (existingSpan && !selectedH1.includes('span')) {
+            h1Element.innerHTML = selectedH1;
+        }
+    }
+    
+    // Terapkan ke H2 elements
+    const h2Section1 = document.getElementById('section-header-1');
+    if (h2Section1) h2Section1.innerHTML = selectedH2Section1;
+    
+    const h2Section2 = document.getElementById('section-header-2');
+    if (h2Section2) h2Section2.innerHTML = selectedH2Section2;
+    
+    const h2Section3 = document.getElementById('section-header-3');
+    if (h2Section3) h2Section3.innerHTML = selectedH2Section3;
+    
+    const h2Section4 = document.getElementById('section-header-4');
+    if (h2Section4) h2Section4.innerHTML = selectedH2Section4;
+    
+    // Update meta description juga untuk SEO yang lebih baik
+    const metaDesc = document.getElementById('dynamic-description');
+    if (metaDesc) {
+        metaDesc.setAttribute('content', `Access exclusive ${formattedQuery} leaked content on ${domainIdentity}. Premium leak vault with hourly updates.`);
+    }
+    
+    // Hapus atau update badge agar tidak bentrok dengan H1
+    const vaultBadge = document.getElementById('vault-badge');
+    if (vaultBadge) {
+        vaultBadge.innerHTML = `🔥 EXCLUSIVE LEAK VAULT · ${domainIdentity} 🔥`;
+    }
+    
+    // Update breadcrumb name
+    document.getElementById('bc-name').innerText = formattedQuery;
+    
+    // ===== SISANYA SAMA PERSIS DENGAN DRAFT ASLI =====
+    
+    // extract nama influencer (untuk konten dinamis)
     const removeTerms = ['leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'pack', 'bundle', 'gallery', 'content', 'media', 'videos', 'photos', 'pics', 'onlyfans', 'tiktok', 'instagram', 'twitter', 'telegram', 'discord', 'trending', 'viral', 'exclusive', 'private', 'premium', '2024', '2025', '2026', 'full', 'complete', 'hot', 'new'];
     let baseRaw = query.toLowerCase();
     removeTerms.forEach(term => {
@@ -401,22 +580,13 @@ permalink: /photo/
     }
     const displayName = formatName(baseName);
     const displayLower = displayName.toLowerCase();
-
+    
     // random viewer count untuk FOMO
     const randomViewers = Math.floor(Math.random() * 2000) + 500;
     const randomFileCount = Math.floor(Math.random() * 150) + 50;
     
-    // SEO
-    let pageTitle = `🔥 ${displayName} Leaked Content · Exclusive Vault`;
-    let pageDesc = `Access the complete ${displayName} leaked content vault. ${randomFileCount}+ leaked photos and videos. Trending now with ${randomViewers}+ views today.`;
-    document.title = pageTitle;
-    const metaTag = document.getElementById('dynamic-description');
-    if (metaTag) metaTag.setAttribute('content', pageDesc);
-    
-    document.getElementById('main-heading').innerHTML = `${displayName} <span style="font-size:0.7rem;">· Leaked Vault</span>`;
+    // urgency line
     document.getElementById('urgency-line').innerHTML = `🔥 ${randomViewers}+ people viewed this vault today · Limited access 🔥`;
-    document.getElementById('bc-name').innerText = displayName;
-    document.getElementById('vault-badge').innerHTML = '🔥 EXCLUSIVE LEAK VAULT 🔥';
     
     // intro FOMO
     const introEl = document.getElementById('intro-text');
@@ -465,7 +635,7 @@ permalink: /photo/
         `;
     }).join('');
     
-    // FOMO TAGS (semua mengandung 'leaked')
+    // FOMO TAGS
     const fomoVariants = [
         `${displayLower} leaked onlyfans premium`,
         `${displayLower} leaked instagram private`,
@@ -508,10 +678,11 @@ permalink: /photo/
         <span>🕒 updated ${timeStr}</span>
     `;
     
-    // canonical
-    const canonical = document.getElementById('dynamic-canonical');
-    if (canonical) {
-        canonical.setAttribute('href', window.location.href.split('?')[0]);
+    // canonical link dinamis
+    const canonicalLink = document.getElementById('dynamic-canonical');
+    if (canonicalLink) {
+        const fullUrl = window.location.href;
+        canonicalLink.setAttribute('href', fullUrl);
     }
 })();
 </script>

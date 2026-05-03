@@ -12,7 +12,7 @@ permalink: /item/
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large">
     <title id="dynamic-title">Index · Digital Reference Library</title>
     <meta id="dynamic-description" name="description" content="Reference library of digital creators, public figures, and online personalities. Research-oriented archive maintained for documentation purposes.">
-    <link id="dynamic-canonical" rel="canonical" href="https://example.com/personal/">
+    <link id="dynamic-canonical" rel="canonical" href="">
     <style>
         :root {
             --bg: #ffffff;
@@ -22,6 +22,8 @@ permalink: /item/
             --text-secondary: #5b687c;
             --accent: #3b6ea0;
             --accent-light: #eef3fa;
+            --accent-hover: #1f4d6e;
+            --intro-bg: #eef3fa;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -63,7 +65,7 @@ permalink: /item/
             text-underline-offset: 2px;
         }
         a:hover {
-            color: #1f4d6e;
+            color: var(--accent-hover);
             text-decoration-thickness: 2px;
         }
         /* breadcrumb */
@@ -202,28 +204,28 @@ permalink: /item/
         <div class="stat-line" id="stat-line-dynamic"></div>
 
         <!-- INTRO (single variant tapi tetap dinamis) -->
-        <div id="dynamic-intro" style="background: var(--accent-light); padding: 1rem; margin: 1rem 0; border-left: 3px solid var(--accent);">
+        <div id="dynamic-intro" style="background: var(--intro-bg); padding: 1rem; margin: 1rem 0; border-left: 3px solid var(--accent);">
             <p id="intro-text"></p>
         </div>
 
         <!-- SECTION A: BIOGRAPHY & BACKGROUND -->
-        <h2>📋 Biography & Background</h2>
+        <h2 id="bio-heading">📋 Biography & Background</h2>
         <ul class="link-list" id="bio-list"></ul>
 
         <!-- SECTION B: MEDIA INDEX -->
-        <h2>🖼️ Media Index</h2>
+        <h2 id="media-heading">🖼️ Media Index</h2>
         <ul class="link-list" id="media-list"></ul>
 
         <!-- SECTION C: PLATFORM PRESENCE -->
-        <h2>🌐 Platform Presence</h2>
+        <h2 id="platform-heading">🌐 Platform Presence</h2>
         <ul class="link-list" id="platform-list"></ul>
 
         <!-- SECTION D: RELATED REFERENCES -->
-        <h2>🔗 Related References</h2>
+        <h2 id="related-heading">🔗 Related References</h2>
         <div class="tag-list" id="related-list"></div>
 
         <!-- SECTION E: RESEARCH NOTES -->
-        <h2>📌 Research Notes</h2>
+        <h2 id="notes-heading">📌 Research Notes</h2>
         <div id="research-notes" style="font-size: 0.85rem; color: var(--text-secondary);"></div>
 
         <hr />
@@ -235,24 +237,187 @@ permalink: /item/
 
 <script>
 (function() {
+    // ========== AMBIL SUBDOMAIN / DOMAIN ==========
+    function getSiteIdentity() {
+        const hostname = window.location.hostname;
+        // Pisahkan subdomain dan domain utama
+        const parts = hostname.split('.');
+        
+        // Handle localhost / IP
+        if (hostname === 'localhost' || hostname.match(/^[\d\.]+$/)) {
+            return 'Local';
+        }
+        
+        // Cek apakah ada subdomain (lebih dari 2 bagian untuk .com/.net/.org, atau lebih dari 3 untuk .co.id dll)
+        // Pendekatan sederhana: ambil bagian pertama jika panjang > 2
+        if (parts.length >= 3) {
+            // Kemungkinan ada subdomain: sub.example.com atau sub.example.co.id
+            // Cek apakah bagian kedua adalah co/go/or id (kasus khusus)
+            const secondLevel = parts[parts.length - 2];
+            if (secondLevel === 'co' || secondLevel === 'go' || secondLevel === 'or' || secondLevel === 'ac') {
+                // Format seperti xxx.co.id, subdomain ada jika parts.length > 3
+                if (parts.length > 3) {
+                    return parts[0];
+                }
+                return secondLevel + '.' + parts[parts.length - 1];
+            } else {
+                // Standard .com/.net/.org
+                return parts[0];
+            }
+        } else if (parts.length === 2) {
+            // Hanya domain utama: example.com
+            return parts[0];
+        } else {
+            // Single word: localhost atau 'example' (unlikely)
+            return parts[0];
+        }
+    }
+    
+    function capitalizeFirst(str) {
+        if (!str) return '';
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+    
+    function formatQueryForDisplay(query) {
+        // Ubah query menjadi format judul (setiap kata huruf besar di awal)
+        return query.split(' ').map(word => {
+            // Kata kecil yang tidak perlu huruf besar di tengah (opsional, tapi biarkan sederhana)
+            if (word.length > 2) {
+                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            }
+            return word.toLowerCase();
+        }).join(' ');
+    }
+    
+    // Dapatkan identitas situs (subdomain atau domain utama)
+    let siteIdentity = getSiteIdentity();
+    // Kapitalisasi awal untuk identitas
+    siteIdentity = capitalizeFirst(siteIdentity);
+    
+    // Dapatkan query dari URL
     const params = new URLSearchParams(window.location.search);
     let query = params.get('q');
-
+    
     const defaultDiv = document.getElementById('default-block');
     const queryDiv = document.getElementById('query-block');
-
+    
+    // Jika tidak ada query, tampilkan default (title/h1 tetap standar)
     if (!query) {
         defaultDiv.style.display = 'block';
         queryDiv.style.display = 'none';
+        // Canonical tetap di-set
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if (canonicalLink) {
+            canonicalLink.setAttribute('href', window.location.href.split('?')[0]);
+        }
         return;
     }
-
+    
     defaultDiv.style.display = 'none';
     queryDiv.style.display = 'block';
-
-    query = decodeURIComponent(query.replace(/\+/g, ' '));
     
-    // clean base name (hapus kata2 umum)
+    query = decodeURIComponent(query.replace(/\+/g, ' '));
+    const formattedQuery = formatQueryForDisplay(query);
+    
+    // ========== FORMAT TITLE, H1, H2, H3 ==========
+    // Format konsisten: "Query on SiteIdentity" dengan variasi
+    // Varian kalimat yang konsisten (tetap sama setiap refresh karena deterministic)
+    const titleFormats = [
+        `${formattedQuery} on ${siteIdentity}`,
+        `${formattedQuery} · ${siteIdentity}`,
+        `${formattedQuery} | ${siteIdentity}`
+    ];
+    // Pilih format berdasarkan hash dari query (konsisten)
+    const getConsistentIndex = (str, max) => {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return Math.abs(hash) % max;
+    };
+    const formatIndex = getConsistentIndex(query, titleFormats.length);
+    const baseTitleFormat = titleFormats[formatIndex];
+    
+    // Varian untuk H1 (bisa sedikit berbeda tapi tetap mengandung query dan siteIdentity)
+    const h1Formats = [
+        `${formattedQuery} on ${siteIdentity}`,
+        `${formattedQuery} — ${siteIdentity}`,
+        `${formattedQuery} › ${siteIdentity}`,
+        `${siteIdentity} : ${formattedQuery}`,
+        `${formattedQuery} | ${siteIdentity}`
+    ];
+    const h1Format = h1Formats[getConsistentIndex(query + '_h1', h1Formats.length)];
+    
+    // Varian untuk H2 Sections
+    const getH2Format = (sectionName, sectionKey) => {
+        const h2Variants = [
+            `${sectionName} · ${formattedQuery} on ${siteIdentity}`,
+            `${formattedQuery} — ${sectionName}`,
+            `${sectionName} › ${formattedQuery}`,
+            `${sectionName} | ${formattedQuery} on ${siteIdentity}`,
+            `${formattedQuery} : ${sectionName}`
+        ];
+        const idx = getConsistentIndex(query + sectionKey, h2Variants.length);
+        return h2Variants[idx];
+    };
+    
+    // Varian untuk H3 (jika ada nanti, tapi sekarang tidak ada H3 di body, hanya untuk antisipasi)
+    const getH3Format = (subsectionName, subsectionKey) => {
+        const h3Variants = [
+            `${subsectionName} — ${formattedQuery}`,
+            `${formattedQuery} › ${subsectionName}`,
+            `${subsectionName} (${formattedQuery})`
+        ];
+        const idx = getConsistentIndex(query + subsectionKey, h3Variants.length);
+        return h3Variants[idx];
+    };
+    
+    // Set Title
+    document.title = baseTitleFormat + ' · Digital Reference Library';
+    
+    // Set H1
+    const mainTitleEl = document.getElementById('main-title');
+    if (mainTitleEl) {
+        mainTitleEl.innerHTML = h1Format;
+    }
+    
+    // Set H2 untuk setiap section
+    const bioHeading = document.getElementById('bio-heading');
+    if (bioHeading) {
+        bioHeading.innerHTML = getH2Format('📋 Biography & Background', '_bio');
+    }
+    
+    const mediaHeading = document.getElementById('media-heading');
+    if (mediaHeading) {
+        mediaHeading.innerHTML = getH2Format('🖼️ Media Index', '_media');
+    }
+    
+    const platformHeading = document.getElementById('platform-heading');
+    if (platformHeading) {
+        platformHeading.innerHTML = getH2Format('🌐 Platform Presence', '_platform');
+    }
+    
+    const relatedHeading = document.getElementById('related-heading');
+    if (relatedHeading) {
+        relatedHeading.innerHTML = getH2Format('🔗 Related References', '_related');
+    }
+    
+    const notesHeading = document.getElementById('notes-heading');
+    if (notesHeading) {
+        notesHeading.innerHTML = getH2Format('📌 Research Notes', '_notes');
+    }
+    
+    // Meta Description tetap mengandung identitas juga
+    const metaDesc = document.getElementById('dynamic-description');
+    if (metaDesc) {
+        metaDesc.setAttribute('content', `Reference entry for "${formattedQuery}" on ${siteIdentity}. Biography, media archive, and platform presence documentation. Independent digital library.`);
+    }
+    
+    // Breadcrumb name
+    document.getElementById('bc-name').innerText = formattedQuery;
+    
+    // Sisa script untuk konten dinamis lainnya (tidak diubah)
     const stopWords = ['archive', 'index', 'library', 'collection', 'database', 'research', 'reference', 'bio', 'biography', 'media', 'photo', 'video', 'platform', 'social', 'digital', 'creator', 'personality', 'figure', 'online', '2024', '2025', '2026'];
     let baseRaw = query.toLowerCase();
     stopWords.forEach(sw => {
@@ -262,14 +427,12 @@ permalink: /item/
     baseRaw = baseRaw.replace(/\s+/g, ' ').trim();
     const baseName = baseRaw || query;
     
-    // format display name
     function properCase(str) {
         return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
     }
     const displayName = properCase(baseName);
     const displayLower = displayName.toLowerCase();
-
-    // deteksi tipe dari query asli
+    
     const qLow = query.toLowerCase();
     let contentType = 'general';
     if (qLow.includes('bio') || qLow.includes('biography') || qLow.includes('profile')) contentType = 'bio';
@@ -277,30 +440,6 @@ permalink: /item/
     else if (qLow.includes('video') || qLow.includes('clip')) contentType = 'media';
     else if (qLow.includes('instagram') || qLow.includes('twitter') || qLow.includes('tiktok') || qLow.includes('youtube') || qLow.includes('platform')) contentType = 'platform';
     
-    // SEO: title & description
-    let titleText = '';
-    let metaDescText = '';
-    if (contentType === 'bio') {
-        titleText = `${displayName} · Biography & Profile · Digital Reference Library`;
-        metaDescText = `Complete biography of ${displayName}. Background, career timeline, and public presence. Independent research archive.`;
-    } else if (contentType === 'media') {
-        titleText = `${displayName} · Media Archive · Curated Index`;
-        metaDescText = `Curated media collection of ${displayName}. Publicly available images and video documentation. Research purposes.`;
-    } else if (contentType === 'platform') {
-        titleText = `${displayName} · Platform Presence · Social Media Footprint`;
-        metaDescText = `Cross-platform presence of ${displayName}. Documentation from Instagram, Twitter, TikTok, and more.`;
-    } else {
-        titleText = `${displayName} · Digital Archive · Reference Entry`;
-        metaDescText = `Comprehensive reference entry for ${displayName}. Biography, media, and platform documentation. Independent library.`;
-    }
-    document.title = titleText;
-    const metaDesc = document.getElementById('dynamic-description');
-    if (metaDesc) metaDesc.setAttribute('content', metaDescText);
-    
-    document.getElementById('main-title').innerHTML = `${displayName} <span style="font-size:0.9rem; font-weight:normal;">· reference entry</span>`;
-    document.getElementById('bc-name').innerText = displayName;
-    
-    // intro text dinamis
     const introP = document.getElementById('intro-text');
     if (contentType === 'bio') {
         introP.innerHTML = `This page provides a structured biographical reference for <strong>${displayName}</strong>, including early life, career milestones, and documented public presence. Maintained for research purposes.`;
@@ -312,14 +451,12 @@ permalink: /item/
         introP.innerHTML = `<strong>${displayName}</strong> is documented in this independent digital reference library. The following sections include biographical notes, media references, and platform presence.`;
     }
     
-    // helper membuat link internal
     function buildLink(variantSuffix, label, description = '') {
         const newQuery = `${displayLower} ${variantSuffix}`;
         const href = `/personal/?q=${encodeURIComponent(newQuery)}`;
         return `<a href="${href}">${label}</a>${description ? `<small> — ${description}</small>` : ''}`;
     }
     
-    // BIO LIST
     const bioItems = [
         { variant: 'biography', label: 'Full Biography', desc: 'complete background and timeline' },
         { variant: 'early life', label: 'Early Life & Origins', desc: 'background and formative years' },
@@ -331,7 +468,6 @@ permalink: /item/
         `<li>${buildLink(item.variant, item.label, item.desc)}</li>`
     ).join('');
     
-    // MEDIA LIST
     const mediaItems = [
         { variant: 'photo archive', label: 'Photo Archive', desc: 'curated image collection' },
         { variant: 'video archive', label: 'Video Index', desc: 'public video documentation' },
@@ -342,7 +478,6 @@ permalink: /item/
         `<li>${buildLink(item.variant, item.label, item.desc)}</li>`
     ).join('');
     
-    // PLATFORM LIST
     const platformItems = [
         { variant: 'instagram', label: 'Instagram Presence', desc: 'archived public posts' },
         { variant: 'twitter', label: 'Twitter/X Activity', desc: 'public interactions' },
@@ -354,7 +489,6 @@ permalink: /item/
         `<li>${buildLink(item.variant, item.label, item.desc)}</li>`
     ).join('');
     
-    // RELATED TAGS (variasi luas)
     const relatedQueries = [
         `${displayLower} biography`, `${displayLower} career`, `${displayLower} social media`,
         `${displayLower} photos`, `${displayLower} videos`, `digital creators`,
@@ -365,7 +499,6 @@ permalink: /item/
         `<a href="/personal/?q=${encodeURIComponent(q)}" class="tag">#${q.replace(/ /g, '')}</a>`
     ).join('');
     
-    // RESEARCH NOTES (evergreen, tidak terikat waktu)
     const researchNotes = [
         `This entry is part of an ongoing effort to document digital public figures.`,
         `Information is aggregated from publicly available sources and maintained for reference.`,
@@ -373,7 +506,6 @@ permalink: /item/
     ];
     document.getElementById('research-notes').innerHTML = `<p>${researchNotes.join(' ')}</p>`;
     
-    // dynamic stat line
     const today = new Date();
     const monthYear = today.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
     document.getElementById('stat-line-dynamic').innerHTML = `
@@ -384,7 +516,6 @@ permalink: /item/
     `;
     document.getElementById('update-date').innerText = monthYear;
     
-    // canonical link update
     const canonicalLink = document.getElementById('dynamic-canonical');
     if (canonicalLink) {
         canonicalLink.setAttribute('href', window.location.href.split('?')[0]);

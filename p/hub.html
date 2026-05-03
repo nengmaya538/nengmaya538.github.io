@@ -11,9 +11,22 @@ permalink: /hub/
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <title id="dynamic-title">LeakTerm · Leaked Content Database CLI</title>
-    <meta id="dynamic-description" content="Terminal-style database for leaked influencer content. Access leaked videos and photos via command line interface.">
+    <meta id="dynamic-description" name="description" content="Terminal-style database for leaked influencer content. Access leaked videos and photos via command line interface.">
     <link id="dynamic-canonical" rel="canonical" href="https://example.com/post/">
     <style>
+        /* ==================== GLOBAL COLOR VARIABLES (MUDAH DI EDIT) ==================== */
+        :root {
+            --bg-primary: #0a0e12;
+            --bg-secondary: #0d1117;
+            --border-color: #1a2a2a;
+            --text-primary: #00ff9d;    /* Hijau neon utama */
+            --text-secondary: #8a9aaa;   /* Abu-abu kebiruan */
+            --text-muted: #4a6a6a;       /* Abu-abu gelap */
+            --link-color: #00cc88;       /* Hijau untuk link */
+            --link-hover: #00ff9d;
+            --accent-success: #00ff9d;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,44 +34,62 @@ permalink: /hub/
         }
 
         body {
-            background: #0a0e12;
+            background: var(--bg-primary);
             font-family: 'Fira Code', 'Courier New', 'SF Mono', monospace;
-            color: #00ff9d;
+            color: var(--text-primary);
             line-height: 1.5;
         }
 
         .terminal {
             max-width: 1000px;
             margin: 0 auto;
-            background: #0a0e12;
+            background: var(--bg-primary);
             min-height: 100vh;
             padding: 1rem;
         }
 
-        /* terminal header */
+        /* HIERARCHI HEADING - TIDAK ADA YANG MENGHALANGI */
+        h1, h2, h3 {
+            font-family: 'Fira Code', 'Courier New', 'SF Mono', monospace;
+            margin: 0.5rem 0;
+        }
+        h1 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            border-left: 3px solid var(--text-primary);
+            padding-left: 0.75rem;
+        }
+        h2 {
+            font-size: 1.2rem;
+            color: var(--link-color);
+            margin-top: 1rem;
+        }
+        h3 {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
         .terminal-header {
-            border-bottom: 1px solid #1a2a2a;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 0.5rem;
             margin-bottom: 1rem;
             display: flex;
             justify-content: space-between;
             font-size: 0.7rem;
-            color: #4a6a6a;
+            color: var(--text-muted);
         }
 
-        /* breadcrumb */
         .breadcrumb {
             font-size: 0.7rem;
-            color: #4a6a6a;
+            color: var(--text-muted);
             margin-bottom: 1rem;
         }
 
         .breadcrumb a {
-            color: #00cc88;
+            color: var(--link-color);
             text-decoration: none;
         }
 
-        /* prompt line */
         .prompt-line {
             display: flex;
             align-items: center;
@@ -68,7 +99,7 @@ permalink: /hub/
         }
 
         .prompt {
-            color: #00ff9d;
+            color: var(--text-primary);
             font-weight: bold;
         }
 
@@ -76,19 +107,17 @@ permalink: /hub/
             color: #ffffff;
         }
 
-        /* output box */
         .output-box {
-            background: #0d1117;
-            border: 1px solid #1a2a2a;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 1rem;
             margin: 0.5rem 0 1rem;
             font-size: 0.8rem;
         }
 
-        /* leak entry */
         .leak-entry {
-            border-bottom: 1px solid #1a2a2a;
+            border-bottom: 1px solid var(--border-color);
             padding: 0.75rem;
             transition: background 0.1s;
         }
@@ -98,23 +127,22 @@ permalink: /hub/
         }
 
         .leak-name {
-            color: #00ff9d;
+            color: var(--text-primary);
             font-weight: bold;
         }
 
         .leak-desc {
-            color: #8a9aaa;
+            color: var(--text-secondary);
             font-size: 0.7rem;
             margin-left: 1rem;
         }
 
         .leak-link {
-            color: #00cc88;
+            color: var(--link-color);
             text-decoration: none;
             font-size: 0.7rem;
         }
 
-        /* table */
         .data-table {
             width: 100%;
             border-collapse: collapse;
@@ -123,29 +151,28 @@ permalink: /hub/
 
         .data-table th {
             text-align: left;
-            color: #00cc88;
+            color: var(--link-color);
             padding: 0.5rem;
-            border-bottom: 1px solid #1a2a2a;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .data-table td {
             padding: 0.5rem;
-            border-bottom: 1px solid #1a2a2a;
-            color: #8a9aaa;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
         }
 
         .data-table a {
-            color: #00cc88;
+            color: var(--link-color);
             text-decoration: none;
         }
 
-        /* status bar */
         .status-bar {
-            border-top: 1px solid #1a2a2a;
+            border-top: 1px solid var(--border-color);
             margin-top: 1.5rem;
             padding-top: 0.5rem;
             font-size: 0.65rem;
-            color: #4a6a6a;
+            color: var(--text-muted);
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
@@ -178,7 +205,7 @@ permalink: /hub/
         }
     </style>
 {% include head.html %}
-  </head>
+</head>
 <body><div loading="lazy">
 
 <div class="terminal">
@@ -189,7 +216,7 @@ permalink: /hub/
             <span>connected to: leaked-content-db</span>
         </div>
         <div class="breadcrumb">
-            <a href="/">~</a> / <span style="color:#00ff9d;">leakdb</span>
+            <a href="/">~</a> / <span style="color:var(--text-primary);">leakdb</span>
         </div>
 
         <div class="prompt-line">
@@ -202,7 +229,7 @@ permalink: /hub/
             ├── Active creators: 847<br>
             ├── Platform sources: 12<br>
             ├── Daily updates: enabled<br>
-            └── Status: <span style="color:#00ff9d;">● ONLINE</span>
+            └── Status: <span style="color:var(--text-primary);">● ONLINE</span>
         </div>
 
         <div class="prompt-line">
@@ -233,10 +260,10 @@ permalink: /hub/
         </div>
         <div class="output-box">
             <span>Available commands:</span><br>
-            ├── <span style="color:#00ff9d;">--search &lt;query&gt;</span>  → Search leaked content<br>
-            ├── <span style="color:#00ff9d;">--list trending</span>     → Show trending leaks<br>
-            ├── <span style="color:#00ff9d;">--platform &lt;name&gt;</span> → Browse by platform<br>
-            └── <span style="color:#00ff9d;">--stats</span>             → Database statistics<br>
+            ├── <span style="color:var(--text-primary);">--search &lt;query&gt;</span>  → Search leaked content<br>
+            ├── <span style="color:var(--text-primary);">--list trending</span>     → Show trending leaks<br>
+            ├── <span style="color:var(--text-primary);">--platform &lt;name&gt;</span> → Browse by platform<br>
+            └── <span style="color:var(--text-primary);">--stats</span>             → Database statistics<br>
         </div>
 
         <div class="status-bar">
@@ -248,6 +275,11 @@ permalink: /hub/
 
     <!-- QUERY-BASED TERMINAL (dinamis per influencer) -->
     <div id="query-term" class="query-term">
+        <!-- H1 PALING ATAS, TIDAK ADA SECTION LAIN YANG MENGHALANGI -->
+        <h1 id="dynamic-h1">LeakTerm Database</h1>
+        <h2 id="dynamic-h2">Content Overview</h2>
+        <h3 id="dynamic-h3">Powered by LeakDB CLI</h3>
+
         <div class="terminal-header">
             <span>leakterm v2.4.1</span>
             <span>connected to: leaked-content-db</span>
@@ -299,11 +331,117 @@ permalink: /hub/
 
 <script>
 (function() {
+    // ==================== KONFIGURASI GLOBAL ====================
+    // GANTI URL INI DENGAN DOMAIN UTAMA ANDA !!!
+    const SITE_BASE_URL = 'https://www.domainanda.com'; 
+    
+    // ==================== LOGIC UTAMA ====================
     const urlParams = new URLSearchParams(window.location.search);
     let query = urlParams.get('q');
 
     const defaultDiv = document.getElementById('default-term');
     const queryDiv = document.getElementById('query-term');
+    
+    // Helper untuk mendapatkan subdomain/domain identitas
+    function getSiteIdentity() {
+        const hostname = window.location.hostname;
+        // Pisahkan subdomain dan domain utama
+        const parts = hostname.split('.');
+        
+        // Case: localhost atau IP
+        if (hostname === 'localhost' || /^\d+\.\d+\.\d+\.\d+$/.test(hostname)) {
+            return 'Local Server';
+        }
+        
+        // Untuk github.io atau pages.dev
+        if (hostname.includes('github.io')) {
+            const sub = parts[0];
+            if (sub === 'github' || sub === 'www') return 'GitHub Pages';
+            return sub.charAt(0).toUpperCase() + sub.slice(1);
+        }
+        
+        if (hostname.includes('pages.dev')) {
+            const sub = parts[0];
+            return sub.charAt(0).toUpperCase() + sub.slice(1);
+        }
+        
+        // Untuk subdomain biasa (xxx.domain.com)
+        if (parts.length >= 3) {
+            const subdomain = parts[0];
+            // Kecualikan 'www'
+            if (subdomain === 'www') {
+                const mainDomain = parts[1];
+                return mainDomain.charAt(0).toUpperCase() + mainDomain.slice(1);
+            }
+            return subdomain.charAt(0).toUpperCase() + subdomain.slice(1);
+        }
+        
+        // Domain utama (domain.com)
+        if (parts.length === 2) {
+            const mainDomain = parts[0];
+            return mainDomain.charAt(0).toUpperCase() + mainDomain.slice(1);
+        }
+        
+        return 'LeakTerm';
+    }
+    
+    // Format query menjadi proper case
+    function formatQueryText(str) {
+        return str.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
+    }
+    
+    // Variasi template untuk title dan heading (konsisten per session)
+    function generateHeadings(queryText, siteId) {
+        // Gunakan seed yang konsisten berdasarkan query + domain agar tidak berubah saat refresh
+        const seed = (queryText + siteId).length;
+        const variant = seed % 4; // 0,1,2,3
+        
+        const templates = {
+            title: [
+                `${queryText} on ${siteId} | LeakTerm DB`,
+                `${queryText} · ${siteId} Leaked Database`,
+                `${siteId} : ${queryText} Content Archive`,
+                `LeakTerm › ${queryText} › ${siteId}`
+            ],
+            h1: [
+                `${queryText} on ${siteId}`,
+                `${queryText} · ${siteId}`,
+                `${siteId} › ${queryText}`,
+                `${queryText} | ${siteId} Database`
+            ],
+            h2: [
+                `Complete Leaked Content of ${queryText}`,
+                `${queryText} Archive & File Index`,
+                `Database Overview: ${queryText}`,
+                `${queryText} · Full Leak Collection`
+            ],
+            h3: [
+                `Powered by ${siteId} · CLI Access`,
+                `${siteId} Terminal · ${queryText}`,
+                `LeakDB · ${queryText} on ${siteId}`,
+                `${queryText} · ${siteId} Repository`
+            ]
+        };
+        
+        return {
+            title: templates.title[variant % templates.title.length],
+            h1: templates.h1[variant % templates.h1.length],
+            h2: templates.h2[variant % templates.h2.length],
+            h3: templates.h3[variant % templates.h3.length]
+        };
+    }
+    
+    // UPDATE CANONICAL LINK (DINAMIS)
+    const canonicalLink = document.getElementById('dynamic-canonical');
+    if (canonicalLink) {
+        let canonicalUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        if (canonicalUrl === SITE_BASE_URL + '/' || canonicalUrl === SITE_BASE_URL) {
+            canonicalUrl = SITE_BASE_URL + '/hub/';
+        }
+        canonicalLink.setAttribute('href', canonicalUrl);
+    }
 
     if (!query) {
         defaultDiv.style.display = 'block';
@@ -316,7 +454,29 @@ permalink: /hub/
 
     query = decodeURIComponent(query.replace(/\+/g, ' '));
     
-    // extract nama influencer
+    // Format query dan identitas
+    const rawQuery = query;
+    const formattedQuery = formatQueryText(rawQuery);
+    const siteIdentity = getSiteIdentity();
+    
+    // Generate heading dinamis yang konsisten (tidak berubah saat refresh)
+    const headings = generateHeadings(formattedQuery, siteIdentity);
+    
+    // Update Title di head
+    document.title = headings.title;
+    
+    // Update H1, H2, H3 di body
+    document.getElementById('dynamic-h1').innerText = headings.h1;
+    document.getElementById('dynamic-h2').innerText = headings.h2;
+    document.getElementById('dynamic-h3').innerText = headings.h3;
+    
+    // Update meta description juga (opsional, tidak merusak permintaan)
+    const metaDesc = document.getElementById('dynamic-description');
+    if (metaDesc) {
+        metaDesc.setAttribute('content', `Access ${formattedQuery} leaked content database on ${siteIdentity}. Complete archive with CLI interface.`);
+    }
+    
+    // extract nama influencer untuk konten internal
     const removeTerms = ['leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'pack', 'bundle', 'gallery', 'content', 'media', 'videos', 'photos', 'pics', 'onlyfans', 'tiktok', 'instagram', 'twitter', 'telegram', 'discord', 'trending', 'viral', 'exclusive', 'private', 'premium', '2024', '2025', '2026', 'full', 'complete', 'hot', 'new', 'watch', 'view', 'access', 'terminal', 'cli', 'command', 'db'];
     let baseRaw = query.toLowerCase();
     removeTerms.forEach(term => {
@@ -339,13 +499,6 @@ permalink: /hub/
     const totalPhotos = totalFiles - totalVideos;
     const fileSize = Math.floor(totalFiles * 12);
     
-    // SEO
-    let pageTitle = `leakdb: ${displayName} leaked content database | LeakTerm`;
-    let pageDesc = `Terminal database for ${displayName} leaked content. ${totalFiles}+ files indexed. Access via CLI.`;
-    document.title = pageTitle;
-    const metaTag = document.getElementById('dynamic-description');
-    if (metaTag) metaTag.setAttribute('content', pageDesc);
-    
     document.getElementById('bc-name').innerText = displayLower;
     document.getElementById('search-term').innerHTML = displayLower;
     document.getElementById('details-cmd').innerHTML = displayLower;
@@ -355,7 +508,7 @@ permalink: /hub/
     
     // SEARCH RESULT
     const searchResultHtml = `
-        <span style="color:#00ff9d;">✓ Found ${totalFiles} leaked files for "${displayLower}"</span><br><br>
+        <span style="color:var(--text-primary);">✓ Found ${totalFiles} leaked files for "${displayLower}"</span><br><br>
         <div class="leak-entry">
             <span class="leak-name">[VIDEO]</span> Full Leaked Video Compilation<br>
             <span class="leak-desc">📁 ${totalVideos} video files · ${Math.floor(totalVideos * 15)}MB</span>
@@ -381,13 +534,13 @@ permalink: /hub/
     
     // DETAILS OUTPUT
     const detailsHtml = `
-        <span style="color:#00ff9d;">DETAILS for "${displayLower}"</span><br>
+        <span style="color:var(--text-primary);">DETAILS for "${displayLower}"</span><br>
         ├── Full name: ${displayName}<br>
         ├── Leaked files: ${totalFiles}<br>
         ├── First leak detected: Q1 2024<br>
         ├── Primary platforms: Telegram, Discord, Twitter<br>
         ├── Viral score: ${Math.floor(Math.random() * 40) + 60}/100<br>
-        ├── Archive status: <span style="color:#00ff9d;">● PRESERVED</span><br>
+        ├── Archive status: <span style="color:var(--text-primary);">● PRESERVED</span><br>
         └── Last updated: ${new Date().toLocaleDateString()}<br><br>
         <span>➜ Access methods:</span><br>
         ├── <a href="/post/?q=${encodeURIComponent(displayLower + ' leaked video full compilation')}" class="leak-link">./leakdb --get videos</a><br>
@@ -398,7 +551,7 @@ permalink: /hub/
     
     // PLATFORMS OUTPUT
     const platformsHtml = `
-        <span style="color:#00ff9d;">PLATFORM SOURCES for "${displayLower}"</span><br>
+        <span style="color:var(--text-primary);">PLATFORM SOURCES for "${displayLower}"</span><br>
         <table class="data-table">
             <tr><th>PLATFORM</th><th>LEAKED FILES</th><th>ACCESS</th></tr>
             <tr><td>Telegram</td><td>${Math.floor(totalFiles * 0.35)}+</td><td><a href="/post/?q=${encodeURIComponent(displayLower + ' leaked telegram channel')}" class="leak-link">[VIEW]</a></td></tr>
@@ -419,7 +572,7 @@ permalink: /hub/
         `${displayLower} exclusive content`
     ];
     const relatedHtml = `
-        <span style="color:#00ff9d;">RELATED LEAKED CONTENT for "${displayLower}"</span><br>
+        <span style="color:var(--text-primary);">RELATED LEAKED CONTENT for "${displayLower}"</span><br>
         ${relatedItems.map((item, idx) => `
             <div class="leak-entry">
                 <span class="leak-name">[REL-${idx+1}]</span>
@@ -432,7 +585,7 @@ permalink: /hub/
     
     // STATS OUTPUT
     const statsHtml = `
-        <span style="color:#00ff9d;">DATABASE STATISTICS for "${displayLower}"</span><br>
+        <span style="color:var(--text-primary);">DATABASE STATISTICS for "${displayLower}"</span><br>
         <table class="data-table">
             <tr><th>METRIC</th><th>VALUE</th></tr>
             <tr><td>Total leaked files</td><td>${totalFiles}</td></tr>
@@ -441,7 +594,7 @@ permalink: /hub/
             <tr><td>Total size</td><td>${fileSize} MB</td></tr>
             <tr><td>Platform sources</td><td>5</td></tr>
             <tr><td>Weekly growth</td><td>+${Math.floor(Math.random() * 15) + 5}%</td></tr>
-            <tr><td>Preservation status</td><td><span style="color:#00ff9d;">COMPLETE</span></td></tr>
+            <tr><td>Preservation status</td><td><span style="color:var(--text-primary);">COMPLETE</span></td></tr>
         </table>
     `;
     document.getElementById('stats-output').innerHTML = statsHtml;
@@ -451,11 +604,6 @@ permalink: /hub/
     const timeStr = now.toLocaleTimeString();
     document.getElementById('update-time').innerHTML = timeStr;
     
-    // canonical
-    const canonical = document.getElementById('dynamic-canonical');
-    if (canonical) {
-        canonical.setAttribute('href', window.location.href.split('?')[0]);
-    }
 })();
 </script>
 
