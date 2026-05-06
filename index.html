@@ -7,84 +7,69 @@ layout: null
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
     
-    <!-- CANONICAL FALLBACK -->
-    <link id="dynamic-canonical" rel="canonical" href="">
-    
-    <!-- FAVICON & MANIFEST -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#1a1a1b">
-    
-    <!-- TITLE & META FALLBACK -->
-    <title id="dynamic-title">Loading...</title>
-    <meta id="dynamic-description" name="description" content="">
-    <meta id="dynamic-author" name="author" content="">
-
     <!-- ============================================ -->
-    <!-- SEO OTOMATIS - JALAN SEBELUM RENDER          -->
+    <!-- SEO OTOMATIS UNTUK HOMEPAGE & QUERY          -->
     <!-- ============================================ -->
     <script>
-    /*
-     * SEO script ini membaca hostname utuh dan query,
-     * lalu mengisi title, meta description, meta author,
-     * canonical, dan schema.org sebelum halaman dirender.
-     * Crawler yang tidak menjalankan JS tetap bisa
-     * membaca metadata awal.
-     */
     (function() {
         var hostname = location.hostname;
+        var pathname = location.pathname;
         var urlParams = new URLSearchParams(location.search);
         var query = urlParams.get("q");
 
         /*
          * Ambil hostname utuh tanpa TLD.
-         * Contoh:
-         *   abc.domain01.com        → abc-domain01
-         *   beatleakedflow.my.id    → beatleakedflow
-         *   sub.freehtmlparser.io   → sub-freehtmlparser
+         * abc.domain01.com → abc-domain01
+         * beatleakedflow.my.id → beatleakedflow
          */
         var parts = hostname.split(".");
-        var tldParts = 2; // asumsi TLD 2 level: my.id, github.io, pages.dev, co.id, com, net, dll
+        var tldParts = 2;
         var rawName = parts.slice(0, Math.max(1, parts.length - tldParts)).join("-");
         if (rawName.toLowerCase() === "www") {
             rawName = parts.slice(1, Math.max(2, parts.length - tldParts)).join("-");
         }
         var fullName = rawName;
 
-        var displayDomain = fullName;
+        var formatText = function(str) {
+            return str
+                .replace(/[-_]/g, " ")
+                .replace(/\+/g, " ")
+                .replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        };
 
+        var displayDomain = formatText(fullName);
         var titleText = "";
         var descText = "";
 
         if (query) {
+            // Halaman query
             query = decodeURIComponent(query.replace(/\+/g, " "));
-            titleText = query + " on " + displayDomain;
-            descText = query + " - Complete archive on " + displayDomain + ". Latest updates and exclusive content.";
+            var cleanQuery = formatText(query);
+            titleText = cleanQuery + " on " + displayDomain;
+            descText = cleanQuery + " - Complete archive on " + displayDomain + ". Latest updates and exclusive content.";
         } else {
+            // Homepage
             titleText = displayDomain;
             descText = displayDomain + " - Latest updates and exclusive content.";
         }
 
+        // Title
         document.title = titleText;
-        var titleTag = document.getElementById("dynamic-title");
-        if (titleTag) titleTag.textContent = titleText;
 
-        var metaDesc = document.getElementById("dynamic-description");
-        if (metaDesc) metaDesc.setAttribute("content", descText);
+        // Meta description
+        var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
+        metaDesc.name = "description";
+        metaDesc.content = descText;
+        if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
 
-        var metaAuthor = document.getElementById("dynamic-author");
-        if (metaAuthor) metaAuthor.setAttribute("content", displayDomain);
+        // Meta author
+        var metaAuthor = document.querySelector("meta[name=\"author\"]") || document.createElement("meta");
+        metaAuthor.name = "author";
+        metaAuthor.content = displayDomain;
+        if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
 
-        var canonicalLink = document.getElementById("dynamic-canonical");
-        if (canonicalLink) {
-            canonicalLink.setAttribute("href", location.href);
-        }
-
+        // Schema.org WebSite
         var schemaData = {
             "@context": "https://schema.org",
             "@type": "WebSite",
@@ -95,453 +80,598 @@ layout: null
         schemaScript.type = "application/ld+json";
         schemaScript.textContent = JSON.stringify(schemaData);
         document.head.appendChild(schemaScript);
+
+        // Canonical
+        var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
+        canonical.setAttribute("rel", "canonical");
+        canonical.setAttribute("href", location.href);
+        if (!canonical.parentNode) document.head.appendChild(canonical);
     })();
     </script>
 
-    <!-- ============================================ -->
-    <!-- GLOBAL STYLE - VARIABEL DASAR               -->
-    <!-- ============================================ -->
-    <style>
-        :root {
-            --bg-body: #1a1a1b;
-            --bg-card: #1e1e1f;
-            --border-color: #343536;
-            --border-hover: #565758;
-            --text-primary: #d7dadc;
-            --text-secondary: #818384;
-            --text-muted: #5a5b5c;
-            --accent: #d93900;
-            --accent-hover: #ff4500;
-            --flair-bg-1: #1a3e4c;
-            --flair-text-1: #9efff0;
-            --flair-bg-2: #4c1a2e;
-            --flair-text-2: #ff9ec4;
-            --flair-bg-3: #1a4c2e;
-            --flair-text-3: #9effb0;
-            --flair-bg-4: #4c3a1a;
-            --flair-text-4: #ffd700;
-            --flair-bg-5: #1a3a4c;
-            --flair-text-5: #87ceeb;
-            --card-radius: 8px;
-            --card-padding: 0.75rem;
-            --card-gap: 0.75rem;
-            --font-heading: 1.5rem;
-            --font-card-title: 1rem;
-            --font-meta: 0.7rem;
-            --font-small: 0.6rem;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: var(--bg-body);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif;
-            color: var(--text-primary);
-            line-height: 1.5;
-        }
-
-        .forum-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-
-        /* ========== H1 ========== */
-        .page-h1 {
-            font-size: var(--font-heading);
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        /* ========== BREADCRUMB ========== */
-        .breadcrumb {
-            font-size: var(--font-meta);
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .breadcrumb a {
-            color: var(--text-secondary);
-            text-decoration: none;
-        }
-
-        .breadcrumb a:hover {
-            text-decoration: underline;
-        }
-
-        .breadcrumb span:last-child {
-            color: var(--text-primary);
-        }
-
-        /* ========== HEADER CARD ========== */
-        .header-card {
-            background: var(--bg-card);
-            border-radius: var(--card-radius);
-            padding: var(--card-padding);
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            border: 1px solid var(--border-color);
-        }
-
-        .header-info h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .header-info p {
-            font-size: var(--font-meta);
-            color: var(--text-secondary);
-        }
-
-        .header-action {
-            background: var(--accent);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: var(--font-meta);
-            font-weight: 600;
-            color: #fff;
-            cursor: pointer;
-            transition: background 0.2s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .header-action:hover {
-            background: var(--accent-hover);
-        }
-
-        /* ========== SORT BAR ========== */
-        .sort-bar {
-            display: flex;
-            gap: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-            font-size: 0.75rem;
-        }
-
-        .sort-active {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .sort-inactive {
-            cursor: pointer;
-            color: var(--text-secondary);
-        }
-
-        .sort-inactive:hover {
-            color: var(--text-primary);
-        }
-
-        /* ========== TWO COLUMN LAYOUT ========== */
-        .two-col {
-            display: grid;
-            grid-template-columns: 1fr 280px;
-            gap: 1rem;
-        }
-
-        /* ========== POST FEED ========== */
-        .post-feed {
-            display: flex;
-            flex-direction: column;
-            gap: var(--card-gap);
-        }
-
-        .post-feed.grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .post-feed.gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        /* ========== POST CARD ========== */
-        .post-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--card-radius);
-            padding: var(--card-padding);
-            transition: all 0.1s;
-        }
-
-        .post-card:hover {
-            border-color: var(--border-hover);
-        }
-
-        .post-card-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: var(--font-meta);
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .post-card-community {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .post-card-author {
-            font-weight: 500;
-        }
-
-        .post-card-time {
-            font-size: var(--font-small);
-        }
-
-        .post-card-title {
-            font-size: var(--font-card-title);
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .post-card-title a {
-            color: var(--text-primary);
-            text-decoration: none;
-            display: block;
-        }
-
-        .post-card-title a:hover {
-            text-decoration: underline;
-            color: var(--accent-hover);
-        }
-
-        .post-card-meta {
-            display: flex;
-            gap: 0.5rem;
-            font-size: var(--font-small);
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        /* ========== FLAIRS ========== */
-        .flair {
-            display: inline-block;
-            padding: 0.15rem 0.5rem;
-            border-radius: 12px;
-            font-size: var(--font-small);
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .flair-1 { background: var(--flair-bg-1); color: var(--flair-text-1); }
-        .flair-2 { background: var(--flair-bg-2); color: var(--flair-text-2); }
-        .flair-3 { background: var(--flair-bg-3); color: var(--flair-text-3); }
-        .flair-4 { background: var(--flair-bg-4); color: var(--flair-text-4); }
-        .flair-5 { background: var(--flair-bg-5); color: var(--flair-text-5); }
-
-        /* ========== VOTE SECTION ========== */
-        .vote-section {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .vote-btn {
-            font-size: 1rem;
-            cursor: pointer;
-            transition: color 0.2s;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            padding: 0;
-        }
-
-        .vote-btn:hover {
-            color: var(--accent);
-        }
-
-        /* ========== ACTION ROW ========== */
-        .action-row {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 0.5rem;
-            font-size: var(--font-small);
-        }
-
-        .action-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-        }
-
-        .action-link:hover {
-            color: var(--text-primary);
-            text-decoration: underline;
-        }
-
-        /* ========== SIDEBAR ========== */
-        .sidebar-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--card-radius);
-            padding: var(--card-padding);
-            margin-bottom: 1rem;
-            position: sticky;
-            top: 1rem;
-        }
-
-        .sidebar-title {
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.25rem;
-            color: var(--text-primary);
-        }
-
-        .sidebar-item {
-            padding: 0.4rem 0;
-            border-bottom: 1px solid #2a2a2b;
-            font-size: var(--font-meta);
-        }
-
-        .sidebar-item a {
-            color: var(--text-primary);
-            text-decoration: none;
-            display: block;
-            transition: color 0.2s;
-        }
-
-        .sidebar-item a:hover {
-            color: var(--accent-hover);
-            text-decoration: underline;
-        }
-
-        .sidebar-number {
-            color: var(--accent);
-            font-weight: 700;
-            margin-right: 0.25rem;
-        }
-
-        /* ========== FOOTER ========== */
-        hr {
-            border: none;
-            border-top: 1px solid var(--border-color);
-            margin: 1rem 0;
-        }
-
-        .footer {
-            font-size: var(--font-small);
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: var(--font-small);
-        }
-
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            .two-col { grid-template-columns: 1fr; }
-            .forum-container { padding: 0.5rem; }
-            .sidebar-card { position: static; }
-            .post-feed.grid { grid-template-columns: 1fr; }
-            .post-feed.gallery { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        @media (max-width: 480px) {
-            .post-feed.gallery { grid-template-columns: 1fr; }
-        }
-    </style>
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    
+    <!-- FAVICON & MANIFEST -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#317EFB">
 
 {% include head.html %}
 {% include verif.html %}
 </head>
 <body>
-
 <div loading="lazy">
 
-<div class="forum-container">
+{% include /ads/gobloggugel/sosmed.html %}
 
     <!-- ============================================ -->
-    <!-- HALAMAN QUERY (HANYA MUNCUL JIKA ADA ?q=)    -->
+    <!-- KONDISI 1: HOMEPAGE (TANPA QUERY)            -->
     <!-- ============================================ -->
-    <div id="query-page">
+    <!--
+     * Muncul saat TIDAK ADA ?q=
+     * H1 di-handle oleh include header1.html
+     * Konten dari looping Jekyll site.categories.main
+    -->
+    <div id="homepage">
+        {% include header1.html %}
+        <nav>
+            {% include /kw/01.html %}
+        </nav>
+        <main>
+            <article>
+                <style>
+                    /* ============================================ */
+                    /* STYLE HOMEPAGE                               */
+                    /* ============================================ */
+                    .post-item {
+                        background: #fff;
+                        padding: 12px;
+                        margin-bottom: 12px;
+                        border: 1px solid #e5e5e5;
+                        border-radius: 6px;
+                        box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+                        transition: all .15s ease;
+                    }
 
-        <!-- H1 -->
-        <h1 id="page-h1" class="page-h1"></h1>
+                    .post-item:hover {
+                        border-color: #ccc;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+                    }
 
-        <!-- BREADCRUMB -->
-        <div class="breadcrumb">
-            <a href="/">Home</a> / <span id="breadcrumb-domain"></span> / search: <span id="breadcrumb-query"></span>
-        </div>
+                    .post-item h2 {
+                        font-size: 16px;
+                        margin-bottom: 6px;
+                    }
 
-        <!-- HEADER CARD -->
-        <div class="header-card">
-            <div class="header-info">
-                <h2 id="header-title"></h2>
-                <p id="header-subtitle"></p>
+                    .post-item h2 a {
+                        text-decoration: none;
+                        color: #111;
+                    }
+
+                    .post-item h2 a:hover {
+                        text-decoration: underline;
+                    }
+
+                    .excerpt {
+                        font-size: 13px;
+                        color: #555;
+                        margin-bottom: 8px;
+                    }
+
+                    .meta {
+                        font-size: 11px;
+                    }
+
+                    .meta a {
+                        display: inline-block;
+                        padding: 2px 6px;
+                        margin: 2px 6px 2px 0;
+                        border-radius: 4px;
+                        text-decoration: none;
+                        font-weight: 500;
+                    }
+
+                    .meta .cat {
+                        background: #e8f1ff;
+                        color: #1a4fb3;
+                        border: 1px solid #c7dcff;
+                    }
+
+                    .meta .label {
+                        background: #e9f7ef;
+                        color: #1b7f4c;
+                        border: 1px solid #c9ead6;
+                    }
+
+                    .meta .tag {
+                        background: #f3f3f3;
+                        color: #555;
+                        border: 1px solid #ddd;
+                    }
+
+                    .meta a:hover { opacity: .85; }
+
+                    .section-label {
+                        text-align: center;
+                        font-weight: 600;
+                        margin-bottom: 1rem;
+                    }
+
+                    .pagination {
+                        margin-top: 16px;
+                        text-align: center;
+                        font-size: 13px;
+                    }
+
+                    .pagination a,
+                    .pagination span {
+                        display: inline-block;
+                        padding: 5px 9px;
+                        margin: 3px;
+                        border: 1px solid #ddd;
+                        border-radius: 4px;
+                        text-decoration: none;
+                        color: #333;
+                        background: #fff;
+                    }
+
+                    .pagination .current {
+                        background: #333;
+                        color: #fff;
+                        border-color: #333;
+                    }
+
+                    .pagination a:hover {
+                        background: #eee;
+                    }
+                </style>
+
+                <div class="section-label"><b>Latest Posts</b></div>
+
+                {% for post in site.categories.main %}
+                <div class="post-item">
+                    <h2>
+                        <a href="{{ post.url }}">
+                            {{ post.title }}
+                        </a>
+                    </h2>
+                    <div class="excerpt">
+                        {{ post.description }}
+                    </div>
+                    {% assign before_svg = post.content | split: "<p>" | first %}
+                    <div class="excerpt spo">
+                        {{ before_svg }}
+                    </div>
+                </div>
+                {% endfor %}
+            </article>
+        </main>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- KONDISI 2: HALAMAN QUERY (DENGAN ?q=)        -->
+    <!-- ============================================ -->
+    <div id="query-page" style="display:none;">
+        <style>
+            /* ============================================ */
+            /* STYLE HALAMAN QUERY (DARK THEME)             */
+            /* ============================================ */
+            :root {
+                --bg-body: #1a1a1b;
+                --bg-card: #1e1e1f;
+                --border-color: #343536;
+                --border-hover: #565758;
+                --text-primary: #d7dadc;
+                --text-secondary: #818384;
+                --text-muted: #5a5b5c;
+                --accent: #d93900;
+                --accent-hover: #ff4500;
+                --flair-bg-1: #1a3e4c;
+                --flair-text-1: #9efff0;
+                --flair-bg-2: #4c1a2e;
+                --flair-text-2: #ff9ec4;
+                --flair-bg-3: #1a4c2e;
+                --flair-text-3: #9effb0;
+                --flair-bg-4: #4c3a1a;
+                --flair-text-4: #ffd700;
+                --flair-bg-5: #1a3a4c;
+                --flair-text-5: #87ceeb;
+                --card-radius: 8px;
+                --card-padding: 0.75rem;
+                --card-gap: 0.75rem;
+                --font-heading: 1.5rem;
+                --font-card-title: 1rem;
+                --font-meta: 0.7rem;
+                --font-small: 0.6rem;
+            }
+
+            .query-container {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 1rem;
+                background: var(--bg-body);
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+                color: var(--text-primary);
+                line-height: 1.5;
+                min-height: 100vh;
+            }
+
+            .query-container * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            .page-h1 {
+                font-size: var(--font-heading);
+                font-weight: 600;
+                margin-bottom: 0.75rem;
+                color: var(--text-primary);
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .breadcrumb {
+                font-size: var(--font-meta);
+                color: var(--text-secondary);
+                margin-bottom: 1rem;
+            }
+
+            .breadcrumb a {
+                color: var(--text-secondary);
+                text-decoration: none;
+            }
+
+            .breadcrumb a:hover {
+                text-decoration: underline;
+            }
+
+            .breadcrumb span:last-child {
+                color: var(--text-primary);
+            }
+
+            .header-card {
+                background: var(--bg-card);
+                border-radius: var(--card-radius);
+                padding: var(--card-padding);
+                margin-bottom: 1rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+                border: 1px solid var(--border-color);
+            }
+
+            .header-info h2 {
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+
+            .header-info p {
+                font-size: var(--font-meta);
+                color: var(--text-secondary);
+            }
+
+            .header-action {
+                background: var(--accent);
+                padding: 0.4rem 1rem;
+                border-radius: 20px;
+                font-size: var(--font-meta);
+                font-weight: 600;
+                color: #fff;
+                cursor: pointer;
+                transition: background 0.2s;
+                text-decoration: none;
+                display: inline-block;
+            }
+
+            .header-action:hover {
+                background: var(--accent-hover);
+            }
+
+            .sort-bar {
+                display: flex;
+                gap: 1rem;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 0.5rem;
+                margin-bottom: 1rem;
+                font-size: 0.75rem;
+            }
+
+            .sort-active {
+                color: var(--accent);
+                font-weight: 600;
+            }
+
+            .sort-inactive {
+                cursor: pointer;
+                color: var(--text-secondary);
+            }
+
+            .sort-inactive:hover {
+                color: var(--text-primary);
+            }
+
+            .two-col {
+                display: grid;
+                grid-template-columns: 1fr 280px;
+                gap: 1rem;
+            }
+
+            .post-feed {
+                display: flex;
+                flex-direction: column;
+                gap: var(--card-gap);
+            }
+
+            .post-feed.grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .post-feed.gallery {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .post-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: var(--card-radius);
+                padding: var(--card-padding);
+                transition: all 0.1s;
+            }
+
+            .post-card:hover {
+                border-color: var(--border-hover);
+            }
+
+            .post-card-header {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: var(--font-meta);
+                color: var(--text-secondary);
+                margin-bottom: 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            .post-card-community {
+                color: var(--accent);
+                font-weight: 600;
+            }
+
+            .post-card-author {
+                font-weight: 500;
+            }
+
+            .post-card-time {
+                font-size: var(--font-small);
+            }
+
+            .post-card-title {
+                font-size: var(--font-card-title);
+                font-weight: 500;
+                margin-bottom: 0.5rem;
+                color: var(--text-primary);
+            }
+
+            .post-card-title a {
+                color: var(--text-primary);
+                text-decoration: none;
+                display: block;
+            }
+
+            .post-card-title a:hover {
+                text-decoration: underline;
+                color: var(--accent-hover);
+            }
+
+            .post-card-meta {
+                display: flex;
+                gap: 0.5rem;
+                font-size: var(--font-small);
+                color: var(--text-secondary);
+                margin-bottom: 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            .flair {
+                display: inline-block;
+                padding: 0.15rem 0.5rem;
+                border-radius: 12px;
+                font-size: var(--font-small);
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+            .flair-1 { background: var(--flair-bg-1); color: var(--flair-text-1); }
+            .flair-2 { background: var(--flair-bg-2); color: var(--flair-text-2); }
+            .flair-3 { background: var(--flair-bg-3); color: var(--flair-text-3); }
+            .flair-4 { background: var(--flair-bg-4); color: var(--flair-text-4); }
+            .flair-5 { background: var(--flair-bg-5); color: var(--flair-text-5); }
+
+            .vote-section {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--text-secondary);
+            }
+
+            .vote-btn {
+                font-size: 1rem;
+                cursor: pointer;
+                transition: color 0.2s;
+                background: none;
+                border: none;
+                color: var(--text-secondary);
+                padding: 0;
+            }
+
+            .vote-btn:hover {
+                color: var(--accent);
+            }
+
+            .action-row {
+                display: flex;
+                gap: 0.75rem;
+                margin-top: 0.5rem;
+                font-size: var(--font-small);
+            }
+
+            .action-link {
+                color: var(--text-secondary);
+                text-decoration: none;
+            }
+
+            .action-link:hover {
+                color: var(--text-primary);
+                text-decoration: underline;
+            }
+
+            .sidebar-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: var(--card-radius);
+                padding: var(--card-padding);
+                margin-bottom: 1rem;
+                position: sticky;
+                top: 1rem;
+            }
+
+            .sidebar-title {
+                font-size: 0.75rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 0.25rem;
+                color: var(--text-primary);
+            }
+
+            .sidebar-item {
+                padding: 0.4rem 0;
+                border-bottom: 1px solid #2a2a2b;
+                font-size: var(--font-meta);
+            }
+
+            .sidebar-item a {
+                color: var(--text-primary);
+                text-decoration: none;
+                display: block;
+                transition: color 0.2s;
+            }
+
+            .sidebar-item a:hover {
+                color: var(--accent-hover);
+                text-decoration: underline;
+            }
+
+            .sidebar-number {
+                color: var(--accent);
+                font-weight: 700;
+                margin-right: 0.25rem;
+            }
+
+            .query-footer {
+                font-size: var(--font-small);
+                color: var(--text-muted);
+                text-align: center;
+                margin-top: 2rem;
+            }
+
+            .footer-links {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            .footer-links a {
+                color: var(--text-secondary);
+                text-decoration: none;
+                font-size: var(--font-small);
+            }
+
+            .footer-links a:hover {
+                text-decoration: underline;
+            }
+
+            hr {
+                border: none;
+                border-top: 1px solid var(--border-color);
+                margin: 1rem 0;
+            }
+
+            @media (max-width: 768px) {
+                .two-col { grid-template-columns: 1fr; }
+                .query-container { padding: 0.5rem; }
+                .sidebar-card { position: static; }
+                .post-feed.grid { grid-template-columns: 1fr; }
+                .post-feed.gallery { grid-template-columns: repeat(2, 1fr); }
+            }
+
+            @media (max-width: 480px) {
+                .post-feed.gallery { grid-template-columns: 1fr; }
+            }
+        </style>
+
+        <div class="query-container">
+            <!-- H1 -->
+            <h1 id="page-h1" class="page-h1"></h1>
+
+            <!-- BREADCRUMB -->
+            <div class="breadcrumb">
+                <a href="/">Home</a> / <span id="breadcrumb-domain"></span> / search: <span id="breadcrumb-query"></span>
             </div>
-            <span class="header-action" id="header-action-label"></span>
-        </div>
 
-        <!-- SORT BAR -->
-        <div class="sort-bar">
-            <span class="sort-active" id="sort-label"></span>
-            <span class="sort-inactive">Newest</span>
-            <span class="sort-inactive">Most upvoted</span>
-        </div>
+            <!-- HEADER CARD -->
+            <div class="header-card">
+                <div class="header-info">
+                    <h2 id="header-title"></h2>
+                    <p id="header-subtitle"></p>
+                </div>
+                <span class="header-action" id="header-action-label"></span>
+            </div>
 
-        <!-- MAIN + SIDEBAR -->
-        <div class="two-col">
-            <div class="post-feed" id="post-feed"></div>
-            <div>
-                <div class="sidebar-card">
-                    <div class="sidebar-title"><h3 id="sidebar-heading" style="font-size: 0.75rem; font-weight: 600; margin: 0;"></h3></div>
-                    <div id="sidebar-links"></div>
+            <!-- SORT BAR -->
+            <div class="sort-bar">
+                <span class="sort-active" id="sort-label"></span>
+                <span class="sort-inactive">Newest</span>
+                <span class="sort-inactive">Most upvoted</span>
+            </div>
+
+            <!-- MAIN + SIDEBAR -->
+            <div class="two-col">
+                <div class="post-feed" id="post-feed"></div>
+                <div>
+                    <div class="sidebar-card">
+                        <div class="sidebar-title"><h3 id="sidebar-heading" style="font-size: 0.75rem; font-weight: 600; margin: 0;"></h3></div>
+                        <div id="sidebar-links"></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- FOOTER -->
-        <hr />
-        <div class="footer">
-            <div class="footer-links" id="footer-links"></div>
-            <span id="footer-text"></span> - <span id="footer-status"></span>
+            <!-- FOOTER -->
+            <hr />
+            <div class="query-footer">
+                <div class="footer-links" id="footer-links"></div>
+                <span id="footer-text"></span> - <span id="footer-status"></span>
+            </div>
         </div>
-
     </div>
+
+{% include footer.html %}
 
 </div>
 
 <!-- ============================================ -->
-<!-- JAVASCRIPT: DNA FULL HOSTNAME                 -->
+<!-- JAVASCRIPT: DNA FULL HOSTNAME + QUERY LOGIC  -->
 <!-- ============================================ -->
 <script>
 (function() {
@@ -550,15 +680,7 @@ layout: null
      * ============================================
      * STEP 1: AMBIL FULL HOSTNAME SEBAGAI DNA
      * ============================================
-     * Hostname utuh tanpa TLD menjadi identitas.
-     * Contoh:
-     *   abc.domain01.com        → abc-domain01
-     *   abc.domain02.com        → abc-domain02 (BEDA)
-     *   beatleakedflow.my.id    → beatleakedflow
-     *   sub.beatleakedflow.my.id → sub-beatleakedflow
-     *   freehtmlparser.github.io → freehtmlparser
      */
-
     var hostname = window.location.hostname;
     var parts = hostname.split(".");
     var tldParts = 2;
@@ -570,7 +692,7 @@ layout: null
 
     /*
      * ============================================
-     * STEP 2: HASH FUNCTION (DETERMINISTIK)
+     * STEP 2: HASH FUNCTION
      * ============================================
      */
     function hashString(str) {
@@ -591,19 +713,25 @@ layout: null
      */
     var urlParams = new URLSearchParams(window.location.search);
     var query = urlParams.get("q");
+    var homepage = document.getElementById("homepage");
     var queryPage = document.getElementById("query-page");
 
     if (!query) {
+        // Tampilkan homepage, sembunyikan query page
+        if (homepage) homepage.style.display = "block";
         if (queryPage) queryPage.style.display = "none";
         return;
     }
 
+    // Tampilkan query page, sembunyikan homepage
+    if (homepage) homepage.style.display = "none";
     if (queryPage) queryPage.style.display = "block";
+
     query = decodeURIComponent(query.replace(/\+/g, " "));
 
     /*
      * ============================================
-     * STEP 4: COMBINED SEED (DOMAIN + QUERY)
+     * STEP 4: COMBINED SEED
      * ============================================
      */
     var combinedSeed = hashString(fullName + "|||" + query);
@@ -677,22 +805,21 @@ layout: null
     var flairBg5 = hslToHex((hue + 240) % 360, 30, 15);
     var flairText5 = hslToHex((hue + 240) % 360, 60, 75);
 
-    var styleEl = document.createElement("style");
-    styleEl.textContent = ":root {" +
-        "--accent: " + accentColor + ";" +
-        "--accent-hover: " + accentHover + ";" +
-        "--flair-bg-1: " + flairBg1 + ";" +
-        "--flair-text-1: " + flairText1 + ";" +
-        "--flair-bg-2: " + flairBg2 + ";" +
-        "--flair-text-2: " + flairText2 + ";" +
-        "--flair-bg-3: " + flairBg3 + ";" +
-        "--flair-text-3: " + flairText3 + ";" +
-        "--flair-bg-4: " + flairBg4 + ";" +
-        "--flair-text-4: " + flairText4 + ";" +
-        "--flair-bg-5: " + flairBg5 + ";" +
-        "--flair-text-5: " + flairText5 + ";" +
-        "}";
-    document.head.appendChild(styleEl);
+    var queryContainer = document.querySelector(".query-container");
+    if (queryContainer) {
+        queryContainer.style.setProperty("--accent", accentColor);
+        queryContainer.style.setProperty("--accent-hover", accentHover);
+        queryContainer.style.setProperty("--flair-bg-1", flairBg1);
+        queryContainer.style.setProperty("--flair-text-1", flairText1);
+        queryContainer.style.setProperty("--flair-bg-2", flairBg2);
+        queryContainer.style.setProperty("--flair-text-2", flairText2);
+        queryContainer.style.setProperty("--flair-bg-3", flairBg3);
+        queryContainer.style.setProperty("--flair-text-3", flairText3);
+        queryContainer.style.setProperty("--flair-bg-4", flairBg4);
+        queryContainer.style.setProperty("--flair-text-4", flairText4);
+        queryContainer.style.setProperty("--flair-bg-5", flairBg5);
+        queryContainer.style.setProperty("--flair-text-5", flairText5);
+    }
 
     /*
      * ============================================
@@ -705,7 +832,7 @@ layout: null
 
     /*
      * ============================================
-     * STEP 8: GENERATE FLAIR POOL DARI NAMA DOMAIN
+     * STEP 8: GENERATE FLAIR POOL
      * ============================================
      */
     function generateFlairPool(name, count) {
@@ -728,10 +855,9 @@ layout: null
 
     /*
      * ============================================
-     * STEP 9: POOL TEMPLATE (DI-SHUFFLE PER DOMAIN)
+     * STEP 9: POOL TEMPLATE
      * ============================================
      */
-
     var titleTemplates = shuffleArray([
         "[QUERY] Archive on [DOMAIN]",
         "[QUERY] - Full Collection | [DOMAIN]",
@@ -834,18 +960,14 @@ layout: null
      * STEP 11: UPDATE ELEMEN HALAMAN
      * ============================================
      */
-
-    // H1
     var h1Text = pickFromArray(titleTemplates, combinedSeed, 0)
         .replace("[QUERY]", displayName)
         .replace("[DOMAIN]", fullName);
     document.getElementById("page-h1").innerText = h1Text;
 
-    // Breadcrumb
     document.getElementById("breadcrumb-domain").innerText = fullName;
     document.getElementById("breadcrumb-query").innerText = displayName;
 
-    // Header card
     var h2Text = pickFromArray(h2Templates, combinedSeed, 1)
         .replace("[QUERY]", displayName)
         .replace("[DOMAIN]", fullName);
@@ -855,16 +977,13 @@ layout: null
     document.getElementById("header-action-label").innerText =
         pickFromArray(headerActionLabels, combinedSeed, 0);
 
-    // Sort label
     document.getElementById("sort-label").innerText = pickFromArray(sortLabels, combinedSeed, 0);
 
-    // Sidebar heading
     var sidebarH3 = pickFromArray(sidebarTitles, combinedSeed, 2)
         .replace("[QUERY]", displayName)
         .replace("[DOMAIN]", fullName);
     document.getElementById("sidebar-heading").innerText = sidebarH3;
 
-    // Footer text + status (evergreen, tanpa tanggal)
     document.getElementById("footer-text").innerText =
         pickFromArray(footerTexts, combinedSeed, 3).replace("[DOMAIN]", fullName);
     document.getElementById("footer-status").innerText =
@@ -872,7 +991,7 @@ layout: null
 
     /*
      * ============================================
-     * STEP 12: KEYWORD POOL UNTUK INTERNAL LINK
+     * STEP 12: KEYWORD POOL
      * ============================================
      */
     var platforms = shuffleArray([
@@ -1016,21 +1135,8 @@ layout: null
     }
     document.getElementById("footer-links").innerHTML = footerLinksHtml;
 
-    /*
-     * ============================================
-     * STEP 16: CANONICAL FINAL
-     * ============================================
-     */
-    var canonicalLink = document.getElementById("dynamic-canonical");
-    if (canonicalLink) {
-        canonicalLink.setAttribute("href", location.href);
-    }
-
 })();
 </script>
 
-{% include footer.html %}
-
-</div>
 </body>
 </html>
