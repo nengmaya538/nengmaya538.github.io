@@ -10,94 +10,57 @@ layout: null
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     
-    <!-- ============================================ -->
-    <!-- CANONICAL AWAL (FALLBACK SEBELUM JS JALAN)   -->
-    <!-- ============================================ -->
+    <!-- CANONICAL FALLBACK -->
     <link id="dynamic-canonical" rel="canonical" href="">
     
-    <!-- ============================================ -->
-    <!-- FAVICON & MANIFEST                           -->
-    <!-- ============================================ -->
+    <!-- FAVICON & MANIFEST -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#317EFB">
+    <meta name="theme-color" content="#1a1a1b">
     
-    <!-- ============================================ -->
-    <!-- TITLE AWAL (FALLBACK, AKAN DIUPDATE OLEH JS) -->
-    <!-- ============================================ -->
+    <!-- TITLE & META FALLBACK -->
     <title id="dynamic-title">Loading...</title>
     <meta id="dynamic-description" name="description" content="">
-    
-    <!-- ============================================ -->
-    <!-- META AUTHOR (FALLBACK)                       -->
-    <!-- ============================================ -->
     <meta id="dynamic-author" name="author" content="">
 
     <!-- ============================================ -->
-    <!-- SEO OTOMATIS (JALAN SEBELUM KONTEN DIRENDER) -->
+    <!-- SEO OTOMATIS - JALAN SEBELUM RENDER          -->
     <!-- ============================================ -->
     <script>
     /*
-     * ============================================
-     * SEO OTOMATIS - JALAN SEBELUM HALAMAN DIRENDER
-     * ============================================
-     * Script ini diletakkan di <head> supaya crawler
-     * bisa membaca metadata meskipun tidak menjalankan
-     * JavaScript sepenuhnya.
-     *
-     * Mencakup:
-     * - Title otomatis dari domain/query
-     * - Meta description
-     * - Meta author dari domain
-     * - Canonical URL sesuai halaman saat ini
-     * - Schema.org WebSite
+     * SEO script ini membaca domain dan query,
+     * lalu mengisi title, meta description, meta author,
+     * canonical, dan schema.org sebelum halaman dirender.
+     * Crawler yang tidak menjalankan JS tetap bisa
+     * membaca metadata awal.
      */
     (function() {
         var hostname = location.hostname;
-        var pathname = location.pathname;
         var urlParams = new URLSearchParams(location.search);
         var query = urlParams.get("q");
 
-        // Helper: ambil subdomain/domain utama
-        var domainPart = hostname.split(".")[0];
-        if (domainPart.toLowerCase() === "www") {
-            domainPart = hostname.split(".")[1] || "";
+        // Ambil nama domain utuh (tanpa TLD)
+        var fullName = hostname.split(".")[0];
+        if (fullName.toLowerCase() === "www") {
+            fullName = hostname.split(".")[1] || fullName;
         }
 
-        // Helper: format teks (capitalize, ganti - dan _ jadi spasi)
-        var formatText = function(str) {
-            return str
-                .replace(/[-_]/g, " ")
-                .replace(/\+/g, " ")
-                .replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-        };
+        // Format nama domain untuk display
+        var displayDomain = fullName;
 
-        var domainDisplay = formatText(domainPart.trim());
-
-        // ============================================
-        // TITLE & META - SESUAI KONDISI QUERY/HOMEPAGE
-        // ============================================
+        // Title & description berdasarkan kondisi
         var titleText = "";
         var descText = "";
 
         if (query) {
-            /*
-             * KONDISI DENGAN QUERY
-             * Title: "[Query] on [Domain]"
-             */
             query = decodeURIComponent(query.replace(/\+/g, " "));
-            var cleanQuery = formatText(query);
-            titleText = cleanQuery + " on " + domainDisplay;
-            descText = cleanQuery + " leaked content archive on " + domainDisplay + ". Latest leaks, viral updates, and exclusive content.";
+            titleText = query + " on " + displayDomain;
+            descText = query + " - Complete archive on " + displayDomain + ". Latest updates and exclusive content.";
         } else {
-            /*
-             * KONDISI HOMEPAGE (TANPA QUERY)
-             * Title: "[Domain]"
-             */
-            titleText = domainDisplay;
-            descText = domainDisplay + " - The biggest leaked content archive. TikTok leaks, OnlyFans leaks, and viral content archives.";
+            titleText = displayDomain;
+            descText = displayDomain + " - Latest updates and exclusive content.";
         }
 
         // Set title
@@ -111,23 +74,19 @@ layout: null
 
         // Set meta author
         var metaAuthor = document.getElementById("dynamic-author");
-        if (metaAuthor) metaAuthor.setAttribute("content", domainDisplay);
+        if (metaAuthor) metaAuthor.setAttribute("content", displayDomain);
 
-        // ============================================
-        // CANONICAL
-        // ============================================
+        // Set canonical
         var canonicalLink = document.getElementById("dynamic-canonical");
         if (canonicalLink) {
             canonicalLink.setAttribute("href", location.href);
         }
 
-        // ============================================
-        // SCHEMA.ORG WebSite
-        // ============================================
+        // Schema.org WebSite
         var schemaData = {
             "@context": "https://schema.org",
             "@type": "WebSite",
-            "name": domainDisplay,
+            "name": displayDomain,
             "url": location.origin
         };
         var schemaScript = document.createElement("script");
@@ -138,10 +97,13 @@ layout: null
     </script>
 
     <!-- ============================================ -->
-    <!-- GLOBAL STYLE - DIPAKAI UNTUK KEDUA KONDISI   -->
+    <!-- GLOBAL STYLE - VARIABEL DASAR               -->
     <!-- ============================================ -->
     <style>
-        /* ========== CSS RESET & VARIABLES ========== */
+        /*
+         * Variabel dasar. Akan dioverride oleh style
+         * yang digenerate JavaScript berdasarkan hash domain.
+         */
         :root {
             --bg-body: #1a1a1b;
             --bg-card: #1e1e1f;
@@ -152,17 +114,23 @@ layout: null
             --text-muted: #5a5b5c;
             --accent: #d93900;
             --accent-hover: #ff4500;
-            --flair-leak-bg: #1a3e4c;
-            --flair-leak-text: #9efff0;
-            --flair-exclusive-bg: #4c1a2e;
-            --flair-exclusive-text: #ff9ec4;
-            --flair-mega-bg: #1a4c2e;
-            --flair-mega-text: #9effb0;
-            --flair-new-bg: #4c3a1a;
-            --flair-new-text: #ffd700;
-            --flair-working-bg: #1a3a4c;
-            --flair-working-text: #87ceeb;
-            --upvote-color: #ff4500;
+            --flair-bg-1: #1a3e4c;
+            --flair-text-1: #9efff0;
+            --flair-bg-2: #4c1a2e;
+            --flair-text-2: #ff9ec4;
+            --flair-bg-3: #1a4c2e;
+            --flair-text-3: #9effb0;
+            --flair-bg-4: #4c3a1a;
+            --flair-text-4: #ffd700;
+            --flair-bg-5: #1a3a4c;
+            --flair-text-5: #87ceeb;
+            --card-radius: 8px;
+            --card-padding: 0.75rem;
+            --card-gap: 0.75rem;
+            --font-heading: 1.5rem;
+            --font-card-title: 1rem;
+            --font-meta: 0.7rem;
+            --font-small: 0.6rem;
         }
 
         * {
@@ -184,48 +152,19 @@ layout: null
             padding: 1rem;
         }
 
-        /* ========== HEADER SUBREDDIT STYLE ========== */
-        .reddit-header {
-            background: var(--bg-card);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            border: 1px solid var(--border-color);
-        }
-
-        .subreddit-info h2 {
-            font-size: 1.2rem;
+        /* ========== H1 (IDENTITAS HALAMAN) ========== */
+        .page-h1 {
+            font-size: var(--font-heading);
             font-weight: 600;
-        }
-
-        .subreddit-info p {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-        }
-
-        .join-btn {
-            background: var(--accent);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #fff;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .join-btn:hover {
-            background: var(--accent-hover);
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
         }
 
         /* ========== BREADCRUMB ========== */
         .breadcrumb {
-            font-size: 0.7rem;
+            font-size: var(--font-meta);
             color: var(--text-secondary);
             margin-bottom: 1rem;
         }
@@ -241,6 +180,47 @@ layout: null
 
         .breadcrumb span:last-child {
             color: var(--text-primary);
+        }
+
+        /* ========== HEADER CARD ========== */
+        .header-card {
+            background: var(--bg-card);
+            border-radius: var(--card-radius);
+            padding: var(--card-padding);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .header-info h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .header-info p {
+            font-size: var(--font-meta);
+            color: var(--text-secondary);
+        }
+
+        .header-action {
+            background: var(--accent);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: var(--font-meta);
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .header-action:hover {
+            background: var(--accent-hover);
         }
 
         /* ========== SORT BAR ========== */
@@ -267,13 +247,36 @@ layout: null
             color: var(--text-primary);
         }
 
-        /* ========== POST CARD (QUERY PAGE) ========== */
+        /* ========== TWO COLUMN LAYOUT ========== */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 1rem;
+        }
+
+        /* ========== POST FEED ========== */
+        .post-feed {
+            display: flex;
+            flex-direction: column;
+            gap: var(--card-gap);
+        }
+
+        .post-feed.grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .post-feed.gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* ========== POST CARD ========== */
         .post-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 0.75rem;
-            padding: 0.75rem;
+            border-radius: var(--card-radius);
+            padding: var(--card-padding);
             transition: all 0.1s;
         }
 
@@ -281,51 +284,51 @@ layout: null
             border-color: var(--border-hover);
         }
 
-        .post-header {
+        .post-card-header {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.7rem;
+            font-size: var(--font-meta);
             color: var(--text-secondary);
             margin-bottom: 0.5rem;
             flex-wrap: wrap;
         }
 
-        .subreddit {
+        .post-card-community {
             color: var(--accent);
             font-weight: 600;
         }
 
-        .post-author {
+        .post-card-author {
             font-weight: 500;
         }
 
-        .post-time {
-            font-size: 0.65rem;
+        .post-card-time {
+            font-size: var(--font-small);
         }
 
-        .post-title {
-            font-size: 1rem;
+        .post-card-title {
+            font-size: var(--font-card-title);
             font-weight: 500;
             margin-bottom: 0.5rem;
             color: var(--text-primary);
         }
 
-        .post-title a {
+        .post-card-title a {
             color: var(--text-primary);
             text-decoration: none;
             display: block;
         }
 
-        .post-title a:hover {
+        .post-card-title a:hover {
             text-decoration: underline;
             color: var(--accent-hover);
         }
 
-        .post-meta {
+        .post-card-meta {
             display: flex;
             gap: 0.5rem;
-            font-size: 0.65rem;
+            font-size: var(--font-small);
             color: var(--text-secondary);
             margin-bottom: 0.5rem;
             flex-wrap: wrap;
@@ -336,16 +339,16 @@ layout: null
             display: inline-block;
             padding: 0.15rem 0.5rem;
             border-radius: 12px;
-            font-size: 0.6rem;
+            font-size: var(--font-small);
             font-weight: 600;
             text-transform: uppercase;
         }
 
-        .flair-leak { background: var(--flair-leak-bg); color: var(--flair-leak-text); }
-        .flair-exclusive { background: var(--flair-exclusive-bg); color: var(--flair-exclusive-text); }
-        .flair-mega { background: var(--flair-mega-bg); color: var(--flair-mega-text); }
-        .flair-new { background: var(--flair-new-bg); color: var(--flair-new-text); }
-        .flair-working { background: var(--flair-working-bg); color: var(--flair-working-text); }
+        .flair-1 { background: var(--flair-bg-1); color: var(--flair-text-1); }
+        .flair-2 { background: var(--flair-bg-2); color: var(--flair-text-2); }
+        .flair-3 { background: var(--flair-bg-3); color: var(--flair-text-3); }
+        .flair-4 { background: var(--flair-bg-4); color: var(--flair-text-4); }
+        .flair-5 { background: var(--flair-bg-5); color: var(--flair-text-5); }
 
         /* ========== VOTE SECTION ========== */
         .vote-section {
@@ -357,45 +360,44 @@ layout: null
             color: var(--text-secondary);
         }
 
-        .vote-arrow {
+        .vote-btn {
             font-size: 1rem;
             cursor: pointer;
             transition: color 0.2s;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0;
         }
 
-        .vote-arrow:hover { color: var(--upvote-color); }
+        .vote-btn:hover {
+            color: var(--accent);
+        }
 
         /* ========== ACTION BUTTONS ========== */
-        .action-buttons {
+        .action-row {
             display: flex;
             gap: 0.75rem;
             margin-top: 0.5rem;
-            font-size: 0.65rem;
+            font-size: var(--font-small);
         }
 
-        .action-btn {
+        .action-link {
             color: var(--text-secondary);
             text-decoration: none;
         }
 
-        .action-btn:hover {
+        .action-link:hover {
             color: var(--text-primary);
             text-decoration: underline;
-        }
-
-        /* ========== TWO COLUMN LAYOUT (QUERY PAGE) ========== */
-        .two-col {
-            display: grid;
-            grid-template-columns: 1fr 280px;
-            gap: 1rem;
         }
 
         /* ========== SIDEBAR ========== */
         .sidebar-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.75rem;
+            border-radius: var(--card-radius);
+            padding: var(--card-padding);
             margin-bottom: 1rem;
             position: sticky;
             top: 1rem;
@@ -410,147 +412,31 @@ layout: null
             color: var(--text-primary);
         }
 
-        .trending-topic {
+        .sidebar-item {
             padding: 0.4rem 0;
             border-bottom: 1px solid #2a2a2b;
-            font-size: 0.7rem;
+            font-size: var(--font-meta);
         }
 
-        .trending-topic a {
+        .sidebar-item a {
             color: var(--text-primary);
             text-decoration: none;
             display: block;
             transition: color 0.2s;
         }
 
-        .trending-topic a:hover {
+        .sidebar-item a:hover {
             color: var(--accent-hover);
             text-decoration: underline;
         }
 
-        .trending-number {
+        .sidebar-number {
             color: var(--accent);
             font-weight: 700;
             margin-right: 0.25rem;
         }
 
-        /* ============================================ */
-        /* HOMEPAGE POST ITEM (TANPA QUERY)             */
-        /* ============================================ */
-        /*
-         * Style untuk post-item di homepage.
-         * Menggunakan variabel global yang sama supaya
-         * konsisten dengan halaman query.
-         */
-        .post-item {
-            background: var(--bg-card);
-            padding: 12px;
-            margin-bottom: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            transition: all 0.15s ease;
-        }
-
-        .post-item:hover {
-            border-color: var(--border-hover);
-        }
-
-        .post-item h2 {
-            font-size: 16px;
-            margin-bottom: 6px;
-        }
-
-        .post-item h2 a {
-            text-decoration: none;
-            color: var(--text-primary);
-        }
-
-        .post-item h2 a:hover {
-            text-decoration: underline;
-            color: var(--accent-hover);
-        }
-
-        .excerpt {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-
-        .meta {
-            font-size: 11px;
-        }
-
-        .meta a {
-            display: inline-block;
-            padding: 2px 6px;
-            margin: 2px 6px 2px 0;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .meta .cat {
-            background: #1a3e4c;
-            color: #9efff0;
-            border: 1px solid #2a5e6c;
-        }
-
-        .meta .label {
-            background: #1a4c2e;
-            color: #9effb0;
-            border: 1px solid #2a6e3e;
-        }
-
-        .meta .tag {
-            background: #3e2e1a;
-            color: #ffd79e;
-            border: 1px solid #5e4e2a;
-        }
-
-        .meta a:hover { opacity: 0.85; }
-
-        /* ============================================ */
-        /* HOMEPAGE HEADER LABEL                        */
-        /* ============================================ */
-        .homepage-section-label {
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
-
-        /* ============================================ */
-        /* PAGINATION (HOMEPAGE)                        */
-        /* ============================================ */
-        .pagination {
-            margin-top: 16px;
-            text-align: center;
-            font-size: 13px;
-        }
-
-        .pagination a,
-        .pagination span {
-            display: inline-block;
-            padding: 5px 9px;
-            margin: 3px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            text-decoration: none;
-            color: var(--text-primary);
-            background: var(--bg-card);
-        }
-
-        .pagination .current {
-            background: var(--accent);
-            color: #fff;
-            border-color: var(--accent);
-        }
-
-        .pagination a:hover {
-            background: var(--border-color);
-        }
-
+        /* ========== FOOTER ========== */
         hr {
             border: none;
             border-top: 1px solid var(--border-color);
@@ -558,7 +444,7 @@ layout: null
         }
 
         .footer {
-            font-size: 0.6rem;
+            font-size: var(--font-small);
             color: var(--text-muted);
             text-align: center;
             margin-top: 2rem;
@@ -575,166 +461,108 @@ layout: null
         .footer-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.6rem;
+            font-size: var(--font-small);
         }
 
         .footer-links a:hover {
             text-decoration: underline;
         }
 
-        /* ============================================ */
-        /* CONDITIONAL DISPLAY                         */
-        /* ============================================ */
-        .default-forum { display: block; }
-        .query-forum { display: none; }
-
+        /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
             .two-col { grid-template-columns: 1fr; }
             .forum-container { padding: 0.5rem; }
             .sidebar-card { position: static; }
+            .post-feed.grid { grid-template-columns: 1fr; }
+            .post-feed.gallery { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .post-feed.gallery { grid-template-columns: 1fr; }
         }
     </style>
 
 {% include head.html %}
 {% include verif.html %}
-  </head>
+</head>
 <body>
-<div loading="lazy">
 
-{% include /ads/gobloggugel/sosmed.html %}
+<div loading="lazy">
 
 <div class="forum-container">
 
     <!-- ============================================ -->
-    <!-- KONDISI 1: HOMEPAGE (TANPA QUERY)            -->
+    <!-- HALAMAN QUERY (HANYA MUNCUL JIKA ADA ?q=)    -->
     <!-- ============================================ -->
-    <!--
-     * Bagian ini hanya muncul saat TIDAK ADA parameter ?q=
-     * Konten diisi oleh looping Jekyll dari site.categories.main
-     * H1 sudah di-handle oleh include header1.html
-     * Style menggunakan variabel global yang sama
-    -->
-    <div id="default-forum" class="default-forum">
+    <div id="query-page">
 
-        <!-- Header navigasi dari include eksternal -->
-        {% include header1.html %}
+        <!-- H1 - IDENTITAS HALAMAN -->
+        <h1 id="page-h1" class="page-h1"></h1>
 
-        <nav>
-            {% include /kw/01.html %}
-        </nav>
-
-        <main>
-            <article>
-                <!-- Label section -->
-                <div class="homepage-section-label">Latest Posts</div>
-
-                <!--
-                 * Looping post dari kategori "main" di Jekyll
-                 * Tiap post punya: title, url, description, content
-                 * Style pakai .post-item yang sudah disesuaikan dengan global variabel
-                -->
-                {% for post in site.categories.main %}
-                <div class="post-item">
-                    <h2>
-                        <a href="{{ post.url }}">
-                            {{ post.title }}
-                        </a>
-                    </h2>
-                    <div class="excerpt">
-                        {{ post.description }}
-                    </div>
-                    <!--
-                     * Ambil konten sebelum tag <p> pertama
-                     * Berguna untuk menampilkan ringkasan/preview
-                    -->
-                    {% assign before_svg = post.content | split: "<p>" | first %}
-                    <div class="excerpt spo">
-                        {{ before_svg }}
-                    </div>
-                </div>
-                {% endfor %}
-            </article>
-        </main>
-
-    </div>
-
-    <!-- ============================================ -->
-    <!-- KONDISI 2: HALAMAN QUERY (DENGAN ?q=)        -->
-    <!-- ============================================ -->
-    <!--
-     * Bagian ini hanya muncul saat ADA parameter ?q=
-     * H1 muncul paling atas sebagai identitas halaman
-     * Semua konten digenerate dinamis oleh JavaScript
-     * Internal link semua mengarah ke /?q=... lainnya
-    -->
-    <div id="query-forum" class="query-forum">
-        <!-- H1 PALING ATAS - Identitas halaman query -->
-        <h1 id="dynamic-h1" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary); padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color);"></h1>
-
+        <!-- BREADCRUMB -->
         <div class="breadcrumb">
-            <a href="/">Home</a> / <a href="/">r/LeakedHub</a> / search: <span id="bc-name"></span>
+            <a href="/">Home</a> / <span id="breadcrumb-domain"></span> / search: <span id="breadcrumb-query"></span>
         </div>
 
-        <div class="reddit-header">
-            <div class="subreddit-info">
-                <h2 id="dynamic-h2">r/LeakedHub - search results</h2>
-                <p id="result-count">Showing leaked content for <span id="search-term"></span></p>
+        <!-- HEADER CARD -->
+        <div class="header-card">
+            <div class="header-info">
+                <h2 id="header-title"></h2>
+                <p id="header-subtitle"></p>
             </div>
-            <div class="join-btn">+ JOIN</div>
+            <span class="header-action" id="header-action-label"></span>
         </div>
 
+        <!-- SORT BAR -->
         <div class="sort-bar">
-            <span class="sort-active" id="sort-active-label">Relevance</span>
+            <span class="sort-active" id="sort-label"></span>
             <span class="sort-inactive">Newest</span>
             <span class="sort-inactive">Most upvoted</span>
         </div>
 
+        <!-- MAIN + SIDEBAR -->
         <div class="two-col">
-            <div>
-                <div id="search-results"></div>
-            </div>
+            <div class="post-feed" id="post-feed"></div>
             <div>
                 <div class="sidebar-card">
-                    <div class="sidebar-title"><h3 id="dynamic-h3-sidebar" style="font-size: 0.75rem; font-weight: 600; margin: 0;">SIMILAR LEAKS</h3></div>
-                    <div id="similar-leaks-sidebar"></div>
+                    <div class="sidebar-title"><h3 id="sidebar-heading" style="font-size: 0.75rem; font-weight: 600; margin: 0;"></h3></div>
+                    <div id="sidebar-links"></div>
                 </div>
             </div>
         </div>
 
+        <!-- FOOTER -->
         <hr />
         <div class="footer">
             <div class="footer-links" id="footer-links"></div>
-            <span id="footer-text">r/LeakedHub - Independent leak archive</span> - <span id="update-date"></span>
+            <span id="footer-text"></span> - <span id="footer-date"></span>
         </div>
+
     </div>
 
 </div>
 
 <!-- ============================================ -->
-<!-- JAVASCRIPT UNTUK KEDUA KONDISI               -->
+<!-- JAVASCRIPT: DNA FULL DOMAIN NAME             -->
 <!-- ============================================ -->
 <script>
-/*
- * ============================================
- * SCRIPT INI MENANGANI:
- * 1. CANONICAL UPDATE (FALLBACK JIKA SEO SCRIPT DI ATAS BELUM JALAN)
- * 2. DETEKSI QUERY VS HOMEPAGE
- * 3. GENERATE KONTEN DINAMIS UNTUK HALAMAN QUERY
- * ============================================
- */
 (function() {
+
     /*
-     * CANONICAL FINAL
-     * Dipanggil lagi untuk memastikan canonical selalu sesuai
-     * meskipun SEO script di <head> sudah menjalankannya.
+     * ============================================
+     * STEP 1: AMBIL FULL DOMAIN NAME SEBAGAI DNA
+     * ============================================
+     * Nama domain utuh (tanpa TLD) menjadi identitas.
+     * Semua turunan berasal dari hash nama ini.
      */
-    var currentUrl = window.location.href;
-    var canonicalLink = document.getElementById("dynamic-canonical");
-    if (canonicalLink) {
-        canonicalLink.setAttribute("href", currentUrl);
+
+    var hostname = window.location.hostname;
+    var fullName = hostname.split(".")[0];
+    if (fullName.toLowerCase() === "www") {
+        fullName = hostname.split(".")[1] || fullName;
     }
 
-    // ========== HASH FUNCTION (DETERMINISTIK) ==========
+    // Hash deterministik dari full domain name
     function hashString(str) {
         var hash = 0;
         for (var i = 0; i < str.length; i++) {
@@ -744,7 +572,45 @@ layout: null
         return Math.abs(hash);
     }
 
-    // ========== SEEDED RANDOM ==========
+    var domainHash = hashString(fullName);
+
+    // Prefix 3 huruf untuk CSS class unik
+    var prefix = fullName.substring(0, 3).toLowerCase();
+
+    /*
+     * ============================================
+     * STEP 2: DETEKSI QUERY
+     * ============================================
+     * Jika tidak ada query, halaman ini disembunyikan
+     * (homepage di-handle oleh Jekyll).
+     */
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var query = urlParams.get("q");
+
+    var queryPage = document.getElementById("query-page");
+
+    if (!query) {
+        // Tidak ada query, sembunyikan halaman query
+        if (queryPage) queryPage.style.display = "none";
+        return;
+    }
+
+    // Ada query, tampilkan halaman query
+    if (queryPage) queryPage.style.display = "block";
+
+    query = decodeURIComponent(query.replace(/\+/g, " "));
+
+    /*
+     * ============================================
+     * STEP 3: SEEDED RANDOM (DETERMINISTIK)
+     * ============================================
+     * Gabungan domain + query sebagai seed,
+     * supaya domain A + query X != domain B + query X.
+     */
+
+    var combinedSeed = hashString(fullName + "|||" + query);
+
     function SeededRandom(seed) {
         this.seed = seed;
         this.next = function() {
@@ -753,7 +619,10 @@ layout: null
         };
     }
 
-    // ========== SHUFFLE DENGAN SEED ==========
+    function pickFromArray(arr, seed, index) {
+        return arr[(seed + index) % arr.length];
+    }
+
     function shuffleArray(arr, seed) {
         var shuffled = arr.slice();
         var rng = new SeededRandom(seed);
@@ -766,56 +635,194 @@ layout: null
         return shuffled;
     }
 
-    function pickFromArray(arr, seed, index) {
-        return arr[(seed + index) % arr.length];
+    /*
+     * ============================================
+     * STEP 4: GENERATE WARNA & STYLE DARI HASH
+     * ============================================
+     * Hue: 0-360 dari domainHash
+     * Layout: feed/list, grid, gallery (3 opsi)
+     * Style: tema gelap dengan aksen berbeda
+     */
+
+    var hue = domainHash % 360;
+
+    // Layout: 0=feed/list, 1=grid, 2=gallery
+    var layoutIndex = domainHash % 3;
+    var layoutClasses = ["feed-list", "grid", "gallery"];
+    var layoutClass = layoutClasses[layoutIndex];
+
+    // Generate warna dari hue (HSL)
+    function hslToHex(h, s, l) {
+        h = h % 360;
+        s = s / 100;
+        l = l / 100;
+        var c = (1 - Math.abs(2 * l - 1)) * s;
+        var x = c * (1 - Math.abs((h / 60) % 2 - 1));
+        var m = l - c / 2;
+        var r, g, b;
+        if (h < 60) { r = c; g = x; b = 0; }
+        else if (h < 120) { r = x; g = c; b = 0; }
+        else if (h < 180) { r = 0; g = c; b = x; }
+        else if (h < 240) { r = 0; g = x; b = c; }
+        else if (h < 300) { r = x; g = 0; b = c; }
+        else { r = c; g = 0; b = x; }
+        r = Math.round((r + m) * 255);
+        g = Math.round((g + m) * 255);
+        b = Math.round((b + m) * 255);
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
     }
 
-    // ========== AMBIL DOMAIN & QUERY ==========
-    var hostname = window.location.hostname;
-    var domainPart = hostname.split(".")[0];
-    var displayDomain = domainPart.charAt(0).toUpperCase() + domainPart.slice(1).toLowerCase();
-    
-    var urlParams = new URLSearchParams(window.location.search);
-    var query = urlParams.get("q");
+    var accentColor = hslToHex(hue, 70, 50);
+    var accentHover = hslToHex(hue, 80, 60);
+    var flairBg1 = hslToHex(hue, 30, 15);
+    var flairText1 = hslToHex(hue, 60, 75);
+    var flairBg2 = hslToHex((hue + 60) % 360, 30, 15);
+    var flairText2 = hslToHex((hue + 60) % 360, 60, 75);
+    var flairBg3 = hslToHex((hue + 120) % 360, 30, 15);
+    var flairText3 = hslToHex((hue + 120) % 360, 60, 75);
+    var flairBg4 = hslToHex((hue + 180) % 360, 30, 15);
+    var flairText4 = hslToHex((hue + 180) % 360, 60, 75);
+    var flairBg5 = hslToHex((hue + 240) % 360, 30, 15);
+    var flairText5 = hslToHex((hue + 240) % 360, 60, 75);
 
-    var defaultDiv = document.getElementById("default-forum");
-    var queryDiv = document.getElementById("query-forum");
+    // Terapkan style via CSS custom properties
+    var styleEl = document.createElement("style");
+    styleEl.textContent = ":root {" +
+        "--accent: " + accentColor + ";" +
+        "--accent-hover: " + accentHover + ";" +
+        "--flair-bg-1: " + flairBg1 + ";" +
+        "--flair-text-1: " + flairText1 + ";" +
+        "--flair-bg-2: " + flairBg2 + ";" +
+        "--flair-text-2: " + flairText2 + ";" +
+        "--flair-bg-3: " + flairBg3 + ";" +
+        "--flair-text-3: " + flairText3 + ";" +
+        "--flair-bg-4: " + flairBg4 + ";" +
+        "--flair-text-4: " + flairText4 + ";" +
+        "--flair-bg-5: " + flairBg5 + ";" +
+        "--flair-text-5: " + flairText5 + ";" +
+        "}";
+    document.head.appendChild(styleEl);
 
     /*
-     * JIKA TIDAK ADA QUERY => TAMPILKAN HOMEPAGE
-     * queryDiv disembunyikan, defaultDiv (homepage) ditampilkan.
-     * Tidak ada generate JavaScript karena konten dari Jekyll.
+     * ============================================
+     * STEP 5: GENERATE FLAIR POOL
+     * ============================================
+     * Flair dibuat dari huruf-huruf domain name,
+     * sehingga tiap domain punya flair unik.
      */
-    if (!query) {
-        if (defaultDiv) defaultDiv.style.display = "block";
-        if (queryDiv) queryDiv.style.display = "none";
-        return;
+
+    function generateFlairPool(name, count) {
+        var chars = name.toUpperCase().replace(/[^A-Z]/g, "");
+        if (chars.length < 3) chars = name.toUpperCase() + "XYZ";
+        
+        var pool = [];
+        var rng = new SeededRandom(hashString(name + "_flair"));
+        for (var i = 0; i < count; i++) {
+            var flair = "";
+            var len = 3 + Math.floor(rng.next() * 6); // 3-8 karakter
+            for (var j = 0; j < len; j++) {
+                flair += chars.charAt(Math.floor(rng.next() * chars.length));
+            }
+            pool.push(flair);
+        }
+        return pool;
     }
 
-    /*
-     * JIKA ADA QUERY => TAMPILKAN HALAMAN QUERY
-     * defaultDiv disembunyikan, queryDiv ditampilkan.
-     * Semua konten digenerate oleh JavaScript di bawah.
-     */
-    if (defaultDiv) defaultDiv.style.display = "none";
-    if (queryDiv) queryDiv.style.display = "block";
+    var flairPool = generateFlairPool(fullName, 20);
 
-    // ========== SEED GABUNGAN DOMAIN + QUERY ==========
-    var combinedSeed = hashString(hostname + "|||" + query.toLowerCase());
-
-    query = decodeURIComponent(query.replace(/\+/g, " "));
-    
     /*
-     * Bersihkan query dari kata-kata umum (stopwords)
-     * supaya mendapatkan nama inti (baseName).
+     * ============================================
+     * STEP 6: POOL TEMPLATE & TERMINOLOGI
+     * ============================================
+     * Semua pool di-shuffle dengan seed dari domainHash,
+     * sehingga tiap domain punya preferensi berbeda.
      */
+
+    var titleTemplates = shuffleArray([
+        "[QUERY] Archive on [DOMAIN]",
+        "[QUERY] - Full Collection | [DOMAIN]",
+        "[DOMAIN] presents: [QUERY]",
+        "[QUERY] - Latest Updates on [DOMAIN]",
+        "Access [QUERY] on [DOMAIN]",
+        "[DOMAIN] - [QUERY] Complete Archive",
+        "[QUERY] Collection - [DOMAIN]",
+        "Browse [QUERY] on [DOMAIN]"
+    ], domainHash);
+
+    var h2Templates = shuffleArray([
+        "[DOMAIN] - [QUERY] Archive",
+        "Search Results: [QUERY] - [DOMAIN]",
+        "[QUERY] - [DOMAIN] Collection",
+        "[DOMAIN] - Latest [QUERY] Content",
+        "[QUERY] Updates - [DOMAIN]"
+    ], domainHash);
+
+    var sidebarTitles = shuffleArray([
+        "More on [DOMAIN]",
+        "Related Content",
+        "You May Also Like",
+        "Trending on [DOMAIN]",
+        "Popular Picks",
+        "[DOMAIN] Recommends"
+    ], domainHash);
+
+    var footerTexts = shuffleArray([
+        "[DOMAIN] - Independent archive",
+        "[DOMAIN] - Community driven",
+        "[DOMAIN] - Live updates",
+        "[DOMAIN] - Updated regularly",
+        "[DOMAIN] - Verified source"
+    ], domainHash);
+
+    var sortLabels = shuffleArray([
+        "Relevance",
+        "Trending",
+        "Hot",
+        "Top Rated",
+        "Most Viewed"
+    ], domainHash);
+
+    var headerActionLabels = shuffleArray([
+        "JOIN",
+        "FOLLOW",
+        "SUBSCRIBE",
+        "ACCESS",
+        "ENTER",
+        "BROWSE"
+    ], domainHash);
+
+    var timePhrases = shuffleArray([
+        "just now", "a few minutes ago", "recently",
+        "earlier today", "today", "not long ago",
+        "fresh", "new", "latest", "just added",
+        "updated", "active now"
+    ], domainHash);
+
+    var authorPrefixes = shuffleArray([
+        "user", "member", "contributor", "curator",
+        "collector", "source", "uploader"
+    ], domainHash);
+
+    var actionVerbSets = shuffleArray([
+        ["comments", "Share", "Save"],
+        ["replies", "Share", "Bookmark"],
+        ["discussions", "Copy link", "Save"],
+        ["responses", "Share", "Pin"]
+    ], domainHash);
+
+    /*
+     * ============================================
+     * STEP 7: EXTRACT DISPLAY NAME DARI QUERY
+     * ============================================
+     */
+
     var removeTerms = [
-        "leaked", "leak", "leaks", "archive", "collection", "dump", "vault",
-        "pack", "bundle", "gallery", "content", "media", "videos", "photos",
-        "pics", "onlyfans", "tiktok", "instagram", "twitter", "telegram",
-        "discord", "trending", "viral", "exclusive", "private", "premium",
-        "full", "complete", "hot", "new", "watch", "view", "access",
-        "reddit", "forum", "thread"
+        "leaked", "leak", "leaks", "archive", "collection", "dump",
+        "vault", "pack", "bundle", "gallery", "content", "media",
+        "videos", "photos", "pics", "onlyfans", "tiktok", "instagram",
+        "twitter", "telegram", "discord", "trending", "viral",
+        "exclusive", "private", "premium", "full", "complete",
+        "hot", "new", "watch", "view", "access", "reddit", "forum", "thread"
     ];
     var baseRaw = query.toLowerCase();
     removeTerms.forEach(function(term) {
@@ -825,7 +832,7 @@ layout: null
     baseRaw = baseRaw.replace(/\s+/g, " ").trim();
     var baseName = baseRaw || query;
     if (baseName.length < 2) baseName = query;
-    
+
     function formatName(str) {
         return str.split(" ").map(function(w) {
             return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
@@ -834,244 +841,216 @@ layout: null
     var displayName = formatName(baseName);
     var displayLower = displayName.toLowerCase();
 
-    // ========== POOL TEMPLATE UNTUK VARIASI ==========
-    var titleTemplates = [
-        "[QUERY] Leaked Content Archive on [DOMAIN]",
-        "[QUERY] - Exclusive Leaks on [DOMAIN]",
-        "[DOMAIN] - [QUERY] Leaked Media Collection",
-        "Leaked: [QUERY] | [DOMAIN] Archive",
-        "[QUERY] Leaks - Watch on [DOMAIN]",
-        "[DOMAIN] - [QUERY] Private Leaks",
-        "[QUERY] Leaked Videos and Photos - [DOMAIN]",
-        "Access [QUERY] Leaks on [DOMAIN]"
-    ];
+    /*
+     * ============================================
+     * STEP 8: UPDATE HALAMAN
+     * ============================================
+     */
 
-    var h2Templates = [
-        "r/LeakedHub - [QUERY] Leaks Archive",
-        "[QUERY] - Latest Leaked Content",
-        "[QUERY] Leaks - [DOMAIN] Exclusive",
-        "Search: [QUERY] Leaks - r/LeakedHub",
-        "[QUERY] - Complete Leak Collection",
-        "r/LeakedHub - [QUERY] Full Archive"
-    ];
+    // H1
+    var h1Text = pickFromArray(titleTemplates, combinedSeed, 0)
+        .replace("[QUERY]", displayName)
+        .replace("[DOMAIN]", fullName);
+    document.getElementById("page-h1").innerText = h1Text;
 
-    var h3Templates = [
-        "Similar Leaks Like [QUERY]",
-        "More [QUERY] Leaks",
-        "Trending Near [QUERY]",
-        "Related: [QUERY] Archives",
-        "[QUERY] - You May Also Like"
-    ];
+    // Breadcrumb
+    document.getElementById("breadcrumb-domain").innerText = fullName;
+    document.getElementById("breadcrumb-query").innerText = displayName;
 
-    var footerTemplates = [
-        "r/LeakedHub - Independent leak archive",
-        "r/LeakedHub - Community driven leaks",
-        "r/LeakedHub - Live leak updates",
-        "r/LeakedHub - Updated leak database",
-        "r/LeakedHub - Verified leak source"
-    ];
+    // Header card
+    var h2Text = pickFromArray(h2Templates, combinedSeed, 1)
+        .replace("[QUERY]", displayName)
+        .replace("[DOMAIN]", fullName);
+    document.getElementById("header-title").innerText = h2Text;
+    document.getElementById("header-subtitle").innerText = 
+        "Showing results for " + displayName + " - " + (10 + (combinedSeed % 8)) + " entries";
+    document.getElementById("header-action-label").innerText = 
+        pickFromArray(headerActionLabels, combinedSeed, 0);
 
-    var sortLabels = ["Relevance", "Trending", "Hot", "Top Rated"];
+    // Sort label
+    document.getElementById("sort-label").innerText = pickFromArray(sortLabels, combinedSeed, 0);
 
-    var timePhrases = [
-        "just now", "a few minutes ago", "several minutes ago",
-        "an hour ago", "a couple hours ago", "a few hours ago",
-        "several hours ago", "earlier today", "today",
-        "recently", "lately", "not long ago", "a short while ago",
-        "moments ago", "fresh", "new", "latest"
-    ];
+    // Sidebar heading
+    var sidebarH3 = pickFromArray(sidebarTitles, combinedSeed, 2)
+        .replace("[QUERY]", displayName)
+        .replace("[DOMAIN]", fullName);
+    document.getElementById("sidebar-heading").innerText = sidebarH3;
 
-    var authorNames = [
-        "leakmaster", "exclusivevault", "leakarchiver", "ofleakfinder",
-        "tiktokdump", "privateleaks", "megaleaker", "contentdrops",
-        "viralarchive", "leakedmedia", "dirtydelete", "storysaver",
-        "behindthepaywall", "premiumunlock", "fullsetleaks", "telegramsource"
-    ];
+    // Footer
+    document.getElementById("footer-text").innerText = 
+        pickFromArray(footerTexts, combinedSeed, 3).replace("[DOMAIN]", fullName);
 
-    // ========== KEYWORD POOLS ==========
-    var leakTypes = ["leaked", "leak", "leaks", "exclusive leak", "private leak", "full leak", "mega leak"];
-    var contentTypes = ["videos", "photos", "pics", "media", "content", "collection", "archive", "pack", "set", "gallery", "footage", "clips", "stories", "posts"];
-    var platforms = ["OnlyFans", "TikTok", "Instagram", "Telegram", "Twitter", "Discord", "Snapchat", "Premium"];
-    var adjectives = ["private", "exclusive", "premium", "deleted", "hidden", "rare", "viral", "censored", "secret"];
+    // Footer date (evergreen, tanpa tahun)
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var today = new Date();
+    document.getElementById("footer-date").innerText = months[today.getMonth()] + " " + today.getDate();
 
     /*
-     * Generate keyword query untuk internal link
-     * Menggabungkan platform + adjective + contentType + leakType
+     * ============================================
+     * STEP 9: KEYWORD POOL UNTUK INTERNAL LINK
+     * ============================================
+     * Generate dari hash domain + query,
+     * tiap domain dapat keyword pool berbeda.
      */
-    function generateQueryKeywords(seed, count) {
+
+    var platforms = shuffleArray([
+        "OnlyFans", "TikTok", "Instagram", "Telegram", "Twitter",
+        "Discord", "Snapchat", "Premium", "Patreon", "Twitch",
+        "YouTube", "Facebook", "Reddit", "Threads"
+    ], domainHash);
+
+    var adjectives = shuffleArray([
+        "private", "exclusive", "premium", "deleted", "hidden",
+        "rare", "viral", "secret", "unreleased", "censored",
+        "archived", "restricted", "special", "limited"
+    ], domainHash);
+
+    var contentTypes = shuffleArray([
+        "videos", "photos", "media", "content", "collection",
+        "archive", "pack", "set", "gallery", "clips",
+        "stories", "posts", "footage", "files", "data"
+    ], domainHash);
+
+    var leakTerms = shuffleArray([
+        "leaked", "leak", "leaks", "exclusive", "private",
+        "premium", "full", "mega", "rare"
+    ], domainHash);
+
+    function generateQueryKW(seed, count) {
         var keywords = [];
         for (var i = 0; i < count; i++) {
             var parts = [];
             parts.push(pickFromArray(platforms, seed, i));
-            parts.push(pickFromArray(adjectives, seed, i + 3));
-            parts.push(pickFromArray(contentTypes, seed, i + 7));
-            parts.push(pickFromArray(leakTypes, seed, i + 11));
-            var kw = parts.join(" ").toLowerCase();
-            keywords.push(kw);
+            parts.push(pickFromArray(adjectives, seed, i + 5));
+            parts.push(pickFromArray(contentTypes, seed, i + 10));
+            parts.push(pickFromArray(leakTerms, seed, i + 15));
+            keywords.push(parts.join(" ").toLowerCase());
         }
         return keywords;
     }
 
-    /*
-     * Generate judul post
-     * Pola bervariasi: MEGA, EXCLUSIVE, NEW, FULL, WORKING, SOURCE, RARE, VIP
-     */
-    function generatePostTitle(seed, postIndex, baseName) {
-        var patterns = [
-            "[MEGA] " + baseName + " Leaked Videos - Full Compilation",
-            "[EXCLUSIVE] " + baseName + " Private " + pickFromArray(contentTypes, seed, postIndex) + " Leak",
-            baseName + " " + pickFromArray(platforms, seed, postIndex + 2) + " Leaks - Complete Archive",
-            "[NEW] " + baseName + " Leaked " + pickFromArray(contentTypes, seed, postIndex + 5),
-            "[FULL] " + baseName + " Exclusive Content Leaked - All Files",
-            "[WORKING] " + baseName + " Private " + pickFromArray(contentTypes, seed, postIndex + 8) + " - Full Set",
-            baseName + " " + pickFromArray(adjectives, seed, postIndex + 10) + " " + pickFromArray(contentTypes, seed, postIndex + 12) + " Leak",
-            "[SOURCE] " + baseName + " Leaked " + pickFromArray(platforms, seed, postIndex + 15) + " Channel Archive",
-            baseName + " Complete Leaked Collection - " + pickFromArray(platforms, seed, postIndex + 18) + " Dump",
-            "[RARE] " + baseName + " " + pickFromArray(adjectives, seed, postIndex + 20) + " Content Leaked Online",
-            baseName + " Leak Archive Download - All " + pickFromArray(contentTypes, seed, postIndex + 22),
-            "[VIP] " + baseName + " " + pickFromArray(platforms, seed, postIndex + 25) + " Private Leaks Exposed"
-        ];
-        return pickFromArray(patterns, seed, postIndex);
+    function generatePostTitle(seed, index, name) {
+        var patterns = shuffleArray([
+            "[F1] " + name + " Collection - Full Set",
+            "[F2] " + name + " Archive - Complete",
+            name + " - [F1] Content Update",
+            "[F3] " + name + " - Latest Entry",
+            name + " [F4] Collection",
+            "[F1] " + name + " - [F2] Edition",
+            name + " Archive - [F3] Release",
+            "[F5] " + name + " - All Files"
+        ], seed);
+        return pickFromArray(patterns, seed, index);
     }
 
     /*
-     * Generate pasangan flair untuk tiap post
+     * ============================================
+     * STEP 10: GENERATE POSTS
+     * ============================================
      */
-    function generateFlairs(seed, postIndex) {
-        var flairOptions = [
-            ["LEAK", "MEGA"],
-            ["EXCLUSIVE", "LEAK"],
-            ["LEAK", "NEW"],
-            ["EXCLUSIVE", "MEGA"],
-            ["LEAK", "WORKING"],
-            ["NEW", "LEAK"],
-            ["EXCLUSIVE", "NEW"],
-            ["LEAK", "VIP"]
-        ];
-        return pickFromArray(flairOptions, seed, postIndex);
-    }
 
-    /*
-     * Generate footer links (dinamis, tidak hardcode)
-     */
-    function generateFooterLinks(seed, baseName) {
-        var linkCount = 5 + (seed % 4);
-        var links = [];
-        var linkKws = generateQueryKeywords(seed + 5555, linkCount);
-        for (var i = 0; i < linkCount; i++) {
-            var label = linkKws[i].split(" ").map(function(w) {
-                return w.charAt(0).toUpperCase() + w.slice(1);
-            }).join(" ");
-            var linkQuery = baseName.toLowerCase() + " " + linkKws[i];
-            links.push("<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\">" + label + "</a>");
-        }
-        return links.join(" ");
-    }
-
-    // ========== UPDATE H1 (IDENTITAS HALAMAN) ==========
-    var tplIdx = combinedSeed % titleTemplates.length;
-    var titleText = titleTemplates[tplIdx].replace("[QUERY]", displayName).replace("[DOMAIN]", displayDomain);
-    var h1Element = document.getElementById("dynamic-h1");
-    if (h1Element) h1Element.innerText = titleText;
-
-    // ========== UPDATE H2 ==========
-    var h2Element = document.getElementById("dynamic-h2");
-    if (h2Element) {
-        var h2Text = h2Templates[combinedSeed % h2Templates.length]
-            .replace("[QUERY]", displayName)
-            .replace("[DOMAIN]", displayDomain);
-        h2Element.innerText = h2Text;
-    }
-
-    // ========== UPDATE H3 (SIDEBAR) ==========
-    var h3Element = document.getElementById("dynamic-h3-sidebar");
-    if (h3Element) {
-        var h3Text = h3Templates[combinedSeed % h3Templates.length]
-            .replace("[QUERY]", displayName)
-            .replace("[DOMAIN]", displayDomain);
-        h3Element.innerText = h3Text;
-    }
-
-    // ========== UPDATE SORT LABEL ==========
-    var sortLabel = document.getElementById("sort-active-label");
-    if (sortLabel) sortLabel.innerText = pickFromArray(sortLabels, combinedSeed, 1);
-
-    // ========== UPDATE FOOTER ==========
-    var footerEl = document.getElementById("footer-text");
-    if (footerEl) footerEl.innerText = footerTemplates[combinedSeed % footerTemplates.length];
-
-    // ========== UPDATE BREADCRUMB & RESULT COUNT ==========
-    document.getElementById("bc-name").innerText = displayName;
-    document.getElementById("search-term").innerHTML = displayName;
-    document.getElementById("result-count").innerHTML = "Showing leaked content for <strong>" + displayName + "</strong> - " + (8 + (combinedSeed % 5)) + " results";
-
-    // ========== GENERATE POSTS ==========
-    var postCount = 10 + (combinedSeed % 5);
+    var postCount = 10 + (combinedSeed % 8); // 10-17 posts
+    var postKws = generateQueryKW(combinedSeed, postCount);
     var postsHtml = "";
-    var queryKws = generateQueryKeywords(combinedSeed, postCount);
 
     for (var p = 0; p < postCount; p++) {
-        var postSeed = combinedSeed + p * 333;
-        var upvotes = Math.floor(500 + (new SeededRandom(postSeed).next() * 3500));
-        var commentCount = Math.floor(upvotes / (6 + (postSeed % 4)));
+        var postSeed = combinedSeed + p * 777;
+        var upvotes = Math.floor(300 + (new SeededRandom(postSeed).next() * 4700));
+        var commentCount = Math.floor(upvotes / (5 + (postSeed % 5)));
         var timeAgo = pickFromArray(timePhrases, postSeed, p);
-        var author = pickFromArray(authorNames, postSeed, p);
-        var flairs = generateFlairs(postSeed, p);
-        var title = generatePostTitle(postSeed, p, displayName);
-        var linkQuery = displayLower + " " + queryKws[p];
-        var actionSet = pickFromArray([
-            ["comments", "Share", "Save"],
-            ["replies", "Share", "Save"],
-            ["discussions", "Copy link", "Bookmark"],
-            ["reactions", "Share", "Save"]
-        ], postSeed, 0);
+        var authorPrefix = pickFromArray(authorPrefixes, postSeed, p);
+        var authorNum = Math.floor(new SeededRandom(postSeed + 100).next() * 9000) + 1000;
+        
+        // Flair untuk post ini
+        var f1 = pickFromArray(flairPool, postSeed, 0);
+        var f2 = pickFromArray(flairPool, postSeed, 7);
+        var f3 = pickFromArray(flairPool, postSeed, 14);
+        var f4 = pickFromArray(flairPool, postSeed, 3);
+        var f5 = pickFromArray(flairPool, postSeed, 10);
+
+        var rawTitle = generatePostTitle(postSeed, p, displayName);
+        rawTitle = rawTitle.replace("[F1]", f1).replace("[F2]", f2)
+                           .replace("[F3]", f3).replace("[F4]", f4).replace("[F5]", f5);
+
+        var linkQuery = displayLower + " " + postKws[p];
+        var actionSet = pickFromArray(actionVerbSets, postSeed, p);
+
+        // Class flair: rotasi 1-5
+        var flairClass1 = "flair-" + ((p % 5) + 1);
+        var flairClass2 = "flair-" + (((p + 2) % 5) + 1);
 
         postsHtml += "<div class=\"post-card\">";
-        postsHtml += "<div class=\"post-header\">";
-        postsHtml += "<span class=\"subreddit\">r/LeakedHub</span>";
-        postsHtml += "<span class=\"post-author\">u/" + author + "</span>";
-        postsHtml += "<span class=\"post-time\">- " + timeAgo + "</span>";
+        postsHtml += "<div class=\"post-card-header\">";
+        postsHtml += "<span class=\"post-card-community\">" + fullName + "</span>";
+        postsHtml += "<span class=\"post-card-author\">" + authorPrefix + "_" + authorNum + "</span>";
+        postsHtml += "<span class=\"post-card-time\">- " + timeAgo + "</span>";
         postsHtml += "</div>";
-        postsHtml += "<div class=\"post-title\"><a href=\"/?q=" + encodeURIComponent(linkQuery) + "\">" + title + "</a></div>";
-        postsHtml += "<div class=\"post-meta\">";
-        postsHtml += "<span class=\"flair flair-leak\">" + flairs[0] + "</span>";
-        postsHtml += "<span class=\"flair flair-mega\">" + flairs[1] + "</span>";
+        postsHtml += "<div class=\"post-card-title\"><a href=\"/?q=" + encodeURIComponent(linkQuery) + "\">" + rawTitle + "</a></div>";
+        postsHtml += "<div class=\"post-card-meta\">";
+        postsHtml += "<span class=\"flair " + flairClass1 + "\">" + f1 + "</span>";
+        postsHtml += "<span class=\"flair " + flairClass2 + "\">" + f2 + "</span>";
         postsHtml += "</div>";
-        postsHtml += "<div class=\"vote-section\"><span class=\"vote-arrow\">Up</span> " + upvotes.toLocaleString() + " <span class=\"vote-arrow\">Down</span></div>";
-        postsHtml += "<div class=\"action-buttons\">";
-        postsHtml += "<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\" class=\"action-btn\">" + commentCount + " " + actionSet[0] + "</a>";
-        postsHtml += "<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\" class=\"action-btn\">" + actionSet[1] + "</a>";
-        postsHtml += "<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\" class=\"action-btn\">" + actionSet[2] + "</a>";
+        postsHtml += "<div class=\"vote-section\"><button class=\"vote-btn\">Up</button> " + upvotes.toLocaleString() + " <button class=\"vote-btn\">Down</button></div>";
+        postsHtml += "<div class=\"action-row\">";
+        postsHtml += "<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\" class=\"action-link\">" + commentCount + " " + actionSet[0] + "</a>";
+        postsHtml += "<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\" class=\"action-link\">" + actionSet[1] + "</a>";
+        postsHtml += "<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\" class=\"action-link\">" + actionSet[2] + "</a>";
         postsHtml += "</div>";
         postsHtml += "</div>";
     }
 
-    document.getElementById("search-results").innerHTML = postsHtml;
+    document.getElementById("post-feed").innerHTML = postsHtml;
 
-    // ========== SIDEBAR SIMILAR LEAKS ==========
-    var sidebarCount = 10 + (combinedSeed % 6);
-    var sidebarKws = generateQueryKeywords(combinedSeed + 999, sidebarCount);
+    // Terapkan layout class
+    document.getElementById("post-feed").classList.add(layoutClass);
+
+    /*
+     * ============================================
+     * STEP 11: SIDEBAR LINKS
+     * ============================================
+     */
+
+    var sidebarCount = 10 + (combinedSeed % 8); // 10-17 links
+    var sidebarKws = generateQueryKW(combinedSeed + 3333, sidebarCount);
     var sidebarHtml = "";
     for (var s = 0; s < sidebarCount; s++) {
         var skw = sidebarKws[s];
         var label = skw.split(" ").map(function(w) {
             return w.charAt(0).toUpperCase() + w.slice(1);
         }).join(" ");
-        sidebarHtml += "<div class=\"trending-topic\"><a href=\"/?q=" + encodeURIComponent(displayLower + " " + skw) + "\"><span class=\"trending-number\">" + (s+1) + ".</span> " + label + " on " + displayDomain + "</a></div>";
+        sidebarHtml += "<div class=\"sidebar-item\"><a href=\"/?q=" + encodeURIComponent(displayLower + " " + skw) + "\"><span class=\"sidebar-number\">" + (s+1) + ".</span> " + label + "</a></div>";
     }
-    document.getElementById("similar-leaks-sidebar").innerHTML = sidebarHtml;
+    document.getElementById("sidebar-links").innerHTML = sidebarHtml;
 
-    // ========== FOOTER LINKS DINAMIS ==========
-    var footerLinksEl = document.getElementById("footer-links");
-    if (footerLinksEl) {
-        footerLinksEl.innerHTML = generateFooterLinks(combinedSeed, displayName);
+    /*
+     * ============================================
+     * STEP 12: FOOTER LINKS
+     * ============================================
+     */
+
+    var footerLinkCount = 5 + (combinedSeed % 5); // 5-9 links
+    var footerKws = generateQueryKW(combinedSeed + 7777, footerLinkCount);
+    var footerLinksHtml = "";
+    for (var f = 0; f < footerLinkCount; f++) {
+        var fkw = footerKws[f];
+        var flabel = fkw.split(" ").map(function(w) {
+            return w.charAt(0).toUpperCase() + w.slice(1);
+        }).join(" ");
+        var flinkQuery = displayLower + " " + fkw;
+        footerLinksHtml += "<a href=\"/?q=" + encodeURIComponent(flinkQuery) + "\">" + flabel + "</a>";
     }
+    document.getElementById("footer-links").innerHTML = footerLinksHtml;
 
-    // ========== UPDATE DATE (EVERGREEN, TANPA TAHUN) ==========
-    var today = new Date();
-    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var dateStr = months[today.getMonth()] + " " + today.getDate();
-    document.getElementById("update-date").innerText = dateStr;
+    /*
+     * ============================================
+     * STEP 13: CANONICAL FINAL
+     * ============================================
+     */
+
+    var canonicalLink = document.getElementById("dynamic-canonical");
+    if (canonicalLink) {
+        canonicalLink.setAttribute("href", location.href);
+    }
 
 })();
 </script>
