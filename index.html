@@ -9,10 +9,139 @@ layout: null
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
-    <title id="dynamic-title">r/LeakedHub - Influencer Leaks Forum</title>
-    <meta id="dynamic-description" name="description" content="The biggest Reddit-style forum for leaked influencer content. TikTok leaks, OnlyFans leaks, and viral content archives.">
+    
+    <!-- ============================================ -->
+    <!-- CANONICAL AWAL (FALLBACK SEBELUM JS JALAN)   -->
+    <!-- ============================================ -->
     <link id="dynamic-canonical" rel="canonical" href="">
+    
+    <!-- ============================================ -->
+    <!-- FAVICON & MANIFEST                           -->
+    <!-- ============================================ -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#317EFB">
+    
+    <!-- ============================================ -->
+    <!-- TITLE AWAL (FALLBACK, AKAN DIUPDATE OLEH JS) -->
+    <!-- ============================================ -->
+    <title id="dynamic-title">Loading...</title>
+    <meta id="dynamic-description" name="description" content="">
+    
+    <!-- ============================================ -->
+    <!-- META AUTHOR (FALLBACK)                       -->
+    <!-- ============================================ -->
+    <meta id="dynamic-author" name="author" content="">
+
+    <!-- ============================================ -->
+    <!-- SEO OTOMATIS (JALAN SEBELUM KONTEN DIRENDER) -->
+    <!-- ============================================ -->
+    <script>
+    /*
+     * ============================================
+     * SEO OTOMATIS - JALAN SEBELUM HALAMAN DIRENDER
+     * ============================================
+     * Script ini diletakkan di <head> supaya crawler
+     * bisa membaca metadata meskipun tidak menjalankan
+     * JavaScript sepenuhnya.
+     *
+     * Mencakup:
+     * - Title otomatis dari domain/query
+     * - Meta description
+     * - Meta author dari domain
+     * - Canonical URL sesuai halaman saat ini
+     * - Schema.org WebSite
+     */
+    (function() {
+        var hostname = location.hostname;
+        var pathname = location.pathname;
+        var urlParams = new URLSearchParams(location.search);
+        var query = urlParams.get("q");
+
+        // Helper: ambil subdomain/domain utama
+        var domainPart = hostname.split(".")[0];
+        if (domainPart.toLowerCase() === "www") {
+            domainPart = hostname.split(".")[1] || "";
+        }
+
+        // Helper: format teks (capitalize, ganti - dan _ jadi spasi)
+        var formatText = function(str) {
+            return str
+                .replace(/[-_]/g, " ")
+                .replace(/\+/g, " ")
+                .replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        };
+
+        var domainDisplay = formatText(domainPart.trim());
+
+        // ============================================
+        // TITLE & META - SESUAI KONDISI QUERY/HOMEPAGE
+        // ============================================
+        var titleText = "";
+        var descText = "";
+
+        if (query) {
+            /*
+             * KONDISI DENGAN QUERY
+             * Title: "[Query] on [Domain]"
+             */
+            query = decodeURIComponent(query.replace(/\+/g, " "));
+            var cleanQuery = formatText(query);
+            titleText = cleanQuery + " on " + domainDisplay;
+            descText = cleanQuery + " leaked content archive on " + domainDisplay + ". Latest leaks, viral updates, and exclusive content.";
+        } else {
+            /*
+             * KONDISI HOMEPAGE (TANPA QUERY)
+             * Title: "[Domain]"
+             */
+            titleText = domainDisplay;
+            descText = domainDisplay + " - The biggest leaked content archive. TikTok leaks, OnlyFans leaks, and viral content archives.";
+        }
+
+        // Set title
+        document.title = titleText;
+        var titleTag = document.getElementById("dynamic-title");
+        if (titleTag) titleTag.textContent = titleText;
+
+        // Set meta description
+        var metaDesc = document.getElementById("dynamic-description");
+        if (metaDesc) metaDesc.setAttribute("content", descText);
+
+        // Set meta author
+        var metaAuthor = document.getElementById("dynamic-author");
+        if (metaAuthor) metaAuthor.setAttribute("content", domainDisplay);
+
+        // ============================================
+        // CANONICAL
+        // ============================================
+        var canonicalLink = document.getElementById("dynamic-canonical");
+        if (canonicalLink) {
+            canonicalLink.setAttribute("href", location.href);
+        }
+
+        // ============================================
+        // SCHEMA.ORG WebSite
+        // ============================================
+        var schemaData = {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": domainDisplay,
+            "url": location.origin
+        };
+        var schemaScript = document.createElement("script");
+        schemaScript.type = "application/ld+json";
+        schemaScript.textContent = JSON.stringify(schemaData);
+        document.head.appendChild(schemaScript);
+    })();
+    </script>
+
+    <!-- ============================================ -->
+    <!-- GLOBAL STYLE - DIPAKAI UNTUK KEDUA KONDISI   -->
+    <!-- ============================================ -->
     <style>
+        /* ========== CSS RESET & VARIABLES ========== */
         :root {
             --bg-body: #1a1a1b;
             --bg-card: #1e1e1f;
@@ -33,8 +162,6 @@ layout: null
             --flair-new-text: #ffd700;
             --flair-working-bg: #1a3a4c;
             --flair-working-text: #87ceeb;
-            --flair-default-bg: #3e2e1a;
-            --flair-default-text: #ffd79e;
             --upvote-color: #ff4500;
         }
 
@@ -46,7 +173,7 @@ layout: null
 
         body {
             background: var(--bg-body);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif;
             color: var(--text-primary);
             line-height: 1.5;
         }
@@ -57,6 +184,7 @@ layout: null
             padding: 1rem;
         }
 
+        /* ========== HEADER SUBREDDIT STYLE ========== */
         .reddit-header {
             background: var(--bg-card);
             border-radius: 8px;
@@ -95,6 +223,7 @@ layout: null
             background: var(--accent-hover);
         }
 
+        /* ========== BREADCRUMB ========== */
         .breadcrumb {
             font-size: 0.7rem;
             color: var(--text-secondary);
@@ -114,6 +243,7 @@ layout: null
             color: var(--text-primary);
         }
 
+        /* ========== SORT BAR ========== */
         .sort-bar {
             display: flex;
             gap: 1rem;
@@ -137,6 +267,7 @@ layout: null
             color: var(--text-primary);
         }
 
+        /* ========== POST CARD (QUERY PAGE) ========== */
         .post-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -200,6 +331,7 @@ layout: null
             flex-wrap: wrap;
         }
 
+        /* ========== FLAIRS ========== */
         .flair {
             display: inline-block;
             padding: 0.15rem 0.5rem;
@@ -209,31 +341,13 @@ layout: null
             text-transform: uppercase;
         }
 
-        .flair-leak {
-            background: var(--flair-leak-bg);
-            color: var(--flair-leak-text);
-        }
+        .flair-leak { background: var(--flair-leak-bg); color: var(--flair-leak-text); }
+        .flair-exclusive { background: var(--flair-exclusive-bg); color: var(--flair-exclusive-text); }
+        .flair-mega { background: var(--flair-mega-bg); color: var(--flair-mega-text); }
+        .flair-new { background: var(--flair-new-bg); color: var(--flair-new-text); }
+        .flair-working { background: var(--flair-working-bg); color: var(--flair-working-text); }
 
-        .flair-exclusive {
-            background: var(--flair-exclusive-bg);
-            color: var(--flair-exclusive-text);
-        }
-
-        .flair-mega {
-            background: var(--flair-mega-bg);
-            color: var(--flair-mega-text);
-        }
-
-        .flair-new {
-            background: var(--flair-new-bg);
-            color: var(--flair-new-text);
-        }
-
-        .flair-working {
-            background: var(--flair-working-bg);
-            color: var(--flair-working-text);
-        }
-
+        /* ========== VOTE SECTION ========== */
         .vote-section {
             display: flex;
             align-items: center;
@@ -249,10 +363,9 @@ layout: null
             transition: color 0.2s;
         }
 
-        .vote-arrow:hover {
-            color: var(--upvote-color);
-        }
+        .vote-arrow:hover { color: var(--upvote-color); }
 
+        /* ========== ACTION BUTTONS ========== */
         .action-buttons {
             display: flex;
             gap: 0.75rem;
@@ -270,12 +383,14 @@ layout: null
             text-decoration: underline;
         }
 
+        /* ========== TWO COLUMN LAYOUT (QUERY PAGE) ========== */
         .two-col {
             display: grid;
             grid-template-columns: 1fr 280px;
             gap: 1rem;
         }
 
+        /* ========== SIDEBAR ========== */
         .sidebar-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -319,6 +434,123 @@ layout: null
             margin-right: 0.25rem;
         }
 
+        /* ============================================ */
+        /* HOMEPAGE POST ITEM (TANPA QUERY)             */
+        /* ============================================ */
+        /*
+         * Style untuk post-item di homepage.
+         * Menggunakan variabel global yang sama supaya
+         * konsisten dengan halaman query.
+         */
+        .post-item {
+            background: var(--bg-card);
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.15s ease;
+        }
+
+        .post-item:hover {
+            border-color: var(--border-hover);
+        }
+
+        .post-item h2 {
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        .post-item h2 a {
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .post-item h2 a:hover {
+            text-decoration: underline;
+            color: var(--accent-hover);
+        }
+
+        .excerpt {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .meta {
+            font-size: 11px;
+        }
+
+        .meta a {
+            display: inline-block;
+            padding: 2px 6px;
+            margin: 2px 6px 2px 0;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .meta .cat {
+            background: #1a3e4c;
+            color: #9efff0;
+            border: 1px solid #2a5e6c;
+        }
+
+        .meta .label {
+            background: #1a4c2e;
+            color: #9effb0;
+            border: 1px solid #2a6e3e;
+        }
+
+        .meta .tag {
+            background: #3e2e1a;
+            color: #ffd79e;
+            border: 1px solid #5e4e2a;
+        }
+
+        .meta a:hover { opacity: 0.85; }
+
+        /* ============================================ */
+        /* HOMEPAGE HEADER LABEL                        */
+        /* ============================================ */
+        .homepage-section-label {
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        /* ============================================ */
+        /* PAGINATION (HOMEPAGE)                        */
+        /* ============================================ */
+        .pagination {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .pagination a,
+        .pagination span {
+            display: inline-block;
+            padding: 5px 9px;
+            margin: 3px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            text-decoration: none;
+            color: var(--text-primary);
+            background: var(--bg-card);
+        }
+
+        .pagination .current {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .pagination a:hover {
+            background: var(--border-color);
+        }
+
         hr {
             border: none;
             border-top: 1px solid var(--border-color);
@@ -350,27 +582,11 @@ layout: null
             text-decoration: underline;
         }
 
-        .hidden {
-            display: none;
-        }
-
-        .default-forum {
-            display: block;
-        }
-
-        .query-forum {
-            display: none;
-        }
-
-        .homepage-placeholder {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-        }
+        /* ============================================ */
+        /* CONDITIONAL DISPLAY                         */
+        /* ============================================ */
+        .default-forum { display: block; }
+        .query-forum { display: none; }
 
         @media (max-width: 768px) {
             .two-col { grid-template-columns: 1fr; }
@@ -378,34 +594,83 @@ layout: null
             .sidebar-card { position: static; }
         }
     </style>
+
 {% include head.html %}
+{% include verif.html %}
   </head>
-<body><div loading="lazy">
+<body>
+<div loading="lazy">
+
+{% include /ads/gobloggugel/sosmed.html %}
 
 <div class="forum-container">
-    <!-- DEFAULT FORUM (homepage) - DIKOSONGKAN -->
+
+    <!-- ============================================ -->
+    <!-- KONDISI 1: HOMEPAGE (TANPA QUERY)            -->
+    <!-- ============================================ -->
+    <!--
+     * Bagian ini hanya muncul saat TIDAK ADA parameter ?q=
+     * Konten diisi oleh looping Jekyll dari site.categories.main
+     * H1 sudah di-handle oleh include header1.html
+     * Style menggunakan variabel global yang sama
+    -->
     <div id="default-forum" class="default-forum">
-        <div class="reddit-header">
-            <div class="subreddit-info">
-                <h2 id="home-h2">r/LeakedHub</h2>
-                <p id="home-tagline">The biggest leaked content archive on Reddit - 2.4M members</p>
-            </div>
-            <div class="join-btn">+ JOIN</div>
-        </div>
 
-        <div class="homepage-placeholder">
-        </div>
+        <!-- Header navigasi dari include eksternal -->
+        {% include header1.html %}
 
-        <div class="sidebar-card">
-            <div class="sidebar-title" id="home-sidebar-title">TRENDING LEAKS</div>
-            <div id="home-sidebar-links"></div>
-        </div>
+        <nav>
+            {% include /kw/01.html %}
+        </nav>
+
+        <main>
+            <article>
+                <!-- Label section -->
+                <div class="homepage-section-label">Latest Posts</div>
+
+                <!--
+                 * Looping post dari kategori "main" di Jekyll
+                 * Tiap post punya: title, url, description, content
+                 * Style pakai .post-item yang sudah disesuaikan dengan global variabel
+                -->
+                {% for post in site.categories.main %}
+                <div class="post-item">
+                    <h2>
+                        <a href="{{ post.url }}">
+                            {{ post.title }}
+                        </a>
+                    </h2>
+                    <div class="excerpt">
+                        {{ post.description }}
+                    </div>
+                    <!--
+                     * Ambil konten sebelum tag <p> pertama
+                     * Berguna untuk menampilkan ringkasan/preview
+                    -->
+                    {% assign before_svg = post.content | split: "<p>" | first %}
+                    <div class="excerpt spo">
+                        {{ before_svg }}
+                    </div>
+                </div>
+                {% endfor %}
+            </article>
+        </main>
+
     </div>
 
-    <!-- QUERY-BASED FORUM -->
+    <!-- ============================================ -->
+    <!-- KONDISI 2: HALAMAN QUERY (DENGAN ?q=)        -->
+    <!-- ============================================ -->
+    <!--
+     * Bagian ini hanya muncul saat ADA parameter ?q=
+     * H1 muncul paling atas sebagai identitas halaman
+     * Semua konten digenerate dinamis oleh JavaScript
+     * Internal link semua mengarah ke /?q=... lainnya
+    -->
     <div id="query-forum" class="query-forum">
-        <h1 id="dynamic-h1" style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);"></h1>
-        
+        <!-- H1 PALING ATAS - Identitas halaman query -->
+        <h1 id="dynamic-h1" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary); padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color);"></h1>
+
         <div class="breadcrumb">
             <a href="/">Home</a> / <a href="/">r/LeakedHub</a> / search: <span id="bc-name"></span>
         </div>
@@ -442,17 +707,34 @@ layout: null
             <span id="footer-text">r/LeakedHub - Independent leak archive</span> - <span id="update-date"></span>
         </div>
     </div>
+
 </div>
 
+<!-- ============================================ -->
+<!-- JAVASCRIPT UNTUK KEDUA KONDISI               -->
+<!-- ============================================ -->
 <script>
+/*
+ * ============================================
+ * SCRIPT INI MENANGANI:
+ * 1. CANONICAL UPDATE (FALLBACK JIKA SEO SCRIPT DI ATAS BELUM JALAN)
+ * 2. DETEKSI QUERY VS HOMEPAGE
+ * 3. GENERATE KONTEN DINAMIS UNTUK HALAMAN QUERY
+ * ============================================
+ */
 (function() {
+    /*
+     * CANONICAL FINAL
+     * Dipanggil lagi untuk memastikan canonical selalu sesuai
+     * meskipun SEO script di <head> sudah menjalankannya.
+     */
     var currentUrl = window.location.href;
-    var canonicalLink = document.getElementById('dynamic-canonical');
+    var canonicalLink = document.getElementById("dynamic-canonical");
     if (canonicalLink) {
-        canonicalLink.setAttribute('href', currentUrl);
+        canonicalLink.setAttribute("href", currentUrl);
     }
 
-    // ========== HASH FUNCTION ==========
+    // ========== HASH FUNCTION (DETERMINISTIK) ==========
     function hashString(str) {
         var hash = 0;
         for (var i = 0; i < str.length; i++) {
@@ -488,83 +770,134 @@ layout: null
         return arr[(seed + index) % arr.length];
     }
 
-    // ========== DOMAIN & QUERY ==========
+    // ========== AMBIL DOMAIN & QUERY ==========
     var hostname = window.location.hostname;
-    var domainPart = hostname.split('.')[0];
+    var domainPart = hostname.split(".")[0];
     var displayDomain = domainPart.charAt(0).toUpperCase() + domainPart.slice(1).toLowerCase();
     
-    const urlParams = new URLSearchParams(window.location.search);
-    let query = urlParams.get('q');
+    var urlParams = new URLSearchParams(window.location.search);
+    var query = urlParams.get("q");
 
-    const defaultDiv = document.getElementById('default-forum');
-    const queryDiv = document.getElementById('query-forum');
+    var defaultDiv = document.getElementById("default-forum");
+    var queryDiv = document.getElementById("query-forum");
 
-    // ========== POOL TEMPLATE ==========
+    /*
+     * JIKA TIDAK ADA QUERY => TAMPILKAN HOMEPAGE
+     * queryDiv disembunyikan, defaultDiv (homepage) ditampilkan.
+     * Tidak ada generate JavaScript karena konten dari Jekyll.
+     */
+    if (!query) {
+        if (defaultDiv) defaultDiv.style.display = "block";
+        if (queryDiv) queryDiv.style.display = "none";
+        return;
+    }
+
+    /*
+     * JIKA ADA QUERY => TAMPILKAN HALAMAN QUERY
+     * defaultDiv disembunyikan, queryDiv ditampilkan.
+     * Semua konten digenerate oleh JavaScript di bawah.
+     */
+    if (defaultDiv) defaultDiv.style.display = "none";
+    if (queryDiv) queryDiv.style.display = "block";
+
+    // ========== SEED GABUNGAN DOMAIN + QUERY ==========
+    var combinedSeed = hashString(hostname + "|||" + query.toLowerCase());
+
+    query = decodeURIComponent(query.replace(/\+/g, " "));
+    
+    /*
+     * Bersihkan query dari kata-kata umum (stopwords)
+     * supaya mendapatkan nama inti (baseName).
+     */
+    var removeTerms = [
+        "leaked", "leak", "leaks", "archive", "collection", "dump", "vault",
+        "pack", "bundle", "gallery", "content", "media", "videos", "photos",
+        "pics", "onlyfans", "tiktok", "instagram", "twitter", "telegram",
+        "discord", "trending", "viral", "exclusive", "private", "premium",
+        "full", "complete", "hot", "new", "watch", "view", "access",
+        "reddit", "forum", "thread"
+    ];
+    var baseRaw = query.toLowerCase();
+    removeTerms.forEach(function(term) {
+        var regex = new RegExp("\\b" + term + "\\b", "gi");
+        baseRaw = baseRaw.replace(regex, "");
+    });
+    baseRaw = baseRaw.replace(/\s+/g, " ").trim();
+    var baseName = baseRaw || query;
+    if (baseName.length < 2) baseName = query;
+    
+    function formatName(str) {
+        return str.split(" ").map(function(w) {
+            return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+        }).join(" ");
+    }
+    var displayName = formatName(baseName);
+    var displayLower = displayName.toLowerCase();
+
+    // ========== POOL TEMPLATE UNTUK VARIASI ==========
     var titleTemplates = [
-        '[QUERY] Leaked Content Archive on [DOMAIN]',
-        '[QUERY] - Exclusive Leaks on [DOMAIN]',
-        '[DOMAIN] - [QUERY] Leaked Media Collection',
-        'Leaked: [QUERY] | [DOMAIN] Archive',
-        '[QUERY] Leaks - Watch on [DOMAIN]',
-        '[DOMAIN] - [QUERY] Private Leaks',
-        '[QUERY] Leaked Videos and Photos - [DOMAIN]',
-        'Access [QUERY] Leaks on [DOMAIN]'
+        "[QUERY] Leaked Content Archive on [DOMAIN]",
+        "[QUERY] - Exclusive Leaks on [DOMAIN]",
+        "[DOMAIN] - [QUERY] Leaked Media Collection",
+        "Leaked: [QUERY] | [DOMAIN] Archive",
+        "[QUERY] Leaks - Watch on [DOMAIN]",
+        "[DOMAIN] - [QUERY] Private Leaks",
+        "[QUERY] Leaked Videos and Photos - [DOMAIN]",
+        "Access [QUERY] Leaks on [DOMAIN]"
     ];
 
     var h2Templates = [
-        'r/LeakedHub - [QUERY] Leaks Archive',
-        '[QUERY] - Latest Leaked Content',
-        '[QUERY] Leaks - [DOMAIN] Exclusive',
-        'Search: [QUERY] Leaks - r/LeakedHub',
-        '[QUERY] - Complete Leak Collection',
-        'r/LeakedHub - [QUERY] Full Archive'
+        "r/LeakedHub - [QUERY] Leaks Archive",
+        "[QUERY] - Latest Leaked Content",
+        "[QUERY] Leaks - [DOMAIN] Exclusive",
+        "Search: [QUERY] Leaks - r/LeakedHub",
+        "[QUERY] - Complete Leak Collection",
+        "r/LeakedHub - [QUERY] Full Archive"
     ];
 
     var h3Templates = [
-        'Similar Leaks Like [QUERY]',
-        'More [QUERY] Leaks',
-        'Trending Near [QUERY]',
-        'Related: [QUERY] Archives',
-        '[QUERY] - You May Also Like'
+        "Similar Leaks Like [QUERY]",
+        "More [QUERY] Leaks",
+        "Trending Near [QUERY]",
+        "Related: [QUERY] Archives",
+        "[QUERY] - You May Also Like"
     ];
 
     var footerTemplates = [
-        'r/LeakedHub - Independent leak archive',
-        'r/LeakedHub - Community driven leaks',
-        'r/LeakedHub - Live leak updates',
-        'r/LeakedHub - Updated leak database',
-        'r/LeakedHub - Verified leak source'
+        "r/LeakedHub - Independent leak archive",
+        "r/LeakedHub - Community driven leaks",
+        "r/LeakedHub - Live leak updates",
+        "r/LeakedHub - Updated leak database",
+        "r/LeakedHub - Verified leak source"
     ];
 
-    var sortLabels = [
-        'Relevance',
-        'Trending',
-        'Hot',
-        'Top Rated'
-    ];
+    var sortLabels = ["Relevance", "Trending", "Hot", "Top Rated"];
 
     var timePhrases = [
-        'just now', 'a few minutes ago', 'several minutes ago',
-        'an hour ago', 'a couple hours ago', 'a few hours ago',
-        'several hours ago', 'earlier today', 'today',
-        'recently', 'lately', 'not long ago', 'a short while ago',
-        'moments ago', 'fresh', 'new', 'latest'
+        "just now", "a few minutes ago", "several minutes ago",
+        "an hour ago", "a couple hours ago", "a few hours ago",
+        "several hours ago", "earlier today", "today",
+        "recently", "lately", "not long ago", "a short while ago",
+        "moments ago", "fresh", "new", "latest"
     ];
 
     var authorNames = [
-        'leakmaster', 'exclusivevault', 'leakarchiver', 'ofleakfinder',
-        'tiktokdump', 'privateleaks', 'megaleaker', 'contentdrops',
-        'viralarchive', 'leakedmedia', 'dirtydelete', 'storysaver',
-        'behindthepaywall', 'premiumunlock', 'fullsetleaks', 'telegramsource'
+        "leakmaster", "exclusivevault", "leakarchiver", "ofleakfinder",
+        "tiktokdump", "privateleaks", "megaleaker", "contentdrops",
+        "viralarchive", "leakedmedia", "dirtydelete", "storysaver",
+        "behindthepaywall", "premiumunlock", "fullsetleaks", "telegramsource"
     ];
 
     // ========== KEYWORD POOLS ==========
-    var leakTypes = ['leaked', 'leak', 'leaks', 'exclusive leak', 'private leak', 'full leak', 'mega leak'];
-    var contentTypes = ['videos', 'photos', 'pics', 'media', 'content', 'collection', 'archive', 'pack', 'set', 'gallery', 'footage', 'clips', 'stories', 'posts'];
-    var platforms = ['OnlyFans', 'TikTok', 'Instagram', 'Telegram', 'Twitter', 'Discord', 'Snapchat', 'Premium'];
-    var adjectives = ['private', 'exclusive', 'premium', 'deleted', 'hidden', 'rare', 'viral', 'censored', 'secret'];
-    var suffixes = ['full archive', 'complete set', 'mega pack', 'watch now', 'all videos', 'full collection', 'exclusive dump', 'private vault', 'premium unlock', 'behind paywall'];
+    var leakTypes = ["leaked", "leak", "leaks", "exclusive leak", "private leak", "full leak", "mega leak"];
+    var contentTypes = ["videos", "photos", "pics", "media", "content", "collection", "archive", "pack", "set", "gallery", "footage", "clips", "stories", "posts"];
+    var platforms = ["OnlyFans", "TikTok", "Instagram", "Telegram", "Twitter", "Discord", "Snapchat", "Premium"];
+    var adjectives = ["private", "exclusive", "premium", "deleted", "hidden", "rare", "viral", "censored", "secret"];
 
+    /*
+     * Generate keyword query untuk internal link
+     * Menggabungkan platform + adjective + contentType + leakType
+     */
     function generateQueryKeywords(seed, count) {
         var keywords = [];
         for (var i = 0; i < count; i++) {
@@ -573,156 +906,108 @@ layout: null
             parts.push(pickFromArray(adjectives, seed, i + 3));
             parts.push(pickFromArray(contentTypes, seed, i + 7));
             parts.push(pickFromArray(leakTypes, seed, i + 11));
-            var kw = parts.join(' ').toLowerCase();
+            var kw = parts.join(" ").toLowerCase();
             keywords.push(kw);
         }
         return keywords;
     }
 
+    /*
+     * Generate judul post
+     * Pola bervariasi: MEGA, EXCLUSIVE, NEW, FULL, WORKING, SOURCE, RARE, VIP
+     */
     function generatePostTitle(seed, postIndex, baseName) {
         var patterns = [
-            '[MEGA] ' + baseName + ' Leaked Videos - Full Compilation',
-            '[EXCLUSIVE] ' + baseName + ' Private ' + pickFromArray(contentTypes, seed, postIndex) + ' Leak',
-            baseName + ' ' + pickFromArray(platforms, seed, postIndex + 2) + ' Leaks - Complete Archive',
-            '[NEW] ' + baseName + ' Leaked ' + pickFromArray(contentTypes, seed, postIndex + 5),
-            '[FULL] ' + baseName + ' Exclusive Content Leaked - All Files',
-            '[WORKING] ' + baseName + ' Private ' + pickFromArray(contentTypes, seed, postIndex + 8) + ' - Full Set',
-            baseName + ' ' + pickFromArray(adjectives, seed, postIndex + 10) + ' ' + pickFromArray(contentTypes, seed, postIndex + 12) + ' Leak',
-            '[SOURCE] ' + baseName + ' Leaked ' + pickFromArray(platforms, seed, postIndex + 15) + ' Channel Archive',
-            baseName + ' Complete Leaked Collection - ' + pickFromArray(platforms, seed, postIndex + 18) + ' Dump',
-            '[RARE] ' + baseName + ' ' + pickFromArray(adjectives, seed, postIndex + 20) + ' Content Leaked Online',
-            baseName + ' Leak Archive Download - All ' + pickFromArray(contentTypes, seed, postIndex + 22),
-            '[VIP] ' + baseName + ' ' + pickFromArray(platforms, seed, postIndex + 25) + ' Private Leaks Exposed'
+            "[MEGA] " + baseName + " Leaked Videos - Full Compilation",
+            "[EXCLUSIVE] " + baseName + " Private " + pickFromArray(contentTypes, seed, postIndex) + " Leak",
+            baseName + " " + pickFromArray(platforms, seed, postIndex + 2) + " Leaks - Complete Archive",
+            "[NEW] " + baseName + " Leaked " + pickFromArray(contentTypes, seed, postIndex + 5),
+            "[FULL] " + baseName + " Exclusive Content Leaked - All Files",
+            "[WORKING] " + baseName + " Private " + pickFromArray(contentTypes, seed, postIndex + 8) + " - Full Set",
+            baseName + " " + pickFromArray(adjectives, seed, postIndex + 10) + " " + pickFromArray(contentTypes, seed, postIndex + 12) + " Leak",
+            "[SOURCE] " + baseName + " Leaked " + pickFromArray(platforms, seed, postIndex + 15) + " Channel Archive",
+            baseName + " Complete Leaked Collection - " + pickFromArray(platforms, seed, postIndex + 18) + " Dump",
+            "[RARE] " + baseName + " " + pickFromArray(adjectives, seed, postIndex + 20) + " Content Leaked Online",
+            baseName + " Leak Archive Download - All " + pickFromArray(contentTypes, seed, postIndex + 22),
+            "[VIP] " + baseName + " " + pickFromArray(platforms, seed, postIndex + 25) + " Private Leaks Exposed"
         ];
         return pickFromArray(patterns, seed, postIndex);
     }
 
+    /*
+     * Generate pasangan flair untuk tiap post
+     */
     function generateFlairs(seed, postIndex) {
         var flairOptions = [
-            ['LEAK', 'MEGA'],
-            ['EXCLUSIVE', 'LEAK'],
-            ['LEAK', 'NEW'],
-            ['EXCLUSIVE', 'MEGA'],
-            ['LEAK', 'WORKING'],
-            ['NEW', 'LEAK'],
-            ['EXCLUSIVE', 'NEW'],
-            ['LEAK', 'VIP']
+            ["LEAK", "MEGA"],
+            ["EXCLUSIVE", "LEAK"],
+            ["LEAK", "NEW"],
+            ["EXCLUSIVE", "MEGA"],
+            ["LEAK", "WORKING"],
+            ["NEW", "LEAK"],
+            ["EXCLUSIVE", "NEW"],
+            ["LEAK", "VIP"]
         ];
         return pickFromArray(flairOptions, seed, postIndex);
     }
 
-    function generateFooterLinks(seed, baseName, displayDomain) {
-        var linkCount = 5 + (seed % 4); // 5-8 links
+    /*
+     * Generate footer links (dinamis, tidak hardcode)
+     */
+    function generateFooterLinks(seed, baseName) {
+        var linkCount = 5 + (seed % 4);
         var links = [];
         var linkKws = generateQueryKeywords(seed + 5555, linkCount);
         for (var i = 0; i < linkCount; i++) {
-            var label = linkKws[i].split(' ').map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); }).join(' ');
-            var linkQuery = baseName.toLowerCase() + ' ' + linkKws[i];
-            links.push('<a href="/?q=' + encodeURIComponent(linkQuery) + '">' + label + '</a>');
+            var label = linkKws[i].split(" ").map(function(w) {
+                return w.charAt(0).toUpperCase() + w.slice(1);
+            }).join(" ");
+            var linkQuery = baseName.toLowerCase() + " " + linkKws[i];
+            links.push("<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\">" + label + "</a>");
         }
-        return links.join(' ');
+        return links.join(" ");
     }
 
-    // ========== HANDLE HOMEPAGE (TANPA QUERY) ==========
-    if (!query) {
-        defaultDiv.style.display = 'block';
-        queryDiv.style.display = 'none';
-
-        var homeH2 = document.getElementById('home-h2');
-        var homeTagline = document.getElementById('home-tagline');
-        var homeSidebarTitle = document.getElementById('home-sidebar-title');
-        if (homeH2) homeH2.innerText = 'r/LeakedHub - ' + displayDomain;
-        if (homeTagline) homeTagline.innerText = 'The biggest leaked content archive - ' + displayDomain + ' mirror';
-        if (homeSidebarTitle) homeSidebarTitle.innerText = 'TRENDING ON ' + displayDomain.toUpperCase();
-
-        var homeSeed = hashString(hostname);
-        var homeTrendingKeywords = [
-            'tiktok leaked videos', 'onlyfans leaks', 'instagram private leaks',
-            'telegram leak channels', 'mega leak archive', 'exclusive influencer leaks',
-            'viral leaked content', 'premium content leaks', 'deleted stories leaks',
-            'snapchat leak archive', 'twitter leak thread', 'discord leak server'
-        ];
-        var homeShuffled = shuffleArray(homeTrendingKeywords, homeSeed);
-        var homeSidebar = document.getElementById('home-sidebar-links');
-        var homeLinksHtml = '';
-        for (var i = 0; i < 8; i++) {
-            var kw = homeShuffled[i];
-            homeLinksHtml += '<div class="trending-topic"><a href="/?q=' + encodeURIComponent(kw) + '"><span class="trending-number">' + (i+1) + '.</span> ' + kw.charAt(0).toUpperCase() + kw.slice(1) + ' on ' + displayDomain + '</a></div>';
-        }
-        if (homeSidebar) homeSidebar.innerHTML = homeLinksHtml;
-
-        return;
-    }
-
-    // ========== HALAMAN QUERY ==========
-    defaultDiv.style.display = 'none';
-    queryDiv.style.display = 'block';
-
-    var combinedSeed = hashString(hostname + '|||' + query.toLowerCase());
-
-    query = decodeURIComponent(query.replace(/\+/g, ' '));
-    
-    var removeTerms = ['leaked', 'leak', 'leaks', 'archive', 'collection', 'dump', 'vault', 'pack', 'bundle', 'gallery', 'content', 'media', 'videos', 'photos', 'pics', 'onlyfans', 'tiktok', 'instagram', 'twitter', 'telegram', 'discord', 'trending', 'viral', 'exclusive', 'private', 'premium', 'full', 'complete', 'hot', 'new', 'watch', 'view', 'access', 'reddit', 'forum', 'thread'];
-    var baseRaw = query.toLowerCase();
-    removeTerms.forEach(function(term) {
-        var regex = new RegExp('\\b' + term + '\\b', 'gi');
-        baseRaw = baseRaw.replace(regex, '');
-    });
-    baseRaw = baseRaw.replace(/\s+/g, ' ').trim();
-    var baseName = baseRaw || query;
-    if (baseName.length < 2) baseName = query;
-    
-    function formatName(str) {
-        return str.split(' ').map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(); }).join(' ');
-    }
-    var displayName = formatName(baseName);
-    var displayLower = displayName.toLowerCase();
-
-    // ========== UPDATE META ==========
+    // ========== UPDATE H1 (IDENTITAS HALAMAN) ==========
     var tplIdx = combinedSeed % titleTemplates.length;
-    var titleText = titleTemplates[tplIdx].replace('[QUERY]', displayName).replace('[DOMAIN]', displayDomain);
-    document.title = titleText;
-    
-    var metaDesc = document.getElementById('dynamic-description');
-    if (metaDesc) {
-        var descTemplates = [
-            displayName + ' leaked content archive on ' + displayDomain + '. Latest leaks, viral updates, and exclusive content.',
-            'Access ' + displayName + ' full leaked collection on ' + displayDomain + '. Complete archive with all exclusive media.',
-            displayDomain + ' presents ' + displayName + ' leaked videos and photos. Full archive available now.',
-            'Watch ' + displayName + ' leaked private content on ' + displayDomain + '. Updated daily with new leaks.'
-        ];
-        metaDesc.setAttribute('content', pickFromArray(descTemplates, combinedSeed, 0));
-    }
-    
-    // ========== UPDATE H1, H2, H3 ==========
-    var h1Element = document.getElementById('dynamic-h1');
+    var titleText = titleTemplates[tplIdx].replace("[QUERY]", displayName).replace("[DOMAIN]", displayDomain);
+    var h1Element = document.getElementById("dynamic-h1");
     if (h1Element) h1Element.innerText = titleText;
-    
-    var h2Element = document.getElementById('dynamic-h2');
+
+    // ========== UPDATE H2 ==========
+    var h2Element = document.getElementById("dynamic-h2");
     if (h2Element) {
-        var h2Text = h2Templates[combinedSeed % h2Templates.length].replace('[QUERY]', displayName).replace('[DOMAIN]', displayDomain);
+        var h2Text = h2Templates[combinedSeed % h2Templates.length]
+            .replace("[QUERY]", displayName)
+            .replace("[DOMAIN]", displayDomain);
         h2Element.innerText = h2Text;
     }
-    
-    var h3Element = document.getElementById('dynamic-h3-sidebar');
+
+    // ========== UPDATE H3 (SIDEBAR) ==========
+    var h3Element = document.getElementById("dynamic-h3-sidebar");
     if (h3Element) {
-        var h3Text = h3Templates[combinedSeed % h3Templates.length].replace('[QUERY]', displayName).replace('[DOMAIN]', displayDomain);
+        var h3Text = h3Templates[combinedSeed % h3Templates.length]
+            .replace("[QUERY]", displayName)
+            .replace("[DOMAIN]", displayDomain);
         h3Element.innerText = h3Text;
     }
 
-    var sortLabel = document.getElementById('sort-active-label');
+    // ========== UPDATE SORT LABEL ==========
+    var sortLabel = document.getElementById("sort-active-label");
     if (sortLabel) sortLabel.innerText = pickFromArray(sortLabels, combinedSeed, 1);
-    
-    var footerEl = document.getElementById('footer-text');
-    if (footerEl) footerEl.innerText = footerTemplates[combinedSeed % footerTemplates.length];
-    
-    document.getElementById('bc-name').innerText = displayName;
-    document.getElementById('search-term').innerHTML = displayName;
-    document.getElementById('result-count').innerHTML = 'Showing leaked content for <strong>' + displayName + '</strong> - ' + (8 + (combinedSeed % 5)) + ' results';
 
-    // ========== GENERATE POSTS (EVERGREEN) ==========
+    // ========== UPDATE FOOTER ==========
+    var footerEl = document.getElementById("footer-text");
+    if (footerEl) footerEl.innerText = footerTemplates[combinedSeed % footerTemplates.length];
+
+    // ========== UPDATE BREADCRUMB & RESULT COUNT ==========
+    document.getElementById("bc-name").innerText = displayName;
+    document.getElementById("search-term").innerHTML = displayName;
+    document.getElementById("result-count").innerHTML = "Showing leaked content for <strong>" + displayName + "</strong> - " + (8 + (combinedSeed % 5)) + " results";
+
+    // ========== GENERATE POSTS ==========
     var postCount = 10 + (combinedSeed % 5);
-    var postsHtml = '';
+    var postsHtml = "";
     var queryKws = generateQueryKeywords(combinedSeed, postCount);
 
     for (var p = 0; p < postCount; p++) {
@@ -733,66 +1018,66 @@ layout: null
         var author = pickFromArray(authorNames, postSeed, p);
         var flairs = generateFlairs(postSeed, p);
         var title = generatePostTitle(postSeed, p, displayName);
-        var linkQuery = displayLower + ' ' + queryKws[p];
+        var linkQuery = displayLower + " " + queryKws[p];
         var actionSet = pickFromArray([
-            ['comments', 'Share', 'Save'],
-            ['replies', 'Share', 'Save'],
-            ['discussions', 'Copy link', 'Bookmark'],
-            ['reactions', 'Share', 'Save']
+            ["comments", "Share", "Save"],
+            ["replies", "Share", "Save"],
+            ["discussions", "Copy link", "Bookmark"],
+            ["reactions", "Share", "Save"]
         ], postSeed, 0);
 
-        postsHtml += '<div class="post-card">';
-        postsHtml += '<div class="post-header">';
-        postsHtml += '<span class="subreddit">r/LeakedHub</span>';
-        postsHtml += '<span class="post-author">u/' + author + '</span>';
-        postsHtml += '<span class="post-time">- ' + timeAgo + '</span>';
-        postsHtml += '</div>';
-        postsHtml += '<div class="post-title"><a href="/?q=' + encodeURIComponent(linkQuery) + '">' + title + '</a></div>';
-        postsHtml += '<div class="post-meta">';
-        postsHtml += '<span class="flair flair-leak">' + flairs[0] + '</span>';
-        postsHtml += '<span class="flair flair-mega">' + flairs[1] + '</span>';
-        postsHtml += '</div>';
-        postsHtml += '<div class="vote-section"><span class="vote-arrow">Up</span> ' + upvotes.toLocaleString() + ' <span class="vote-arrow">Down</span></div>';
-        postsHtml += '<div class="action-buttons">';
-        postsHtml += '<a href="/?q=' + encodeURIComponent(linkQuery) + '" class="action-btn">' + commentCount + ' ' + actionSet[0] + '</a>';
-        postsHtml += '<a href="/?q=' + encodeURIComponent(linkQuery) + '" class="action-btn">' + actionSet[1] + '</a>';
-        postsHtml += '<a href="/?q=' + encodeURIComponent(linkQuery) + '" class="action-btn">' + actionSet[2] + '</a>';
-        postsHtml += '</div>';
-        postsHtml += '</div>';
+        postsHtml += "<div class=\"post-card\">";
+        postsHtml += "<div class=\"post-header\">";
+        postsHtml += "<span class=\"subreddit\">r/LeakedHub</span>";
+        postsHtml += "<span class=\"post-author\">u/" + author + "</span>";
+        postsHtml += "<span class=\"post-time\">- " + timeAgo + "</span>";
+        postsHtml += "</div>";
+        postsHtml += "<div class=\"post-title\"><a href=\"/?q=" + encodeURIComponent(linkQuery) + "\">" + title + "</a></div>";
+        postsHtml += "<div class=\"post-meta\">";
+        postsHtml += "<span class=\"flair flair-leak\">" + flairs[0] + "</span>";
+        postsHtml += "<span class=\"flair flair-mega\">" + flairs[1] + "</span>";
+        postsHtml += "</div>";
+        postsHtml += "<div class=\"vote-section\"><span class=\"vote-arrow\">Up</span> " + upvotes.toLocaleString() + " <span class=\"vote-arrow\">Down</span></div>";
+        postsHtml += "<div class=\"action-buttons\">";
+        postsHtml += "<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\" class=\"action-btn\">" + commentCount + " " + actionSet[0] + "</a>";
+        postsHtml += "<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\" class=\"action-btn\">" + actionSet[1] + "</a>";
+        postsHtml += "<a href=\"/?q=" + encodeURIComponent(linkQuery) + "\" class=\"action-btn\">" + actionSet[2] + "</a>";
+        postsHtml += "</div>";
+        postsHtml += "</div>";
     }
 
-    document.getElementById('search-results').innerHTML = postsHtml;
+    document.getElementById("search-results").innerHTML = postsHtml;
 
     // ========== SIDEBAR SIMILAR LEAKS ==========
     var sidebarCount = 10 + (combinedSeed % 6);
     var sidebarKws = generateQueryKeywords(combinedSeed + 999, sidebarCount);
-    var sidebarHtml = '';
+    var sidebarHtml = "";
     for (var s = 0; s < sidebarCount; s++) {
         var skw = sidebarKws[s];
-        var label = skw.split(' ').map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); }).join(' ');
-        sidebarHtml += '<div class="trending-topic"><a href="/?q=' + encodeURIComponent(displayLower + ' ' + skw) + '"><span class="trending-number">' + (s+1) + '.</span> ' + label + ' on ' + displayDomain + '</a></div>';
+        var label = skw.split(" ").map(function(w) {
+            return w.charAt(0).toUpperCase() + w.slice(1);
+        }).join(" ");
+        sidebarHtml += "<div class=\"trending-topic\"><a href=\"/?q=" + encodeURIComponent(displayLower + " " + skw) + "\"><span class=\"trending-number\">" + (s+1) + ".</span> " + label + " on " + displayDomain + "</a></div>";
     }
-    document.getElementById('similar-leaks-sidebar').innerHTML = sidebarHtml;
+    document.getElementById("similar-leaks-sidebar").innerHTML = sidebarHtml;
 
     // ========== FOOTER LINKS DINAMIS ==========
-    var footerLinksEl = document.getElementById('footer-links');
+    var footerLinksEl = document.getElementById("footer-links");
     if (footerLinksEl) {
-        footerLinksEl.innerHTML = generateFooterLinks(combinedSeed, displayName, displayDomain);
+        footerLinksEl.innerHTML = generateFooterLinks(combinedSeed, displayName);
     }
 
-    // ========== UPDATE DATE (EVERGREEN, TIDAK ADA TAHUN) ==========
+    // ========== UPDATE DATE (EVERGREEN, TANPA TAHUN) ==========
     var today = new Date();
-    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    var dateStr = months[today.getMonth()] + ' ' + today.getDate();
-    document.getElementById('update-date').innerText = dateStr;
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var dateStr = months[today.getMonth()] + " " + today.getDate();
+    document.getElementById("update-date").innerText = dateStr;
 
 })();
 </script>
-<nav>
 
-</nav>
 {% include footer.html %}
 
-{% include /ads/gobloggugel/sosmed.html %}
-</div></body>
+</div>
+</body>
 </html>
