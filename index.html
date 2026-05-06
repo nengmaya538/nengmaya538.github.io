@@ -59,6 +59,13 @@ layout: null
         metaAuthor.content = displayDomain;
         if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
 
+        // Meta keywords placeholder (akan diupdate oleh script query jika ada query)
+        var metaKeywords = document.querySelector("meta[name=\"keywords\"]") || document.createElement("meta");
+        metaKeywords.name = "keywords";
+        metaKeywords.content = "";
+        metaKeywords.id = "dynamic-keywords";
+        if (!metaKeywords.parentNode) document.head.appendChild(metaKeywords);
+
         var schemaData = {
             "@context": "https://schema.org",
             "@type": "WebSite",
@@ -67,6 +74,7 @@ layout: null
         };
         var schemaScript = document.createElement("script");
         schemaScript.type = "application/ld+json";
+        schemaScript.id = "schema-website";
         schemaScript.textContent = JSON.stringify(schemaData);
         document.head.appendChild(schemaScript);
 
@@ -74,6 +82,43 @@ layout: null
         canonical.setAttribute("rel", "canonical");
         canonical.setAttribute("href", location.href);
         if (!canonical.parentNode) document.head.appendChild(canonical);
+
+        // Open Graph basic
+        var ogTitle = document.querySelector("meta[property=\"og:title\"]") || document.createElement("meta");
+        ogTitle.setAttribute("property", "og:title");
+        ogTitle.content = titleText;
+        if (!ogTitle.parentNode) document.head.appendChild(ogTitle);
+
+        var ogDesc = document.querySelector("meta[property=\"og:description\"]") || document.createElement("meta");
+        ogDesc.setAttribute("property", "og:description");
+        ogDesc.content = descText;
+        if (!ogDesc.parentNode) document.head.appendChild(ogDesc);
+
+        var ogUrl = document.querySelector("meta[property=\"og:url\"]") || document.createElement("meta");
+        ogUrl.setAttribute("property", "og:url");
+        ogUrl.content = location.href;
+        if (!ogUrl.parentNode) document.head.appendChild(ogUrl);
+
+        var ogType = document.querySelector("meta[property=\"og:type\"]") || document.createElement("meta");
+        ogType.setAttribute("property", "og:type");
+        ogType.content = "website";
+        if (!ogType.parentNode) document.head.appendChild(ogType);
+
+        // Twitter Card
+        var twitterCard = document.querySelector("meta[name=\"twitter:card\"]") || document.createElement("meta");
+        twitterCard.name = "twitter:card";
+        twitterCard.content = "summary";
+        if (!twitterCard.parentNode) document.head.appendChild(twitterCard);
+
+        var twitterTitle = document.querySelector("meta[name=\"twitter:title\"]") || document.createElement("meta");
+        twitterTitle.name = "twitter:title";
+        twitterTitle.content = titleText;
+        if (!twitterTitle.parentNode) document.head.appendChild(twitterTitle);
+
+        var twitterDesc = document.querySelector("meta[name=\"twitter:description\"]") || document.createElement("meta");
+        twitterDesc.name = "twitter:description";
+        twitterDesc.content = descText;
+        if (!twitterDesc.parentNode) document.head.appendChild(twitterDesc);
     })();
     </script>
 
@@ -103,6 +148,8 @@ layout: null
         <!-- ============================================ -->
         <header id="blogHeader" class="blog-header-main floating-header-main" loading="lazy">
             <div class="header-content-main">
+                <!-- IMAGE PLACEHOLDER UNIK PER DOMAIN -->
+                <div id="domainAvatar" class="domain-avatar-main" style="flex-shrink:0;margin-right:10px;"></div>
                 <h1 id="blogMainTitle" class="blog-title-main"></h1>
                 <div class="nav-actions-main">
                     <button class="nav-button-main menu-btn-main" id="blogMenuToggle" title="Menu" aria-label="Menu">
@@ -127,7 +174,7 @@ layout: null
         </div>
 
         <!-- ============================================ -->
-        <!-- VARIASI HOMEPAGE PER DOMAIN                  -->
+        <!-- SCRIPT: VARIASI HOMEPAGE + IMAGE PLACEHOLDER -->
         <!-- ============================================ -->
         <script>
         (function() {
@@ -150,108 +197,16 @@ layout: null
             }
             var domainHash = hashString(fullName);
 
-            // H1 dari domain
             var clean = fullName.replace(/-/g, " ");
             var title = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
             document.getElementById("blogMainTitle").textContent = title;
 
             /*
              * ============================================
-             * VARIASI HEADER
+             * IMAGE PLACEHOLDER UNIK PER DOMAIN (UPGRADE #3)
              * ============================================
+             * Generate SVG dengan inisial domain + warna aksen
              */
-            var headerBgOptions = ["#ffffff", "#fafafa", "#f8f6f2", "#f5f5f5", "#fffef9", "#f0f0f0"];
-            var textColorOptions = ["#000000", "#1a1a1a", "#0d1b2a", "#111111", "#1c1c1c", "#222222"];
-            var shadowOptions = [
-                "0 2px 10px rgba(0,0,0,0.08)",
-                "0 1px 6px rgba(0,0,0,0.06)",
-                "0 3px 14px rgba(0,0,0,0.10)",
-                "0 2px 8px rgba(0,0,0,0.04)",
-                "0 4px 16px rgba(0,0,0,0.12)",
-                "0 1px 3px rgba(0,0,0,0.08)"
-            ];
-            var headerBorderOptions = [
-                "none",
-                "none",
-                "none",
-                "1px solid #e0e0e0",
-                "1px solid #eee",
-                "none"
-            ];
-
-            var headerBg = headerBgOptions[domainHash % headerBgOptions.length];
-            var textColor = textColorOptions[domainHash % textColorOptions.length];
-            var shadow = shadowOptions[domainHash % shadowOptions.length];
-            var borderBottom = headerBorderOptions[domainHash % headerBorderOptions.length];
-
-            var header = document.getElementById("blogHeader");
-            var titleEl = document.getElementById("blogMainTitle");
-            var menuBtn = document.getElementById("blogMenuToggle");
-            var menuIcons = document.querySelectorAll(".menu-icon-main");
-
-            if (header) {
-                header.style.background = headerBg;
-                header.style.boxShadow = shadow;
-                header.style.borderBottom = borderBottom;
-            }
-            if (titleEl) {
-                titleEl.style.color = textColor;
-            }
-            if (menuBtn) {
-                menuBtn.style.color = textColor;
-            }
-            menuIcons.forEach(function(icon) {
-                icon.style.stroke = textColor;
-            });
-
-            // Menu panel
-            var panelRadiusOptions = ["8px", "10px", "12px", "6px", "14px", "4px"];
-            var panelShadowOptions = [
-                "0 4px 20px rgba(0,0,0,0.12)",
-                "0 2px 12px rgba(0,0,0,0.10)",
-                "0 6px 24px rgba(0,0,0,0.14)",
-                "0 3px 16px rgba(0,0,0,0.08)",
-                "0 5px 22px rgba(0,0,0,0.13)",
-                "0 4px 18px rgba(0,0,0,0.11)"
-            ];
-            var panelRadius = panelRadiusOptions[domainHash % panelRadiusOptions.length];
-            var panelShadow = panelShadowOptions[domainHash % panelShadowOptions.length];
-
-            var menuPanel = document.getElementById("blogMenuPanel");
-            if (menuPanel) {
-                menuPanel.style.borderRadius = panelRadius;
-                menuPanel.style.boxShadow = panelShadow;
-            }
-
-            /*
-             * ============================================
-             * VARIASI LAYOUT HOMEPAGE
-             * ============================================
-             * 0: List vertikal (default)
-             * 1: Grid 2 kolom
-             * 2: Grid 3 kolom
-             * 3: List dengan border kiri aksen
-             * 4: Card dengan shadow berwarna
-             * 5: Minimal list (tanpa border)
-             */
-            var layoutIndex = domainHash % 6;
-            var homepageContent = document.querySelector(".homepage-content");
-            var postList = document.getElementById("postList");
-
-            if (homepageContent) {
-                // Variasi background konten
-                var contentBgOptions = ["#ffffff", "#fafafa", "#f8f8f8", "#fffef9", "#f5f5f5", "#fcfcfc"];
-                homepageContent.style.background = contentBgOptions[domainHash % contentBgOptions.length];
-            }
-
-            /*
-             * ============================================
-             * VARIASI POST CARD
-             * ============================================
-             */
-            var postCards = document.querySelectorAll(".post-item");
-            
-            // Warna aksen dari hash domain
             var hue = domainHash % 360;
             function hslToHex(h, s, l) {
                 h = h % 360; s = s / 100; l = l / 100;
@@ -270,35 +225,118 @@ layout: null
                 b = Math.round((b + m) * 255);
                 return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
             }
+            var avatarBg = hslToHex(hue, 60, 50);
+            var avatarText = "#ffffff";
+
+            // Ambil inisial (max 3 huruf)
+            var words = fullName.split("-");
+            var initials = "";
+            for (var w = 0; w < Math.min(words.length, 3); w++) {
+                if (words[w].length > 0) {
+                    initials += words[w].charAt(0).toUpperCase();
+                }
+            }
+            if (initials.length < 2) initials = fullName.substring(0, 3).toUpperCase();
+
+            // Buat SVG placeholder
+            var avatarSize = 40;
+            var avatarHTML = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"" + avatarSize + "\" height=\"" + avatarSize + "\" viewBox=\"0 0 " + avatarSize + " " + avatarSize + "\">";
+            avatarHTML += "<rect width=\"" + avatarSize + "\" height=\"" + avatarSize + "\" rx=\"" + (avatarSize/2) + "\" fill=\"" + avatarBg + "\"/>";
+            avatarHTML += "<text x=\"" + (avatarSize/2) + "\" y=\"" + (avatarSize/2 + 6) + "\" text-anchor=\"middle\" fill=\"" + avatarText + "\" font-size=\"" + (avatarSize/2.2) + "\" font-weight=\"bold\" font-family=\"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif\">" + initials + "</text>";
+            avatarHTML += "</svg>";
+
+            document.getElementById("domainAvatar").innerHTML = avatarHTML;
+
+            /*
+             * ============================================
+             * VARIASI HEADER
+             * ============================================
+             */
+            var headerBgOptions = ["#ffffff", "#fafafa", "#f8f6f2", "#f5f5f5", "#fffef9", "#f0f0f0"];
+            var textColorOptions = ["#000000", "#1a1a1a", "#0d1b2a", "#111111", "#1c1c1c", "#222222"];
+            var shadowOptions = [
+                "0 2px 10px rgba(0,0,0,0.08)", "0 1px 6px rgba(0,0,0,0.06)",
+                "0 3px 14px rgba(0,0,0,0.10)", "0 2px 8px rgba(0,0,0,0.04)",
+                "0 4px 16px rgba(0,0,0,0.12)", "0 1px 3px rgba(0,0,0,0.08)"
+            ];
+            var headerBorderOptions = ["none","none","none","1px solid #e0e0e0","1px solid #eee","none"];
+
+            var headerBg = headerBgOptions[domainHash % headerBgOptions.length];
+            var textColor = textColorOptions[domainHash % textColorOptions.length];
+            var shadow = shadowOptions[domainHash % shadowOptions.length];
+            var borderBottom = headerBorderOptions[domainHash % headerBorderOptions.length];
+
+            var header = document.getElementById("blogHeader");
+            var titleEl = document.getElementById("blogMainTitle");
+            var menuBtn = document.getElementById("blogMenuToggle");
+            var menuIcons = document.querySelectorAll(".menu-icon-main");
+
+            if (header) {
+                header.style.background = headerBg;
+                header.style.boxShadow = shadow;
+                header.style.borderBottom = borderBottom;
+            }
+            if (titleEl) { titleEl.style.color = textColor; }
+            if (menuBtn) { menuBtn.style.color = textColor; }
+            menuIcons.forEach(function(icon) { icon.style.stroke = textColor; });
+
+            var panelRadiusOptions = ["8px","10px","12px","6px","14px","4px"];
+            var panelShadowOptions = [
+                "0 4px 20px rgba(0,0,0,0.12)","0 2px 12px rgba(0,0,0,0.10)",
+                "0 6px 24px rgba(0,0,0,0.14)","0 3px 16px rgba(0,0,0,0.08)",
+                "0 5px 22px rgba(0,0,0,0.13)","0 4px 18px rgba(0,0,0,0.11)"
+            ];
+            var panelRadius = panelRadiusOptions[domainHash % panelRadiusOptions.length];
+            var panelShadow = panelShadowOptions[domainHash % panelShadowOptions.length];
+
+            var menuPanel = document.getElementById("blogMenuPanel");
+            if (menuPanel) {
+                menuPanel.style.borderRadius = panelRadius;
+                menuPanel.style.boxShadow = panelShadow;
+            }
+
+            /*
+             * ============================================
+             * VARIASI LAYOUT HOMEPAGE
+             * ============================================
+             */
+            var layoutIndex = domainHash % 6;
+            var homepageContent = document.querySelector(".homepage-content");
+            if (homepageContent) {
+                var contentBgOptions = ["#ffffff","#fafafa","#f8f8f8","#fffef9","#f5f5f5","#fcfcfc"];
+                homepageContent.style.background = contentBgOptions[domainHash % contentBgOptions.length];
+            }
+
+            var postCards = document.querySelectorAll(".post-item");
             var accentColor = hslToHex(hue, 60, 45);
             var accentLight = hslToHex(hue, 40, 90);
             var accentBg = hslToHex(hue, 20, 96);
 
             postCards.forEach(function(card, index) {
                 switch(layoutIndex) {
-                    case 0: // List vertikal - variasi border
+                    case 0:
                         card.style.borderLeft = "3px solid " + accentColor;
                         card.style.borderRadius = "4px 8px 8px 4px";
                         break;
-                    case 1: // Grid 2 kolom
+                    case 1:
                         card.style.borderTop = "3px solid " + accentColor;
                         card.style.borderRadius = "4px 4px 8px 8px";
                         break;
-                    case 2: // Grid 3 kolom - card dengan aksen subtle
+                    case 2:
                         card.style.boxShadow = "0 2px 8px " + accentColor + "15";
                         card.style.border = "1px solid " + accentColor + "30";
                         break;
-                    case 3: // Border kiri tebal
+                    case 3:
                         card.style.borderLeft = "5px solid " + accentColor;
                         card.style.borderRadius = "2px 6px 6px 2px";
                         card.style.background = accentBg;
                         break;
-                    case 4: // Shadow berwarna
+                    case 4:
                         card.style.boxShadow = "0 3px 12px " + accentColor + "20";
                         card.style.border = "1px solid " + accentColor + "25";
                         card.style.borderRadius = "10px";
                         break;
-                    case 5: // Minimal - tanpa border, hanya padding
+                    case 5:
                         card.style.border = "none";
                         card.style.borderBottom = "1px solid #eee";
                         card.style.borderRadius = "0";
@@ -307,7 +345,6 @@ layout: null
                         break;
                 }
 
-                // Variasi meta tags warna
                 var catEls = card.querySelectorAll(".meta .cat");
                 var labelEls = card.querySelectorAll(".meta .label");
                 var tagEls = card.querySelectorAll(".meta .tag");
@@ -317,7 +354,6 @@ layout: null
                     el.style.color = accentColor;
                     el.style.border = "1px solid " + accentColor + "40";
                 });
-
                 labelEls.forEach(function(el) {
                     var hue2 = (hue + 60) % 360;
                     var labelColor = hslToHex(hue2, 50, 40);
@@ -326,7 +362,6 @@ layout: null
                     el.style.color = labelColor;
                     el.style.border = "1px solid " + labelColor + "40";
                 });
-
                 tagEls.forEach(function(el) {
                     var hue3 = (hue + 180) % 360;
                     var tagColor = hslToHex(hue3, 30, 45);
@@ -336,11 +371,6 @@ layout: null
                 });
             });
 
-            /*
-             * ============================================
-             * VARIASI SECTION LABEL
-             * ============================================
-             */
             var sectionLabel = document.querySelector(".section-label");
             if (sectionLabel) {
                 var labelStyles = [
@@ -354,11 +384,6 @@ layout: null
                 sectionLabel.setAttribute("style", labelStyles[domainHash % labelStyles.length]);
             }
 
-            /*
-             * ============================================
-             * VARIASI LAYOUT GRID/LIST
-             * ============================================
-             */
             var postContainer = document.getElementById("postList");
             if (postContainer) {
                 if (layoutIndex === 1) {
@@ -421,244 +446,117 @@ layout: null
         </script>
 
         <style>
-        /* ============================================ */
-        /* STYLE HEADER BLOG                           */
-        /* ============================================ */
         .blog-header-main.floating-header-main {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 16px;
-            background: #fff;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 16px; background: #fff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            box-sizing: border-box;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1001;
+            box-sizing: border-box; position: fixed; top: 0; left: 0; right: 0; z-index: 1001;
         }
-
         .header-content-main {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            gap: 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            width: 100%; max-width: 1200px; margin: 0 auto; gap: 16px;
         }
-
+        .domain-avatar-main { flex-shrink: 0; line-height: 0; }
         .blog-title-main {
-            margin: 0;
-            font-size: 20px;
-            color: #000;
-            flex: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
+            margin: 0; font-size: 20px; color: #000; flex: 1;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            font-weight: 700; letter-spacing: -0.02em; line-height: 1.2;
         }
-
         .nav-actions-main { flex-shrink: 0; margin: 0; }
-
         .menu-btn-main {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            background: transparent;
-            border: none;
-            color: #000;
-            padding: 0;
-            cursor: pointer;
-            border-radius: 0;
-            transition: opacity 0.2s ease;
+            display: flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px; background: transparent; border: none;
+            color: #000; padding: 0; cursor: pointer; border-radius: 0; transition: opacity 0.2s ease;
         }
-
         .menu-btn-main:hover { opacity: 0.6; background: transparent; }
         .menu-btn-main:active { opacity: 0.4; }
-
         .menu-icon-main {
-            width: 24px;
-            height: 24px;
-            stroke: #000000;
-            fill: none;
-            stroke-width: 2.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
+            width: 24px; height: 24px; stroke: #000000; fill: none;
+            stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
         }
-
         #blogMenuPanel {
-            display: none;
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            padding: 16px;
-            position: fixed;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-            border-radius: 10px;
+            display: none; background: #fff; border: 1px solid #e0e0e0;
+            padding: 16px; position: fixed; z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12); border-radius: 10px;
         }
-
         #blogMenuPanel ul { list-style: none; margin: 0; padding: 0; }
         #blogMenuPanel li { margin: 0; padding: 0; }
-
         #blogMenuPanel a {
-            color: #000;
-            text-decoration: none;
-            display: block;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-            font-weight: 500;
-            white-space: nowrap;
+            color: #000; text-decoration: none; display: block; border-radius: 6px;
+            transition: all 0.2s ease; font-weight: 500; white-space: nowrap;
         }
-
         #blogMenuPanel a:hover { background: rgba(0,0,0,0.05); }
-
-        /* SPACER */
         .header-spacer { height: 60px; }
-
-        /* HOMEPAGE CONTENT */
-        .homepage-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            background: #fff;
-        }
-
-        /* POST ITEM (style dasar, akan divariasi oleh JS) */
+        .homepage-content { max-width: 1200px; margin: 0 auto; padding: 1.5rem; background: #fff; }
         .post-item {
-            background: #fff;
-            padding: 12px;
-            margin-bottom: 12px;
-            border: 1px solid #e5e5e5;
-            border-radius: 6px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-            transition: all .15s ease;
+            background: #fff; padding: 12px; margin-bottom: 12px;
+            border: 1px solid #e5e5e5; border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04); transition: all .15s ease;
         }
-
-        .post-item:hover {
-            border-color: #ccc;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
-        }
-
+        .post-item:hover { border-color: #ccc; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
         .post-item h2 { font-size: 16px; margin-bottom: 6px; }
         .post-item h2 a { text-decoration: none; color: #111; }
         .post-item h2 a:hover { text-decoration: underline; }
-
         .excerpt { font-size: 13px; color: #555; margin-bottom: 8px; }
         .meta { font-size: 11px; }
-
         .meta a {
-            display: inline-block;
-            padding: 2px 6px;
-            margin: 2px 6px 2px 0;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
+            display: inline-block; padding: 2px 6px; margin: 2px 6px 2px 0;
+            border-radius: 4px; text-decoration: none; font-weight: 500;
         }
-
         .meta .cat { background: #e8f1ff; color: #1a4fb3; border: 1px solid #c7dcff; }
         .meta .label { background: #e9f7ef; color: #1b7f4c; border: 1px solid #c9ead6; }
         .meta .tag { background: #f3f3f3; color: #555; border: 1px solid #ddd; }
         .meta a:hover { opacity: .85; }
+        .section-label { text-align: center; font-weight: 600; margin-bottom: 1.5rem; }
 
-        .section-label {
-            text-align: center;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-
-        .pagination { margin-top: 16px; text-align: center; font-size: 13px; }
-        .pagination a, .pagination span {
-            display: inline-block;
-            padding: 5px 9px;
-            margin: 3px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #333;
-            background: #fff;
-        }
-        .pagination .current { background: #333; color: #fff; border-color: #333; }
-        .pagination a:hover { background: #eee; }
-
-        /* DESKTOP */
         @media (min-width: 1025px) {
             .blog-header-main.floating-header-main { padding: 12px 24px; }
             .header-content-main { max-width: 1400px; }
             .blog-title-main { font-size: 22px; }
             .menu-btn-main { width: 40px; height: 40px; }
             .menu-icon-main { width: 26px; height: 26px; }
-            #blogMenuPanel {
-                top: 65px; right: 24px; padding: 20px;
-                min-width: 220px; max-width: 250px;
-            }
+            #blogMenuPanel { top: 65px; right: 24px; padding: 20px; min-width: 220px; max-width: 250px; }
             #blogMenuPanel a { padding: 12px 16px; font-size: 15px; margin-bottom: 4px; }
             #blogMenuPanel li:not(:last-child) a { border-bottom: 1px solid #f0f0f0; }
             .header-spacer { height: 70px; }
         }
-
-        /* TABLET */
         @media (max-width: 1024px) and (min-width: 769px) {
             .blog-header-main.floating-header-main { padding: 10px 16px; }
             .header-content-main { gap: 14px; }
             .blog-title-main { font-size: 18px; }
             .menu-btn-main { width: 36px; height: 36px; }
             .menu-icon-main { width: 22px; height: 22px; stroke-width: 2.5; }
-            #blogMenuPanel {
-                top: 58px; right: 16px; padding: 16px;
-                min-width: 200px; max-width: 220px;
-            }
+            #blogMenuPanel { top: 58px; right: 16px; padding: 16px; min-width: 200px; max-width: 220px; }
             #blogMenuPanel a { padding: 10px 14px; font-size: 14px; margin-bottom: 3px; }
-            #blogMenuPanel li:not(:last-child) a { border-bottom: 1px solid #f0f0f0; }
             .header-spacer { height: 58px; }
         }
-
-        /* MOBILE */
         @media (max-width: 768px) {
             .blog-header-main.floating-header-main { padding: 8px 12px; }
             .blog-title-main { font-size: 17px; }
             .menu-btn-main { width: 32px; height: 32px; }
             .menu-icon-main { width: 20px; height: 20px; stroke-width: 2.5; }
-            #blogMenuPanel {
-                top: 56px; right: 12px; padding: 14px;
-                min-width: 180px; max-width: 200px;
-            }
+            #blogMenuPanel { top: 56px; right: 12px; padding: 14px; min-width: 180px; max-width: 200px; }
             #blogMenuPanel a { padding: 9px 12px; font-size: 13px; margin-bottom: 2px; }
-            #blogMenuPanel li:not(:last-child) a { border-bottom: 1px solid #f0f0f0; }
             .header-spacer { height: 52px; }
         }
-
-        /* MOBILE KECIL */
         @media (max-width: 480px) {
             .blog-header-main.floating-header-main { padding: 8px 10px; }
             .header-content-main { gap: 12px; }
             .blog-title-main { font-size: 16px; font-weight: 600; }
             .menu-btn-main { width: 30px; height: 30px; }
             .menu-icon-main { width: 18px; height: 18px; stroke-width: 2.5; }
-            #blogMenuPanel {
-                top: 54px; right: 10px; padding: 12px;
-                min-width: 160px; max-width: 180px;
-            }
+            #blogMenuPanel { top: 54px; right: 10px; padding: 12px; min-width: 160px; max-width: 180px; }
             #blogMenuPanel a { padding: 8px 10px; font-size: 12px; margin-bottom: 2px; }
-            #blogMenuPanel li:not(:last-child) a { border-bottom: 1px solid #f0f0f0; }
             .header-spacer { height: 48px; }
         }
         </style>
 
-        <!-- SPACER HEADER -->
         <div class="header-spacer"></div>
 
-        <!-- KONTEN HOMEPAGE -->
         <div class="homepage-content">
             <main>
                 <article>
                     <div class="section-label"><b>Latest Posts</b></div>
-
                     <div id="postList">
                         {% for post in site.categories.main %}
                         <div class="post-item">
@@ -692,213 +590,123 @@ layout: null
     <div id="query-page" style="display:none;">
         <style>
             :root {
-                --bg-body: #1a1a1b;
-                --bg-card: #1e1e1f;
-                --border-color: #343536;
-                --border-hover: #565758;
-                --text-primary: #d7dadc;
-                --text-secondary: #818384;
-                --text-muted: #5a5b5c;
-                --accent: #d93900;
-                --accent-hover: #ff4500;
-                --flair-bg-1: #1a3e4c;
-                --flair-text-1: #9efff0;
-                --flair-bg-2: #4c1a2e;
-                --flair-text-2: #ff9ec4;
-                --flair-bg-3: #1a4c2e;
-                --flair-text-3: #9effb0;
-                --flair-bg-4: #4c3a1a;
-                --flair-text-4: #ffd700;
-                --flair-bg-5: #1a3a4c;
-                --flair-text-5: #87ceeb;
-                --card-radius: 8px;
-                --card-padding: 0.75rem;
-                --card-gap: 0.75rem;
-                --font-heading: 1.5rem;
-                --font-card-title: 1rem;
-                --font-meta: 0.7rem;
-                --font-small: 0.6rem;
+                --bg-body: #1a1a1b; --bg-card: #1e1e1f;
+                --border-color: #343536; --border-hover: #565758;
+                --text-primary: #d7dadc; --text-secondary: #818384; --text-muted: #5a5b5c;
+                --accent: #d93900; --accent-hover: #ff4500;
+                --flair-bg-1: #1a3e4c; --flair-text-1: #9efff0;
+                --flair-bg-2: #4c1a2e; --flair-text-2: #ff9ec4;
+                --flair-bg-3: #1a4c2e; --flair-text-3: #9effb0;
+                --flair-bg-4: #4c3a1a; --flair-text-4: #ffd700;
+                --flair-bg-5: #1a3a4c; --flair-text-5: #87ceeb;
+                --card-radius: 8px; --card-padding: 0.75rem; --card-gap: 0.75rem;
+                --font-heading: 1.5rem; --font-card-title: 1rem;
+                --font-meta: 0.7rem; --font-small: 0.6rem;
             }
-
             .query-container {
-                max-width: 1000px;
-                margin: 0 auto;
-                padding: 1rem;
-                background: var(--bg-body);
+                max-width: 1000px; margin: 0 auto; padding: 1rem;
+                background: var(--bg-body); color: var(--text-primary);
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif;
-                color: var(--text-primary);
-                line-height: 1.5;
-                min-height: 100vh;
+                line-height: 1.5; min-height: 100vh;
             }
-
             .query-container * { margin: 0; padding: 0; box-sizing: border-box; }
-
             .page-h1 {
-                font-size: var(--font-heading);
-                font-weight: 600;
-                margin-bottom: 0.75rem;
-                color: var(--text-primary);
-                padding-bottom: 0.5rem;
+                font-size: var(--font-heading); font-weight: 600; margin-bottom: 0.75rem;
+                color: var(--text-primary); padding-bottom: 0.5rem;
                 border-bottom: 1px solid var(--border-color);
             }
-
             .breadcrumb { font-size: var(--font-meta); color: var(--text-secondary); margin-bottom: 1rem; }
             .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
             .breadcrumb a:hover { text-decoration: underline; }
             .breadcrumb span:last-child { color: var(--text-primary); }
-
             .header-card {
-                background: var(--bg-card);
-                border-radius: var(--card-radius);
-                padding: var(--card-padding);
-                margin-bottom: 1rem;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: 1rem;
-                border: 1px solid var(--border-color);
+                background: var(--bg-card); border-radius: var(--card-radius);
+                padding: var(--card-padding); margin-bottom: 1rem;
+                display: flex; justify-content: space-between; align-items: center;
+                flex-wrap: wrap; gap: 1rem; border: 1px solid var(--border-color);
             }
-
             .header-info h2 { font-size: 1.2rem; font-weight: 600; }
             .header-info p { font-size: var(--font-meta); color: var(--text-secondary); }
-
             .header-action {
-                background: var(--accent);
-                padding: 0.4rem 1rem;
-                border-radius: 20px;
-                font-size: var(--font-meta);
-                font-weight: 600;
-                color: #fff;
-                cursor: pointer;
-                transition: background 0.2s;
-                text-decoration: none;
-                display: inline-block;
+                background: var(--accent); padding: 0.4rem 1rem; border-radius: 20px;
+                font-size: var(--font-meta); font-weight: 600; color: #fff;
+                cursor: pointer; transition: background 0.2s; text-decoration: none; display: inline-block;
             }
             .header-action:hover { background: var(--accent-hover); }
-
             .sort-bar {
-                display: flex;
-                gap: 1rem;
-                border-bottom: 1px solid var(--border-color);
-                padding-bottom: 0.5rem;
-                margin-bottom: 1rem;
-                font-size: 0.75rem;
+                display: flex; gap: 1rem; border-bottom: 1px solid var(--border-color);
+                padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 0.75rem;
             }
             .sort-active { color: var(--accent); font-weight: 600; }
             .sort-inactive { cursor: pointer; color: var(--text-secondary); }
             .sort-inactive:hover { color: var(--text-primary); }
-
             .two-col { display: grid; grid-template-columns: 1fr 280px; gap: 1rem; }
             .post-feed { display: flex; flex-direction: column; gap: var(--card-gap); }
             .post-feed.grid { display: grid; grid-template-columns: repeat(2, 1fr); }
             .post-feed.gallery { display: grid; grid-template-columns: repeat(3, 1fr); }
-
             .post-card {
-                background: var(--bg-card);
-                border: 1px solid var(--border-color);
-                border-radius: var(--card-radius);
-                padding: var(--card-padding);
-                transition: all 0.1s;
+                background: var(--bg-card); border: 1px solid var(--border-color);
+                border-radius: var(--card-radius); padding: var(--card-padding); transition: all 0.1s;
             }
             .post-card:hover { border-color: var(--border-hover); }
-
             .post-card-header {
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                font-size: var(--font-meta);
-                color: var(--text-secondary);
-                margin-bottom: 0.5rem;
-                flex-wrap: wrap;
+                display: flex; align-items: center; gap: 0.5rem;
+                font-size: var(--font-meta); color: var(--text-secondary);
+                margin-bottom: 0.5rem; flex-wrap: wrap;
             }
             .post-card-community { color: var(--accent); font-weight: 600; }
             .post-card-author { font-weight: 500; }
             .post-card-time { font-size: var(--font-small); }
-
             .post-card-title {
-                font-size: var(--font-card-title);
-                font-weight: 500;
-                margin-bottom: 0.5rem;
-                color: var(--text-primary);
+                font-size: var(--font-card-title); font-weight: 500;
+                margin-bottom: 0.5rem; color: var(--text-primary);
             }
             .post-card-title a { color: var(--text-primary); text-decoration: none; display: block; }
             .post-card-title a:hover { text-decoration: underline; color: var(--accent-hover); }
-
             .post-card-meta {
-                display: flex;
-                gap: 0.5rem;
-                font-size: var(--font-small);
-                color: var(--text-secondary);
-                margin-bottom: 0.5rem;
-                flex-wrap: wrap;
+                display: flex; gap: 0.5rem; font-size: var(--font-small);
+                color: var(--text-secondary); margin-bottom: 0.5rem; flex-wrap: wrap;
             }
-
             .flair {
-                display: inline-block;
-                padding: 0.15rem 0.5rem;
-                border-radius: 12px;
-                font-size: var(--font-small);
-                font-weight: 600;
-                text-transform: uppercase;
+                display: inline-block; padding: 0.15rem 0.5rem; border-radius: 12px;
+                font-size: var(--font-small); font-weight: 600; text-transform: uppercase;
             }
             .flair-1 { background: var(--flair-bg-1); color: var(--flair-text-1); }
             .flair-2 { background: var(--flair-bg-2); color: var(--flair-text-2); }
             .flair-3 { background: var(--flair-bg-3); color: var(--flair-text-3); }
             .flair-4 { background: var(--flair-bg-4); color: var(--flair-text-4); }
             .flair-5 { background: var(--flair-bg-5); color: var(--flair-text-5); }
-
             .vote-section {
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                font-size: 0.8rem;
-                font-weight: 600;
-                color: var(--text-secondary);
+                display: flex; align-items: center; gap: 0.5rem;
+                font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);
             }
             .vote-btn {
-                font-size: 1rem;
-                cursor: pointer;
-                transition: color 0.2s;
-                background: none;
-                border: none;
-                color: var(--text-secondary);
-                padding: 0;
+                font-size: 1rem; cursor: pointer; transition: color 0.2s;
+                background: none; border: none; color: var(--text-secondary); padding: 0;
             }
             .vote-btn:hover { color: var(--accent); }
-
             .action-row { display: flex; gap: 0.75rem; margin-top: 0.5rem; font-size: var(--font-small); }
             .action-link { color: var(--text-secondary); text-decoration: none; }
             .action-link:hover { color: var(--text-primary); text-decoration: underline; }
-
             .sidebar-card {
-                background: var(--bg-card);
-                border: 1px solid var(--border-color);
-                border-radius: var(--card-radius);
-                padding: var(--card-padding);
-                margin-bottom: 1rem;
-                position: sticky;
-                top: 1rem;
+                background: var(--bg-card); border: 1px solid var(--border-color);
+                border-radius: var(--card-radius); padding: var(--card-padding);
+                margin-bottom: 1rem; position: sticky; top: 1rem;
             }
             .sidebar-title {
-                font-size: 0.75rem;
-                font-weight: 600;
-                margin-bottom: 0.5rem;
-                border-bottom: 1px solid var(--border-color);
-                padding-bottom: 0.25rem;
+                font-size: 0.75rem; font-weight: 600; margin-bottom: 0.5rem;
+                border-bottom: 1px solid var(--border-color); padding-bottom: 0.25rem;
                 color: var(--text-primary);
             }
             .sidebar-item { padding: 0.4rem 0; border-bottom: 1px solid #2a2a2b; font-size: var(--font-meta); }
             .sidebar-item a { color: var(--text-primary); text-decoration: none; display: block; transition: color 0.2s; }
             .sidebar-item a:hover { color: var(--accent-hover); text-decoration: underline; }
             .sidebar-number { color: var(--accent); font-weight: 700; margin-right: 0.25rem; }
-
             .query-footer { font-size: var(--font-small); color: var(--text-muted); text-align: center; margin-top: 2rem; }
             .footer-links { display: flex; gap: 1rem; justify-content: center; margin-bottom: 0.5rem; flex-wrap: wrap; }
             .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: var(--font-small); }
             .footer-links a:hover { text-decoration: underline; }
             hr { border: none; border-top: 1px solid var(--border-color); margin: 1rem 0; }
-
             @media (max-width: 768px) {
                 .two-col { grid-template-columns: 1fr; }
                 .query-container { padding: 0.5rem; }
@@ -913,11 +721,9 @@ layout: null
 
         <div class="query-container">
             <h1 id="page-h1" class="page-h1"></h1>
-
             <div class="breadcrumb">
                 <a href="/">Home</a> / <span id="breadcrumb-domain"></span> / search: <span id="breadcrumb-query"></span>
             </div>
-
             <div class="header-card">
                 <div class="header-info">
                     <h2 id="header-title"></h2>
@@ -925,13 +731,11 @@ layout: null
                 </div>
                 <span class="header-action" id="header-action-label"></span>
             </div>
-
             <div class="sort-bar">
                 <span class="sort-active" id="sort-label"></span>
                 <span class="sort-inactive">Newest</span>
                 <span class="sort-inactive">Most upvoted</span>
             </div>
-
             <div class="two-col">
                 <div class="post-feed" id="post-feed"></div>
                 <div>
@@ -941,7 +745,6 @@ layout: null
                     </div>
                 </div>
             </div>
-
             <hr />
             <div class="query-footer">
                 <div class="footer-links" id="footer-links"></div>
@@ -955,7 +758,7 @@ layout: null
 </div>
 
 <!-- ============================================ -->
-<!-- JAVASCRIPT: DNA FULL HOSTNAME + QUERY LOGIC  -->
+<!-- JAVASCRIPT: DNA FULL HOSTNAME + QUERY LOGIC   -->
 <!-- ============================================ -->
 <script>
 (function() {
@@ -995,7 +798,6 @@ layout: null
     if (queryPage) queryPage.style.display = "block";
 
     query = decodeURIComponent(query.replace(/\+/g, " "));
-
     var combinedSeed = hashString(fullName + "|||" + query);
 
     function SeededRandom(seed) {
@@ -1022,7 +824,6 @@ layout: null
         return shuffled;
     }
 
-    // Warna
     var hue = domainHash % 360;
     function hslToHex(h, s, l) {
         h = h % 360; s = s / 100; l = l / 100;
@@ -1044,31 +845,21 @@ layout: null
 
     var accentColor = hslToHex(hue, 70, 50);
     var accentHover = hslToHex(hue, 80, 60);
-    var flairBg1 = hslToHex(hue, 30, 15);
-    var flairText1 = hslToHex(hue, 60, 75);
-    var flairBg2 = hslToHex((hue + 60) % 360, 30, 15);
-    var flairText2 = hslToHex((hue + 60) % 360, 60, 75);
-    var flairBg3 = hslToHex((hue + 120) % 360, 30, 15);
-    var flairText3 = hslToHex((hue + 120) % 360, 60, 75);
-    var flairBg4 = hslToHex((hue + 180) % 360, 30, 15);
-    var flairText4 = hslToHex((hue + 180) % 360, 60, 75);
-    var flairBg5 = hslToHex((hue + 240) % 360, 30, 15);
-    var flairText5 = hslToHex((hue + 240) % 360, 60, 75);
 
     var queryContainer = document.querySelector(".query-container");
     if (queryContainer) {
         queryContainer.style.setProperty("--accent", accentColor);
         queryContainer.style.setProperty("--accent-hover", accentHover);
-        queryContainer.style.setProperty("--flair-bg-1", flairBg1);
-        queryContainer.style.setProperty("--flair-text-1", flairText1);
-        queryContainer.style.setProperty("--flair-bg-2", flairBg2);
-        queryContainer.style.setProperty("--flair-text-2", flairText2);
-        queryContainer.style.setProperty("--flair-bg-3", flairBg3);
-        queryContainer.style.setProperty("--flair-text-3", flairText3);
-        queryContainer.style.setProperty("--flair-bg-4", flairBg4);
-        queryContainer.style.setProperty("--flair-text-4", flairText4);
-        queryContainer.style.setProperty("--flair-bg-5", flairBg5);
-        queryContainer.style.setProperty("--flair-text-5", flairText5);
+        queryContainer.style.setProperty("--flair-bg-1", hslToHex(hue, 30, 15));
+        queryContainer.style.setProperty("--flair-text-1", hslToHex(hue, 60, 75));
+        queryContainer.style.setProperty("--flair-bg-2", hslToHex((hue+60)%360, 30, 15));
+        queryContainer.style.setProperty("--flair-text-2", hslToHex((hue+60)%360, 60, 75));
+        queryContainer.style.setProperty("--flair-bg-3", hslToHex((hue+120)%360, 30, 15));
+        queryContainer.style.setProperty("--flair-text-3", hslToHex((hue+120)%360, 60, 75));
+        queryContainer.style.setProperty("--flair-bg-4", hslToHex((hue+180)%360, 30, 15));
+        queryContainer.style.setProperty("--flair-text-4", hslToHex((hue+180)%360, 60, 75));
+        queryContainer.style.setProperty("--flair-bg-5", hslToHex((hue+240)%360, 30, 15));
+        queryContainer.style.setProperty("--flair-text-5", hslToHex((hue+240)%360, 60, 75));
     }
 
     var layoutIndex = domainHash % 3;
@@ -1129,44 +920,32 @@ layout: null
         "[DOMAIN] - Verified source"
     ], domainHash);
 
-    var footerStatuses = shuffleArray([
-        "live", "active", "online", "updated", "available"
-    ], domainHash);
-
-    var sortLabels = shuffleArray([
-        "Relevance", "Trending", "Hot", "Top Rated", "Most Viewed"
-    ], domainHash);
-
-    var headerActionLabels = shuffleArray([
-        "JOIN", "FOLLOW", "SUBSCRIBE", "ACCESS", "ENTER", "BROWSE"
-    ], domainHash);
-
+    var footerStatuses = shuffleArray(["live","active","online","updated","available"], domainHash);
+    var sortLabels = shuffleArray(["Relevance","Trending","Hot","Top Rated","Most Viewed"], domainHash);
+    var headerActionLabels = shuffleArray(["JOIN","FOLLOW","SUBSCRIBE","ACCESS","ENTER","BROWSE"], domainHash);
     var timePhrases = shuffleArray([
-        "just now", "a few minutes ago", "recently",
-        "earlier today", "today", "not long ago",
-        "fresh", "new", "latest", "just added",
-        "updated", "active now"
+        "just now","a few minutes ago","recently","earlier today","today",
+        "not long ago","fresh","new","latest","just added","updated","active now"
     ], domainHash);
 
     var authorPrefixes = shuffleArray([
-        "user", "member", "contributor", "curator",
-        "collector", "source", "uploader"
+        "user","member","contributor","curator","collector","source","uploader"
     ], domainHash);
 
     var actionVerbSets = shuffleArray([
-        ["comments", "Share", "Save"],
-        ["replies", "Share", "Bookmark"],
-        ["discussions", "Copy link", "Save"],
-        ["responses", "Share", "Pin"]
+        ["comments","Share","Save"],
+        ["replies","Share","Bookmark"],
+        ["discussions","Copy link","Save"],
+        ["responses","Share","Pin"]
     ], domainHash);
 
     var removeTerms = [
-        "leaked", "leak", "leaks", "archive", "collection", "dump",
-        "vault", "pack", "bundle", "gallery", "content", "media",
-        "videos", "photos", "pics", "onlyfans", "tiktok", "instagram",
-        "twitter", "telegram", "discord", "trending", "viral",
-        "exclusive", "private", "premium", "full", "complete",
-        "hot", "new", "watch", "view", "access", "reddit", "forum", "thread"
+        "leaked","leak","leaks","archive","collection","dump",
+        "vault","pack","bundle","gallery","content","media",
+        "videos","photos","pics","onlyfans","tiktok","instagram",
+        "twitter","telegram","discord","trending","viral",
+        "exclusive","private","premium","full","complete",
+        "hot","new","watch","view","access","reddit","forum","thread"
     ];
     var baseRaw = query.toLowerCase();
     removeTerms.forEach(function(term) {
@@ -1185,17 +964,114 @@ layout: null
     var displayName = formatName(baseName);
     var displayLower = displayName.toLowerCase();
 
+    /*
+     * ============================================
+     * UPGRADE #4: META KEYWORDS DARI QUERY + LEAK
+     * ============================================
+     */
+    var metaKeywords = document.getElementById("dynamic-keywords");
+    if (metaKeywords) {
+        var leakKeywordVariations = [
+            displayLower + " leak",
+            displayLower + " leaked",
+            "leaked " + displayLower,
+            displayLower + " leaks",
+            "leak " + displayLower,
+            displayLower + " exclusive",
+            "exclusive " + displayLower,
+            displayLower + " full",
+            "full " + displayLower + " leak",
+            displayLower + " leaked content",
+            displayLower + " leaked videos",
+            displayLower + " leaked photos",
+            displayLower + " archive",
+            displayLower + " private leak",
+            "rare " + displayLower + " leak"
+        ];
+        var kwShuffled = shuffleArray(leakKeywordVariations, combinedSeed);
+        metaKeywords.content = kwShuffled.slice(0, 8).join(", ");
+    }
+
+    /*
+     * ============================================
+     * UPGRADE #1: BREADCRUMB SCHEMA
+     * ============================================
+     */
+    var breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": location.origin
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": fullName,
+                "item": location.origin
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": displayName,
+                "item": location.href
+            }
+        ]
+    };
+    var breadcrumbScript = document.createElement("script");
+    breadcrumbScript.type = "application/ld+json";
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(breadcrumbScript);
+
+    /*
+     * ============================================
+     * UPGRADE #2: FAQ SCHEMA
+     * ============================================
+     */
+    var faqQuestions = shuffleArray([
+        { q: "Where to find " + displayLower + " leaked content?", a: "Browse the complete " + displayLower + " archive on " + fullName + ". All leaked videos, photos, and exclusive media available." },
+        { q: "Is " + displayLower + " leaked content available online?", a: "Yes, " + displayLower + " leaked content is available on " + fullName + ". Access the full collection with regular updates." },
+        { q: "What type of " + displayLower + " leaks can I find?", a: "Find " + displayLower + " leaked videos, photos, private content, and exclusive archives on " + fullName + "." },
+        { q: "How to access " + displayLower + " private leaked media?", a: "Access " + displayLower + " private leaked media through " + fullName + ". Complete archive with all exclusive content." },
+        { q: "Are there recent " + displayLower + " leaks available?", a: "Yes, " + fullName + " has the latest " + displayLower + " leaks updated regularly with new content." }
+    ], combinedSeed);
+
+    var faqData = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqQuestions.slice(0, 3).map(function(item) {
+            return {
+                "@type": "Question",
+                "name": item.q,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": item.a
+                }
+            };
+        })
+    };
+    var faqScript = document.createElement("script");
+    faqScript.type = "application/ld+json";
+    faqScript.textContent = JSON.stringify(faqData);
+    document.head.appendChild(faqScript);
+
+    /*
+     * ============================================
+     * UPDATE HALAMAN QUERY
+     * ============================================
+     */
     var h1Text = pickFromArray(titleTemplates, combinedSeed, 0)
-        .replace("[QUERY]", displayName)
-        .replace("[DOMAIN]", fullName);
+        .replace("[QUERY]", displayName).replace("[DOMAIN]", fullName);
     document.getElementById("page-h1").innerText = h1Text;
 
     document.getElementById("breadcrumb-domain").innerText = fullName;
     document.getElementById("breadcrumb-query").innerText = displayName;
 
     var h2Text = pickFromArray(h2Templates, combinedSeed, 1)
-        .replace("[QUERY]", displayName)
-        .replace("[DOMAIN]", fullName);
+        .replace("[QUERY]", displayName).replace("[DOMAIN]", fullName);
     document.getElementById("header-title").innerText = h2Text;
     document.getElementById("header-subtitle").innerText =
         "Showing results for " + displayName + " - " + (10 + (combinedSeed % 8)) + " entries";
@@ -1205,8 +1081,7 @@ layout: null
     document.getElementById("sort-label").innerText = pickFromArray(sortLabels, combinedSeed, 0);
 
     var sidebarH3 = pickFromArray(sidebarTitles, combinedSeed, 2)
-        .replace("[QUERY]", displayName)
-        .replace("[DOMAIN]", fullName);
+        .replace("[QUERY]", displayName).replace("[DOMAIN]", fullName);
     document.getElementById("sidebar-heading").innerText = sidebarH3;
 
     document.getElementById("footer-text").innerText =
@@ -1215,26 +1090,26 @@ layout: null
         pickFromArray(footerStatuses, combinedSeed, 50);
 
     var platforms = shuffleArray([
-        "OnlyFans", "TikTok", "Instagram", "Telegram", "Twitter",
-        "Discord", "Snapchat", "Premium", "Patreon", "Twitch",
-        "YouTube", "Facebook", "Reddit", "Threads"
+        "OnlyFans","TikTok","Instagram","Telegram","Twitter",
+        "Discord","Snapchat","Premium","Patreon","Twitch",
+        "YouTube","Facebook","Reddit","Threads"
     ], domainHash);
 
     var adjectives = shuffleArray([
-        "private", "exclusive", "premium", "deleted", "hidden",
-        "rare", "viral", "secret", "unreleased", "censored",
-        "archived", "restricted", "special", "limited"
+        "private","exclusive","premium","deleted","hidden",
+        "rare","viral","secret","unreleased","censored",
+        "archived","restricted","special","limited"
     ], domainHash);
 
     var contentTypes = shuffleArray([
-        "videos", "photos", "media", "content", "collection",
-        "archive", "pack", "set", "gallery", "clips",
-        "stories", "posts", "footage", "files", "data"
+        "videos","photos","media","content","collection",
+        "archive","pack","set","gallery","clips",
+        "stories","posts","footage","files","data"
     ], domainHash);
 
     var leakTerms = shuffleArray([
-        "leaked", "leak", "leaks", "exclusive", "private",
-        "premium", "full", "mega", "rare"
+        "leaked","leak","leaks","exclusive","private",
+        "premium","full","mega","rare"
     ], domainHash);
 
     function generateQueryKW(seed, count) {
