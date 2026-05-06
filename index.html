@@ -18,11 +18,6 @@ layout: null
         var urlParams = new URLSearchParams(location.search);
         var query = urlParams.get("q");
 
-        /*
-         * Ambil hostname utuh tanpa TLD.
-         * abc.domain01.com → abc-domain01
-         * beatleakedflow.my.id → beatleakedflow
-         */
         var parts = hostname.split(".");
         var tldParts = 2;
         var rawName = parts.slice(0, Math.max(1, parts.length - tldParts)).join("-");
@@ -43,33 +38,27 @@ layout: null
         var descText = "";
 
         if (query) {
-            // Halaman query
             query = decodeURIComponent(query.replace(/\+/g, " "));
             var cleanQuery = formatText(query);
             titleText = cleanQuery + " on " + displayDomain;
             descText = cleanQuery + " - Complete archive on " + displayDomain + ". Latest updates and exclusive content.";
         } else {
-            // Homepage
             titleText = displayDomain;
             descText = displayDomain + " - Latest updates and exclusive content.";
         }
 
-        // Title
         document.title = titleText;
 
-        // Meta description
         var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
         metaDesc.name = "description";
         metaDesc.content = descText;
         if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
 
-        // Meta author
         var metaAuthor = document.querySelector("meta[name=\"author\"]") || document.createElement("meta");
         metaAuthor.name = "author";
         metaAuthor.content = displayDomain;
         if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
 
-        // Schema.org WebSite
         var schemaData = {
             "@context": "https://schema.org",
             "@type": "WebSite",
@@ -81,7 +70,6 @@ layout: null
         schemaScript.textContent = JSON.stringify(schemaData);
         document.head.appendChild(schemaScript);
 
-        // Canonical
         var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
         canonical.setAttribute("rel", "canonical");
         canonical.setAttribute("href", location.href);
@@ -91,7 +79,6 @@ layout: null
 
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     
-    <!-- FAVICON & MANIFEST -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -109,145 +96,594 @@ layout: null
     <!-- ============================================ -->
     <!-- KONDISI 1: HOMEPAGE (TANPA QUERY)            -->
     <!-- ============================================ -->
-    <!--
-     * Muncul saat TIDAK ADA ?q=
-     * H1 di-handle oleh include header1.html
-     * Konten dari looping Jekyll site.categories.main
-    -->
     <div id="homepage">
-        {% include header1.html %}
+        
+        <!-- ============================================ -->
+        <!-- HEADER BLOG DENGAN VARIASI PER DOMAIN        -->
+        <!-- ============================================ -->
+        <header id="blogHeader" class="blog-header-main floating-header-main" loading="lazy">
+            <div class="header-content-main">
+                <h1 id="blogMainTitle" class="blog-title-main"></h1>
+                <div class="nav-actions-main">
+                    <button class="nav-button-main menu-btn-main" id="blogMenuToggle" title="Menu" aria-label="Menu">
+                        <svg id="blogIconMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="menu-icon-main">
+                            <path d="M3 6h18M3 12h18M3 18h18"/>
+                        </svg>
+                        <svg id="blogIconClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="menu-icon-main" style="display:none;">
+                            <path d="M6 6l12 12M6 18l12-12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div id="blogMenuPanel">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/contact/">Contact</a></li>
+                <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                <li><a href="/terms-and-conditions/">Terms and Conditions</a></li>
+            </ul>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- VARIASI HOMEPAGE PER DOMAIN                  -->
+        <!-- ============================================ -->
+        <script>
+        (function() {
+            var hostname = window.location.hostname;
+            var parts = hostname.split(".");
+            var tldParts = 2;
+            var rawName = parts.slice(0, Math.max(1, parts.length - tldParts)).join("-");
+            if (rawName.toLowerCase() === "www") {
+                rawName = parts.slice(1, Math.max(2, parts.length - tldParts)).join("-");
+            }
+            var fullName = rawName;
+
+            function hashString(str) {
+                var hash = 0;
+                for (var i = 0; i < str.length; i++) {
+                    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                    hash |= 0;
+                }
+                return Math.abs(hash);
+            }
+            var domainHash = hashString(fullName);
+
+            // H1 dari domain
+            var clean = fullName.replace(/-/g, " ");
+            var title = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+            document.getElementById("blogMainTitle").textContent = title;
+
+            /*
+             * ============================================
+             * VARIASI HEADER
+             * ============================================
+             */
+            var headerBgOptions = ["#ffffff", "#fafafa", "#f8f6f2", "#f5f5f5", "#fffef9", "#f0f0f0"];
+            var textColorOptions = ["#000000", "#1a1a1a", "#0d1b2a", "#111111", "#1c1c1c", "#222222"];
+            var shadowOptions = [
+                "0 2px 10px rgba(0,0,0,0.08)",
+                "0 1px 6px rgba(0,0,0,0.06)",
+                "0 3px 14px rgba(0,0,0,0.10)",
+                "0 2px 8px rgba(0,0,0,0.04)",
+                "0 4px 16px rgba(0,0,0,0.12)",
+                "0 1px 3px rgba(0,0,0,0.08)"
+            ];
+            var headerBorderOptions = [
+                "none",
+                "none",
+                "none",
+                "1px solid #e0e0e0",
+                "1px solid #eee",
+                "none"
+            ];
+
+            var headerBg = headerBgOptions[domainHash % headerBgOptions.length];
+            var textColor = textColorOptions[domainHash % textColorOptions.length];
+            var shadow = shadowOptions[domainHash % shadowOptions.length];
+            var borderBottom = headerBorderOptions[domainHash % headerBorderOptions.length];
+
+            var header = document.getElementById("blogHeader");
+            var titleEl = document.getElementById("blogMainTitle");
+            var menuBtn = document.getElementById("blogMenuToggle");
+            var menuIcons = document.querySelectorAll(".menu-icon-main");
+
+            if (header) {
+                header.style.background = headerBg;
+                header.style.boxShadow = shadow;
+                header.style.borderBottom = borderBottom;
+            }
+            if (titleEl) {
+                titleEl.style.color = textColor;
+            }
+            if (menuBtn) {
+                menuBtn.style.color = textColor;
+            }
+            menuIcons.forEach(function(icon) {
+                icon.style.stroke = textColor;
+            });
+
+            // Menu panel
+            var panelRadiusOptions = ["8px", "10px", "12px", "6px", "14px", "4px"];
+            var panelShadowOptions = [
+                "0 4px 20px rgba(0,0,0,0.12)",
+                "0 2px 12px rgba(0,0,0,0.10)",
+                "0 6px 24px rgba(0,0,0,0.14)",
+                "0 3px 16px rgba(0,0,0,0.08)",
+                "0 5px 22px rgba(0,0,0,0.13)",
+                "0 4px 18px rgba(0,0,0,0.11)"
+            ];
+            var panelRadius = panelRadiusOptions[domainHash % panelRadiusOptions.length];
+            var panelShadow = panelShadowOptions[domainHash % panelShadowOptions.length];
+
+            var menuPanel = document.getElementById("blogMenuPanel");
+            if (menuPanel) {
+                menuPanel.style.borderRadius = panelRadius;
+                menuPanel.style.boxShadow = panelShadow;
+            }
+
+            /*
+             * ============================================
+             * VARIASI LAYOUT HOMEPAGE
+             * ============================================
+             * 0: List vertikal (default)
+             * 1: Grid 2 kolom
+             * 2: Grid 3 kolom
+             * 3: List dengan border kiri aksen
+             * 4: Card dengan shadow berwarna
+             * 5: Minimal list (tanpa border)
+             */
+            var layoutIndex = domainHash % 6;
+            var homepageContent = document.querySelector(".homepage-content");
+            var postList = document.getElementById("postList");
+
+            if (homepageContent) {
+                // Variasi background konten
+                var contentBgOptions = ["#ffffff", "#fafafa", "#f8f8f8", "#fffef9", "#f5f5f5", "#fcfcfc"];
+                homepageContent.style.background = contentBgOptions[domainHash % contentBgOptions.length];
+            }
+
+            /*
+             * ============================================
+             * VARIASI POST CARD
+             * ============================================
+             */
+            var postCards = document.querySelectorAll(".post-item");
+            
+            // Warna aksen dari hash domain
+            var hue = domainHash % 360;
+            function hslToHex(h, s, l) {
+                h = h % 360; s = s / 100; l = l / 100;
+                var c = (1 - Math.abs(2 * l - 1)) * s;
+                var x = c * (1 - Math.abs((h / 60) % 2 - 1));
+                var m = l - c / 2;
+                var r, g, b;
+                if (h < 60) { r = c; g = x; b = 0; }
+                else if (h < 120) { r = x; g = c; b = 0; }
+                else if (h < 180) { r = 0; g = c; b = x; }
+                else if (h < 240) { r = 0; g = x; b = c; }
+                else if (h < 300) { r = x; g = 0; b = c; }
+                else { r = c; g = 0; b = x; }
+                r = Math.round((r + m) * 255);
+                g = Math.round((g + m) * 255);
+                b = Math.round((b + m) * 255);
+                return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+            }
+            var accentColor = hslToHex(hue, 60, 45);
+            var accentLight = hslToHex(hue, 40, 90);
+            var accentBg = hslToHex(hue, 20, 96);
+
+            postCards.forEach(function(card, index) {
+                switch(layoutIndex) {
+                    case 0: // List vertikal - variasi border
+                        card.style.borderLeft = "3px solid " + accentColor;
+                        card.style.borderRadius = "4px 8px 8px 4px";
+                        break;
+                    case 1: // Grid 2 kolom
+                        card.style.borderTop = "3px solid " + accentColor;
+                        card.style.borderRadius = "4px 4px 8px 8px";
+                        break;
+                    case 2: // Grid 3 kolom - card dengan aksen subtle
+                        card.style.boxShadow = "0 2px 8px " + accentColor + "15";
+                        card.style.border = "1px solid " + accentColor + "30";
+                        break;
+                    case 3: // Border kiri tebal
+                        card.style.borderLeft = "5px solid " + accentColor;
+                        card.style.borderRadius = "2px 6px 6px 2px";
+                        card.style.background = accentBg;
+                        break;
+                    case 4: // Shadow berwarna
+                        card.style.boxShadow = "0 3px 12px " + accentColor + "20";
+                        card.style.border = "1px solid " + accentColor + "25";
+                        card.style.borderRadius = "10px";
+                        break;
+                    case 5: // Minimal - tanpa border, hanya padding
+                        card.style.border = "none";
+                        card.style.borderBottom = "1px solid #eee";
+                        card.style.borderRadius = "0";
+                        card.style.boxShadow = "none";
+                        card.style.padding = "16px 0";
+                        break;
+                }
+
+                // Variasi meta tags warna
+                var catEls = card.querySelectorAll(".meta .cat");
+                var labelEls = card.querySelectorAll(".meta .label");
+                var tagEls = card.querySelectorAll(".meta .tag");
+
+                catEls.forEach(function(el) {
+                    el.style.background = accentLight;
+                    el.style.color = accentColor;
+                    el.style.border = "1px solid " + accentColor + "40";
+                });
+
+                labelEls.forEach(function(el) {
+                    var hue2 = (hue + 60) % 360;
+                    var labelColor = hslToHex(hue2, 50, 40);
+                    var labelLight = hslToHex(hue2, 30, 92);
+                    el.style.background = labelLight;
+                    el.style.color = labelColor;
+                    el.style.border = "1px solid " + labelColor + "40";
+                });
+
+                tagEls.forEach(function(el) {
+                    var hue3 = (hue + 180) % 360;
+                    var tagColor = hslToHex(hue3, 30, 45);
+                    el.style.background = "#f5f5f5";
+                    el.style.color = tagColor;
+                    el.style.border = "1px solid #ddd";
+                });
+            });
+
+            /*
+             * ============================================
+             * VARIASI SECTION LABEL
+             * ============================================
+             */
+            var sectionLabel = document.querySelector(".section-label");
+            if (sectionLabel) {
+                var labelStyles = [
+                    "font-size:14px;color:" + accentColor + ";",
+                    "font-size:16px;text-transform:uppercase;letter-spacing:1px;",
+                    "font-size:13px;color:" + textColor + ";border-bottom:2px solid " + accentColor + ";display:inline-block;padding-bottom:4px;",
+                    "font-size:15px;background:" + accentLight + ";padding:6px 16px;border-radius:20px;display:inline-block;",
+                    "font-size:14px;font-style:italic;",
+                    "font-size:18px;font-weight:700;"
+                ];
+                sectionLabel.setAttribute("style", labelStyles[domainHash % labelStyles.length]);
+            }
+
+            /*
+             * ============================================
+             * VARIASI LAYOUT GRID/LIST
+             * ============================================
+             */
+            var postContainer = document.getElementById("postList");
+            if (postContainer) {
+                if (layoutIndex === 1) {
+                    postContainer.style.display = "grid";
+                    postContainer.style.gridTemplateColumns = "repeat(2, 1fr)";
+                    postContainer.style.gap = "16px";
+                } else if (layoutIndex === 2) {
+                    postContainer.style.display = "grid";
+                    postContainer.style.gridTemplateColumns = "repeat(3, 1fr)";
+                    postContainer.style.gap = "12px";
+                } else {
+                    postContainer.style.display = "block";
+                }
+            }
+
+            // Toggle menu
+            var toggleBtnBlog = document.getElementById("blogMenuToggle");
+            var iconMenuBlog = document.getElementById("blogIconMenu");
+            var iconCloseBlog = document.getElementById("blogIconClose");
+
+            function updateBlogMenuPosition() {
+                if (menuPanel && menuPanel.style.display === "block" && toggleBtnBlog) {
+                    var btnRect = toggleBtnBlog.getBoundingClientRect();
+                    menuPanel.style.top = (btnRect.bottom + 5) + "px";
+                    menuPanel.style.right = (window.innerWidth - btnRect.right) + "px";
+                }
+            }
+
+            if (toggleBtnBlog && menuPanel && iconMenuBlog && iconCloseBlog) {
+                toggleBtnBlog.addEventListener("click", function(e) {
+                    e.stopPropagation();
+                    var isVisible = menuPanel.style.display === "block";
+                    menuPanel.style.display = isVisible ? "none" : "block";
+                    iconMenuBlog.style.display = isVisible ? "inline" : "none";
+                    iconCloseBlog.style.display = isVisible ? "none" : "inline";
+                    if (!isVisible) updateBlogMenuPosition();
+                });
+
+                document.addEventListener("click", function(e) {
+                    if (!menuPanel.contains(e.target) && !toggleBtnBlog.contains(e.target) && menuPanel.style.display === "block") {
+                        menuPanel.style.display = "none";
+                        iconMenuBlog.style.display = "inline";
+                        iconCloseBlog.style.display = "none";
+                    }
+                });
+
+                document.addEventListener("keydown", function(e) {
+                    if (e.key === "Escape" && menuPanel.style.display === "block") {
+                        menuPanel.style.display = "none";
+                        iconMenuBlog.style.display = "inline";
+                        iconCloseBlog.style.display = "none";
+                    }
+                });
+
+                window.addEventListener("resize", updateBlogMenuPosition);
+                window.addEventListener("scroll", updateBlogMenuPosition);
+                window.addEventListener("load", updateBlogMenuPosition);
+            }
+        })();
+        </script>
+
+        <style>
+        /* ============================================ */
+        /* STYLE HEADER BLOG                           */
+        /* ============================================ */
+        .blog-header-main.floating-header-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+        }
+
+        .header-content-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 16px;
+        }
+
+        .blog-title-main {
+            margin: 0;
+            font-size: 20px;
+            color: #000;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .nav-actions-main { flex-shrink: 0; margin: 0; }
+
+        .menu-btn-main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: transparent;
+            border: none;
+            color: #000;
+            padding: 0;
+            cursor: pointer;
+            border-radius: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .menu-btn-main:hover { opacity: 0.6; background: transparent; }
+        .menu-btn-main:active { opacity: 0.4; }
+
+        .menu-icon-main {
+            width: 24px;
+            height: 24px;
+            stroke: #000000;
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        #blogMenuPanel {
+            display: none;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+            border-radius: 10px;
+        }
+
+        #blogMenuPanel ul { list-style: none; margin: 0; padding: 0; }
+        #blogMenuPanel li { margin: 0; padding: 0; }
+
+        #blogMenuPanel a {
+            color: #000;
+            text-decoration: none;
+            display: block;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        #blogMenuPanel a:hover { background: rgba(0,0,0,0.05); }
+
+        /* SPACER */
+        .header-spacer { height: 60px; }
+
+        /* HOMEPAGE CONTENT */
+        .homepage-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: #fff;
+        }
+
+        /* POST ITEM (style dasar, akan divariasi oleh JS) */
+        .post-item {
+            background: #fff;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            transition: all .15s ease;
+        }
+
+        .post-item:hover {
+            border-color: #ccc;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        }
+
+        .post-item h2 { font-size: 16px; margin-bottom: 6px; }
+        .post-item h2 a { text-decoration: none; color: #111; }
+        .post-item h2 a:hover { text-decoration: underline; }
+
+        .excerpt { font-size: 13px; color: #555; margin-bottom: 8px; }
+        .meta { font-size: 11px; }
+
+        .meta a {
+            display: inline-block;
+            padding: 2px 6px;
+            margin: 2px 6px 2px 0;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .meta .cat { background: #e8f1ff; color: #1a4fb3; border: 1px solid #c7dcff; }
+        .meta .label { background: #e9f7ef; color: #1b7f4c; border: 1px solid #c9ead6; }
+        .meta .tag { background: #f3f3f3; color: #555; border: 1px solid #ddd; }
+        .meta a:hover { opacity: .85; }
+
+        .section-label {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .pagination { margin-top: 16px; text-align: center; font-size: 13px; }
+        .pagination a, .pagination span {
+            display: inline-block;
+            padding: 5px 9px;
+            margin: 3px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            background: #fff;
+        }
+        .pagination .current { background: #333; color: #fff; border-color: #333; }
+        .pagination a:hover { background: #eee; }
+
+        /* DESKTOP */
+        @media (min-width: 1025px) {
+            .blog-header-main.floating-header-main { padding: 12px 24px; }
+            .header-content-main { max-width: 1400px; }
+            .blog-title-main { font-size: 22px; }
+            .menu-btn-main { width: 40px; height: 40px; }
+            .menu-icon-main { width: 26px; height: 26px; }
+            #blogMenuPanel {
+                top: 65px; right: 24px; padding: 20px;
+                min-width: 220px; max-width: 250px;
+            }
+            #blogMenuPanel a { padding: 12px 16px; font-size: 15px; margin-bottom: 4px; }
+            #blogMenuPanel li:not(:last-child) a { border-bottom: 1px solid #f0f0f0; }
+            .header-spacer { height: 70px; }
+        }
+
+        /* TABLET */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .blog-header-main.floating-header-main { padding: 10px 16px; }
+            .header-content-main { gap: 14px; }
+            .blog-title-main { font-size: 18px; }
+            .menu-btn-main { width: 36px; height: 36px; }
+            .menu-icon-main { width: 22px; height: 22px; stroke-width: 2.5; }
+            #blogMenuPanel {
+                top: 58px; right: 16px; padding: 16px;
+                min-width: 200px; max-width: 220px;
+            }
+            #blogMenuPanel a { padding: 10px 14px; font-size: 14px; margin-bottom: 3px; }
+            #blogMenuPanel li:not(:last-child) a { border-bottom: 1px solid #f0f0f0; }
+            .header-spacer { height: 58px; }
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .blog-header-main.floating-header-main { padding: 8px 12px; }
+            .blog-title-main { font-size: 17px; }
+            .menu-btn-main { width: 32px; height: 32px; }
+            .menu-icon-main { width: 20px; height: 20px; stroke-width: 2.5; }
+            #blogMenuPanel {
+                top: 56px; right: 12px; padding: 14px;
+                min-width: 180px; max-width: 200px;
+            }
+            #blogMenuPanel a { padding: 9px 12px; font-size: 13px; margin-bottom: 2px; }
+            #blogMenuPanel li:not(:last-child) a { border-bottom: 1px solid #f0f0f0; }
+            .header-spacer { height: 52px; }
+        }
+
+        /* MOBILE KECIL */
+        @media (max-width: 480px) {
+            .blog-header-main.floating-header-main { padding: 8px 10px; }
+            .header-content-main { gap: 12px; }
+            .blog-title-main { font-size: 16px; font-weight: 600; }
+            .menu-btn-main { width: 30px; height: 30px; }
+            .menu-icon-main { width: 18px; height: 18px; stroke-width: 2.5; }
+            #blogMenuPanel {
+                top: 54px; right: 10px; padding: 12px;
+                min-width: 160px; max-width: 180px;
+            }
+            #blogMenuPanel a { padding: 8px 10px; font-size: 12px; margin-bottom: 2px; }
+            #blogMenuPanel li:not(:last-child) a { border-bottom: 1px solid #f0f0f0; }
+            .header-spacer { height: 48px; }
+        }
+        </style>
+
+        <!-- SPACER HEADER -->
+        <div class="header-spacer"></div>
+
+        <!-- KONTEN HOMEPAGE -->
+        <div class="homepage-content">
+            <main>
+                <article>
+                    <div class="section-label"><b>Latest Posts</b></div>
+
+                    <div id="postList">
+                        {% for post in site.categories.main %}
+                        <div class="post-item">
+                            <h2>
+                                <a href="{{ post.url }}">
+                                    {{ post.title }}
+                                </a>
+                            </h2>
+                            <div class="excerpt">
+                                {{ post.description }}
+                            </div>
+                            {% assign before_svg = post.content | split: "<p>" | first %}
+                            <div class="excerpt spo">
+                                {{ before_svg }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </article>
+            </main>
+        </div>
+
         <nav>
             {% include /kw/01.html %}
         </nav>
-        <main>
-            <article>
-                <style>
-                    /* ============================================ */
-                    /* STYLE HOMEPAGE                               */
-                    /* ============================================ */
-                    .post-item {
-                        background: #fff;
-                        padding: 12px;
-                        margin-bottom: 12px;
-                        border: 1px solid #e5e5e5;
-                        border-radius: 6px;
-                        box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-                        transition: all .15s ease;
-                    }
-
-                    .post-item:hover {
-                        border-color: #ccc;
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.06);
-                    }
-
-                    .post-item h2 {
-                        font-size: 16px;
-                        margin-bottom: 6px;
-                    }
-
-                    .post-item h2 a {
-                        text-decoration: none;
-                        color: #111;
-                    }
-
-                    .post-item h2 a:hover {
-                        text-decoration: underline;
-                    }
-
-                    .excerpt {
-                        font-size: 13px;
-                        color: #555;
-                        margin-bottom: 8px;
-                    }
-
-                    .meta {
-                        font-size: 11px;
-                    }
-
-                    .meta a {
-                        display: inline-block;
-                        padding: 2px 6px;
-                        margin: 2px 6px 2px 0;
-                        border-radius: 4px;
-                        text-decoration: none;
-                        font-weight: 500;
-                    }
-
-                    .meta .cat {
-                        background: #e8f1ff;
-                        color: #1a4fb3;
-                        border: 1px solid #c7dcff;
-                    }
-
-                    .meta .label {
-                        background: #e9f7ef;
-                        color: #1b7f4c;
-                        border: 1px solid #c9ead6;
-                    }
-
-                    .meta .tag {
-                        background: #f3f3f3;
-                        color: #555;
-                        border: 1px solid #ddd;
-                    }
-
-                    .meta a:hover { opacity: .85; }
-
-                    .section-label {
-                        text-align: center;
-                        font-weight: 600;
-                        margin-bottom: 1rem;
-                    }
-
-                    .pagination {
-                        margin-top: 16px;
-                        text-align: center;
-                        font-size: 13px;
-                    }
-
-                    .pagination a,
-                    .pagination span {
-                        display: inline-block;
-                        padding: 5px 9px;
-                        margin: 3px;
-                        border: 1px solid #ddd;
-                        border-radius: 4px;
-                        text-decoration: none;
-                        color: #333;
-                        background: #fff;
-                    }
-
-                    .pagination .current {
-                        background: #333;
-                        color: #fff;
-                        border-color: #333;
-                    }
-
-                    .pagination a:hover {
-                        background: #eee;
-                    }
-                </style>
-
-                <div class="section-label"><b>Latest Posts</b></div>
-
-                {% for post in site.categories.main %}
-                <div class="post-item">
-                    <h2>
-                        <a href="{{ post.url }}">
-                            {{ post.title }}
-                        </a>
-                    </h2>
-                    <div class="excerpt">
-                        {{ post.description }}
-                    </div>
-                    {% assign before_svg = post.content | split: "<p>" | first %}
-                    <div class="excerpt spo">
-                        {{ before_svg }}
-                    </div>
-                </div>
-                {% endfor %}
-            </article>
-        </main>
     </div>
 
     <!-- ============================================ -->
@@ -255,9 +691,6 @@ layout: null
     <!-- ============================================ -->
     <div id="query-page" style="display:none;">
         <style>
-            /* ============================================ */
-            /* STYLE HALAMAN QUERY (DARK THEME)             */
-            /* ============================================ */
             :root {
                 --bg-body: #1a1a1b;
                 --bg-card: #1e1e1f;
@@ -298,11 +731,7 @@ layout: null
                 min-height: 100vh;
             }
 
-            .query-container * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
+            .query-container * { margin: 0; padding: 0; box-sizing: border-box; }
 
             .page-h1 {
                 font-size: var(--font-heading);
@@ -313,24 +742,10 @@ layout: null
                 border-bottom: 1px solid var(--border-color);
             }
 
-            .breadcrumb {
-                font-size: var(--font-meta);
-                color: var(--text-secondary);
-                margin-bottom: 1rem;
-            }
-
-            .breadcrumb a {
-                color: var(--text-secondary);
-                text-decoration: none;
-            }
-
-            .breadcrumb a:hover {
-                text-decoration: underline;
-            }
-
-            .breadcrumb span:last-child {
-                color: var(--text-primary);
-            }
+            .breadcrumb { font-size: var(--font-meta); color: var(--text-secondary); margin-bottom: 1rem; }
+            .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+            .breadcrumb a:hover { text-decoration: underline; }
+            .breadcrumb span:last-child { color: var(--text-primary); }
 
             .header-card {
                 background: var(--bg-card);
@@ -345,15 +760,8 @@ layout: null
                 border: 1px solid var(--border-color);
             }
 
-            .header-info h2 {
-                font-size: 1.2rem;
-                font-weight: 600;
-            }
-
-            .header-info p {
-                font-size: var(--font-meta);
-                color: var(--text-secondary);
-            }
+            .header-info h2 { font-size: 1.2rem; font-weight: 600; }
+            .header-info p { font-size: var(--font-meta); color: var(--text-secondary); }
 
             .header-action {
                 background: var(--accent);
@@ -367,10 +775,7 @@ layout: null
                 text-decoration: none;
                 display: inline-block;
             }
-
-            .header-action:hover {
-                background: var(--accent-hover);
-            }
+            .header-action:hover { background: var(--accent-hover); }
 
             .sort-bar {
                 display: flex;
@@ -380,42 +785,14 @@ layout: null
                 margin-bottom: 1rem;
                 font-size: 0.75rem;
             }
+            .sort-active { color: var(--accent); font-weight: 600; }
+            .sort-inactive { cursor: pointer; color: var(--text-secondary); }
+            .sort-inactive:hover { color: var(--text-primary); }
 
-            .sort-active {
-                color: var(--accent);
-                font-weight: 600;
-            }
-
-            .sort-inactive {
-                cursor: pointer;
-                color: var(--text-secondary);
-            }
-
-            .sort-inactive:hover {
-                color: var(--text-primary);
-            }
-
-            .two-col {
-                display: grid;
-                grid-template-columns: 1fr 280px;
-                gap: 1rem;
-            }
-
-            .post-feed {
-                display: flex;
-                flex-direction: column;
-                gap: var(--card-gap);
-            }
-
-            .post-feed.grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .post-feed.gallery {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .two-col { display: grid; grid-template-columns: 1fr 280px; gap: 1rem; }
+            .post-feed { display: flex; flex-direction: column; gap: var(--card-gap); }
+            .post-feed.grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+            .post-feed.gallery { display: grid; grid-template-columns: repeat(3, 1fr); }
 
             .post-card {
                 background: var(--bg-card);
@@ -424,10 +801,7 @@ layout: null
                 padding: var(--card-padding);
                 transition: all 0.1s;
             }
-
-            .post-card:hover {
-                border-color: var(--border-hover);
-            }
+            .post-card:hover { border-color: var(--border-hover); }
 
             .post-card-header {
                 display: flex;
@@ -438,19 +812,9 @@ layout: null
                 margin-bottom: 0.5rem;
                 flex-wrap: wrap;
             }
-
-            .post-card-community {
-                color: var(--accent);
-                font-weight: 600;
-            }
-
-            .post-card-author {
-                font-weight: 500;
-            }
-
-            .post-card-time {
-                font-size: var(--font-small);
-            }
+            .post-card-community { color: var(--accent); font-weight: 600; }
+            .post-card-author { font-weight: 500; }
+            .post-card-time { font-size: var(--font-small); }
 
             .post-card-title {
                 font-size: var(--font-card-title);
@@ -458,17 +822,8 @@ layout: null
                 margin-bottom: 0.5rem;
                 color: var(--text-primary);
             }
-
-            .post-card-title a {
-                color: var(--text-primary);
-                text-decoration: none;
-                display: block;
-            }
-
-            .post-card-title a:hover {
-                text-decoration: underline;
-                color: var(--accent-hover);
-            }
+            .post-card-title a { color: var(--text-primary); text-decoration: none; display: block; }
+            .post-card-title a:hover { text-decoration: underline; color: var(--accent-hover); }
 
             .post-card-meta {
                 display: flex;
@@ -487,7 +842,6 @@ layout: null
                 font-weight: 600;
                 text-transform: uppercase;
             }
-
             .flair-1 { background: var(--flair-bg-1); color: var(--flair-text-1); }
             .flair-2 { background: var(--flair-bg-2); color: var(--flair-text-2); }
             .flair-3 { background: var(--flair-bg-3); color: var(--flair-text-3); }
@@ -502,7 +856,6 @@ layout: null
                 font-weight: 600;
                 color: var(--text-secondary);
             }
-
             .vote-btn {
                 font-size: 1rem;
                 cursor: pointer;
@@ -512,27 +865,11 @@ layout: null
                 color: var(--text-secondary);
                 padding: 0;
             }
+            .vote-btn:hover { color: var(--accent); }
 
-            .vote-btn:hover {
-                color: var(--accent);
-            }
-
-            .action-row {
-                display: flex;
-                gap: 0.75rem;
-                margin-top: 0.5rem;
-                font-size: var(--font-small);
-            }
-
-            .action-link {
-                color: var(--text-secondary);
-                text-decoration: none;
-            }
-
-            .action-link:hover {
-                color: var(--text-primary);
-                text-decoration: underline;
-            }
+            .action-row { display: flex; gap: 0.75rem; margin-top: 0.5rem; font-size: var(--font-small); }
+            .action-link { color: var(--text-secondary); text-decoration: none; }
+            .action-link:hover { color: var(--text-primary); text-decoration: underline; }
 
             .sidebar-card {
                 background: var(--bg-card);
@@ -543,7 +880,6 @@ layout: null
                 position: sticky;
                 top: 1rem;
             }
-
             .sidebar-title {
                 font-size: 0.75rem;
                 font-weight: 600;
@@ -552,61 +888,16 @@ layout: null
                 padding-bottom: 0.25rem;
                 color: var(--text-primary);
             }
+            .sidebar-item { padding: 0.4rem 0; border-bottom: 1px solid #2a2a2b; font-size: var(--font-meta); }
+            .sidebar-item a { color: var(--text-primary); text-decoration: none; display: block; transition: color 0.2s; }
+            .sidebar-item a:hover { color: var(--accent-hover); text-decoration: underline; }
+            .sidebar-number { color: var(--accent); font-weight: 700; margin-right: 0.25rem; }
 
-            .sidebar-item {
-                padding: 0.4rem 0;
-                border-bottom: 1px solid #2a2a2b;
-                font-size: var(--font-meta);
-            }
-
-            .sidebar-item a {
-                color: var(--text-primary);
-                text-decoration: none;
-                display: block;
-                transition: color 0.2s;
-            }
-
-            .sidebar-item a:hover {
-                color: var(--accent-hover);
-                text-decoration: underline;
-            }
-
-            .sidebar-number {
-                color: var(--accent);
-                font-weight: 700;
-                margin-right: 0.25rem;
-            }
-
-            .query-footer {
-                font-size: var(--font-small);
-                color: var(--text-muted);
-                text-align: center;
-                margin-top: 2rem;
-            }
-
-            .footer-links {
-                display: flex;
-                gap: 1rem;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                flex-wrap: wrap;
-            }
-
-            .footer-links a {
-                color: var(--text-secondary);
-                text-decoration: none;
-                font-size: var(--font-small);
-            }
-
-            .footer-links a:hover {
-                text-decoration: underline;
-            }
-
-            hr {
-                border: none;
-                border-top: 1px solid var(--border-color);
-                margin: 1rem 0;
-            }
+            .query-footer { font-size: var(--font-small); color: var(--text-muted); text-align: center; margin-top: 2rem; }
+            .footer-links { display: flex; gap: 1rem; justify-content: center; margin-bottom: 0.5rem; flex-wrap: wrap; }
+            .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: var(--font-small); }
+            .footer-links a:hover { text-decoration: underline; }
+            hr { border: none; border-top: 1px solid var(--border-color); margin: 1rem 0; }
 
             @media (max-width: 768px) {
                 .two-col { grid-template-columns: 1fr; }
@@ -615,22 +906,18 @@ layout: null
                 .post-feed.grid { grid-template-columns: 1fr; }
                 .post-feed.gallery { grid-template-columns: repeat(2, 1fr); }
             }
-
             @media (max-width: 480px) {
                 .post-feed.gallery { grid-template-columns: 1fr; }
             }
         </style>
 
         <div class="query-container">
-            <!-- H1 -->
             <h1 id="page-h1" class="page-h1"></h1>
 
-            <!-- BREADCRUMB -->
             <div class="breadcrumb">
                 <a href="/">Home</a> / <span id="breadcrumb-domain"></span> / search: <span id="breadcrumb-query"></span>
             </div>
 
-            <!-- HEADER CARD -->
             <div class="header-card">
                 <div class="header-info">
                     <h2 id="header-title"></h2>
@@ -639,25 +926,22 @@ layout: null
                 <span class="header-action" id="header-action-label"></span>
             </div>
 
-            <!-- SORT BAR -->
             <div class="sort-bar">
                 <span class="sort-active" id="sort-label"></span>
                 <span class="sort-inactive">Newest</span>
                 <span class="sort-inactive">Most upvoted</span>
             </div>
 
-            <!-- MAIN + SIDEBAR -->
             <div class="two-col">
                 <div class="post-feed" id="post-feed"></div>
                 <div>
                     <div class="sidebar-card">
-                        <div class="sidebar-title"><h3 id="sidebar-heading" style="font-size: 0.75rem; font-weight: 600; margin: 0;"></h3></div>
+                        <div class="sidebar-title"><h3 id="sidebar-heading" style="font-size:0.75rem;font-weight:600;margin:0;"></h3></div>
                         <div id="sidebar-links"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- FOOTER -->
             <hr />
             <div class="query-footer">
                 <div class="footer-links" id="footer-links"></div>
@@ -676,11 +960,6 @@ layout: null
 <script>
 (function() {
 
-    /*
-     * ============================================
-     * STEP 1: AMBIL FULL HOSTNAME SEBAGAI DNA
-     * ============================================
-     */
     var hostname = window.location.hostname;
     var parts = hostname.split(".");
     var tldParts = 2;
@@ -690,11 +969,6 @@ layout: null
     }
     var fullName = rawName;
 
-    /*
-     * ============================================
-     * STEP 2: HASH FUNCTION
-     * ============================================
-     */
     function hashString(str) {
         var hash = 0;
         for (var i = 0; i < str.length; i++) {
@@ -706,41 +980,24 @@ layout: null
 
     var domainHash = hashString(fullName);
 
-    /*
-     * ============================================
-     * STEP 3: DETEKSI QUERY
-     * ============================================
-     */
     var urlParams = new URLSearchParams(window.location.search);
     var query = urlParams.get("q");
     var homepage = document.getElementById("homepage");
     var queryPage = document.getElementById("query-page");
 
     if (!query) {
-        // Tampilkan homepage, sembunyikan query page
         if (homepage) homepage.style.display = "block";
         if (queryPage) queryPage.style.display = "none";
         return;
     }
 
-    // Tampilkan query page, sembunyikan homepage
     if (homepage) homepage.style.display = "none";
     if (queryPage) queryPage.style.display = "block";
 
     query = decodeURIComponent(query.replace(/\+/g, " "));
 
-    /*
-     * ============================================
-     * STEP 4: COMBINED SEED
-     * ============================================
-     */
     var combinedSeed = hashString(fullName + "|||" + query);
 
-    /*
-     * ============================================
-     * STEP 5: SEEDED RANDOM & UTILS
-     * ============================================
-     */
     function SeededRandom(seed) {
         this.seed = seed;
         this.next = function() {
@@ -765,17 +1022,10 @@ layout: null
         return shuffled;
     }
 
-    /*
-     * ============================================
-     * STEP 6: GENERATE WARNA DARI HASH DOMAIN
-     * ============================================
-     */
+    // Warna
     var hue = domainHash % 360;
-
     function hslToHex(h, s, l) {
-        h = h % 360;
-        s = s / 100;
-        l = l / 100;
+        h = h % 360; s = s / 100; l = l / 100;
         var c = (1 - Math.abs(2 * l - 1)) * s;
         var x = c * (1 - Math.abs((h / 60) % 2 - 1));
         var m = l - c / 2;
@@ -821,20 +1071,10 @@ layout: null
         queryContainer.style.setProperty("--flair-text-5", flairText5);
     }
 
-    /*
-     * ============================================
-     * STEP 7: LAYOUT DARI HASH DOMAIN
-     * ============================================
-     */
     var layoutIndex = domainHash % 3;
     var layoutClasses = ["feed-list", "grid", "gallery"];
     var layoutClass = layoutClasses[layoutIndex];
 
-    /*
-     * ============================================
-     * STEP 8: GENERATE FLAIR POOL
-     * ============================================
-     */
     function generateFlairPool(name, count) {
         var chars = name.toUpperCase().replace(/[^A-Z]/g, "");
         if (chars.length < 3) chars = name.toUpperCase() + "XYZ";
@@ -853,11 +1093,6 @@ layout: null
 
     var flairPool = generateFlairPool(fullName, 20);
 
-    /*
-     * ============================================
-     * STEP 9: POOL TEMPLATE
-     * ============================================
-     */
     var titleTemplates = shuffleArray([
         "[QUERY] Archive on [DOMAIN]",
         "[QUERY] - Full Collection | [DOMAIN]",
@@ -925,11 +1160,6 @@ layout: null
         ["responses", "Share", "Pin"]
     ], domainHash);
 
-    /*
-     * ============================================
-     * STEP 10: EKSTRAK DISPLAY NAME DARI QUERY
-     * ============================================
-     */
     var removeTerms = [
         "leaked", "leak", "leaks", "archive", "collection", "dump",
         "vault", "pack", "bundle", "gallery", "content", "media",
@@ -955,11 +1185,6 @@ layout: null
     var displayName = formatName(baseName);
     var displayLower = displayName.toLowerCase();
 
-    /*
-     * ============================================
-     * STEP 11: UPDATE ELEMEN HALAMAN
-     * ============================================
-     */
     var h1Text = pickFromArray(titleTemplates, combinedSeed, 0)
         .replace("[QUERY]", displayName)
         .replace("[DOMAIN]", fullName);
@@ -989,11 +1214,6 @@ layout: null
     document.getElementById("footer-status").innerText =
         pickFromArray(footerStatuses, combinedSeed, 50);
 
-    /*
-     * ============================================
-     * STEP 12: KEYWORD POOL
-     * ============================================
-     */
     var platforms = shuffleArray([
         "OnlyFans", "TikTok", "Instagram", "Telegram", "Twitter",
         "Discord", "Snapchat", "Premium", "Patreon", "Twitch",
@@ -1044,11 +1264,6 @@ layout: null
         return pickFromArray(patterns, seed, index);
     }
 
-    /*
-     * ============================================
-     * STEP 13: GENERATE POSTS
-     * ============================================
-     */
     var postCount = 10 + (combinedSeed % 8);
     var postKws = generateQueryKW(combinedSeed, postCount);
     var postsHtml = "";
@@ -1073,7 +1288,6 @@ layout: null
 
         var linkQuery = displayLower + " " + postKws[p];
         var actionSet = pickFromArray(actionVerbSets, postSeed, p);
-
         var flairClass1 = "flair-" + ((p % 5) + 1);
         var flairClass2 = "flair-" + (((p + 2) % 5) + 1);
 
@@ -1100,11 +1314,6 @@ layout: null
     document.getElementById("post-feed").innerHTML = postsHtml;
     document.getElementById("post-feed").classList.add(layoutClass);
 
-    /*
-     * ============================================
-     * STEP 14: SIDEBAR LINKS
-     * ============================================
-     */
     var sidebarCount = 10 + (combinedSeed % 8);
     var sidebarKws = generateQueryKW(combinedSeed + 3333, sidebarCount);
     var sidebarHtml = "";
@@ -1117,11 +1326,6 @@ layout: null
     }
     document.getElementById("sidebar-links").innerHTML = sidebarHtml;
 
-    /*
-     * ============================================
-     * STEP 15: FOOTER LINKS
-     * ============================================
-     */
     var footerLinkCount = 5 + (combinedSeed % 5);
     var footerKws = generateQueryKW(combinedSeed + 7777, footerLinkCount);
     var footerLinksHtml = "";
