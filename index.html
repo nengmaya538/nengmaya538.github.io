@@ -30,7 +30,7 @@ layout: null
     <!-- ============================================ -->
     <script>
     /*
-     * SEO script ini membaca domain dan query,
+     * SEO script ini membaca hostname utuh dan query,
      * lalu mengisi title, meta description, meta author,
      * canonical, dan schema.org sebelum halaman dirender.
      * Crawler yang tidak menjalankan JS tetap bisa
@@ -41,16 +41,23 @@ layout: null
         var urlParams = new URLSearchParams(location.search);
         var query = urlParams.get("q");
 
-        // Ambil nama domain utuh (tanpa TLD)
-        var fullName = hostname.split(".")[0];
-        if (fullName.toLowerCase() === "www") {
-            fullName = hostname.split(".")[1] || fullName;
+        /*
+         * Ambil hostname utuh tanpa TLD.
+         * Contoh:
+         *   abc.domain01.com        → abc-domain01
+         *   beatleakedflow.my.id    → beatleakedflow
+         *   sub.freehtmlparser.io   → sub-freehtmlparser
+         */
+        var parts = hostname.split(".");
+        var tldParts = 2; // asumsi TLD 2 level: my.id, github.io, pages.dev, co.id, com, net, dll
+        var rawName = parts.slice(0, Math.max(1, parts.length - tldParts)).join("-");
+        if (rawName.toLowerCase() === "www") {
+            rawName = parts.slice(1, Math.max(2, parts.length - tldParts)).join("-");
         }
+        var fullName = rawName;
 
-        // Format nama domain untuk display
         var displayDomain = fullName;
 
-        // Title & description berdasarkan kondisi
         var titleText = "";
         var descText = "";
 
@@ -63,26 +70,21 @@ layout: null
             descText = displayDomain + " - Latest updates and exclusive content.";
         }
 
-        // Set title
         document.title = titleText;
         var titleTag = document.getElementById("dynamic-title");
         if (titleTag) titleTag.textContent = titleText;
 
-        // Set meta description
         var metaDesc = document.getElementById("dynamic-description");
         if (metaDesc) metaDesc.setAttribute("content", descText);
 
-        // Set meta author
         var metaAuthor = document.getElementById("dynamic-author");
         if (metaAuthor) metaAuthor.setAttribute("content", displayDomain);
 
-        // Set canonical
         var canonicalLink = document.getElementById("dynamic-canonical");
         if (canonicalLink) {
             canonicalLink.setAttribute("href", location.href);
         }
 
-        // Schema.org WebSite
         var schemaData = {
             "@context": "https://schema.org",
             "@type": "WebSite",
@@ -100,10 +102,6 @@ layout: null
     <!-- GLOBAL STYLE - VARIABEL DASAR               -->
     <!-- ============================================ -->
     <style>
-        /*
-         * Variabel dasar. Akan dioverride oleh style
-         * yang digenerate JavaScript berdasarkan hash domain.
-         */
         :root {
             --bg-body: #1a1a1b;
             --bg-card: #1e1e1f;
@@ -152,7 +150,7 @@ layout: null
             padding: 1rem;
         }
 
-        /* ========== H1 (IDENTITAS HALAMAN) ========== */
+        /* ========== H1 ========== */
         .page-h1 {
             font-size: var(--font-heading);
             font-weight: 600;
@@ -374,7 +372,7 @@ layout: null
             color: var(--accent);
         }
 
-        /* ========== ACTION BUTTONS ========== */
+        /* ========== ACTION ROW ========== */
         .action-row {
             display: flex;
             gap: 0.75rem;
@@ -496,7 +494,7 @@ layout: null
     <!-- ============================================ -->
     <div id="query-page">
 
-        <!-- H1 - IDENTITAS HALAMAN -->
+        <!-- H1 -->
         <h1 id="page-h1" class="page-h1"></h1>
 
         <!-- BREADCRUMB -->
@@ -535,7 +533,7 @@ layout: null
         <hr />
         <div class="footer">
             <div class="footer-links" id="footer-links"></div>
-            <span id="footer-text"></span> - <span id="footer-date"></span>
+            <span id="footer-text"></span> - <span id="footer-status"></span>
         </div>
 
     </div>
@@ -543,26 +541,38 @@ layout: null
 </div>
 
 <!-- ============================================ -->
-<!-- JAVASCRIPT: DNA FULL DOMAIN NAME             -->
+<!-- JAVASCRIPT: DNA FULL HOSTNAME                 -->
 <!-- ============================================ -->
 <script>
 (function() {
 
     /*
      * ============================================
-     * STEP 1: AMBIL FULL DOMAIN NAME SEBAGAI DNA
+     * STEP 1: AMBIL FULL HOSTNAME SEBAGAI DNA
      * ============================================
-     * Nama domain utuh (tanpa TLD) menjadi identitas.
-     * Semua turunan berasal dari hash nama ini.
+     * Hostname utuh tanpa TLD menjadi identitas.
+     * Contoh:
+     *   abc.domain01.com        → abc-domain01
+     *   abc.domain02.com        → abc-domain02 (BEDA)
+     *   beatleakedflow.my.id    → beatleakedflow
+     *   sub.beatleakedflow.my.id → sub-beatleakedflow
+     *   freehtmlparser.github.io → freehtmlparser
      */
 
     var hostname = window.location.hostname;
-    var fullName = hostname.split(".")[0];
-    if (fullName.toLowerCase() === "www") {
-        fullName = hostname.split(".")[1] || fullName;
+    var parts = hostname.split(".");
+    var tldParts = 2;
+    var rawName = parts.slice(0, Math.max(1, parts.length - tldParts)).join("-");
+    if (rawName.toLowerCase() === "www") {
+        rawName = parts.slice(1, Math.max(2, parts.length - tldParts)).join("-");
     }
+    var fullName = rawName;
 
-    // Hash deterministik dari full domain name
+    /*
+     * ============================================
+     * STEP 2: HASH FUNCTION (DETERMINISTIK)
+     * ============================================
+     */
     function hashString(str) {
         var hash = 0;
         for (var i = 0; i < str.length; i++) {
@@ -574,43 +584,35 @@ layout: null
 
     var domainHash = hashString(fullName);
 
-    // Prefix 3 huruf untuk CSS class unik
-    var prefix = fullName.substring(0, 3).toLowerCase();
-
     /*
      * ============================================
-     * STEP 2: DETEKSI QUERY
+     * STEP 3: DETEKSI QUERY
      * ============================================
-     * Jika tidak ada query, halaman ini disembunyikan
-     * (homepage di-handle oleh Jekyll).
      */
-
     var urlParams = new URLSearchParams(window.location.search);
     var query = urlParams.get("q");
-
     var queryPage = document.getElementById("query-page");
 
     if (!query) {
-        // Tidak ada query, sembunyikan halaman query
         if (queryPage) queryPage.style.display = "none";
         return;
     }
 
-    // Ada query, tampilkan halaman query
     if (queryPage) queryPage.style.display = "block";
-
     query = decodeURIComponent(query.replace(/\+/g, " "));
 
     /*
      * ============================================
-     * STEP 3: SEEDED RANDOM (DETERMINISTIK)
+     * STEP 4: COMBINED SEED (DOMAIN + QUERY)
      * ============================================
-     * Gabungan domain + query sebagai seed,
-     * supaya domain A + query X != domain B + query X.
      */
-
     var combinedSeed = hashString(fullName + "|||" + query);
 
+    /*
+     * ============================================
+     * STEP 5: SEEDED RANDOM & UTILS
+     * ============================================
+     */
     function SeededRandom(seed) {
         this.seed = seed;
         this.next = function() {
@@ -637,21 +639,11 @@ layout: null
 
     /*
      * ============================================
-     * STEP 4: GENERATE WARNA & STYLE DARI HASH
+     * STEP 6: GENERATE WARNA DARI HASH DOMAIN
      * ============================================
-     * Hue: 0-360 dari domainHash
-     * Layout: feed/list, grid, gallery (3 opsi)
-     * Style: tema gelap dengan aksen berbeda
      */
-
     var hue = domainHash % 360;
 
-    // Layout: 0=feed/list, 1=grid, 2=gallery
-    var layoutIndex = domainHash % 3;
-    var layoutClasses = ["feed-list", "grid", "gallery"];
-    var layoutClass = layoutClasses[layoutIndex];
-
-    // Generate warna dari hue (HSL)
     function hslToHex(h, s, l) {
         h = h % 360;
         s = s / 100;
@@ -685,7 +677,6 @@ layout: null
     var flairBg5 = hslToHex((hue + 240) % 360, 30, 15);
     var flairText5 = hslToHex((hue + 240) % 360, 60, 75);
 
-    // Terapkan style via CSS custom properties
     var styleEl = document.createElement("style");
     styleEl.textContent = ":root {" +
         "--accent: " + accentColor + ";" +
@@ -705,21 +696,26 @@ layout: null
 
     /*
      * ============================================
-     * STEP 5: GENERATE FLAIR POOL
+     * STEP 7: LAYOUT DARI HASH DOMAIN
      * ============================================
-     * Flair dibuat dari huruf-huruf domain name,
-     * sehingga tiap domain punya flair unik.
      */
+    var layoutIndex = domainHash % 3;
+    var layoutClasses = ["feed-list", "grid", "gallery"];
+    var layoutClass = layoutClasses[layoutIndex];
 
+    /*
+     * ============================================
+     * STEP 8: GENERATE FLAIR POOL DARI NAMA DOMAIN
+     * ============================================
+     */
     function generateFlairPool(name, count) {
         var chars = name.toUpperCase().replace(/[^A-Z]/g, "");
         if (chars.length < 3) chars = name.toUpperCase() + "XYZ";
-        
         var pool = [];
         var rng = new SeededRandom(hashString(name + "_flair"));
         for (var i = 0; i < count; i++) {
             var flair = "";
-            var len = 3 + Math.floor(rng.next() * 6); // 3-8 karakter
+            var len = 3 + Math.floor(rng.next() * 6);
             for (var j = 0; j < len; j++) {
                 flair += chars.charAt(Math.floor(rng.next() * chars.length));
             }
@@ -732,10 +728,8 @@ layout: null
 
     /*
      * ============================================
-     * STEP 6: POOL TEMPLATE & TERMINOLOGI
+     * STEP 9: POOL TEMPLATE (DI-SHUFFLE PER DOMAIN)
      * ============================================
-     * Semua pool di-shuffle dengan seed dari domainHash,
-     * sehingga tiap domain punya preferensi berbeda.
      */
 
     var titleTemplates = shuffleArray([
@@ -774,21 +768,16 @@ layout: null
         "[DOMAIN] - Verified source"
     ], domainHash);
 
+    var footerStatuses = shuffleArray([
+        "live", "active", "online", "updated", "available"
+    ], domainHash);
+
     var sortLabels = shuffleArray([
-        "Relevance",
-        "Trending",
-        "Hot",
-        "Top Rated",
-        "Most Viewed"
+        "Relevance", "Trending", "Hot", "Top Rated", "Most Viewed"
     ], domainHash);
 
     var headerActionLabels = shuffleArray([
-        "JOIN",
-        "FOLLOW",
-        "SUBSCRIBE",
-        "ACCESS",
-        "ENTER",
-        "BROWSE"
+        "JOIN", "FOLLOW", "SUBSCRIBE", "ACCESS", "ENTER", "BROWSE"
     ], domainHash);
 
     var timePhrases = shuffleArray([
@@ -812,10 +801,9 @@ layout: null
 
     /*
      * ============================================
-     * STEP 7: EXTRACT DISPLAY NAME DARI QUERY
+     * STEP 10: EKSTRAK DISPLAY NAME DARI QUERY
      * ============================================
      */
-
     var removeTerms = [
         "leaked", "leak", "leaks", "archive", "collection", "dump",
         "vault", "pack", "bundle", "gallery", "content", "media",
@@ -843,7 +831,7 @@ layout: null
 
     /*
      * ============================================
-     * STEP 8: UPDATE HALAMAN
+     * STEP 11: UPDATE ELEMEN HALAMAN
      * ============================================
      */
 
@@ -862,9 +850,9 @@ layout: null
         .replace("[QUERY]", displayName)
         .replace("[DOMAIN]", fullName);
     document.getElementById("header-title").innerText = h2Text;
-    document.getElementById("header-subtitle").innerText = 
+    document.getElementById("header-subtitle").innerText =
         "Showing results for " + displayName + " - " + (10 + (combinedSeed % 8)) + " entries";
-    document.getElementById("header-action-label").innerText = 
+    document.getElementById("header-action-label").innerText =
         pickFromArray(headerActionLabels, combinedSeed, 0);
 
     // Sort label
@@ -876,23 +864,17 @@ layout: null
         .replace("[DOMAIN]", fullName);
     document.getElementById("sidebar-heading").innerText = sidebarH3;
 
-    // Footer
-    document.getElementById("footer-text").innerText = 
+    // Footer text + status (evergreen, tanpa tanggal)
+    document.getElementById("footer-text").innerText =
         pickFromArray(footerTexts, combinedSeed, 3).replace("[DOMAIN]", fullName);
-
-    // Footer date (evergreen, tanpa tahun)
-    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var today = new Date();
-    document.getElementById("footer-date").innerText = months[today.getMonth()] + " " + today.getDate();
+    document.getElementById("footer-status").innerText =
+        pickFromArray(footerStatuses, combinedSeed, 50);
 
     /*
      * ============================================
-     * STEP 9: KEYWORD POOL UNTUK INTERNAL LINK
+     * STEP 12: KEYWORD POOL UNTUK INTERNAL LINK
      * ============================================
-     * Generate dari hash domain + query,
-     * tiap domain dapat keyword pool berbeda.
      */
-
     var platforms = shuffleArray([
         "OnlyFans", "TikTok", "Instagram", "Telegram", "Twitter",
         "Discord", "Snapchat", "Premium", "Patreon", "Twitch",
@@ -945,11 +927,10 @@ layout: null
 
     /*
      * ============================================
-     * STEP 10: GENERATE POSTS
+     * STEP 13: GENERATE POSTS
      * ============================================
      */
-
-    var postCount = 10 + (combinedSeed % 8); // 10-17 posts
+    var postCount = 10 + (combinedSeed % 8);
     var postKws = generateQueryKW(combinedSeed, postCount);
     var postsHtml = "";
 
@@ -960,8 +941,7 @@ layout: null
         var timeAgo = pickFromArray(timePhrases, postSeed, p);
         var authorPrefix = pickFromArray(authorPrefixes, postSeed, p);
         var authorNum = Math.floor(new SeededRandom(postSeed + 100).next() * 9000) + 1000;
-        
-        // Flair untuk post ini
+
         var f1 = pickFromArray(flairPool, postSeed, 0);
         var f2 = pickFromArray(flairPool, postSeed, 7);
         var f3 = pickFromArray(flairPool, postSeed, 14);
@@ -975,7 +955,6 @@ layout: null
         var linkQuery = displayLower + " " + postKws[p];
         var actionSet = pickFromArray(actionVerbSets, postSeed, p);
 
-        // Class flair: rotasi 1-5
         var flairClass1 = "flair-" + ((p % 5) + 1);
         var flairClass2 = "flair-" + (((p + 2) % 5) + 1);
 
@@ -1000,17 +979,14 @@ layout: null
     }
 
     document.getElementById("post-feed").innerHTML = postsHtml;
-
-    // Terapkan layout class
     document.getElementById("post-feed").classList.add(layoutClass);
 
     /*
      * ============================================
-     * STEP 11: SIDEBAR LINKS
+     * STEP 14: SIDEBAR LINKS
      * ============================================
      */
-
-    var sidebarCount = 10 + (combinedSeed % 8); // 10-17 links
+    var sidebarCount = 10 + (combinedSeed % 8);
     var sidebarKws = generateQueryKW(combinedSeed + 3333, sidebarCount);
     var sidebarHtml = "";
     for (var s = 0; s < sidebarCount; s++) {
@@ -1024,11 +1000,10 @@ layout: null
 
     /*
      * ============================================
-     * STEP 12: FOOTER LINKS
+     * STEP 15: FOOTER LINKS
      * ============================================
      */
-
-    var footerLinkCount = 5 + (combinedSeed % 5); // 5-9 links
+    var footerLinkCount = 5 + (combinedSeed % 5);
     var footerKws = generateQueryKW(combinedSeed + 7777, footerLinkCount);
     var footerLinksHtml = "";
     for (var f = 0; f < footerLinkCount; f++) {
@@ -1043,10 +1018,9 @@ layout: null
 
     /*
      * ============================================
-     * STEP 13: CANONICAL FINAL
+     * STEP 16: CANONICAL FINAL
      * ============================================
      */
-
     var canonicalLink = document.getElementById("dynamic-canonical");
     if (canonicalLink) {
         canonicalLink.setAttribute("href", location.href);
