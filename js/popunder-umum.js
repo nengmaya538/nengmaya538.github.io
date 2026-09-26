@@ -3,12 +3,8 @@
 
   // =========nakap.web.id========== DAFTAR URL (dipakai popunder & tabunder) ====================
   const DAFTAR_URL = [
-"https://t.co/AnuTEFNPxv",
-"https://t.co/R2TsK7xcPR",
-"https://t.co/4uBEu1p56Q",
-"https://t.co/JxpB8vECQj",
-"https://t.co/dy1g9SMHKV",
-"https://t.co/WKOq54MW8Y"
+"https://t.co/NHnF2ECep4",
+"https://t.co/NHnF2ECep4"
   ];
 
   // ==================== RANDOM HELPER ====================
